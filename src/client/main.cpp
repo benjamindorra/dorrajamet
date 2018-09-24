@@ -6,7 +6,6 @@
 
 int main(int argc, char ** argv)
 {
-    std::cout << "argc = " << argc << std::endl;
     if(argc == 2)
     {
         std::string str(argv[1]);
