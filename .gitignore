@@ -1,4 +1,6 @@
 .vscode/
 .build/
 .extern/
-
+bin/
+build/
+extern/
