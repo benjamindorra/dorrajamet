@@ -2,11 +2,16 @@
 #ifndef STATE__AIPLAYER__H
 #define STATE__AIPLAYER__H
 
+#include <string>
 
 namespace state {
 
   /// class AIPlayer - 
   class AIPlayer {
+    // Operations
+  public:
+    AIPlayer (const std::string id);
+    AIPlayer ();
     // Setters and Getters
   };
 

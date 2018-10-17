@@ -2,11 +2,16 @@
 #ifndef STATE__HUMANPLAYER__H
 #define STATE__HUMANPLAYER__H
 
+#include <string>
 
 namespace state {
 
   /// class HumanPlayer - 
   class HumanPlayer {
+    // Operations
+  public:
+    HumanPlayer (const std::string id);
+    HumanPlayer ();
     // Setters and Getters
   };
 

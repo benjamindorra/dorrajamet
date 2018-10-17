@@ -5,10 +5,12 @@
 #include <vector>
 
 namespace state {
+  class Trait;
   class Adjacencies;
   class Traits;
 }
 
+#include "Trait.h"
 #include "Adjacencies.h"
 #include "Traits.h"
 
@@ -21,6 +23,11 @@ namespace state {
   private:
     std::vector<Trait> traits;
     Adjacencies adjacencies;
+    // Operations
+  public:
+    Ressources ();
+    std::vector<state::Trait> getTraits ();
+    state::Adjacencies getAdjacencies ();
     // Setters and Getters
   };
 

@@ -2,20 +2,26 @@
 #ifndef STATE__TRAITS__H
 #define STATE__TRAITS__H
 
+#include <vector>
 #include <string>
+
+namespace state {
+  class Trait;
+}
+
+#include "Trait.h"
 
 namespace state {
 
   /// class Traits - 
   class Traits {
+    // Associations
     // Attributes
   private:
-    std::string id;
-    std::string opposedId;
-    int diplomacyModifier;
-    int stewardshipModifier;
-    int martialModifier;
-    int intrigueModifier;
+    std::vector<Trait> traits;
+    // Operations
+  public:
+    Traits (std::string path);
     // Setters and Getters
   };
 
