@@ -26,8 +26,6 @@
 #include "state/County.h"
 #include "state/Duchy.h"
 #include "state/Kingdom.h"
-#include "state/IdRef.h"
-#include "state/IdRefList.h"
 #include "state/ClaimPlot.h"
 #include "state/MurderPlot.h"
 #endif
