@@ -2,12 +2,7 @@
 #ifndef STATE__OPINION__H
 #define STATE__OPINION__H
 
-
-namespace state {
-  class Character;
-}
-
-#include "Character.h"
+#include <string>
 
 namespace state {
 
@@ -15,8 +10,11 @@ namespace state {
   class Opinion {
     // Attributes
   private:
-    IdRef<Character> target;
+    std::string target;
     int score;
+    // Operations
+  public:
+    Opinion ();
     // Setters and Getters
   };
 

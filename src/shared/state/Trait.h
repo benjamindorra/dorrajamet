@@ -18,8 +18,6 @@ namespace state {
     int intrigueModifier;
     // Operations
   public:
-    Trait (std::string id, std::string opposedId, int diplomacyModifier, int stewardshipModifier, int martialModifier, int intrigueModifier);
-    Trait (std::string id, std::string path);
     Trait ();
     // Setters and Getters
   };

@@ -2,17 +2,15 @@
 #ifndef STATE__RESSOURCES__H
 #define STATE__RESSOURCES__H
 
-#include <vector>
+#include <string>
 
 namespace state {
-  class Trait;
-  class Adjacencies;
   class Traits;
+  class Adjacencies;
 }
 
-#include "Trait.h"
-#include "Adjacencies.h"
 #include "Traits.h"
+#include "Adjacencies.h"
 
 namespace state {
 
@@ -21,13 +19,13 @@ namespace state {
     // Associations
     // Attributes
   private:
-    std::vector<Trait> traits;
+    Traits traits;
     Adjacencies adjacencies;
     // Operations
   public:
-    Ressources ();
-    std::vector<state::Trait> getTraits ();
-    state::Adjacencies getAdjacencies ();
+    Ressources (std::string pathTraits, std::string pathAdjacencies);
+    Traits getTraits ();
+    Adjacencies getAdjacencies ();
     // Setters and Getters
   };
 

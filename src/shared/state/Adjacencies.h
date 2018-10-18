@@ -14,8 +14,7 @@ namespace state {
     std::map<std::string, std::map<std::string, int>> val;
     // Operations
   public:
-    Adjacencies (const std::string path);
-    const std::map<std::string, std::map<std::string, int>> getAdj ();
+    Adjacencies ();
     // Setters and Getters
   };
 

@@ -3,6 +3,7 @@
 #define STATE__GAMESTATE__H
 
 #include <vector>
+#include <string>
 
 namespace state {
   class Politics;
@@ -29,6 +30,11 @@ namespace state {
     GameMap gameMap;
     std::vector<Character> characters;
     Ressources ressources;
+    // Operations
+  public:
+    GameState ();
+    GameState (char* saveFilePath);
+    GameState (std::string saveFilePath);
     // Setters and Getters
   };
 

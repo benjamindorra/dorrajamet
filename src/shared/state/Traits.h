@@ -21,6 +21,7 @@ namespace state {
     std::vector<Trait> traits;
     // Operations
   public:
+    Traits ();
     Traits (std::string path);
     // Setters and Getters
   };

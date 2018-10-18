@@ -2,13 +2,12 @@
 #ifndef STATE__MURDERPLOT__H
 #define STATE__MURDERPLOT__H
 
+#include <string>
 
 namespace state {
-  class Character;
   class Plot;
 }
 
-#include "Character.h"
 #include "Plot.h"
 
 namespace state {
@@ -17,7 +16,10 @@ namespace state {
   class MurderPlot : public state::Plot {
     // Attributes
   private:
-    IdRef<Character> targetCharacter;
+    std::string targetCharacter;
+    // Operations
+  public:
+    MurderPlot ();
     // Setters and Getters
   };
 

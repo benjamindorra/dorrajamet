@@ -1,41 +1,49 @@
 #include <iostream>
+#include <fstream>
 #include <string>
-#include "tools.h"
+#include "../shared/json.hpp"
+#include "../shared/tools.hpp"
+#include "../shared/state.h"
 
-
+void debug(int c)
+{
+    std::cout << "Jusqu'ici tout va bien : " << c << std::endl;
+}
 
 int main(int argc, char ** argv)
 {
-    if(argc == 2)
+    using json = nlohmann::json;
+    std::string titleString = loadFile("./res/testTitle.json");
+    json j = json::parse(titleString);
+    state::County county;
+    state::Duchy duchy;
+    state::Kingdom kingdom;
+    int type = j["type"].get<int>();
+    switch(type)
     {
-        std::string str(argv[1]);
-        if(str == "hello")
-            std::cout << "Hello World!" << std::endl;
+        case 1://Count
+            county = state::County(titleString);
+            std::cout << "Created a County\n";
+            break;
+        case 2://Duke
+            duchy = state::Duchy(titleString);
+            std::cout << "Created a Duchy\n";
+            break;
+        case 3://King
+            kingdom = state::Kingdom(titleString);
+            std::cout << "Created a Kingdom\n";
+            break;
     }
 
-    int a = 42;
-    std::string id("0001");
-
-    IdRef<int>::val ref;
-
-    ref.first = id;
-    ref.second = &a;
-
-    std::cout << "object id: " << ref.first << "; object value: " << *ref.second << std::endl;
-
-
-    int b = 43, c = 44;
-    std::string id2("0002"), id3("0003");
-    IdRefList<int>::val refList;
-    refList[id] = &a;
-    refList[id2] = &b;
-    refList[id3] = &c;
-
-    for(auto const& x : refList)
-    {
-        std::cout << x.first << ": " << *x.second << std::endl;
-    }
-    
-
+    /*using json = nlohmann::json;
+    std::string content = loadFile("./res/test.json");
+    std::cout << content << std::endl;
+    json j = json::parse(content);
+    int n;
+    n = j["age"].get<int>();
+    n++;
+    j["age"] = n;
+    std::string res = j.dump(4);
+    saveFile("./res/test.json", res);*/
     return 0;
 }

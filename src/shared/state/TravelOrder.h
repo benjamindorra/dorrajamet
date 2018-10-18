@@ -19,6 +19,9 @@ namespace state {
     // Attributes
   private:
     std::vector<OneProvinceOrder> orderList;
+    // Operations
+  public:
+    TravelOrder ();
     // Setters and Getters
   };
 

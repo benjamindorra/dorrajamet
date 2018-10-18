@@ -2,13 +2,12 @@
 #ifndef STATE__CLAIMPLOT__H
 #define STATE__CLAIMPLOT__H
 
+#include <string>
 
 namespace state {
-  class Title;
   class Plot;
 }
 
-#include "Title.h"
 #include "Plot.h"
 
 namespace state {
@@ -17,7 +16,10 @@ namespace state {
   class ClaimPlot : public state::Plot {
     // Attributes
   private:
-    IdRef<Title> targetTitle;
+    std::string targetTitle;
+    // Operations
+  public:
+    ClaimPlot ();
     // Setters and Getters
   };
 

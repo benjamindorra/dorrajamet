@@ -13,7 +13,7 @@ distance11,distance12,distance13
 distance21,distance22,distance23
 distance31,distance32,distance33
 */
-state::Adjacencies::Adjacencies (const std::string path) {
+/*state::Adjacencies::Adjacencies (const std::string path) {
     std::ifstream file(path);
     if (!file.good()) { 
         throw std::runtime_error("Cannot open adjacencies file");
@@ -42,24 +42,5 @@ state::Adjacencies::Adjacencies (const std::string path) {
         }
         i++;
     }
-}
+}*/
 
-const std::map<std::string, std::map<std::string, int>> state::Adjacencies::getAdj() {
-    return this->val;
-}  
-
-//test
-/*
-int main () {
-    state::Adjacencies testmap("/home/utilisateur/Desktop/test.csv");
-    std::map<std::string, std::map<std::string, int>> distances = testmap.state::Adjacencies::getAdj();
-    std::pair<std::string, std::map<std::string, int>> y;
-    for(auto x: distances) {
-        for(auto y: x.second) {
-            std::cout << x.first << " " << y.first << " " << y.second;
-        }
-        std::cout << std::endl;
-    }
-    std::cout << std::endl;
-}
-*/

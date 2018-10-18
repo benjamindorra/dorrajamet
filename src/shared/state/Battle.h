@@ -3,14 +3,7 @@
 #define STATE__BATTLE__H
 
 #include <string>
-
-namespace state {
-  class Province;
-  class Army;
-}
-
-#include "Province.h"
-#include "Army.h"
+#include <vector>
 
 namespace state {
 
@@ -20,11 +13,14 @@ namespace state {
   private:
     std::string id;
     /// Location of the battle (pointer)
-    IdRef<Province> province;
-    IdRefList<Army> whiteArmies;
-    IdRefList<Army> blackArmies;
+    std::string province;
+    std::vector<std::string> whiteArmies;
+    std::vector<std::string> blackArmies;
     int startTurn;
     int endTurn;
+    // Operations
+  public:
+    Battle ();
     // Setters and Getters
   };
 

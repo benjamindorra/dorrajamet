@@ -3,18 +3,13 @@
 #define STATE__ARMY__H
 
 #include <string>
+#include <vector>
 #include <queue>
 
 namespace state {
-  class Levy;
-  class Province;
-  class Battle;
   class TravelOrder;
 }
 
-#include "Levy.h"
-#include "Province.h"
-#include "Battle.h"
 #include "TravelOrder.h"
 
 namespace state {
@@ -22,19 +17,19 @@ namespace state {
   /// class Army - Class to describe a raised army on the map
   class Army {
     // Associations
-    state::Levy references;
     // Attributes
   private:
     std::string id;
-    IdRefList<Levy> levies;
+    std::vector<std::string> levies;
     /// Pointer of the province where the army is currently located
-    IdRef<Province> currentProvince;
-    IdRef<Battle> currentBattle;
+    std::string currentProvince;
+    std::string currentBattle;
     /// Queue of ongoing moving orders for the army
     static std::queue<TravelOrder> orders;
+    // Operations
+  public:
+    Army ();
     // Setters and Getters
-    const Levy& getReferences() const;
-    void setReferences(const Levy& references);
   };
 
 };

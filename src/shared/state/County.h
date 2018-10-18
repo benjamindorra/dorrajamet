@@ -2,13 +2,12 @@
 #ifndef STATE__COUNTY__H
 #define STATE__COUNTY__H
 
+#include <string>
 
 namespace state {
-  class Province;
   class Title;
 }
 
-#include "Province.h"
 #include "Title.h"
 
 namespace state {
@@ -18,7 +17,16 @@ namespace state {
     // Attributes
   private:
     /// Pointer to the related province
-    IdRef<Province> province;
+    std::string province;
+    /// Id of the liege title if any
+    std::string liege;
+    /// Id of the de Jure liege title if any
+    std::string deJureLiege;
+    // Operations
+  public:
+    County ();
+    County (std::string strJson);
+    ~County ();
     // Setters and Getters
   };
 

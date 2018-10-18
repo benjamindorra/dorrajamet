@@ -2,7 +2,6 @@
 #ifndef STATE__AIPLAYER__H
 #define STATE__AIPLAYER__H
 
-#include <string>
 
 namespace state {
 
@@ -10,7 +9,6 @@ namespace state {
   class AIPlayer {
     // Operations
   public:
-    AIPlayer (const std::string id);
     AIPlayer ();
     // Setters and Getters
   };

@@ -2,17 +2,18 @@
 #ifndef STATE__GAMEMAP__H
 #define STATE__GAMEMAP__H
 
-#include <vector>
+#include <string>
+#include <map>
 
 namespace state {
-  class Province;
-  class Army;
   class Battle;
+  class Army;
+  class Province;
 }
 
-#include "Province.h"
-#include "Army.h"
 #include "Battle.h"
+#include "Army.h"
+#include "Province.h"
 
 namespace state {
 
@@ -21,11 +22,14 @@ namespace state {
     // Associations
     // Attributes
   private:
-    std::vector<Province> provinces;
+    std::map<std::string, Province> provinces;
     /// A list of all the armies mobilized on the map
-    std::vector<Army> armies;
+    std::map<std::string, Army> armies;
     /// A list of all ongoing and finished battles between armies
-    std::vector<Battle> battles;
+    std::map<std::string, Battle> battles;
+    // Operations
+  public:
+    GameMap ();
     // Setters and Getters
   };
 

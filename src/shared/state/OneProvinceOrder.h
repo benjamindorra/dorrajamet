@@ -13,6 +13,9 @@ namespace state {
 
   /// class OneProvinceOrder - A class describing a travel from one province to an adjacent province
   class OneProvinceOrder : public state::Order {
+    // Operations
+  public:
+    OneProvinceOrder ();
     // Setters and Getters
   };
 
