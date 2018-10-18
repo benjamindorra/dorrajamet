@@ -2,6 +2,7 @@
 #ifndef STATE__KINGDOM__H
 #define STATE__KINGDOM__H
 
+#include <string>
 
 namespace state {
   class Title;
@@ -16,6 +17,8 @@ namespace state {
     // Operations
   public:
     Kingdom ();
+    Kingdom (std::string strJson);
+    ~Kingdom ();
     // Setters and Getters
   };
 

@@ -3,7 +3,6 @@
 #define STATE__TITLE__H
 
 #include <string>
-#include <map>
 
 namespace state {
 
@@ -15,12 +14,6 @@ namespace state {
     std::string name;
     /// Pointer to the holder if any
     std::string holder;
-    /// Couples of former holders ids (std::string) and the turn when they began holding the title (int)
-    std::map<std::string, int> history;
-    /// Pointer to the liege title if any
-    std::string liege;
-    /// Pointer to the de Jure liege title if any
-    std::string deJureLiege;
     // Setters and Getters
     const std::string& getId() const;
     void setId(const std::string& id);
@@ -28,12 +21,6 @@ namespace state {
     void setName(const std::string& name);
     const std::string& getHolder() const;
     void setHolder(const std::string& holder);
-    const std::map<std::string, int>& getHistory() const;
-    void setHistory(const std::map<std::string, int>& history);
-    const std::string& getLiege() const;
-    void setLiege(const std::string& liege);
-    const std::string& getDeJureLiege() const;
-    void setDeJureLiege(const std::string& deJureLiege);
   };
 
 };

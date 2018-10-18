@@ -27,28 +27,4 @@ namespace state
     {
         this->holder = holder;
     }
-    const std::map<std::string, int>& Title::getHistory() const
-    {
-        return this->history;
-    }
-    void Title::setHistory(const std::map<std::string, int>& history)
-    {
-        this->history = history;
-    }
-    const std::string& Title::getLiege() const
-    {
-        return this->liege;
-    }
-    void Title::setLiege(const std::string& liege)
-    {
-        this->liege = liege;
-    }
-    const std::string& Title::getDeJureLiege() const
-    {
-        return this->deJureLiege;
-    }
-    void Title::setDeJureLiege(const std::string& deJureLiege)
-    {
-        this->deJureLiege = deJureLiege;
-    }
 }

@@ -3,6 +3,7 @@
 #define STATE__BATTLE__H
 
 #include <string>
+#include <vector>
 
 namespace state {
 
@@ -13,8 +14,8 @@ namespace state {
     std::string id;
     /// Location of the battle (pointer)
     std::string province;
-    std::string whiteArmies;
-    std::string blackArmies;
+    std::vector<std::string> whiteArmies;
+    std::vector<std::string> blackArmies;
     int startTurn;
     int endTurn;
     // Operations

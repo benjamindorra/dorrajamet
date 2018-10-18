@@ -2,18 +2,19 @@
 #ifndef STATE__POLITICS__H
 #define STATE__POLITICS__H
 
+#include <string>
 #include <map>
 #include <vector>
 
 namespace state {
-  class Title;
   class Relation;
   class Character;
+  class Title;
 }
 
-#include "Title.h"
 #include "Relation.h"
 #include "Character.h"
+#include "Title.h"
 
 namespace state {
 
@@ -22,9 +23,9 @@ namespace state {
     // Associations
     // Attributes
   private:
-    std::map<Title> titles;
+    std::map<std::string, Title> titles;
     std::vector<Relation> relations;
-    std::map<Character> characters;
+    std::map<std::string, Character> characters;
     // Operations
   public:
     Politics ();

@@ -8,18 +8,15 @@
 
 namespace state {
   class TravelOrder;
-  class Levy;
 }
 
 #include "TravelOrder.h"
-#include "Levy.h"
 
 namespace state {
 
   /// class Army - Class to describe a raised army on the map
   class Army {
     // Associations
-    state::Levy references;
     // Attributes
   private:
     std::string id;
@@ -33,8 +30,6 @@ namespace state {
   public:
     Army ();
     // Setters and Getters
-    const Levy& getReferences() const;
-    void setReferences(const Levy& references);
   };
 
 };

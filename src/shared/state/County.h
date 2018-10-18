@@ -18,9 +18,15 @@ namespace state {
   private:
     /// Pointer to the related province
     std::string province;
+    /// Id of the liege title if any
+    std::string liege;
+    /// Id of the de Jure liege title if any
+    std::string deJureLiege;
     // Operations
   public:
     County ();
+    County (std::string strJson);
+    ~County ();
     // Setters and Getters
   };
 
