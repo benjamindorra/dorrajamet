@@ -25,6 +25,10 @@ namespace state {
     Duchy ();
     Duchy (std::string strJson);
     ~Duchy ();
+    void debug ();
+    bool checkConsistency ();
+    std::string getLiege ();
+    std::string getDeJureLiege ();
     // Setters and Getters
   };
 

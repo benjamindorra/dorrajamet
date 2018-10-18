@@ -19,6 +19,10 @@ namespace state {
     Kingdom ();
     Kingdom (std::string strJson);
     ~Kingdom ();
+    void debug ();
+    bool checkConsistency ();
+    std::string getLiege ();
+    std::string getDeJureLiege ();
     // Setters and Getters
   };
 

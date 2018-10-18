@@ -423,6 +423,7 @@ gen_class (umlclassnode *node)
             print ("");
             if (umlo->key.attr.inheritance_type == '1') {
                 emit ("virtual ");
+                strcpy(umlo->key.attr.value, "default");
             }
             else if (umlo->key.attr.isabstract || is_valuetype) {
                 emit ("virtual ");
@@ -459,9 +460,13 @@ gen_class (umlclassnode *node)
                 emit (" const");
             }
             if (umlo->key.attr.value[0]) {
-                // virtual
-                if ((umlo->key.attr.isabstract || is_valuetype) &&
+                if(umlo->key.attr.inheritance_type == '1'){
+                    // virtual destructor
+                    emit(" = %s", umlo->key.attr.value);
+                }
+            else if ((umlo->key.attr.isabstract || is_valuetype) &&
                     umlo->key.attr.name[0] != '~')
+                    //virtual
                     emit (" = %s", umlo->key.attr.value);
             }
             emit (";\n");

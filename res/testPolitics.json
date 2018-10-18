@@ -1,0 +1,61 @@
+{
+    "titles":
+    [
+        {
+            "id": "k_of_numbers",
+            "name": "Kingdom of Numbers",
+            "holder": "chara_0001"
+        },
+        {
+            "id": "k_of_numbers",
+            "name": "Kingdom of Numbers",
+            "holder": "chara_0001"
+        },
+        {
+            "id": "d_of_evens",
+            "name": "Duchy of Evens",
+            "holder": "chara_0002",
+            "liege": "k_of_numbers",
+            "deJureLiege": "k_of_numbers"
+        },
+        {
+            "id": "d_of_odds",
+            "name": "Duchy of Odds",
+            "holder": "chara_0003",
+            "liege": "k_of_numbers",
+            "deJureLiege": "k_of_numbers"
+        },
+        {
+            "id": "c_of_one",
+            "name": "County of One",
+            "holder": "chara_0004",
+            "liege": "d_of_odds",
+            "deJureLiege": "d_of_odds",
+            "province": "prov_one"
+        },
+        {
+            "id": "c_of_two",
+            "name": "County of Two",
+            "holder": "chara_0005",
+            "liege": "d_of_evens",
+            "deJureLiege": "d_of_evens",
+            "province": "prov_two"
+        },
+        {
+            "id": "c_of_three",
+            "name": "County of Three",
+            "holder": "chara_0006",
+            "liege": "d_of_odds",
+            "deJureLiege": "d_of_odds",
+            "province": "prov_three"
+        },
+        {
+            "id": "c_of_four",
+            "name": "County of Four",
+            "holder": "chara_0007",
+            "liege": "d_of_evens",
+            "deJureLiege": "d_of_evens",
+            "province": "prov_four"
+        }
+    ]
+}

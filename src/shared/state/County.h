@@ -27,6 +27,10 @@ namespace state {
     County ();
     County (std::string strJson);
     ~County ();
+    void debug ();
+    bool checkConsistency ();
+    std::string getLiege ();
+    std::string getDeJureLiege ();
     // Setters and Getters
   };
 

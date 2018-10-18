@@ -1,6 +1,7 @@
 .vscode/
 .build/
 .extern/
+core
 bin/
 build/
 extern/

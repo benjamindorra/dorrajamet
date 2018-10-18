@@ -2,11 +2,15 @@
 #ifndef __STATE__H
 #define __STATE__H
 
+#include "state/Title.h"
+#include "state/Duchy.h"
+#include "state/Kingdom.h"
+#include "state/County.h"
+#include "state/Titles.h"
 #include "state/Relation.h"
 #include "state/Opinion.h"
 #include "state/Plot.h"
 #include "state/Character.h"
-#include "state/Title.h"
 #include "state/Politics.h"
 #include "state/Battle.h"
 #include "state/Order.h"
@@ -24,9 +28,6 @@
 #include "state/HumanPlayer.h"
 #include "state/Player.h"
 #include "state/GameState.h"
-#include "state/County.h"
-#include "state/Duchy.h"
-#include "state/Kingdom.h"
 #include "state/ClaimPlot.h"
 #include "state/MurderPlot.h"
 #endif

@@ -12,28 +12,8 @@ void debug(int c)
 
 int main(int argc, char ** argv)
 {
-    using json = nlohmann::json;
-    std::string titleString = loadFile("./res/testTitle.json");
-    json j = json::parse(titleString);
-    state::County county;
-    state::Duchy duchy;
-    state::Kingdom kingdom;
-    int type = j["type"].get<int>();
-    switch(type)
-    {
-        case 1://Count
-            county = state::County(titleString);
-            std::cout << "Created a County\n";
-            break;
-        case 2://Duke
-            duchy = state::Duchy(titleString);
-            std::cout << "Created a Duchy\n";
-            break;
-        case 3://King
-            kingdom = state::Kingdom(titleString);
-            std::cout << "Created a Kingdom\n";
-            break;
-    }
+    std::string testString = loadFile("./res/testPolitics.json");
+    state::Politics politics(testString);
 
     /*using json = nlohmann::json;
     std::string content = loadFile("./res/test.json");
