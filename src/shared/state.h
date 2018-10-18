@@ -2,7 +2,11 @@
 #ifndef __STATE__H
 #define __STATE__H
 
+#include "state/Trait.h"
 #include "state/Traits.h"
+#include "state/AIPlayer.h"
+#include "state/HumanPlayer.h"
+#include "state/Player.h"
 #include "state/Opinion.h"
 #include "state/Plot.h"
 #include "state/Character.h"
@@ -19,9 +23,6 @@
 #include "state/GameMap.h"
 #include "state/Adjacencies.h"
 #include "state/Ressources.h"
-#include "state/AIPlayer.h"
-#include "state/HumanPlayer.h"
-#include "state/Player.h"
 #include "state/GameState.h"
 #include "state/County.h"
 #include "state/Duchy.h"

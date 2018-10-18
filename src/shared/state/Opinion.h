@@ -5,14 +5,16 @@
 
 namespace state {
   class Character;
-}
-
+};
+class IdRef;
 #include "Character.h"
+#include "IdRef.h"
 
 namespace state {
 
   /// class Opinion - 
   class Opinion {
+    // Associations
     // Attributes
   private:
     IdRef<Character> target;

@@ -7,15 +7,19 @@
 namespace state {
   class Province;
   class Army;
-}
-
+};
+class IdRefList;
+class IdRef;
 #include "Province.h"
 #include "Army.h"
+#include "IdRefList.h"
+#include "IdRef.h"
 
 namespace state {
 
   /// class Battle - A class describing an ongoing battle on the map
   class Battle {
+    // Associations
     // Attributes
   private:
     std::string id;

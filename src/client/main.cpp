@@ -1,41 +1,62 @@
 #include <iostream>
+#include <fstream>
 #include <string>
-#include "tools.h"
+#include "json.hpp"
 
-
+void debug(int c)
+{
+    std::cout << "Jusqu'ici tout va bien : " << c << std::endl;
+}
 
 int main(int argc, char ** argv)
 {
-    if(argc == 2)
+    using json = nlohmann::json;
+    std::ifstream myfile;
+    myfile.open("./res/test.json");
+    std::string content;
+    char buffer[1024];
+    if(myfile.is_open())
     {
-        std::string str(argv[1]);
-        if(str == "hello")
-            std::cout << "Hello World!" << std::endl;
+        debug(0);
+        int i =0;
+        while(!myfile.eof())
+        {
+            myfile >> buffer[i];
+            std::cout << "[" << i << "] = " << buffer[i] << std::endl;
+            i++;
+        }
+        buffer[i-1] = 0;
+        std::cout << buffer << std::endl;
+        debug(1);
+        content = std::string(buffer);
+        myfile.close();
+        std::cout << content << std::endl;
+        debug(2);
+        json j = json::parse(content);
+        int n;
+        n = j["age"].get<int>();
+        n++;
+        j["age"] = n;
+        debug(3);
+        std::ofstream ofile;
+        ofile.open("./res/test.json");
+        if(ofile.is_open())
+        {
+            debug(4);
+            ofile << j.dump(4);
+            debug(5);
+            ofile.close();
+            debug(6);
+        }
+        else
+        {
+            std::cout << "could not open output file" << std::endl;
+        }
+
     }
-
-    int a = 42;
-    std::string id("0001");
-
-    IdRef<int>::val ref;
-
-    ref.first = id;
-    ref.second = &a;
-
-    std::cout << "object id: " << ref.first << "; object value: " << *ref.second << std::endl;
-
-
-    int b = 43, c = 44;
-    std::string id2("0002"), id3("0003");
-    IdRefList<int>::val refList;
-    refList[id] = &a;
-    refList[id2] = &b;
-    refList[id3] = &c;
-
-    for(auto const& x : refList)
+    else
     {
-        std::cout << x.first << ": " << *x.second << std::endl;
+        std::cout << "could not open file" << std::endl;
     }
-    
-
     return 0;
 }

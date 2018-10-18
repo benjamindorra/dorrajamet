@@ -6,15 +6,17 @@
 namespace state {
   class Title;
   class Plot;
-}
-
+};
+class IdRef;
 #include "Title.h"
 #include "Plot.h"
+#include "IdRef.h"
 
 namespace state {
 
   /// class ClaimPlot - 
   class ClaimPlot : public state::Plot {
+    // Associations
     // Attributes
   private:
     IdRef<Title> targetTitle;

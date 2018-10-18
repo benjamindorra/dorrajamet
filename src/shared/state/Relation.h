@@ -5,21 +5,21 @@
 
 namespace state {
   class Character;
-}
-
+};
+class IdRef;
 #include "Character.h"
+#include "IdRef.h"
 
 namespace state {
 
   /// class Relation - 
   class Relation {
+    // Associations
     // Attributes
   private:
     IdRef<Character> characterA;
     IdRef<Character> characterB;
-    /// enumeration:
-1 for non aggression, 2 for alliance, 3 for friendship, 4 for rivalry, 5 for war
-    enum type;
+    enum{non_aggression, alliance, friendship, rivalry, war} type;
     int endTurn;
     // Setters and Getters
   };

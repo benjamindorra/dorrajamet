@@ -19,15 +19,12 @@ namespace state {
   /// class Player - 
   class Player {
     // Associations
-    state::Character references;
     // Attributes
   private:
     std::string id;
     IdRef<Character> currentCharacter;
     int score;
     // Setters and Getters
-    const Character& getReferences() const;
-    void setReferences(const Character& references);
   };
 
 };

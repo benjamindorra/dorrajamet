@@ -12,6 +12,9 @@ namespace state {
     // Attributes
   private:
     std::map<std::string, std::map<std::string, int>> val;
+    // Operations
+  public:
+    Adjacencies (const std::string path);
     // Setters and Getters
   };
 

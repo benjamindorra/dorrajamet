@@ -10,12 +10,15 @@ namespace state {
   class Province;
   class Battle;
   class TravelOrder;
-}
-
+};
+class IdRefList;
+class IdRef;
 #include "Levy.h"
 #include "Province.h"
 #include "Battle.h"
 #include "TravelOrder.h"
+#include "IdRefList.h"
+#include "IdRef.h"
 
 namespace state {
 
