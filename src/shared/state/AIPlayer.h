@@ -7,6 +7,9 @@ namespace state {
 
   /// class AIPlayer - 
   class AIPlayer {
+    // Operations
+  public:
+    AIPlayer ();
     // Setters and Getters
   };
 

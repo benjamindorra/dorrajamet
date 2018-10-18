@@ -2,6 +2,7 @@
 #ifndef STATE__POLITICS__H
 #define STATE__POLITICS__H
 
+#include <map>
 #include <vector>
 
 namespace state {
@@ -21,9 +22,12 @@ namespace state {
     // Associations
     // Attributes
   private:
-    std::vector<Title> titles;
+    std::map<Title> titles;
     std::vector<Relation> relations;
-    std::vector<Character> characters;
+    std::map<Character> characters;
+    // Operations
+  public:
+    Politics ();
     // Setters and Getters
   };
 

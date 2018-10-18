@@ -2,24 +2,24 @@
 #ifndef STATE__CLAIMPLOT__H
 #define STATE__CLAIMPLOT__H
 
+#include <string>
 
 namespace state {
-  class Title;
   class Plot;
-};
-class IdRef;
-#include "Title.h"
+}
+
 #include "Plot.h"
-#include "IdRef.h"
 
 namespace state {
 
   /// class ClaimPlot - 
   class ClaimPlot : public state::Plot {
-    // Associations
     // Attributes
   private:
-    IdRef<Title> targetTitle;
+    std::string targetTitle;
+    // Operations
+  public:
+    ClaimPlot ();
     // Setters and Getters
   };
 

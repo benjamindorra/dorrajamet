@@ -6,15 +6,11 @@
 #include <vector>
 
 namespace state {
-  class Traits;
   class Opinion;
-  class Title;
   class Plot;
 }
 
-#include "Traits.h"
 #include "Opinion.h"
-#include "Title.h"
 #include "Plot.h"
 
 namespace state {
@@ -28,17 +24,20 @@ namespace state {
     std::string dynastyName;
     /// In turns number
     int age;
-    IdRefList<Traits> traits;
+    std::vector<std::string> traits;
     std::vector<Opinion> opinions;
     int diplomacy;
     int stewardship;
     int martial;
     int intrigue;
-    IdRefList<Title> claims;
+    std::vector<std::string> claims;
     bool alive;
     int prestige;
     int gold;
     Plot currentPlot;
+    // Operations
+  public:
+    Character ();
     // Setters and Getters
   };
 

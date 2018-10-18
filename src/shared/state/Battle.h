@@ -5,30 +5,21 @@
 #include <string>
 
 namespace state {
-  class Province;
-  class Army;
-};
-class IdRefList;
-class IdRef;
-#include "Province.h"
-#include "Army.h"
-#include "IdRefList.h"
-#include "IdRef.h"
-
-namespace state {
 
   /// class Battle - A class describing an ongoing battle on the map
   class Battle {
-    // Associations
     // Attributes
   private:
     std::string id;
     /// Location of the battle (pointer)
-    IdRef<Province> province;
-    IdRefList<Army> whiteArmies;
-    IdRefList<Army> blackArmies;
+    std::string province;
+    std::string whiteArmies;
+    std::string blackArmies;
     int startTurn;
     int endTurn;
+    // Operations
+  public:
+    Battle ();
     // Setters and Getters
   };
 

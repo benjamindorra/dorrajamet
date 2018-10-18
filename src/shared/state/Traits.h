@@ -3,6 +3,7 @@
 #define STATE__TRAITS__H
 
 #include <vector>
+#include <string>
 
 namespace state {
   class Trait;
@@ -16,8 +17,12 @@ namespace state {
   class Traits {
     // Associations
     // Attributes
-  public:
+  private:
     std::vector<Trait> traits;
+    // Operations
+  public:
+    Traits ();
+    Traits (std::string path);
     // Setters and Getters
   };
 

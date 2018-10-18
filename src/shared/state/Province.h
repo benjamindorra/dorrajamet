@@ -37,6 +37,9 @@ Later we will replace that with a list of improvable buildings that will have mo
     unsigned int baseTaxIncome;
     /// Tax income from this province for a turn.
     unsigned int taxIncome;
+    // Operations
+  public:
+    Province ();
     // Setters and Getters
     const Army& getIs located at() const;
     void setIs located at(const Army& is located at);

@@ -16,6 +16,9 @@ namespace state {
     int stewardshipModifier;
     int martialModifier;
     int intrigueModifier;
+    // Operations
+  public:
+    Trait ();
     // Setters and Getters
   };
 

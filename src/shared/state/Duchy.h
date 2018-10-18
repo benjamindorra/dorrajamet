@@ -13,6 +13,9 @@ namespace state {
 
   /// class Duchy - 
   class Duchy : public state::Title {
+    // Operations
+  public:
+    Duchy ();
     // Setters and Getters
   };
 

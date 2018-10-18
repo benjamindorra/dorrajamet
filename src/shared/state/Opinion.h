@@ -2,23 +2,19 @@
 #ifndef STATE__OPINION__H
 #define STATE__OPINION__H
 
-
-namespace state {
-  class Character;
-};
-class IdRef;
-#include "Character.h"
-#include "IdRef.h"
+#include <string>
 
 namespace state {
 
   /// class Opinion - 
   class Opinion {
-    // Associations
     // Attributes
   private:
-    IdRef<Character> target;
+    std::string target;
     int score;
+    // Operations
+  public:
+    Opinion ();
     // Setters and Getters
   };
 

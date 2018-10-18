@@ -14,6 +14,9 @@ namespace state {
     bool isRaised;
     /// Ranges from 0 (0%) to 150 (150%).
     float reinforcementRate;
+    // Operations
+  public:
+    Levy ();
     // Setters and Getters
   };
 

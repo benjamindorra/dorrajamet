@@ -5,12 +5,10 @@
 #include <string>
 
 namespace state {
-  class Character;
   class AIPlayer;
   class HumanPlayer;
 }
 
-#include "Character.h"
 #include "AIPlayer.h"
 #include "HumanPlayer.h"
 
@@ -22,7 +20,7 @@ namespace state {
     // Attributes
   private:
     std::string id;
-    IdRef<Character> currentCharacter;
+    std::string currentCharacter;
     int score;
     // Setters and Getters
   };

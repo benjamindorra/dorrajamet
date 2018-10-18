@@ -13,6 +13,9 @@ namespace state {
 
   /// class Kingdom - 
   class Kingdom : public state::Title {
+    // Operations
+  public:
+    Kingdom ();
     // Setters and Getters
   };
 

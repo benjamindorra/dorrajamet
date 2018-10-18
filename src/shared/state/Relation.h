@@ -2,25 +2,21 @@
 #ifndef STATE__RELATION__H
 #define STATE__RELATION__H
 
-
-namespace state {
-  class Character;
-};
-class IdRef;
-#include "Character.h"
-#include "IdRef.h"
+#include <string>
 
 namespace state {
 
   /// class Relation - 
   class Relation {
-    // Associations
     // Attributes
   private:
-    IdRef<Character> characterA;
-    IdRef<Character> characterB;
+    std::string characterA;
+    std::string characterB;
     enum{non_aggression, alliance, friendship, rivalry, war} type;
     int endTurn;
+    // Operations
+  public:
+    Relation ();
     // Setters and Getters
   };
 

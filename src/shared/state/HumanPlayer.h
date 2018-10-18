@@ -7,6 +7,9 @@ namespace state {
 
   /// class HumanPlayer - 
   class HumanPlayer {
+    // Operations
+  public:
+    HumanPlayer ();
     // Setters and Getters
   };
 

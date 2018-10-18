@@ -2,6 +2,7 @@
 #ifndef STATE__RESSOURCES__H
 #define STATE__RESSOURCES__H
 
+#include <string>
 
 namespace state {
   class Traits;
@@ -20,6 +21,11 @@ namespace state {
   private:
     Traits traits;
     Adjacencies adjacencies;
+    // Operations
+  public:
+    Ressources (std::string pathTraits, std::string pathAdjacencies);
+    Traits getTraits ();
+    Adjacencies getAdjacencies ();
     // Setters and Getters
   };
 
