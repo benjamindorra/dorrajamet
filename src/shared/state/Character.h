@@ -6,26 +6,17 @@
 #include <vector>
 
 namespace state {
-  class Opinion;
-  class Plot;
-}
-
-#include "Opinion.h"
-#include "Plot.h"
-
-namespace state {
 
   /// class Character - 
   class Character {
-    // Associations
     // Attributes
   private:
+    std::string id;
     std::string name;
     std::string dynastyName;
     /// In turns number
     int age;
     std::vector<std::string> traits;
-    std::vector<Opinion> opinions;
     int diplomacy;
     int stewardship;
     int martial;
@@ -34,10 +25,18 @@ namespace state {
     bool alive;
     int prestige;
     int gold;
-    Plot currentPlot;
+    enum plotTypes{none, claim, murder};
+    bool hasPlot;
+    std::string plotTarget;
+    plotTypes plotType;
+    int plotEnd;
     // Operations
   public:
     Character ();
+    Character (std::string strJson);
+    ~Character ();
+    void debug ();
+    bool checkConsistency ();
     // Setters and Getters
   };
 

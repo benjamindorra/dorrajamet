@@ -16,8 +16,8 @@ namespace state {
     std::string holder;
     // Operations
   public:
-    virtual void debug () = 0;
     virtual ~Title () = default;
+    virtual void debug () = 0;
     virtual bool checkConsistency () = 0;
     virtual std::string getLiege () = 0;
     virtual std::string getDeJureLiege () = 0;

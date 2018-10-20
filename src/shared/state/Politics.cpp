@@ -19,9 +19,10 @@ namespace state
             json j = json::parse(strJson);
             titles = Titles(j["titles"].dump());
             if(titles.checkConsistency())
-                std::cout << "Global consistency check success\n";
+                std::cout << "Titles consistency check success\n\n\n";
             else
-                throw std::string("Global consistency check failed");
+                throw std::string("Titles consistency check failed");
+            characters = Characters(j["characters"].dump());
         }
         catch(const std::exception& e)
         {
@@ -32,5 +33,10 @@ namespace state
     Politics::~Politics()
     {
         
+    }
+    void Politics::debug()
+    {
+        titles.debug();
+        characters.debug();
     }
 }

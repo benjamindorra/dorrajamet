@@ -4,17 +4,16 @@
 
 #include <vector>
 #include <string>
-#include <map>
 
 namespace state {
   class Titles;
   class Relation;
-  class Character;
+  class Characters;
 }
 
 #include "Titles.h"
 #include "Relation.h"
-#include "Character.h"
+#include "Characters.h"
 
 namespace state {
 
@@ -25,12 +24,13 @@ namespace state {
   private:
     Titles titles;
     std::vector<Relation> relations;
-    std::map<std::string, Character> characters;
+    Characters characters;
     // Operations
   public:
     Politics ();
     Politics (std::string strJson);
     ~Politics ();
+    void debug ();
     // Setters and Getters
   };
 

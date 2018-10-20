@@ -37,6 +37,7 @@ namespace state {
     Title * operator[] (const char* a);
     Title * operator[] (const std::string key);
     bool checkConsistency ();
+    void debug ();
     // Setters and Getters
   };
 

@@ -1,11 +1,20 @@
 #include "Ressources.h"
 
-state::Traits state::Ressources::getTraits()
+namespace state
 {
-    return this->traits;
-}
+    Ressources::Ressources()
+    {
+        
+    }
 
-state::Adjacencies state::Ressources::getAdjacencies()
-{
-    return this->adjacencies;
+    Traits state::Ressources::getTraits()
+    {
+        return this->traits;
+    }
+
+    Adjacencies state::Ressources::getAdjacencies()
+    {
+        return this->adjacencies;
+    }
+
 }

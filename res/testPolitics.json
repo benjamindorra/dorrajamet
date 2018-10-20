@@ -7,11 +7,6 @@
             "holder": "chara_0001"
         },
         {
-            "id": "k_of_numbers",
-            "name": "Kingdom of Numbers",
-            "holder": "chara_0001"
-        },
-        {
             "id": "d_of_evens",
             "name": "Duchy of Evens",
             "holder": "chara_0002",
@@ -21,14 +16,14 @@
         {
             "id": "d_of_odds",
             "name": "Duchy of Odds",
-            "holder": "chara_0003",
+            "holder": "chara_0001",
             "liege": "k_of_numbers",
             "deJureLiege": "k_of_numbers"
         },
         {
             "id": "c_of_one",
             "name": "County of One",
-            "holder": "chara_0004",
+            "holder": "chara_0001",
             "liege": "d_of_odds",
             "deJureLiege": "d_of_odds",
             "province": "prov_one"
@@ -36,7 +31,7 @@
         {
             "id": "c_of_two",
             "name": "County of Two",
-            "holder": "chara_0005",
+            "holder": "chara_0002",
             "liege": "d_of_evens",
             "deJureLiege": "d_of_evens",
             "province": "prov_two"
@@ -44,7 +39,7 @@
         {
             "id": "c_of_three",
             "name": "County of Three",
-            "holder": "chara_0006",
+            "holder": "chara_0003",
             "liege": "d_of_odds",
             "deJureLiege": "d_of_odds",
             "province": "prov_three"
@@ -52,10 +47,80 @@
         {
             "id": "c_of_four",
             "name": "County of Four",
-            "holder": "chara_0007",
+            "holder": "chara_0004",
             "liege": "d_of_evens",
             "deJureLiege": "d_of_evens",
             "province": "prov_four"
         }
-    ]
+    ],
+    "characters":
+    {
+        "list":
+        [
+            {
+                "id": "chara_0001",
+                "name": "Rayleigh",
+                "dynastyName": "Jones",
+                "age": 22,
+                "traits": ["proud", "patient"],
+                "diplomacy": 12,
+                "stewardship": 10,
+                "martial": 21,
+                "intrigue": 15,
+                "alive": true,
+                "prestige": 200,
+                "gold": 500,
+                "hasPlot": false
+            },
+            {
+                "id": "chara_0002",
+                "name": "Thomas",
+                "dynastyName": "Stuart",
+                "age": 22,
+                "traits": ["lustful", "wroth"],
+                "diplomacy": 12,
+                "stewardship": 10,
+                "martial": 21,
+                "intrigue": 15,
+                "claims": ["c_of_four"],
+                "alive": true,
+                "prestige": 200,
+                "gold": 500,
+                "hasPlot": false
+            },
+            {
+                "id": "chara_0003",
+                "name": "Emile",
+                "dynastyName": "Collins",
+                "age": 22,
+                "traits": ["kind", "slothful"],
+                "diplomacy": 12,
+                "stewardship": 10,
+                "martial": 21,
+                "intrigue": 15,
+                "alive": true,
+                "prestige": 200,
+                "gold": 500,
+                "hasPlot": false
+            },
+            {
+                "id": "chara_0004",
+                "name": "Jonas",
+                "dynastyName": "Miles",
+                "age": 22,
+                "traits": ["chaste", "greedy"],
+                "diplomacy": 12,
+                "stewardship": 10,
+                "martial": 21,
+                "intrigue": 15,
+                "alive": true,
+                "prestige": 200,
+                "gold": 500,
+                "hasPlot": true,
+                "plotTarget": "d_of_odds",
+                "plotType": 1,
+                "plotEnd": 200
+            }
+        ]
+    }
 }

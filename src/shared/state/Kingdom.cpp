@@ -24,7 +24,7 @@ namespace state
         catch(const std::exception& e)
         {
             std::cerr << e.what() << std::endl;
-            throw std::runtime_error("An error occurred when converting Title data from json.");
+            throw std::runtime_error("An error occurred when converting Kingdom data from json.");
         }
     }
     Kingdom::~Kingdom ()

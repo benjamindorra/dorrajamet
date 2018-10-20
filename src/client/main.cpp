@@ -12,18 +12,19 @@ void debug(int c)
 
 int main(int argc, char ** argv)
 {
-    std::string testString = loadFile("./res/testPolitics.json");
-    state::Politics politics(testString);
+    if(argc == 2)
+    {
+        if(argv[1] == std::string("state"))
+        {
+            state::GameState testGameState("./res/testGameState.json");
+            testGameState.debug();
+        }
+        else
+            std::cout << "Unknown parameter: " << argv[1] << std::endl;
+    }
+    else
+        std::cout << "Please type: \"client state\"\n";
 
-    /*using json = nlohmann::json;
-    std::string content = loadFile("./res/test.json");
-    std::cout << content << std::endl;
-    json j = json::parse(content);
-    int n;
-    n = j["age"].get<int>();
-    n++;
-    j["age"] = n;
-    std::string res = j.dump(4);
-    saveFile("./res/test.json", res);*/
+    
     return 0;
 }

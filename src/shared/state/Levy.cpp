@@ -1,8 +1,8 @@
-#include "Trait.h"
+#include "Levy.h"
 
 namespace state
 {
-    Trait::Trait()
+    Levy::Levy()
     {
         
     }

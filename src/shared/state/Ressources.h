@@ -23,6 +23,7 @@ namespace state {
     Adjacencies adjacencies;
     // Operations
   public:
+    Ressources ();
     Ressources (std::string pathTraits, std::string pathAdjacencies);
     Traits getTraits ();
     Adjacencies getAdjacencies ();

@@ -5,6 +5,13 @@
 #include <sstream>
 #include "Adjacencies.h"
 
+namespace state
+{
+    Adjacencies::Adjacencies()
+    {
+        
+    }
+}
 
 /* load a distance map between provinces (in turn) from a CSV file
 structured as follow :

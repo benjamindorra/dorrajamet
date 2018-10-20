@@ -1,8 +1,8 @@
-#include "Trait.h"
+#include "Battle.h"
 
 namespace state
 {
-    Trait::Trait()
+    Battle::Battle()
     {
         
     }

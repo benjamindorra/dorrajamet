@@ -10,9 +10,10 @@ namespace state {
   class Relation {
     // Attributes
   private:
+    enum relType{non_aggression, alliance, friendship, rivalry, war};
     std::string characterA;
     std::string characterB;
-    enum{non_aggression, alliance, friendship, rivalry, war} type;
+    relType type;
     int endTurn;
     // Operations
   public:

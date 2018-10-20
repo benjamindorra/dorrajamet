@@ -97,4 +97,10 @@ namespace state
         }
         return true;
     }
+    void Titles::debug()
+    {
+        std::cout << "====Titles====\n";
+        for(auto const& title : titles)
+            ((*this)[title.first])->debug();
+    }
 }

@@ -8,14 +8,12 @@
 namespace state {
   class Politics;
   class GameMap;
-  class Character;
   class Ressources;
   class Player;
 }
 
 #include "Politics.h"
 #include "GameMap.h"
-#include "Character.h"
 #include "Ressources.h"
 #include "Player.h"
 
@@ -28,13 +26,15 @@ namespace state {
   private:
     Politics politics;
     GameMap gameMap;
-    std::vector<Character> characters;
     Ressources ressources;
+    std::vector<Player> players;
     // Operations
   public:
     GameState ();
     GameState (char* saveFilePath);
     GameState (std::string saveFilePath);
+    ~GameState ();
+    void debug ();
     // Setters and Getters
   };
 
