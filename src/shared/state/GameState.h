@@ -31,8 +31,8 @@ namespace state {
     // Operations
   public:
     GameState ();
-    GameState (char* saveFilePath);
-    GameState (std::string saveFilePath);
+    GameState (const char* saveFilePath);
+    GameState (const std::string saveFilePath);
     ~GameState ();
     void debug ();
     // Setters and Getters

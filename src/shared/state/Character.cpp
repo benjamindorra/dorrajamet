@@ -99,6 +99,31 @@ namespace state{
     }
     bool Character::checkConsistency ()
     {
+        /*
+        std::string name;
+        std::string dynastyName;
+        int age;
+        std::vector<std::string> traits;
+        int diplomacy;
+        int stewardship;
+        int martial;
+        int intrigue;
+        std::vector<std::string> claims;
+        bool alive;
+        int prestige;
+        int gold;
+        bool hasPlot;
+        std::string plotTarget;
+        plotTypes plotType;
+        int plotEnd;
+        */
+        if(!(name.length() && dynastyName.length()))
+            return false;
+        if(age < 0)
+            return false;
+        auto validAttr = [](int attr){return attr >= 0 && attr <= 100;};
+        if(!(validAttr(diplomacy) && validAttr(stewardship) && validAttr(intrigue) && validAttr(martial)))
+            return false;
         return true;
     }
 }

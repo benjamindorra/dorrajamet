@@ -21,13 +21,17 @@ namespace state
             if(titles.checkConsistency())
                 std::cout << "Titles consistency check success\n\n\n";
             else
-                throw std::string("Titles consistency check failed");
+                throw std::string("Titles consistency check failed\n");
             characters = Characters(j["characters"].dump());
+            if(characters.checkConsistency())
+                std::cout << "Characters consistency check success\n\n\n";
+            else
+                throw std::string("Characters consistency check failed\n");
         }
         catch(const std::exception& e)
         {
             std::cerr << e.what() << std::endl ;
-            throw std::runtime_error("Error when loading titles.");
+            throw std::runtime_error("Error when loading politics.");
         }
     }
     Politics::~Politics()
@@ -37,6 +41,7 @@ namespace state
     void Politics::debug()
     {
         titles.debug();
+        std::cout << "\n\n\n";
         characters.debug();
     }
 }

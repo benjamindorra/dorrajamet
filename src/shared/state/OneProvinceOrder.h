@@ -2,6 +2,7 @@
 #ifndef STATE__ONEPROVINCEORDER__H
 #define STATE__ONEPROVINCEORDER__H
 
+#include <string>
 
 namespace state {
   class Order;
@@ -16,6 +17,10 @@ namespace state {
     // Operations
   public:
     OneProvinceOrder ();
+    OneProvinceOrder (std::string strJson);
+    ~OneProvinceOrder ();
+    bool checkConsistency ();
+    void debug ();
     // Setters and Getters
   };
 

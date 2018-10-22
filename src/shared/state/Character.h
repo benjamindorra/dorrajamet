@@ -25,7 +25,7 @@ namespace state {
     bool alive;
     int prestige;
     int gold;
-    enum plotTypes{none, claim, murder};
+    enum plotTypes{none = 0, claim = 1, murder = 2};
     bool hasPlot;
     std::string plotTarget;
     plotTypes plotType;

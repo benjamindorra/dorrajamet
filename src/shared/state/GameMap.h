@@ -30,6 +30,10 @@ namespace state {
     // Operations
   public:
     GameMap ();
+    GameMap (std::string strJson);
+    ~GameMap ();
+    bool checkConsistency ();
+    void debug ();
     // Setters and Getters
   };
 

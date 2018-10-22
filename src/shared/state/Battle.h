@@ -21,6 +21,10 @@ namespace state {
     // Operations
   public:
     Battle ();
+    Battle (std::string strJson);
+    ~Battle ();
+    bool checkConsistency ();
+    void debug ();
     // Setters and Getters
   };
 

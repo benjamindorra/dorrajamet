@@ -3,6 +3,7 @@
 #define STATE__TRAVELORDER__H
 
 #include <vector>
+#include <string>
 
 namespace state {
   class OneProvinceOrder;
@@ -22,6 +23,10 @@ namespace state {
     // Operations
   public:
     TravelOrder ();
+    TravelOrder (std::string strJson);
+    ~TravelOrder ();
+    bool checkConsistency ();
+    void debug ();
     // Setters and Getters
   };
 

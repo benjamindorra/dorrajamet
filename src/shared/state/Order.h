@@ -16,6 +16,10 @@ namespace state {
     int duration;
     /// Number of travel turns elapsed.
     int elapsed;
+    // Operations
+  public:
+    virtual bool checkConsistency () = 0;
+    virtual void debug () = 0;
     // Setters and Getters
     const std::string& getOriginProvinceId() const;
     void setOriginProvinceId(const std::string& originProvinceId);

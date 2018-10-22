@@ -10,7 +10,7 @@ namespace state {
   class Relation {
     // Attributes
   private:
-    enum relType{non_aggression, alliance, friendship, rivalry, war};
+    enum relType{non_aggression = 0, alliance = 1, friendship = 2, rivalry = 3, war = 4};
     std::string characterA;
     std::string characterB;
     relType type;
@@ -18,6 +18,10 @@ namespace state {
     // Operations
   public:
     Relation ();
+    Relation (std::string strJson);
+    ~Relation ();
+    bool checkConsistency ();
+    void debug ();
     // Setters and Getters
   };
 

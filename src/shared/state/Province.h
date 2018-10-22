@@ -19,8 +19,8 @@ namespace state {
   private:
     std::string id;
     std::string name;
-    /// 3 bytes rgb color code of the province on the province layer of the map. Unique.
-    char colorCode[3];
+    /// int value of the unique color code of the province (for ui purposes)
+    unsigned int colorCode;
     /// Ranges from 0 to 100. Represent the current development status of the province. The player can spend money to raise this value. Increase this value will offer better levies and tax income. Later we could replace that with a list of improvable buildings that will have more specific modifiers on the province.
     unsigned char development;
     /// Representing the prosperity/devastation of the province (impacts the taxes and levies). Ranges from -100 (total devastation) to 100 (maximum prosperity).
@@ -36,6 +36,10 @@ namespace state {
     // Operations
   public:
     Province ();
+    Province (std::string strJson);
+    ~Province ();
+    bool checkConsistency ();
+    void debug ();
     // Setters and Getters
   };
 
