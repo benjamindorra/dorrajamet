@@ -2,6 +2,7 @@
 #ifndef STATE__LEVY__H
 #define STATE__LEVY__H
 
+#include <string>
 
 namespace state {
 
@@ -10,13 +11,17 @@ namespace state {
     // Attributes
   private:
     /// Number of men in the levy
-    int men;
+    int unsigned men;
     bool isRaised;
     /// Ranges from 0 (0%) to 150 (150%).
     float reinforcementRate;
     // Operations
   public:
     Levy ();
+    Levy (std::string strJson);
+    ~Levy ();
+    bool checkConsistency ();
+    void debug ();
     // Setters and Getters
   };
 

@@ -14,7 +14,7 @@ namespace state
         ressources = Ressources();
         players = std::vector<Player>();
     }
-    GameState::GameState (char* saveFilePath) : GameState(std::string(saveFilePath)){}
+    GameState::GameState (const char* saveFilePath) : GameState(std::string(saveFilePath)){}
     GameState::GameState (std::string saveFilePath)
     {
         using json = nlohmann::json;

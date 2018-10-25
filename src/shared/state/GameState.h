@@ -31,7 +31,7 @@ namespace state {
     // Operations
   public:
     GameState ();
-    GameState (char* saveFilePath);
+    GameState (const char* saveFilePath);
     GameState (std::string saveFilePath);
     ~GameState ();
     void debug ();

@@ -4,7 +4,6 @@
 
 #include <string>
 #include <vector>
-#include <queue>
 
 namespace state {
   class TravelOrder;
@@ -20,15 +19,20 @@ namespace state {
     // Attributes
   private:
     std::string id;
+    /// Id(s) of the province(s) of which levies are in this army
     std::vector<std::string> levies;
     /// Pointer of the province where the army is currently located
     std::string currentProvince;
     std::string currentBattle;
     /// Queue of ongoing moving orders for the army
-    static std::queue<TravelOrder> orders;
+    std::vector<TravelOrder> orders;
     // Operations
   public:
     Army ();
+    Army (std::string strJson);
+    ~Army ();
+    bool checkConsistency ();
+    void debug ();
     // Setters and Getters
   };
 

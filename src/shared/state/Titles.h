@@ -24,7 +24,7 @@ namespace state {
     // Associations
     // Attributes
   private:
-    enum titleType{kingdom, duchy, county};
+    enum titleType{kingdom = 'k', duchy = 'd', county = 'c'};
     std::map<std::string, titleType> titles;
     std::map<std::string, Kingdom> kingdoms;
     std::map<std::string, Duchy> duchies;
