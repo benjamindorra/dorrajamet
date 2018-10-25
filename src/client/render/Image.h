@@ -2,6 +2,7 @@
 #ifndef RENDER__IMAGE__H
 #define RENDER__IMAGE__H
 
+#include <SFML/Graphics.hpp>
 #include <string>
 
 namespace render {
@@ -9,7 +10,6 @@ namespace render {
   class Element;
 }
 
-#include "Frame.h"
 #include "Element.h"
 
 namespace render {
@@ -20,14 +20,17 @@ namespace render {
   private:
     bool keepRatio;
     bool followWidth;
+    sf::Sprite sprite;
+    sf::Texture texture;
     // Operations
   public:
     Image ();
-    Image (Frame frame);
-    Image (Frame frame, int width, int height);
-    Image (Frame frame, int width, int height, int x, int y);
-    Image (Frame frame, int width, int height, int x, int y, bool keepRatio, bool followWidth);
-    importImage (std::string id);
+    Image (Frame* frame);
+    Image (Frame* frame, int width, int height);
+    Image (Frame* frame, int width, int height, int x, int y);
+    Image (Frame* frame, int width, int height, int x, int y, bool keepRatio, bool followWidth);
+    void importFile (std::string path);
+    sf::Sprite getSprite ();
     // Setters and Getters
   };
 
