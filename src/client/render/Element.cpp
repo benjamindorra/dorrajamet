@@ -1,29 +1,36 @@
 #include "Element.h"
 
 namespace render {
-
-    const Frame& DynamicContent::getFrame() const {
-        return this->frame;
+    /*const Frame *& Element::getFrame() const
+    {
+        //return this->frame; Useless getter with dumb signature proudly presented by useless dia2code
     }
-    void DynamicContent::setFrame(const Frame& frame) {
-        this->frame=frame;
-    }
-    int DynamicContent::getWidth() const {
+    void Element::setFrame(const Frame *& frame)
+    {
+        //this->frame=frame; Useless setter with dumb signature proudly presented by useless dia2code
+    }*/
+    int Element::getWidth() const
+    {
         return this->width;
     }
-    void DynamicContent::setWidth(int width) {
+    void Element::setWidth(int width)
+    {
         this->width=width;
     }
-    int DynamicContent::getHeight() const {
+    int Element::getHeight() const
+    {
         return this->height;
     }
-    void DynamicContent::setHeight(int height) {
+    void Element::setHeight(int height)
+    {
         this->height=height;
     }
-    int DynamicContent::getX() const {
+    int Element::getX() const
+    {
         return this->x;
     }
-    void DynamicContent::setX(int x) {
+    void Element::setX(int x)
+    {
         this->x=x;
     }
 

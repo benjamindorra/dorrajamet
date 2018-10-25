@@ -22,7 +22,7 @@ namespace render {
   public:
     ViewMap ();
     void changeZoom (int var);
-    moveView (int varMapX, int varMapY);
+    void moveView (int varMapX, int varMapY);
     // Setters and Getters
   };
 

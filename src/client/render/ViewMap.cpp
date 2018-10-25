@@ -1,8 +1,13 @@
-#include "Map.h"
+#include "ViewMap.h"
 
-namespace render {
+namespace render
+{
+    void ViewMap::changeZoom (int var)
+    {
 
-    void ViewMap::changeZoom (int var) {}
-    ViewMap::moveView (int varMapX, int varMapY) {}
-
+    }
+    void ViewMap::moveView (int varMapX, int varMapY)
+    {
+        
+    }
 }

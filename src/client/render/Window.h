@@ -24,7 +24,7 @@ namespace render {
   public:
     Window ();
     Window (int width, int height);
-    renderLoop ();
+    void renderLoop ();
     int getWidth ();
     int getHeight ();
     // Setters and Getters

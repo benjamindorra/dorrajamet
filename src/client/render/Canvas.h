@@ -18,7 +18,7 @@ namespace render {
     // Associations
     // Attributes
   private:
-    Window window;
+    Window * window;
     int x;
     int y;
     int width;
@@ -26,9 +26,9 @@ namespace render {
     // Operations
   public:
     Canvas ();
-    Canvas (Window window);
-    Canvas ( window:Window, int width, int height);
-    Canvas (Window window, int width, int height, int x, int y);
+    Canvas (Window * window);
+    Canvas (Window * window, int width, int height);
+    Canvas (Window * window, int width, int height, int x, int y);
     ~Canvas ();
     int getWidth ();
     int getHeight ();

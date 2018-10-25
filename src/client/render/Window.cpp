@@ -2,16 +2,16 @@
 #include <SFML/Graphics.hpp>
 
 namespace render {
-    Window::Window () {
-        this->window.create(sf::VideoMode(1920, 1080), "Window", sf::Style::Fullscreen);
-    }
-    Window::Window (int width, int height) {
+    Window::Window () : Window(1920, 1080) {}
+    Window::Window (int width, int height) 
+    {
         this->width=width;
         this->height=height;
         // draw the window
         this->window.create(sf::VideoMode(this->width, this->height), "Window", sf::Style::Close);
     }
-    Window::renderLoop () {
+    void Window::renderLoop ()
+    {
         // run the program as long as the window is open
         while (this->window.isOpen())
         {
@@ -35,10 +35,12 @@ namespace render {
         }
     }
     // Setters and Getters
-    int Window::getWidth () {
+    int Window::getWidth ()
+    {
         return this->width;
     }
-    int Window::getHeight (){
+    int Window::getHeight ()
+    {
         return this->height;
     }
 }

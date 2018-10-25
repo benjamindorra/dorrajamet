@@ -15,14 +15,14 @@ namespace render {
   class Element {
     // Attributes
   protected:
-    Frame frame;
+    Frame * frame;
     int width;
     int height;
     int x;
     static int y;
     // Setters and Getters
-    const Frame& getFrame() const;
-    void setFrame(const Frame& frame);
+    const Frame *& getFrame() const;
+    void setFrame(const Frame *& frame);
     int getWidth() const;
     void setWidth(int width);
     int getHeight() const;

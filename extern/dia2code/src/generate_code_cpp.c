@@ -460,7 +460,7 @@ gen_class (umlclassnode *node)
                 emit (" const");
             }
             if (umlo->key.attr.value[0]) {
-                if(umlo->key.attr.inheritance_type == '1'){
+                if(umlo->key.attr.inheritance_type == '1' && umlo->key.attr.name[0] == '~'){
                     // virtual destructor
                     emit(" = %s", umlo->key.attr.value);
                 }
