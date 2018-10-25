@@ -1,0 +1,20 @@
+\babel@toc {french}{}
+\contentsline {section}{\numberline {1}Pr\IeC {\'e}sentation G\IeC {\'e}n\IeC {\'e}rale}{1}{section.1}
+\contentsline {subsection}{\numberline {1.1}Arch\IeC {\'e}type}{1}{subsection.1.1}
+\contentsline {subsection}{\numberline {1.2}R\IeC {\`e}gles du jeu}{1}{subsection.1.2}
+\contentsline {subsection}{\numberline {1.3}Ressources}{2}{subsection.1.3}
+\contentsline {section}{\numberline {2}Description et conception des \IeC {\'e}tats}{3}{section.2}
+\contentsline {subsection}{\numberline {2.1}Description des \IeC {\'e}tats}{3}{subsection.2.1}
+\contentsline {subsection}{\numberline {2.2}Conception Logiciel}{6}{subsection.2.2}
+\contentsline {section}{\numberline {3}Rendu: Strat\IeC {\'e}gie et Conception}{8}{section.3}
+\contentsline {subsection}{\numberline {3.1}Strat\IeC {\'e}gie de rendu d'un \IeC {\'e}tat}{8}{subsection.3.1}
+\contentsline {subsection}{\numberline {3.2}Conception logiciel}{10}{subsection.3.2}
+\contentsline {section}{\numberline {4}R\IeC {\`e}gles de changement d'\IeC {\'e}tats et moteur de jeu}{12}{section.4}
+\contentsline {subsection}{\numberline {4.1}R\IeC {\`e}gles}{12}{subsection.4.1}
+\contentsline {subsection}{\numberline {4.2}Conception logiciel}{13}{subsection.4.2}
+\contentsline {section}{\numberline {5}Intelligence Artificielle}{13}{section.5}
+\contentsline {subsection}{\numberline {5.1}Strat\IeC {\'e}gies}{13}{subsection.5.1}
+\contentsline {subsection}{\numberline {5.2}Conception logiciel}{14}{subsection.5.2}
+\contentsline {section}{\numberline {6}Modularisation}{14}{section.6}
+\contentsline {subsection}{\numberline {6.1}Organisation des modules}{14}{subsection.6.1}
+\contentsline {subsection}{\numberline {6.2}Conception logiciel}{15}{subsection.6.2}

@@ -1,0 +1,19 @@
+\BOOKMARK [1][-]{section.1}{Pr\351sentation G\351n\351rale}{}% 1
+\BOOKMARK [2][-]{subsection.1.1}{Arch\351type}{section.1}% 2
+\BOOKMARK [2][-]{subsection.1.2}{R\350gles du jeu}{section.1}% 3
+\BOOKMARK [2][-]{subsection.1.3}{Ressources}{section.1}% 4
+\BOOKMARK [1][-]{section.2}{Description et conception des \351tats}{}% 5
+\BOOKMARK [2][-]{subsection.2.1}{Description des \351tats}{section.2}% 6
+\BOOKMARK [2][-]{subsection.2.2}{Conception Logiciel}{section.2}% 7
+\BOOKMARK [1][-]{section.3}{Rendu: Strat\351gie et Conception}{}% 8
+\BOOKMARK [2][-]{subsection.3.1}{Strat\351gie de rendu d'un \351tat}{section.3}% 9
+\BOOKMARK [2][-]{subsection.3.2}{Conception logiciel}{section.3}% 10
+\BOOKMARK [1][-]{section.4}{R\350gles de changement d'\351tats et moteur de jeu}{}% 11
+\BOOKMARK [2][-]{subsection.4.1}{R\350gles}{section.4}% 12
+\BOOKMARK [2][-]{subsection.4.2}{Conception logiciel}{section.4}% 13
+\BOOKMARK [1][-]{section.5}{Intelligence Artificielle}{}% 14
+\BOOKMARK [2][-]{subsection.5.1}{Strat\351gies}{section.5}% 15
+\BOOKMARK [2][-]{subsection.5.2}{Conception logiciel}{section.5}% 16
+\BOOKMARK [1][-]{section.6}{Modularisation}{}% 17
+\BOOKMARK [2][-]{subsection.6.1}{Organisation des modules}{section.6}% 18
+\BOOKMARK [2][-]{subsection.6.2}{Conception logiciel}{section.6}% 19

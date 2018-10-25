@@ -133,6 +133,12 @@ Nous devrons pouvoir coloriser facilement les bannières pour identifier immédi
 
 Nous pouvons également avoir besoin d’images pour les personnages, même si ce n’est pas obligatoire il s’agirait d’un plus. Dans le même ordre d’idées, nous pourrions employer diverses images sur le thème médiéval pour illustrer les différents menus du jeu. Nous pouvons aussi utiliser différentes musiques d’ambiance, des bruitages de bataille, et quelques sons génériques pour l’appui sur les boutons de l’interface. \\
 
+\begin{figure}[hbtp]
+\centering
+\includegraphics[width=0.4\textwidth]{ru.jpg}
+\caption{royaume-uni} 
+\end{figure}
+
 \clearpage
 \section{Description et conception des états}
 
@@ -148,7 +154,7 @@ Elle contient :
 \item un objet ressources de la classe Ressources, chargé de contenir toutes les ressources statiques servant au fonctionnement du jeu. 
 \item un objet gameMap de la classe GameMap, décrivant l'état des éléments dynamiques de la carte, 
 \item un objet politics de la classe Politics, décrivant l'organisation géopolitique de la partie. 
-\item une liste de joueurs (players) de la classe std::vector<Player> pour suivre l'évolution des différents joueurs, humains ou IA.
+\item une liste de joueurs (players) de la classe std::vector<Player> pour suivre l'évolution des différents joueurs, humains ou IA.\\
 \end{itemize}
 
 \item Politics\\
@@ -156,7 +162,7 @@ La classe Politics décrit l'ensemble des entités politiques existantes.
 \begin{itemize}
 \item On a d'abord la liste des titres (titles), de la classe Titles. Il s'agit de tous les titres qui existent ou peuvent être créés. 
 \item On a ensuite la liste de tous les personnages (characters), de la classe Characters, qui contient tous les personnages en vie ou morts. 
-\item Enfin, on a la liste de toutes les relations (relations) qui peuvent exister entre deux personnages (alliances, etc.), de la classe std::vector<Relation>. 
+\item Enfin, on a la liste de toutes les relations (relations) qui peuvent exister entre deux personnages (alliances, etc.), de la classe std::vector<Relation>. \\
 \end{itemize}
 
 \item Titles\\
@@ -199,14 +205,14 @@ De la classe Title, héritent les classes County, Duchy, Kingdom (Comté, Duché
 La classe Character décrit les personnages du jeu. Les personnages peuvent posséder des titres, ont des statistiques, une opinion, des traits de caractère et peuvent mener des guerres ou comploter. Elle possède de nombreux attributs :
 \begin{itemize}
 \item un champ id de type std::string
-\item un champ nom de type std::string
+\item un champ name de type std::string
 \item un champ dynastyName de type std::string qui décrit la dynastie
 \item un champ age de type int
 \item un champ traits de type std::vector<std::string> qui contient les id des traits de caractère que possède le personnage
 \item un champ diplomaty de type int qui décrit son talent diplomatique
 \item un champ stewardship de type int qui décrit sa capacité à gérer les fiscalités de provinces
 \item un champ martial de type int qui décrit son talent martial
-\item \item un champ intrigue de type int qui décrit son talent pour les complots
+\item un champ intrigue de type int qui décrit son talent pour les complots
 \item un champ claims de type std::vector<std::string> qui décrit les revendications du personnage. Cela lui permet de déclarer la guerre pour récupérer un titre sur lequel il a des revendications.
 \item un champ alive de type bool
 \item un champ prestige de type int qui décrit le score du personnage
@@ -215,7 +221,7 @@ La classe Character décrit les personnages du jeu. Les personnages peuvent poss
 \item un champ hasPlot de type bool qui décrit si le personnage a ou non un complot en cours
 \item un champ plotTarget de type std::string qui donne l'id de la cible d'un hypothétique complot, cette cible pouvant être un personnage ou un titre selon le type de complot.
 \item un champ plotType de type plotTypes qui décrit le type de complot (au plus un) mené actuellement par le personnage.
-\item un champ plotEnd de type int qui décrit le tour où le complot en cours se termine.
+\item un champ plotEnd de type int qui décrit le tour où le complot en cours se termine.\\
 \end{itemize}
 
 \item Relation\\
@@ -225,7 +231,7 @@ La classe Relation décrit un lien particulier entre deux personnages actifs (vi
 \item un champ characterB, tous deux de type std::string,
 \item une énumération relType qui peut valoir : {non\_aggression, alliance, friendship, rivalry, war} et désigne les types de relation possibles,
 \item un champ type de type relType qui désigne le type de relation qui existe entre deux personnages,
-\item une date (numéro de tour) de fin (endTurn) qui vaut 0 dans le cas d'une durée indéterminée.
+\item une date (numéro de tour) de fin (endTurn) qui vaut 0 dans le cas d'une durée indéterminée.\\
 \end{itemize}
 
 \item Player\\
@@ -239,17 +245,17 @@ Les champs sont :
 \item AIPlayer\\
 Une sous-classe de Player.
 \item HumanPlayer\\
-Une sous-classe de Player.
+Une sous-classe de Player.\\
 
 \item Ressources\\
 La classe Ressources décrit les ressources statiques utilisées par le jeu. Elle contient les champs suivants :
 \begin{itemize}
 \item un champ traits de type Traits qui contient tous les traits de caractère que peuvent avoir les personnages
-\item un champ adjacencies de type Adjacencies qui contient le nombre de tours nécessaires à une armée pour passer d'une province à une autre.
+\item un champ adjacencies de type Adjacencies qui contient le nombre de tours nécessaires à une armée pour passer d'une province à une autre.\\
 \end{itemize}
 
 \item Adjacencies\\
-La classe Adjacencies regroupe le nombre de tours nécessaires pour passer d'une province à une autre dans le champ val de type std::map<std::string, std::map<std::string, int>>. Si les provinces ne sont pas adjacentes, la distance est 0. Entre une province et elle-même, la distance est -1.
+La classe Adjacencies regroupe le nombre de tours nécessaires pour passer d'une province à une autre dans le champ val de type std::map<std::string, std::map<std::string, int>>. Si les provinces ne sont pas adjacentes, la distance est 0. Entre une province et elle-même, la distance est -1.\\
 
 \item Traits\\
 Cette classe regroupe tous les traits de caractère que peut avoir un personnage dans le champ traits de type std::vector<Trait>.
@@ -261,7 +267,7 @@ Cette classe décrit un trait de caractère. Elle comprend :
 \item diplomacyModifier de type int qui décrit l'effet qu'a le trait sur la statistique diplomacy
 \item stewardshipModifier de type int qui décrit l'effet qu'a le trait sur la statistique stewardship
 \item martialModifier de type int qui décrit l'effet qu'a le trait sur la statistique martial
-\item intrigueModifier de type int qui décrit l'effet qu'a le trait sur la statistique intrigue
+\item intrigueModifier de type int qui décrit l'effet qu'a le trait sur la statistique intrigue\\
 \end{itemize}
 
 \item GameMap\\
@@ -270,7 +276,7 @@ Elle présente les champs suivants :
 \begin{itemize}
 \item un champ provinces de type std::map<std::string, Province> qui regroupe les différentes provinces.
 \item un champ armies de type std::map<std::string, Army> qui regroupe les différentes armées.
-\item un champ battles de type std::map<std::string, Battle> qui regroupe les différentes batailles.
+\item un champ battles de type std::map<std::string, Battle> qui regroupe les différentes batailles.\\
 \end{itemize} 
 
 \item Battle\\
@@ -281,7 +287,7 @@ Les champs sont :
 \item whiteArmies de type std::vector<std::string>
 \item blackArmies de type std::vector<std::string>
 \item startTurn de type int le tour de début de la bataille
-\item endTurn de type int le tour de fin de la bataille
+\item endTurn de type int le tour de fin de la bataille\\
 \end{itemize}
 
 \item Army\\
@@ -304,7 +310,7 @@ Ordre donné à une armée. contient les champs :
 \item TravelOrder\\
 Ordre des provinces par lesquelles passe une armée. Hérite de Order. Contient un champ de type std::vector <OneProvinceOrder> 
 \item OneProvinceOrder\\
-Hérite de Order. Détermine l'ordre de déplacement d'une armée province par province.
+Hérite de Order. Détermine l'ordre de déplacement d'une armée province par province.\\
 
 \item Province\\
 Cette classe décrit une province. Elle comprend les champs suivants :
@@ -317,12 +323,12 @@ Cette classe décrit une province. Elle comprend les champs suivants :
 \item baseLevy de type Levy la levée de base
 \item levy de type Levy qui calcule la levée réelle après prise en compte de l'état de la province
 \item baseTaxIncome de type unsigned int l'argent que la province rapporte de base
-\item taxIncome de type unsignedInt les impôts réels après prise en compte de l'état de la province
+\item taxIncome de type unsigned int les impôts réels après prise en compte de l'état de la province
 \end{itemize}
 \item Levy\\
 Décrit une levée.
 \begin{itemize}
-\item men de type int le nombre d'hommes dans la levée
+\item unsigned men de type int le nombre d'hommes dans la levée
 \item isRaised de type bool qui décrit si la levée a été mobilisée
 \item reinforcementRate de type float la vitesse de renouvellement de la levée
 \end{itemize}
@@ -330,27 +336,161 @@ Décrit une levée.
 
 \subsection{Conception Logiciel}
 
-%\begin{landscape}
-%\begin{figure}[p]
-%\includegraphics[width=0.9\paperheight]{state.pdf}
-%\caption{\label{uml:state}Diagramme des classes d'état.} 
-%\end{figure}
-%\end{landscape}
+\begin{landscape}
+\begin{figure}[p]
+\includegraphics[width=0.9\paperheight]{state.pdf}
+\caption{\label{uml:state}Diagramme des classes d'état.} 
+\end{figure}
+\end{landscape}
 
 \clearpage
 \section{Rendu: Stratégie et Conception}
 
+Notre stratégie générale consiste à créer une fenêtre (Window) qui va se rafraîchir régulièrement en utilisant la bibliothèque sfml.\\
+Lors du rafraîchissement de la fenêtre, les divers élément composant la page sont affichés.\\
+
+Les élément sont affichés dans des cadres (Frames), eux-mêmes compris dans des Canvas. Les canvas sont placés dans la fenêtre. L'idée est que les Frames peuvent se superposer et potentiellement être ouverts ou fermés à n'importe quel moment, tandis que les canvas sont plus statiques. Cela permet surtout de compartimenter l'affichage.\\
+
+Ces éléments sont ou bien statiques, ou bien liés à des attributs d'objets composant l'état. Dans le second cas, ils décrivent comment afficher ces données.\\
+D'autre part certains éléments sont interactifs, c'est-à-dire qu'ils peuvent provoquer des changements graphiques ou bien modifier l'état de jeu lorsqu'on interagit avec eux.
+Ainsi cliquer sur une des provinces de la carte ouvre un Frame contenant des cadres de texte (Text) qui décrit l'état de la province en utilisant les informations disponible dans la classe Province des états. Les Frames ainsi créés doivent pouvoir être fermés à tout moment par le joueur à l'aide d'un bouton qui lance le destructeur de l'objet.\\ 
+Si un élément doit modifier l'état de jeu, une commande est envoyée au moteur de jeu qui se charge des modifications.\\
+L'affichage de la carte du monde se fait à partir de l'objet View de sfml qui permet de n'afficher qu'une partie d'une scène. \\
+Les autres éléments sont des rectangles qui contiennent des types de données variables.\\
+
 \subsection{Stratégie de rendu d'un état}
 
+\begin{itemize}
+\item Window\\
+Description :\\
+Le c{\oe}ur de la partie rendu. Cette classe utilise un objet RenderWindow de sfml pour créer une fenêtre. Window comprend aussi une fonction renderLoop() qui va rafraîchir l'affichage régulièrement.\\
+Attributs :
+\begin{itemize}
+\item window de type sf::RenderWindow, la fenêtre affichée
+\item width de type int la largeur de la fenêtre
+\item height de type int la hauteur de la fenêtre\\
+\end{itemize}
+\item Canvas\\
+Description :\\
+Un cadre lié à une fenêtre.\\
+Attributs :
+\begin{itemize}
+\item window de type Window  *, pointeur vers la fenêtre à laquelle appartient le canvas
+\item width de type int la largeur du canvas
+\item height de type int la hauteur du canvas
+\item x de type int la position horizontale du canvas dans la fenêtre
+\item y de type int la position verticale du canvas dans la fenêtre\\
+\end{itemize}
+\item Frame\\
+Description :\\
+Un cadre lié à un canvas. Des éléments peuvent y être placés.\\
+Attributs :
+\begin{itemize}
+\item canvas de type Canvas *, pointeur vers le canvas auquel appartient le Frame
+\item width de type int la largeur du Frame
+\item height de type int la hauteur du Frame
+\item x de type int la position horizontale du Frame dans le Canvas
+\item y de type int la position verticale du Frame dans le Canvas\\
+\end{itemize}
+\item Element\\
+Description :\\
+Un élément généraliste dont tous les autres éléments héritent.\\
+Attributs :
+\begin{itemize}
+\item frame de type Frame *, pointeur vers le Frame dans lequel est placé l'élément
+\item width de type int la largeur de l'élément
+\item height de type int la hauteur de l'élément
+\item x de type int la position horizontale de l'élément dans le Frame
+\item y de type int la position verticale de l'élément dans le  Frame\\
+\end{itemize}
+\item interactiveElement\\
+Description :\\
+Un élément iteractif : décrit les éléments qui déclenchent des réactions lors de certaines actions du joueur. Hérite de la classe Element.\\
+Attributs :
+\begin{itemize}
+\item  N/A \\
+\end{itemize}
+\item IObserver\\
+Description :\\
+Une interface d'observer.\\
+Attributs :
+\begin{itemize}
+\item N/A \\
+\end{itemize}
+\item Button\\
+Description :\\
+Un bouton. cliquer dessus déclenche une fonction, si le joueur a la possibilité d'effectuer cette action. Hérite de InteractiveElement.\\
+Attributs :
+\begin{itemize}
+\item available de type bool, décrit si le joueur a la possibilité d'effectuer l'action liée au bouton.
+\item text de type string, le texte affiché sur le bouton\\
+\end{itemize}
+\item ObserverButton\\
+Description :\\
+Observer lié à un bouton, en cas de clic sur le bouton déclenche la fonction associée. Hérite de IObserver.\\
+Attributs :
+\begin{itemize}
+\item N/A\\
+\end{itemize}
+\item ViewMap\\
+Description :\\
+Permet de visualiser une partie plus ou moins grande de la carte du monde. Hérite de InteractiveElement.\\
+Attributs :
+\begin{itemize}
+\item zoom de type int, décrit le niveau de zoom par rapport à la carte complète
+\item mapX de type int, décrit la position horizontale de ViewMap sur la carte
+\item mapY de type int, décrit la position verticale de ViewMap sur la carte\\
+\end{itemize}
+\item ObserverMap\\
+Description :\\
+Observer lié à ViewMap, permet d'observer les commandes liées au zoom et au déplacement de la vue dans la carte. Hérite de IObserver.\\
+Attributs :
+\begin{itemize}
+\item N/A\\
+\end{itemize}
+\item ShowArmy\\
+Description :\\
+Permet de visualiser une armée sur la carte et d'interagir avec elle. Hérite de InteractiveElement.\\
+Attributs :
+\begin{itemize}
+\item army de type Army, l'armée à laquelle est liée l'objet ShowArmy.\\
+\end{itemize}
+\item ObserverArmy\\
+Description :\\
+Observer lié à ShowArmy, permet d'observer les commandes liées à un objet ShowArmy. Hérite de IObserver.\\
+Attributs :
+\begin{itemize}
+\item N/A\\
+\end{itemize}
+\item Text\\
+Description :\\
+Cadre contenant du texte. Hérite de Element.\\
+Attributs :
+\begin{itemize}
+\item characterSize de type int, définit la taille du texte affiché dans l'objet Text.
+\item displayedText de type std::string, décrit le texte affiché
+\item textAdress de type *std::string, l'adresse du texte à afficher\\
+\end{itemize}
+\item Image\\
+Description :\\
+Element permettant d'afficher une image fixe. Hérite d'Element.\\
+Attributs :
+\begin{itemize}
+\item keepRatio de type bool, décrit si l'image doit être adaptée aux dimensions de l'objet ou si elle doit garder son ratio
+\item followWidth de type bool, dans le cas où keepRatio est vrai, cet attribut permet de décider si l'image doit être adaptée selon la largeur ou la hauteur de l'objet\\
+\end{itemize}
+\end{itemize}
+
+ 
 
 \subsection{Conception logiciel}
 
-%\begin{landscape}
-%\begin{figure}[p]
-%\includegraphics[width=0.9\paperheight]{render.pdf}
-%\caption{\label{uml:render}Diagramme des classes de rendu.} 
-%\end{figure}
-%\end{landscape}
+\begin{landscape}
+\begin{figure}[p]
+\includegraphics[width=0.9\paperheight]{render.pdf}
+\caption{\label{uml:render}Diagramme des classes de rendu.} 
+\end{figure}
+\end{landscape}
 
 \clearpage
 \section{Règles de changement d'états et moteur de jeu}
