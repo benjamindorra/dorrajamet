@@ -2,6 +2,7 @@
 #ifndef RENDER__WINDOW__H
 #define RENDER__WINDOW__H
 
+#include <SFML/Graphics.hpp>
 
 namespace render {
   class Canvas;
@@ -15,13 +16,17 @@ namespace render {
   class Window {
     // Associations
     // Attributes
-  public:
-    pair<int height, int width> size;
+  private:
+    int width;
+    int height;
+    sf::RenderWindow window;
     // Operations
   public:
     Window ();
-    Window (pair<int height, int width> size);
+    Window (int width, int height);
     renderLoop ();
+    int getWidth ();
+    int getHeight ();
     // Setters and Getters
   };
 

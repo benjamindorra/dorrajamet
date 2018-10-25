@@ -10,7 +10,7 @@ namespace render {
   class IObserver {
     // Operations
   public:
-    void somethingHappens ();
+    virtual void somethingHappens () = default;
     // Setters and Getters
   };
 

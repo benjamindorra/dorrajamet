@@ -5,15 +5,11 @@
 
 namespace render {
   class Window;
-  class IObserver;
-  class Cadre;
-  class DynamicContent;
+  class Frame;
 }
 
 #include "Window.h"
-#include "IObserver.h"
-#include "Cadre.h"
-#include "DynamicContent.h"
+#include "Frame.h"
 
 namespace render {
 
@@ -21,14 +17,23 @@ namespace render {
   class Canvas {
     // Associations
     // Attributes
-  public:
-    pair<int height,int width> size;
+  private:
+    Window window;
+    int x;
+    int y;
+    int width;
+    int height;
     // Operations
   public:
     Canvas ();
     Canvas (Window window);
-    Canvas (pair<int height, int width> size);
-    Canvas (Window window, pair<int height, int width> size);
+    Canvas ( window:Window, int width, int height);
+    Canvas (Window window, int width, int height, int x, int y);
+    ~Canvas ();
+    int getWidth ();
+    int getHeight ();
+    int getX ();
+    int getY ();
     // Setters and Getters
   };
 

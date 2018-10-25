@@ -2,21 +2,27 @@
 #ifndef RENDER__BUTTON__H
 #define RENDER__BUTTON__H
 
+#include <string>
+
+namespace render {
+  class InteractiveElement;
+}
+
+#include "InteractiveElement.h"
 
 namespace render {
 
   /// class Button - 
-  class Button {
+  class Button : public render::InteractiveElement {
     // Attributes
-  public:
+  private:
     bool available;
-    pair<int x, int y> position;
-    pair<int height, int width> size;
+    std::string text;
     // Operations
   public:
     press ();
     Button ();
-    Button (pair<int x, int y> position);
+    Button (function function, std::string text, int width, int height, int x, int y);
     // Setters and Getters
   };
 

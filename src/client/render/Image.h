@@ -2,11 +2,32 @@
 #ifndef RENDER__IMAGE__H
 #define RENDER__IMAGE__H
 
+#include <string>
+
+namespace render {
+  class Frame;
+  class Element;
+}
+
+#include "Frame.h"
+#include "Element.h"
 
 namespace render {
 
   /// class Image - 
-  class Image {
+  class Image : public render::Element {
+    // Attributes
+  private:
+    bool keepRatio;
+    bool followWidth;
+    // Operations
+  public:
+    Image ();
+    Image (Frame frame);
+    Image (Frame frame, int width, int height);
+    Image (Frame frame, int width, int height, int x, int y);
+    Image (Frame frame, int width, int height, int x, int y, bool keepRatio, bool followWidth);
+    importImage (std::string id);
     // Setters and Getters
   };
 

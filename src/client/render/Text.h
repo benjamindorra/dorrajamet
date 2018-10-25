@@ -2,15 +2,32 @@
 #ifndef RENDER__TEXT__H
 #define RENDER__TEXT__H
 
+#include <string>
+
+namespace render {
+  class Element;
+}
+
+#include "Element.h"
 
 namespace render {
 
   /// class Text - 
-  class Text {
+  class Text : public render::Element {
     // Attributes
+  private:
+    int characterSize;
+    std::string displayedText;
+    *std::string textAdress;
+    // Operations
   public:
-    pair<int x, int y> position;
-    pair<int height, int width> size;
+    Text ();
+    Text (*std::string text);
+    Text (*std::string text, int characterSize);
+    Text (*std::string text, int characterSize, int x, int y);
+    Text (*std::string text, int x, int y, int width, int height);
+    setCharacterSize (int size);
+    refresh ();
     // Setters and Getters
   };
 
