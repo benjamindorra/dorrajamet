@@ -19,6 +19,10 @@ namespace state {
     // Operations
   public:
     Trait ();
+    Trait (std::string strJson);
+    ~Trait ();
+    bool checkConsistency ();
+    void debug ();
     // Setters and Getters
   };
 

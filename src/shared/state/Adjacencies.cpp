@@ -1,5 +1,5 @@
 #include "Adjacencies.h"
-#include "tools.hpp"
+#include "../tools.hpp"
 
 namespace state
 {
@@ -7,24 +7,39 @@ namespace state
     {
         
     }
-    Adjacencies::Adjacencies (std::string rawCsv)
+    Adjacencies::Adjacencies(std::string strCsv)
     {
-        auto lines = splitString(rawCsv, '\n');
-        auto tags = splitString(lines[0], ';');
+        std::vector<string> lines = splitString(strCsv, '\n');
+        std::vector<string> columns;
+        std::string tagString = lines[0], id1, id2, line, distance;
+        std::vector<string> tags = splitString(tagString, ';');
         lines.erase(lines.begin());
-        for(unsigned int i = 0; i < tags.size(); i++)
+        unsigned int i, j;
+        for(i = 0; i < lines.size(); i++)
         {
-            auto tag = tags[i];
-            auto line = lines[i];
-            val[tag] = std::map<std::string, int>();
-            auto cols = splitString(line, ';');
-            for(unsigned int j = 0; j < cols.size(); j++)
+            id1 = tags[i];
+            line = lines[i];
+            val[id1] = std::map<std::string, int>();
+            columns = splitString(line, ';');
+            for(j = 0; j < columns.size(); j++)
             {
-                auto e = stoi(cols[j]);
-                auto tag2 = tags[j];
-                val[tag][tag2] = e;
+                id2 = tags[j];
+                distance = columns[j];
+                val[id1][id2] = stoi(distance, nullptr, 10);
             }
         }
+    }
+    Adjacencies::~Adjacencies()
+    {
+
+    }
+    bool Adjacencies::checkConsistency()
+    {
+
+    }
+    void Adjacencies::debug()
+    {
+
     }
 }
 

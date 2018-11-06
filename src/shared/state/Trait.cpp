@@ -6,4 +6,16 @@ namespace state
     {
         
     }
+    Trait::~Trait ()
+    {
+
+    }
+    bool Trait::checkConsistency ()
+    {
+        return true;
+    }
+    void Trait::debug ()
+    {
+        
+    }
 }

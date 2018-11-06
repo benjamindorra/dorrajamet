@@ -40,21 +40,19 @@ void saveFile(const string path, string content)
         throw runtime_error("Could not open the file: " + path);
     }
 }
-vector<string> splitString(string s, char c)
+
+vector<string> splitString(const char * str, const char a)
 {
-    vector<string> res;
-    string buff("");
-    for(auto n:s)
+    return splitString(string(str), a);
+}
+vector<string> splitString(string str, const char a)
+{
+    vector<string> v;
+    istringstream f(str);
+    string s;
+    while(getline(f, s, a))
     {
-        if(n != c)
-            buff += n;
-        else if(n == c && buff != "")
-        {
-            res.push_back(buff);
-            buff = "";
-        }
+        v.push_back(s);
     }
-    if(buff != "")
-        res.push_back(buff);
-    return res;
+    return v;
 }

@@ -41,7 +41,7 @@ namespace state
     void Politics::debug()
     {
         titles.debug();
-        std::cout << "/n/n/n";
+        std::cout << "\n\n\n";
         characters.debug();
     }
 }

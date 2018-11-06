@@ -30,7 +30,7 @@ namespace state
             json jOrders = j["orders"];
             for(json::iterator it = jOrders.begin(); it != jOrders.end(); ++it)
             {
-                
+                orders.push_back(TravelOrder(it.value().dump()));
             }
         }
         catch(const std::exception& e)
@@ -49,6 +49,8 @@ namespace state
     }
     void Army::debug ()
     {
-
+        std::cout << "Army debug\nCurrentProvince: " << currentProvince << "\nCurrentBattle: " << currentBattle << "\nLevies: \n";
+        for(auto levy : levies)
+            std::cout << " - Province: " << levy << std::endl;
     }
 }

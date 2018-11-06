@@ -32,7 +32,7 @@ namespace state {
   public:
     GameState ();
     GameState (const char* saveFilePath);
-    GameState (std::string saveFilePath);
+    GameState (const std::string saveFilePath);
     ~GameState ();
     void debug ();
     // Setters and Getters
