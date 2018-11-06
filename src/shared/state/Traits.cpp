@@ -6,4 +6,20 @@ namespace state
     {
 
     }
+    Traits::Traits (std::string strJson)
+    {
+
+    }
+    Traits::~Traits ()
+    {
+
+    }
+    bool Traits::checkConsistency ()
+    {
+        return true;
+    }
+    void Traits::debug ()
+    {
+
+    }
 }

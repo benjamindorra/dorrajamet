@@ -24,9 +24,13 @@ namespace state {
     // Operations
   public:
     Ressources ();
+    Ressources (std::string strJson);
     Ressources (std::string pathTraits, std::string pathAdjacencies);
-    Traits getTraits ();
-    Adjacencies getAdjacencies ();
+    ~Ressources ();
+    bool checkConsistency ();
+    void debug ();
+    void loadAdjacencies (std::string adjacenciesPath);
+    void loadTraits (std::string traitsPath);
     // Setters and Getters
   };
 

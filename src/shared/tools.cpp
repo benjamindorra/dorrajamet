@@ -40,3 +40,19 @@ void saveFile(const string path, string content)
         throw runtime_error("Could not open the file: " + path);
     }
 }
+
+vector<string> splitString(const char * str, const char a)
+{
+    return splitString(string(str), a);
+}
+vector<string> splitString(string str, const char a)
+{
+    vector<string> v;
+    istringstream f(str);
+    string s;
+    while(getline(f, s, a))
+    {
+        v.push_back(s);
+    }
+    return v;
+}
