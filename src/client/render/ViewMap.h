@@ -4,25 +4,39 @@
 
 
 namespace render {
-  class InteractiveElement;
+  class Image;
+};
+namespace sf {
+  class View;
+};
+namespace render {
+  class Render;
+  class Element;
 }
 
-#include "InteractiveElement.h"
+#include "Image.h"
+#include "Element.h"
 
 namespace render {
 
   /// class ViewMap - 
-  class ViewMap : public render::InteractiveElement {
+  class ViewMap : public render::Element {
+    // Associations
     // Attributes
   private:
-    int zoom;
-    int mapX;
-    int mapY;
+    Image map;
+    sf::Vector2f center;
+    sf::Vector2f size;
+    sf::View view;
     // Operations
   public:
     ViewMap ();
-    void changeZoom (int var);
-    void moveView (int varMapX, int varMapY);
+    ViewMap (Render * render, Image map);
+    ViewMap (Render * render, Image map, sf::Vector2f size, sf::Vector2f center);
+    ~ViewMap ();
+    void changeSize (int var);
+    void moveView (int deltaX, int deltaY);
+    void draw ();
     // Setters and Getters
   };
 

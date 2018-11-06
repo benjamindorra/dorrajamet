@@ -4,10 +4,8 @@
 
 
 namespace render {
-  class Frame;
+  class Render;
 }
-
-#include "Frame.h"
 
 namespace render {
 
@@ -15,20 +13,25 @@ namespace render {
   class Element {
     // Attributes
   protected:
-    Frame * frame;
+    Render * render;
     int width;
     int height;
     int x;
-    static int y;
+    int y;
+    // Operations
+  public:
+    virtual void draw ();
     // Setters and Getters
-    const Frame *& getFrame() const;
-    void setFrame(const Frame *& frame);
+    const Render *& getRender() const;
+    void setRender(const Render *& render);
     int getWidth() const;
     void setWidth(int width);
     int getHeight() const;
     void setHeight(int height);
     int getX() const;
     void setX(int x);
+    int getY() const;
+    void setY(int y);
   };
 
 };

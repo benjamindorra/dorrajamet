@@ -4,22 +4,24 @@
 
 
 namespace render {
-  class InteractiveElement;
+  class Image;
 }
 
-#include "InteractiveElement.h"
+#include "Image.h"
 
 namespace render {
 
   /// class ShowArmy - 
-  class ShowArmy : public render::InteractiveElement {
+  class ShowArmy {
     // Attributes
-  public:
-    Army army;
+  private:
+    state::Army army;
+    Image imageArmy;
     // Operations
   public:
     ShowArmy ();
-    ShowArmy (Army army);
+    ShowArmy (state::Army army);
+    ~ShowArmy ();
     // Setters and Getters
   };
 

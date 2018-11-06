@@ -6,7 +6,6 @@
 #include <string>
 
 namespace render {
-  class Frame;
   class Element;
 }
 
@@ -25,10 +24,10 @@ namespace render {
     // Operations
   public:
     Image ();
-    Image (Frame* frame);
-    Image (Frame* frame, int width, int height);
-    Image (Frame* frame, int width, int height, int x, int y);
-    Image (Frame* frame, int width, int height, int x, int y, bool keepRatio, bool followWidth);
+    Image (int width, int height);
+    Image (int width, int height, int x, int y);
+    Image (int width, int height, int x, int y, bool keepRatio, bool followWidth);
+    ~Image ();
     void importFile (std::string path);
     sf::Sprite getSprite ();
     // Setters and Getters

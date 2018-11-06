@@ -1,45 +1,36 @@
 #include "Image.h"
 #include <iostream>
+#include <vector>
 
 namespace render {
-    Image::Image (){}
-    Image::Image (Frame* frame){
-        this->frame=frame;
-        this->x=0;
-        this->y=0;
-        this->width=frame->getWidth();
-        this->height=frame->getHeight();
-        this->keepRatio=true;
-        this->followWidth=true;
+    Image::Image (){
     }
-    Image::Image (Frame* frame, int width, int height){
-        this->frame=frame;
+    Image::Image (int width, int height){
         this->width=width;
         this->height=height;
-        this->x=(frame->getWidth()-width)/2;
-        this->y=(frame->getHeight()-height)/2;
+        this->x=0;
+        this->y=0;
         this->keepRatio=false;
         this->followWidth=true;
-        sprite.setScale(sf::Vector2f(width, height));
+        sprite.setPosition(sf::Vector2f(this->x, this->y));
     }
-    Image::Image (Frame* frame, int width, int height, int x, int y){
-        this->frame=frame;
+    Image::Image (int width, int height, int x, int y){
         this->width=width;
         this->height=height;
         this->x=x;
         this->y=y;
         this->keepRatio=false;
         this->followWidth=true;
-        sprite.setScale(sf::Vector2f(width, height));
+        sprite.setPosition(sf::Vector2f(x, y));
     }
-    Image::Image (Frame* frame, int width, int height, int x, int y, bool keepRatio, bool followWidth){
-        this->frame=frame;
+    Image::Image (int width, int height, int x, int y, bool keepRatio, bool followWidth){
         this->width=width;
         this->height=height;
         this->x=x;
         this->y=y;
         this->keepRatio=keepRatio;
         this->followWidth=followWidth;
+        sprite.setPosition(sf::Vector2f(x, y));
     }
     void Image::importFile (std::string path){
         if (!this->texture.loadFromFile(path))
@@ -47,6 +38,18 @@ namespace render {
             throw std::runtime_error("Error when loading texture");
         }
         sprite.setTexture(this->texture);
+        sf::Vector2u size = this->texture.getSize(); 
+        if (!this->keepRatio) {
+            sprite.setScale(sf::Vector2f((float)this->width/size.x, (float)this->height/size.y));
+        }
+        else if (this->followWidth){
+            float ratio = (float)this->width/size.x;
+            sprite.setScale(sf::Vector2f(ratio, ratio));
+        }
+        else if (!this->followWidth){
+            float ratio = (float)this->height/size.y;
+            sprite.setScale(sf::Vector2f(ratio, ratio));
+        }
     }
 
     sf::Sprite Image::getSprite () {
