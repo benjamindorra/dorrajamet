@@ -22,7 +22,10 @@ namespace state {
     // Operations
   public:
     Traits ();
-    Traits (std::string path);
+    Traits (std::string strJson);
+    ~Traits ();
+    bool checkConsistency ();
+    void debug ();
     // Setters and Getters
   };
 
