@@ -92,7 +92,7 @@ namespace state{
                         "Name: " << this->name << " of " << this->dynastyName << std::endl;
         std::cout << "Traits: ";
         for(auto trait : this->traits) std::cout << trait << " | ";
-        std::cout << "Claims: ";
+        std::cout << "\nClaims: ";
         std::cout << std::endl;
         for(auto claim : this->claims) std::cout << claim << " | ";
         std::cout << std::endl;
