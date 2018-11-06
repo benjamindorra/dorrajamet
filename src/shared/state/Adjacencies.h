@@ -15,6 +15,7 @@ namespace state {
     // Operations
   public:
     Adjacencies ();
+    Adjacencies (std::string rawCsv);
     // Setters and Getters
   };
 
