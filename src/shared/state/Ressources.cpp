@@ -1,5 +1,6 @@
 #include "Ressources.h"
 #include "../json.hpp"
+#include "../tools.hpp"
 #include <iostream>
 
 namespace state
@@ -53,11 +54,29 @@ namespace state
     }
     void Ressources::loadAdjacencies(std::string adjacenciesPath)
     {
-
+        try
+        {
+            std::string rawCsv = loadFile(adjacenciesPath);
+            this->adjacencies = Adjacencies(rawCsv);
+        }
+        catch(const std::exception& e)
+        {
+            std::cerr << e.what();
+            throw std::runtime_error("Error: could not load adjacencies.");
+        }
     }
     void Ressources::loadTraits(std::string traitsPath)
     {
-
+        try
+        {
+            std::string rawTraits = loadFile(traitsPath);
+            this->traits = Traits(traitsPath);
+        }
+        catch(const std::exception& e)
+        {
+            std::cerr << e.what();
+            throw std::runtime_error("Error: could not load traits.");
+        }
     }
 
 }

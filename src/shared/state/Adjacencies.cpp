@@ -35,7 +35,7 @@ namespace state
     }
     bool Adjacencies::checkConsistency()
     {
-
+        return true;
     }
     void Adjacencies::debug()
     {
