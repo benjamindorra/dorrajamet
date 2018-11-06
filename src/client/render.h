@@ -2,18 +2,12 @@
 #ifndef __RENDER__H
 #define __RENDER__H
 
-#include "render/Window.h"
-#include "render/Canvas.h"
-#include "render/Frame.h"
 #include "render/Element.h"
-#include "render/IObserver.h"
-#include "render/InteractiveElement.h"
-#include "render/Button.h"
+#include "render/Render.h"
+#include "render/Image.h"
 #include "render/ShowArmy.h"
 #include "render/ViewMap.h"
-#include "render/Text.h"
-#include "render/Image.h"
-#include "render/ObserverMap.h"
-#include "render/ObserverArmy.h"
-#include "render/ObserverButton.h"
+#include "render/ShowArmies.h"
+#include "render/CharacterData.h"
+#include "render/ProvinceData.h"
 #endif
