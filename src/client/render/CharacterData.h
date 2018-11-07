@@ -17,6 +17,7 @@ namespace render {
   public:
     CharacterData ();
     ~CharacterData ();
+    void draw ();
     // Setters and Getters
   };
 
