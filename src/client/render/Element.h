@@ -13,7 +13,7 @@ namespace render {
   class Element {
     // Attributes
   protected:
-    Render * render;
+    Render * mainRender;
     int width;
     int height;
     int x;
@@ -22,8 +22,8 @@ namespace render {
   public:
     virtual void draw ();
     // Setters and Getters
-    const Render *& getRender() const;
-    void setRender(const Render *& render);
+    const Render *& getMainRender() const;
+    void setMainRender(const Render *& mainRender);
     int getWidth() const;
     void setWidth(int width);
     int getHeight() const;
