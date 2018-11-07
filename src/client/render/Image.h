@@ -30,6 +30,7 @@ namespace render {
     ~Image ();
     void importFile (std::string path);
     sf::Sprite getSprite ();
+    void draw ();
     // Setters and Getters
   };
 

@@ -32,6 +32,9 @@ namespace render {
         this->followWidth=followWidth;
         sprite.setPosition(sf::Vector2f(x, y));
     }
+
+    Image::~Image() {}
+    
     void Image::importFile (std::string path){
         if (!this->texture.loadFromFile(path))
         {
@@ -55,4 +58,6 @@ namespace render {
     sf::Sprite Image::getSprite () {
         return this->sprite;
     }
+
+    void Image::draw() {}
 }
