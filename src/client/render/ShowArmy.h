@@ -3,24 +3,29 @@
 #define RENDER__SHOWARMY__H
 
 
+namespace state {
+  class Army;
+};
 namespace render {
   class Image;
 }
 
 #include "Image.h"
+#include "state/Army.h"
 
 namespace render {
 
   /// class ShowArmy - 
   class ShowArmy {
+    // Associations
     // Attributes
   private:
-    state::Army army;
+    state::Army * army;
     Image imageArmy;
     // Operations
   public:
     ShowArmy ();
-    ShowArmy (state::Army army);
+    ShowArmy (state::Army * army);
     ~ShowArmy ();
     // Setters and Getters
   };
