@@ -17,6 +17,7 @@ namespace render {
   public:
     ProvinceData ();
     ~ProvinceData ();
+    void draw ();
     // Setters and Getters
   };
 
