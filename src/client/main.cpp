@@ -5,6 +5,7 @@
 #include "../shared/tools.hpp"
 #include "../shared/state.h"
 #include "render.h"
+#include <SFML/Graphics.hpp>
 
 void debug(int c)
 {
@@ -16,6 +17,8 @@ void testRender(){
     render::Render render1(800,600);
     //create the map image
     render::Image map(400, 400);
+    //import the image
+    map.render::Image::importFile("./res/provinces.bmp");
     //create the viewmap
     render::ViewMap viewmap(&render1, map, sf::Vector2f(200.f, 200.f), sf::Vector2f(200.f,200.f)); 
     //tell render to draw the viewmap
