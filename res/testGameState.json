@@ -123,21 +123,26 @@
                     "plotEnd": 200
                 }
             ]
-        }
-    },
-    "relations":
-    [
-        {
-            "type": 2,
-            "characterA": "chara_0001",
-            "characterB": "chara_0004",
-            "endTurn": -1
         },
-        {
-            "type": 3,
-            "characterA": "chara_0001",
-            "characterB": "chara_0002",
-            "endTurn": -1
-        }
-    ]
+        "relations":
+        [
+            {
+                "type": 2,
+                "characterA": "chara_0001",
+                "characterB": "chara_0004",
+                "endTurn": -1
+            },
+            {
+                "type": 3,
+                "characterA": "chara_0001",
+                "characterB": "chara_0002",
+                "endTurn": -1
+            }
+        ]
+    },
+    "ressources":
+    {
+        "adjacenciesPath": "./res/adjacencies.csv",
+        "traitsPath": "./res/traits.json"
+    }
 }

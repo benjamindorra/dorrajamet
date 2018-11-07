@@ -2,8 +2,8 @@
 #ifndef STATE__TRAITS__H
 #define STATE__TRAITS__H
 
-#include <vector>
 #include <string>
+#include <map>
 
 namespace state {
   class Trait;
@@ -18,7 +18,7 @@ namespace state {
     // Associations
     // Attributes
   private:
-    std::vector<Trait> traits;
+    std::map<std::string, Trait> traits;
     // Operations
   public:
     Traits ();

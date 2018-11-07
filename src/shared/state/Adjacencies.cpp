@@ -1,5 +1,7 @@
 #include "Adjacencies.h"
 #include "../tools.hpp"
+#include <iostream>
+#include <iomanip>
 
 namespace state
 {
@@ -35,11 +37,42 @@ namespace state
     }
     bool Adjacencies::checkConsistency()
     {
+        // Matrix must be symetric with a null diagonal
+        for(auto line:val)
+        {
+            for(auto element: line.second)
+            {
+                if(val[line.first][element.first] != val[element.first][line.first])
+                    return false;
+                if(element.first == line.first)
+                    if(element.second)
+                        return false;
+            }
+        }
         return true;
     }
     void Adjacencies::debug()
     {
-
+        std::string orig, dest;
+        int distance;
+        std::cout << "======Adjacencies matrix======" << std::endl;
+        // Printing the tags on the first line
+        std::cout << std::setw(16) << "";
+        for(auto line:val)
+            std::cout << " - " << std::setw(16) << line.first;
+        std::cout << std::endl;
+        for(auto line:val)
+        {
+            orig = line.first;
+            std::cout << std::setw(16) << orig;
+            for(auto elem:line.second)
+            {
+                dest = elem.first;
+                distance = elem.second;
+                std::cout << " - " << std::setw(16) << distance;
+            }
+            std::cout << std::endl;
+        }
     }
 }
 

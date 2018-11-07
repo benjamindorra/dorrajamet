@@ -27,6 +27,10 @@ namespace state
                 std::cout << "Characters consistency check success\n\n\n";
             else
                 throw std::string("Characters consistency check failed\n");
+            /*for(auto relStr:j["relations"].get<std::vector<std::string>>())
+            {
+                relations.push_back(Relation(relStr));
+            }*/
         }
         catch(const std::exception& e)
         {

@@ -17,7 +17,7 @@ string loadFile(const string path)
     }
     else
     {
-        throw runtime_error("Could not open the file: " + path);
+        throw runtime_error("Could not open the file: " + path + '\n');
     }
 }
 void saveFile(const char* path, string content)
@@ -37,7 +37,7 @@ void saveFile(const string path, string content)
     }
     else
     {
-        throw runtime_error("Could not open the file: " + path);
+        throw runtime_error("Could not open the file: " + path + '\n');
     }
 }
 

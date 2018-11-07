@@ -17,7 +17,15 @@ namespace state
         {
             json j = json::parse(strJson);
             this->loadAdjacencies(j["adjacenciesPath"].get<std::string>());
+            if(adjacencies.checkConsistency())
+                std::cout << "Adjacencies consistency check success\n\n\n";
+            else
+                throw std::string("Adjacencies consistency check failed\n");
             this->loadTraits(j["traitsPath"].get<std::string>());
+            if(traits.checkConsistency())
+                std::cout << "Traits consistency check success\n\n\n";
+            else
+                throw std::string("Traits consistency check failed\n");
         }
         catch(const std::exception& e)
         {
@@ -70,7 +78,7 @@ namespace state
         try
         {
             std::string rawTraits = loadFile(traitsPath);
-            this->traits = Traits(traitsPath);
+            this->traits = Traits(rawTraits);
         }
         catch(const std::exception& e)
         {
