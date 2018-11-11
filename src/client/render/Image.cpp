@@ -59,5 +59,9 @@ namespace render {
         return this->sprite;
     }
 
+    sf::Vector2u Image::getSize() {
+        return texture.getSize();
+    }
+
     void Image::draw() {}
 }

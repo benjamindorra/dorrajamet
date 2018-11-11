@@ -7,9 +7,13 @@
 #include <map>
 
 namespace render {
+  class ColorMap;
+  class ViewMap;
   class Element;
 }
 
+#include "ColorMap.h"
+#include "ViewMap.h"
 #include "Element.h"
 
 namespace render {
@@ -21,6 +25,8 @@ namespace render {
   private:
     sf::RenderWindow window;
     std::map<std::string,Element*> toDraw;
+    ColorMap * colorMap;
+    ViewMap * viewMap;
     // Operations
   public:
     Render ();
@@ -30,6 +36,8 @@ namespace render {
     sf::RenderWindow * getWindow ();
     void addToDraw (std::string id, Element * element);
     void removeToDraw (std::string id);
+    void loadColormap (ColorMap * colorMap);
+    void loadMap (ViewMap * viewMap);
     // Setters and Getters
   };
 

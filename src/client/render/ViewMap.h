@@ -2,6 +2,7 @@
 #ifndef RENDER__VIEWMAP__H
 #define RENDER__VIEWMAP__H
 
+#include <vector>
 
 namespace render {
   class Image;
@@ -25,8 +26,6 @@ namespace render {
     // Attributes
   private:
     Image map;
-    sf::Vector2f center;
-    sf::Vector2f size;
     sf::View view;
     // Operations
   public:
@@ -34,8 +33,11 @@ namespace render {
     ViewMap (Render * render, Image map);
     ViewMap (Render * render, Image map, sf::Vector2f size, sf::Vector2f center);
     ~ViewMap ();
-    void changeSize (int var);
-    void moveView (int deltaX, int deltaY);
+    sf::Vector2f getSize ();
+    void changeZoom (float zoom);
+    sf::Vector2f getCenter ();
+    void moveView (float deltaX, float deltaY);
+    std::vector<float> getViewPort ();
     void draw ();
     // Setters and Getters
   };
