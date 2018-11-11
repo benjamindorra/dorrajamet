@@ -14,15 +14,19 @@ void debug(int c)
 
 void testRender(){
     // create the window
-    render::Render render1(800,600);
+    render::Render render1(1280,720);
     //create the map image
     render::Image map(400, 400);
     //import the image
     map.render::Image::importFile("./res/provinces.bmp");
     //create the viewmap
-    render::ViewMap viewmap(&render1, map, sf::Vector2f(200.f, 200.f), sf::Vector2f(200.f,200.f)); 
+    render::ViewMap viewmap(&render1, map, sf::Vector2f(224.f, 162.f), sf::Vector2f(200.f,200.f)); 
     //tell render to draw the viewmap
-    render1.render::Render::addToDraw("ViewMap",&viewmap);
+    render1.render::Render::loadMap(&viewmap);
+    //create the colormap
+    render::ColorMap colormap("./res/provinces.bmp");
+    //give render access to the colormap
+    render1.loadColormap(&colormap);
     //start the renderloop
     render1.render::Render::renderLoop();
 }
