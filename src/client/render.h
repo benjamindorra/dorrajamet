@@ -2,11 +2,12 @@
 #ifndef __RENDER__H
 #define __RENDER__H
 
+#include "render/ColorMap.h"
 #include "render/Element.h"
-#include "render/Render.h"
-#include "render/Image.h"
-#include "render/ShowArmy.h"
 #include "render/ViewMap.h"
+#include "render/Render.h"
+#include "render/ShowArmy.h"
+#include "render/Image.h"
 #include "render/ShowArmies.h"
 #include "render/CharacterData.h"
 #include "render/ProvinceData.h"
