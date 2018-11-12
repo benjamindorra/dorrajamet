@@ -11,11 +11,13 @@ namespace sf {
   class View;
 };
 namespace render {
+  class ShowArmies;
   class Render;
   class Element;
 }
 
 #include "Image.h"
+#include "ShowArmies.h"
 #include "Element.h"
 
 namespace render {
@@ -27,11 +29,12 @@ namespace render {
   private:
     Image map;
     sf::View view;
+    ShowArmies showArmies;
     // Operations
   public:
     ViewMap ();
-    ViewMap (Render * render, Image map);
-    ViewMap (Render * render, Image map, sf::Vector2f size, sf::Vector2f center);
+    ViewMap (Render * render, Image map, ShowArmies showArmies);
+    ViewMap (Render * render, Image map, sf::Vector2f size, sf::Vector2f center, ShowArmies showArmies);
     ~ViewMap ();
     sf::Vector2f getSize ();
     void changeZoom (float zoom);

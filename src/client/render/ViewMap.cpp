@@ -1,13 +1,14 @@
 #include "ViewMap.h"
 #include "Render.h"
+
 namespace render {
     ViewMap::ViewMap () {
         
     }
-    ViewMap::ViewMap (Render * mainRender, Image map) : map(map){
+    ViewMap::ViewMap (Render * mainRender, Image map, ShowArmies showArmies) : map(map), showArmies(showArmies){
         this->mainRender=mainRender;
     }
-    ViewMap::ViewMap (Render * mainRender, Image map, sf::Vector2f size, sf::Vector2f center) : map(map) {
+    ViewMap::ViewMap (Render * mainRender, Image map, sf::Vector2f size, sf::Vector2f center, ShowArmies showArmies) : map(map), showArmies(showArmies) {
                 view.setCenter(center);
                 view.setViewport(sf::FloatRect(0.3, 0.1, 0.7, 0.9));
                 view.setSize(size);
@@ -40,7 +41,6 @@ namespace render {
         if ((newX-sizeX>0) & (newX+sizeX<map.getSize().x)){
             if ((newY-sizeY>0) & (newY+sizeY<map.getSize().y)) {
                 this->view.setCenter(newX,newY);
-                std::cout<<view.getSize().x<<" "<<view.getSize().y<<std::endl;
             }
         }
     }
@@ -50,9 +50,17 @@ namespace render {
         viewPort = {rect.left, rect.top, rect.width, rect.height};
         return viewPort;
     }
+    // draw map and armies
     void ViewMap::draw() {
+        // change view
         mainRender->getWindow()->setView(view);
+        // render map
         mainRender->Render::getWindow()->draw(map.Image::getSprite());
+        // render armies
+        for (ShowArmy army : *(showArmies.ShowArmies::getArmies())) {
+            army.ShowArmy::draw();
+        }
+        // restore view
         mainRender->Render::getWindow()->setView(mainRender->Render::getWindow()->getDefaultView());
     }
 

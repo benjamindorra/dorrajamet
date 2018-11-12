@@ -4,11 +4,11 @@
 
 #include "render/ColorMap.h"
 #include "render/Element.h"
+#include "render/ShowArmy.h"
+#include "render/ShowArmies.h"
 #include "render/ViewMap.h"
 #include "render/Render.h"
-#include "render/ShowArmy.h"
 #include "render/Image.h"
-#include "render/ShowArmies.h"
 #include "render/CharacterData.h"
 #include "render/ProvinceData.h"
 #endif

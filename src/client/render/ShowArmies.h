@@ -22,6 +22,8 @@ namespace render {
   public:
     ShowArmies ();
     ~ShowArmies ();
+    void addArmy (ShowArmy showArmy);
+    std::vector<ShowArmy> * getArmies ();
     // Setters and Getters
   };
 

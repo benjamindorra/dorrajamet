@@ -32,6 +32,7 @@ namespace render {
     sf::Sprite getSprite ();
     sf::Vector2u getSize ();
     void draw ();
+    void setPosition (int x, int y);
     // Setters and Getters
   };
 

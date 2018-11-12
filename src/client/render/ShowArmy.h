@@ -8,25 +8,31 @@ namespace state {
 };
 namespace render {
   class Image;
+  class Render;
+  class Element;
 }
 
 #include "Image.h"
+#include "Element.h"
 #include "state/Army.h"
 
 namespace render {
 
   /// class ShowArmy - 
-  class ShowArmy {
+  class ShowArmy : public render::Element {
     // Associations
     // Attributes
   private:
     state::Army * army;
-    Image imageArmy;
+    Image armyImg;
     // Operations
   public:
     ShowArmy ();
-    ShowArmy (state::Army * army);
+    ShowArmy (Render * mainRender, Image armyImg);
+    ShowArmy (Render * mainRender, Image armyImg, state::Army * army);
     ~ShowArmy ();
+    void draw ();
+    void setPosition (int x, int y);
     // Setters and Getters
   };
 

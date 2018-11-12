@@ -62,6 +62,10 @@ namespace render {
     sf::Vector2u Image::getSize() {
         return texture.getSize();
     }
+    
+    void Image::setPosition(int x, int y) {
+        sprite.setPosition(sf::Vector2f(x, y));
+    }
 
     void Image::draw() {}
 }
