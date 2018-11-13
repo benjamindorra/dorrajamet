@@ -4,6 +4,7 @@
 
 #include <string>
 #include <map>
+#include <vector>
 
 namespace state {
 
@@ -12,6 +13,7 @@ namespace state {
     // Attributes
   private:
     std::map<std::string, std::map<std::string, int>> val;
+    std::map<std::string, std::map<std::string, std::vector<std::string>>> paths;
     // Operations
   public:
     Adjacencies ();
@@ -19,6 +21,10 @@ namespace state {
     ~Adjacencies ();
     bool checkConsistency ();
     void debug ();
+    std::string getClosestProv (std::string origId, std::map<std::string, int> * d, std::vector<std::string> * Q);
+    void updateDists (std::map<std::string, int> * d, std::map<std::string, std::string> * p, std::vector<std::string> * Q, int weight, std::string s1, std::string s2);
+    std::vector<std::string> computeShortestPath (std::string origId, std::string destId);
+    std::vector<std::pair<std::string, int>> getShortestPath (std::string origId, std::string destId);
     // Setters and Getters
   };
 
