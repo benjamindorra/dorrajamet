@@ -23,6 +23,12 @@ namespace state {
     ~Trait ();
     bool checkConsistency ();
     void debug ();
+    const std::string getId ();
+    const std::string getOpposedId ();
+    const int getDiplomacyModifier ();
+    const int getStewardshipModifier ();
+    const int getMartialModifier ();
+    const int getIntrigueModifier ();
     // Setters and Getters
   };
 

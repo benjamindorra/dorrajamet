@@ -1,0 +1,117 @@
+{
+    "traits":
+    [
+        {
+            "id": "chaste",
+            "opposedId": "lustful",
+            "diplomacyModifier": 1,
+            "stewardshipModifier": 1,
+            "martialModifier": 0,
+            "intrigueModifier": 0
+        },
+        {
+            "id": "temperate",
+            "opposedId": "gluttonous",
+            "diplomacyModifier": 0,
+            "stewardshipModifier": 2,
+            "martialModifier": 0,
+            "intrigueModifier": 0
+        },
+        {
+            "id": "charitable",
+            "opposedId": "greedy",
+            "diplomacyModifier": 3,
+            "stewardshipModifier": 0,
+            "martialModifier": 0,
+            "intrigueModifier": 0
+        },
+        {
+            "id": "diligent",
+            "opposedId": "slothful",
+            "diplomacyModifier": 1,
+            "stewardshipModifier": 1,
+            "martialModifier": 1,
+            "intrigueModifier": 1
+        },
+        {
+            "id": "patient",
+            "opposedId": "wroth",
+            "diplomacyModifier": 1,
+            "stewardshipModifier": 1,
+            "martialModifier": 0,
+            "intrigueModifier": 1
+        },
+        {
+            "id": "kind",
+            "opposedId": "envious",
+            "diplomacyModifier": 2,
+            "stewardshipModifier": 0,
+            "martialModifier": 0,
+            "intrigueModifier": -2
+        },
+        {
+            "id": "humble",
+            "opposedId": "proud",
+            "diplomacyModifier": 1,
+            "stewardshipModifier": 0,
+            "martialModifier": 0,
+            "intrigueModifier": 0
+        },
+        {
+            "id": "lustful",
+            "opposedId": "chaste",
+            "diplomacyModifier": 0,
+            "stewardshipModifier": 0,
+            "martialModifier": 0,
+            "intrigueModifier": 2
+        },
+        {
+            "id": "gluttonous",
+            "opposedId": "temperate",
+            "diplomacyModifier": 0,
+            "stewardshipModifier": -2,
+            "martialModifier": 0,
+            "intrigueModifier": 0
+        },
+        {
+            "id": "greedy",
+            "opposedId": "charitable",
+            "diplomacyModifier": -1,
+            "stewardshipModifier": 1,
+            "martialModifier": 0,
+            "intrigueModifier": 1
+        },
+        {
+            "id": "slothful",
+            "opposedId": "diligent",
+            "diplomacyModifier": -1,
+            "stewardshipModifier": -1,
+            "martialModifier": -1,
+            "intrigueModifier": -1
+        },
+        {
+            "id": "wroth",
+            "opposedId": "patient",
+            "diplomacyModifier": -1,
+            "stewardshipModifier": 0,
+            "martialModifier": 3,
+            "intrigueModifier": -1
+        },
+        {
+            "id": "envious",
+            "opposedId": "kind",
+            "diplomacyModifier": -1,
+            "stewardshipModifier": 0,
+            "martialModifier": 0,
+            "intrigueModifier": 2
+        },
+        {
+            "id": "proud",
+            "opposedId": "humble",
+            "diplomacyModifier": 0,
+            "stewardshipModifier": 0,
+            "martialModifier": 1,
+            "intrigueModifier": 1
+        }
+    ]
+}

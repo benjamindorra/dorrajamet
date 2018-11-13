@@ -23,6 +23,7 @@ namespace state
             std::string fileContent = loadFile(saveFilePath);
             json j = json::parse(fileContent);
             this->politics = Politics(j["politics"].dump());
+            this->ressources = Ressources(j["ressources"].dump());
         }
         catch(const std::exception& e)
         {
@@ -37,5 +38,6 @@ namespace state
     void GameState::debug()
     {
         this->politics.debug();
+        this->ressources.debug();
     }
 }
