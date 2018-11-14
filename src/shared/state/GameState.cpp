@@ -2,7 +2,7 @@
 #include <iostream>
 #include <fstream>
 #include <string>
-#include "../json.hpp"
+#include <json.hpp>
 #include "../tools.hpp"
 
 namespace state

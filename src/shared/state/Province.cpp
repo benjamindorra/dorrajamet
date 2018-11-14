@@ -1,5 +1,5 @@
 #include "Province.h"
-#include "../json.hpp"
+#include <json.hpp>
 #include <iostream>
 #include <iomanip>
 
