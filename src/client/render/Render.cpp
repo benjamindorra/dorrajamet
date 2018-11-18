@@ -1,3 +1,8 @@
+/*********************************************************
+Render.cpp
+Main class of render. Control the rendering of the other
+objects and handle the events.
+**********************************************************/
 #include "Render.h"
 #include <SFML/Graphics.hpp>
 #include <iostream>
@@ -17,6 +22,7 @@ namespace render {
     void Render::renderLoop ()
     {
         this->window.setFramerateLimit(60);
+        Button endTurn(this, window.getSize().x*0.8, 0, "end turn", sf::Color::Red, sf::Vector2i(window.getSize().x*0.2, window.getSize().y*0.1));
         // run the program as long as the window is open
         while (this->window.isOpen())
         {
@@ -34,20 +40,54 @@ namespace render {
                     // mouse click
                     case sf::Event::MouseButtonPressed: {
                         // get color of the pixel clicked in the colorMap
-                        sf::Vector2f viewSize = viewMap->getSize();
-                        sf::Vector2f viewCenter = viewMap->getCenter();
-                        std::vector<float> viewPort = viewMap->getViewPort();
-                        sf::Vector2u windowSize = window.getSize();
-                        // check if click is in the map 
-                        // (assumption : the map is always in the bottom right)
-                        float x = (float)event.mouseButton.x-float(windowSize.x-1)*viewPort[0];
-                        float y = (float)event.mouseButton.y-float(windowSize.y-1)*viewPort[1];
-                        if (x>=0. & y>=0.) {
-                            // get the position on the colormap
-                            unsigned int mapX =  int((viewCenter.x-viewSize.x/2)+x/float(windowSize.x-1)/viewPort[2]*(viewSize.x+7))+1;
-                            unsigned int mapY =  int((viewCenter.y-viewSize.y/2)+y/float(windowSize.y-1)/viewPort[3]*(viewSize.y+10))+10;
-                            unsigned int pix = colorMap->ColorMap::getPixel(mapX,mapY);
-                            std::cout<<"pix: "<<pix<<std::endl;
+                        int x = event.mouseButton.x;
+                        int y = event.mouseButton.y;
+                        // check if click is in the data
+                        if (data->contains(x, y)) {
+                            if (event.mouseButton.button==sf::Mouse::Button::Left) {
+                                data->click(x,y);
+                            }
+                        }
+                        // check if click is in the end turn button
+                        else if (endTurn.contains(x,y)) {
+                            if (event.mouseButton.button==sf::Mouse::Button::Left) {
+                                std::cout<<"End player turn"<<std::endl;
+                            }
+                        }
+                        // check if click is in the map
+                        else if (viewMap->contains(x, y)) {
+                            sf::Vector2f pixel = window.mapPixelToCoords (sf::Vector2i(x,y), *viewMap->getView());
+                            if (event.mouseButton.button==sf::Mouse::Button::Left) {
+                                std::string leftclick = viewMap->leftClick(pixel);
+                                if (leftclick=="province") {
+                                    unsigned int mapX = (unsigned int)pixel.x;
+                                    unsigned int mapY = (unsigned int)pixel.y;
+                                    unsigned int pix = colorMap->ColorMap::getPixel(mapX,mapY);
+                                    std::cout<<"pix: "<<pix<<std::endl;
+                                    std::cout<<"x: "<<mapX<<"y: "<<mapY<<std::endl;
+                                    std::string text = "Province : Wales\n"
+                                    "This is a test for the world to witness.\n" 
+                                    "No one can change it now. There is no escape from my empire.\nTruly a marvel for the ages. Big if true.\n";
+                                    data->Data::select(Data::Province,text);
+                                }
+                                else {
+                                    std::cout<<"army !"<<std::endl;
+                                }
+
+                            }
+                            if (event.mouseButton.button==sf::Mouse::Button::Right) {
+                                std::string leftclick = viewMap->rightClick(pixel);
+                                if (leftclick=="province") {
+                                    unsigned int mapX = (unsigned int)pixel.x;
+                                    unsigned int mapY = (unsigned int)pixel.y;
+                                    unsigned int pix = colorMap->ColorMap::getPixel(mapX,mapY);
+                                    std::cout<<"pix: "<<pix<<std::endl;
+                                    std::cout<<"x: "<<mapX<<"y: "<<mapY<<std::endl;
+                                    std::string text = "William Thomson\n"
+                                    "Titles:\nDuchy of Wales\n\nStatistics:\nIntelligence 10\nFighting 2\n\nTraits:\nGluttony\n";
+                                    data->Data::select(Data::Character, text);
+                                }
+                            }
                         }
                         else std::cout<<"x: "<<x<<"y: "<<y<<std::endl;
                         break;
@@ -68,24 +108,43 @@ namespace render {
                         break;
                     }
                     case sf::Event::MouseWheelScrolled: {
-                        if (event.mouseWheelScroll.delta>0) {
-                            viewMap->changeZoom(0.9);
+                        int x = event.mouseWheelScroll.x;
+                        int y = event.mouseWheelScroll.y;
+                        // scroll the data
+                        if (data->contains(x, y)) {
+                            if (event.mouseWheelScroll.delta>0) {
+                                data->scroll(-10);
+                            }
+                            else data->scroll(10);
                         }
-                        else viewMap->changeZoom(1.1);
+                        // zoom the map
+                        else if (viewMap->contains(x,y)) {
+                            if (event.mouseWheelScroll.delta>0) {
+                                viewMap->changeZoom(0.9);
+                            }
+                            else viewMap->changeZoom(1.1);
+                        }
                         break;
                     }
+                    default: {}
+                    }
                 }
-            }
 
             // clear the window with black color
             this->window.clear(sf::Color::Black);
 
+            //draw the map
+            viewMap->ViewMap::draw();
+            // draw the data
+            data->Data::draw();
+            // draw the playerdata
+            playerData->draw();
+            // draw end turn button
+            endTurn.draw();
             // calls the drawing functions of each object in ToDraw
             for (auto elem : toDraw) {
                 elem.second->draw();
             }
-            //draw the map
-            viewMap->ViewMap::draw();
             // end the current frame
             this->window.display();
         }
@@ -95,7 +154,7 @@ namespace render {
     {
         return &this->window;
     }
-
+    
     void Render::addToDraw(std::string id, Element * element) {
         this->toDraw[id]=element;
     }
@@ -107,5 +166,13 @@ namespace render {
     }
     void Render::loadMap (ViewMap * viewMap) {
         this->viewMap=viewMap;
+    }
+
+    void Render::loadData (Data * data) {
+        this->data = data;
+    }
+    
+    void Render::loadPlayerData (PlayerData * playerData) {
+        this->playerData = playerData;
     }
 }

@@ -16,26 +16,30 @@ void testRender(){
     // create the window
     render::Render render1(1280,720);
     // create the map image
-    render::Image map(400, 400);
+    render::Image map;
     // import the image
-    map.render::Image::importFile("./res/provinces.bmp");
+    map.importFile("./res/provinces.bmp");
     // create the ShowArmies
     render::ShowArmies showArmies;
     // create an army image
     render::Image armyImg;
-    armyImg.render::Image::importFile("./res/army.bmp");
+    armyImg.importFile("./res/army.bmp");
     // create a ShowArmy
     render::ShowArmy showArmy(&render1, armyImg);
     // add the ShowArmy in ShowArmies
-    showArmies.addArmy(showArmy);
+    showArmies.addArmy(&showArmy);
     // create the viewmap
     render::ViewMap viewmap(&render1, map, sf::Vector2f(224.f, 162.f), sf::Vector2f(200.f,200.f), showArmies); 
     // tell render to draw the viewmap
-    render1.render::Render::loadMap(&viewmap);
+    render1.loadMap(&viewmap);
     // create the colormap
     render::ColorMap colormap("./res/provinces.bmp");
     // give render access to the colormap
     render1.loadColormap(&colormap);
+    // show data
+    render::Data data(&render1);
+    // show player data
+    render::PlayerData playerdata(&render1);
     // start the renderloop
     render1.render::Render::renderLoop();
 }

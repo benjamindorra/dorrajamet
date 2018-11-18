@@ -1,3 +1,7 @@
+/**********************************************************
+Element.cpp
+A virtual graphical element.
+***********************************************************/
 #include "Element.h"
 
 namespace render {

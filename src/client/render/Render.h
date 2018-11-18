@@ -9,9 +9,15 @@
 namespace render {
   class ColorMap;
   class ViewMap;
+  class Data;
+  class PlayerData;
   class Element;
+  class Button;
 }
 
+#include "Button.h"
+#include "PlayerData.h"
+#include "Data.h"
 #include "ColorMap.h"
 #include "ViewMap.h"
 #include "Element.h"
@@ -27,6 +33,8 @@ namespace render {
     std::map<std::string,Element*> toDraw;
     ColorMap * colorMap;
     ViewMap * viewMap;
+    Data * data;
+    PlayerData * playerData;
     // Operations
   public:
     Render ();
@@ -38,6 +46,8 @@ namespace render {
     void removeToDraw (std::string id);
     void loadColormap (ColorMap * colorMap);
     void loadMap (ViewMap * viewMap);
+    void loadData (Data * data);
+    void loadPlayerData (PlayerData * playerData);
     // Setters and Getters
   };
 

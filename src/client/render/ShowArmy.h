@@ -2,14 +2,15 @@
 #ifndef RENDER__SHOWARMY__H
 #define RENDER__SHOWARMY__H
 
+#include <string>
 
-namespace state {
-  class Army;
-};
 namespace render {
   class Image;
   class Render;
   class Element;
+};
+namespace state {
+  class Army;
 }
 
 #include "Image.h"
@@ -23,16 +24,21 @@ namespace render {
     // Associations
     // Attributes
   private:
-    state::Army * army;
     Image armyImg;
+    std::string id;
+    bool selected;
     // Operations
   public:
     ShowArmy ();
     ShowArmy (Render * mainRender, Image armyImg);
-    ShowArmy (Render * mainRender, Image armyImg, state::Army * army);
+    ShowArmy (Render * mainRender, Image armyImg, std::string id);
     ~ShowArmy ();
     void draw ();
     void setPosition (int x, int y);
+    bool contains (int x, int y);
+    std::string getId ();
+    void select ();
+    bool getSelected ();
     // Setters and Getters
   };
 

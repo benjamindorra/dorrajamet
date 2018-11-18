@@ -3,6 +3,7 @@
 #define RENDER__SHOWARMIES__H
 
 #include <vector>
+#include <string>
 
 namespace render {
   class ShowArmy;
@@ -17,13 +18,16 @@ namespace render {
     // Associations
     // Attributes
   private:
-    std::vector<ShowArmy> armies;
+    std::vector<ShowArmy*> armies;
     // Operations
   public:
     ShowArmies ();
     ~ShowArmies ();
-    void addArmy (ShowArmy showArmy);
-    std::vector<ShowArmy> * getArmies ();
+    void addArmy (ShowArmy * showArmy);
+    std::vector<ShowArmy*> * getArmies ();
+    std::string selectArmy (int x, int y);
+    std::string moveSelected (int x, int y);
+    void draw ();
     // Setters and Getters
   };
 

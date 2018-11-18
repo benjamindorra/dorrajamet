@@ -2,15 +2,10 @@
 #ifndef RENDER__VIEWMAP__H
 #define RENDER__VIEWMAP__H
 
-#include <vector>
+#include <string>
 
 namespace render {
   class Image;
-};
-namespace sf {
-  class View;
-};
-namespace render {
   class ShowArmies;
   class Render;
   class Element;
@@ -33,15 +28,19 @@ namespace render {
     // Operations
   public:
     ViewMap ();
-    ViewMap (Render * render, Image map, ShowArmies showArmies);
-    ViewMap (Render * render, Image map, sf::Vector2f size, sf::Vector2f center, ShowArmies showArmies);
+    ViewMap (Render * render, Image map, ShowArmies& showArmies);
+    ViewMap (Render * render, Image map, sf::Vector2f size, sf::Vector2f center, ShowArmies& showArmies);
     ~ViewMap ();
     sf::Vector2f getSize ();
     void changeZoom (float zoom);
     sf::Vector2f getCenter ();
     void moveView (float deltaX, float deltaY);
-    std::vector<float> getViewPort ();
     void draw ();
+    sf::View * getView ();
+    bool contains (int x, int y);
+    std::string leftClick (sf::Vector2f pixel);
+    std::string rightClick (sf::Vector2f pixel);
+    void checkZoomY (float zoom);
     // Setters and Getters
   };
 

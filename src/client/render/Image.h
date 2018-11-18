@@ -17,22 +17,22 @@ namespace render {
   class Image : public render::Element {
     // Attributes
   private:
-    bool keepRatio;
-    bool followWidth;
     sf::Sprite sprite;
     sf::Texture texture;
     // Operations
   public:
     Image ();
-    Image (int width, int height);
-    Image (int width, int height, int x, int y);
-    Image (int width, int height, int x, int y, bool keepRatio, bool followWidth);
+    Image (int x, int y);
+    Image (int x, int y, int width, int height);
     ~Image ();
     void importFile (std::string path);
     sf::Sprite getSprite ();
-    sf::Vector2u getSize ();
+    sf::Vector2i getSize ();
     void draw ();
     void setPosition (int x, int y);
+    sf::Vector2f getPosition ();
+    void setSize (int x, int y, bool keepRatio = false, bool followWidth = true);
+    void setColor (sf::Color color);
     // Setters and Getters
   };
 

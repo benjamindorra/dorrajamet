@@ -792,7 +792,9 @@ void print_include_stdlib(struct stdlib_includes* si,char* name) {
        && (strstr(name,"sf::RenderWindow")
        ||  strstr(name,"sf::VertexArray")
        ||  strstr(name,"sf::Image")
-       ||  strstr(name,"sf::Texture"))) {
+       ||  strstr(name,"sf::Texture")
+       ||  strstr(name,"sf::Text")
+       ||  strstr(name,"sf::Sprite"))) {
            print ("#include <SFML/Graphics.hpp>\n");
            si->sfmlGraphics = 1;
        }       
@@ -800,7 +802,7 @@ void print_include_stdlib(struct stdlib_includes* si,char* name) {
        && (strstr(name,"Json::") == name)) {
            print ("#include <json/json.h>\n");
            si->jsoncpp = 1;
-       }       
+       }    
     }
 }
 

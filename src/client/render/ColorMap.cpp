@@ -1,3 +1,7 @@
+/**********************************************************
+ColorMap.cpp
+Hidden map, show where a province is through unique colors.
+***********************************************************/
 #include "ColorMap.h"
 #include <iostream>
 #include <exception>
@@ -16,10 +20,12 @@ namespace render {
         //delete this->image;
     }
     unsigned int ColorMap::getPixel (int x, int y) {
-        if ((x<this->image.getSize().x) & (y<this->image.getSize().y) & (x>=0) & (y>=0)) {
-            return image.getPixel(x,y).toInteger();
+        if ((x>=0) & (y>=0)) {
+            if (((unsigned int)x<this->image.getSize().x) & ((unsigned int)y<this->image.getSize().y)) {
+                return image.getPixel(x,y).toInteger();
+            }
         }
-        else return 0;
+        return 0;
     }
 
 }

@@ -5,11 +5,6 @@
 #include <SFML/Graphics.hpp>
 #include <string>
 
-namespace sf {
-  class Image;
-}
-
-
 namespace render {
 
   /// class ColorMap - 

@@ -21,6 +21,7 @@ namespace render {
     // Operations
   public:
     virtual void draw ();
+    virtual ~Element () = default;
     // Setters and Getters
     const Render *& getMainRender() const;
     void setMainRender(const Render *& mainRender);
