@@ -1,5 +1,5 @@
 #include "OneProvinceOrder.h"
-#include "../json.hpp"
+#include <json.hpp>
 #include <iostream>
 
 namespace state
@@ -45,5 +45,14 @@ namespace state
     void OneProvinceOrder::debug ()
     {
         std::cout << "Debug OP Order\nOrigin: " << originProvinceId << "\nDestination: " << destinationProvinceId << "\nDuration: " << duration << "\nElapsed: " << elapsed << std::endl;
+    }
+    bool OneProvinceOrder::nextStep()
+    {
+        elapsed++;
+        return elapsed >= duration;
+    }
+    std::string OneProvinceOrder::getDestination()
+    {
+        return destinationProvinceId;
     }
 }

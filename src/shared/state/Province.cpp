@@ -1,5 +1,5 @@
 #include "Province.h"
-#include "../json.hpp"
+#include <json.hpp>
 #include <iostream>
 #include <iomanip>
 
@@ -70,5 +70,13 @@ namespace state
     void Province::debug ()
     {
         std::cout << "Debug Province\nId: " << id << "\nName: " << name << "\nColor Code: " << std::hex << colorCode << "\nDevelopment score: " << development << "\nProsperity level: " << prosperity << std::endl;
+    }
+    int Province::getLevyMen()
+    {
+        return levy.getMen();
+    }
+    void Province::killMenFromLevy (int victims)
+    {
+        levy.killMen(victims);
     }
 }

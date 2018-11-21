@@ -1,17 +1,22 @@
-Gamestate
-    Ressources
-        Traits
-            Loading
-        Adjacencies
-            Loading
-            Djikistra
-    Players
-        Loading
-    Consistency
-        Titles - Players
-        Titles - Provinces
-        Army - Provinces
-        Orders - Provinces
-        Provinces - Adjacencies
-        ?Orders - Adjacencies
-Rendering
+ENGINE:
+    ProcessEndTurn:
+        ✔ Process army orders @done(18-11-19 13:30)
+        [] Check for new battles // Ongoing
+        ✔ Process ongoing battles @done(18-11-19 16:40)
+        [] Clear finished battles
+        [] Disband defeated armies
+        [] Reinforce armies
+        [] Process player gains and expenses
+    ProcessPlayerActions:
+        [] New Army orders
+        [] Plot action
+        [] Diplomatic action
+        [] Relational action
+        [] Reply to proposal
+        [] Dismiss battle report
+GAMESTATE:
+    Missing parts:
+        [] Diplomatic proposal (member of Player)
+        [] Battle report (member of Player)
+
+    

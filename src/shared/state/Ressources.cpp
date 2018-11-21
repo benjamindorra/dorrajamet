@@ -1,5 +1,5 @@
 #include "Ressources.h"
-#include "../json.hpp"
+#include <json.hpp>
 #include "../tools.hpp"
 #include <iostream>
 
@@ -85,6 +85,10 @@ namespace state
             std::cerr << e.what();
             throw std::runtime_error("Error: could not load traits.");
         }
+    }
+    nlohmann::json Ressources::getOrderJson (std::string origId, std::string destId)
+    {
+        return adjacencies.getOrderJson(origId, destId);
     }
 
 }

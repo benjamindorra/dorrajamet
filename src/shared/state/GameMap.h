@@ -4,10 +4,12 @@
 
 #include <string>
 #include <map>
+#include <json.hpp>
 
 namespace state {
-  class Battle;
+  class GameState;
   class Army;
+  class Battle;
   class Province;
 }
 
@@ -22,6 +24,7 @@ namespace state {
     // Associations
     // Attributes
   private:
+    GameState * parent;
     std::map<std::string, Province> provinces;
     /// A list of all the armies mobilized on the map
     std::map<std::string, Army> armies;
@@ -30,10 +33,18 @@ namespace state {
     // Operations
   public:
     GameMap ();
-    GameMap (std::string strJson);
+    GameMap (GameState * parent, std::string strJson);
     ~GameMap ();
     bool checkConsistency ();
     void debug ();
+    std::string getArmyPosition (std::string armyId);
+    void setArmyOrder (std::string armyId, nlohmann::json orderJson);
+    void updateArmiesOrders ();
+    void checkNewBattles ();
+    void updateBattles ();
+    Army * getArmy (std::string idArmy);
+    int getLevyMen (std::string idProvince);
+    void killMenFromLevy (std::string idProvince, int victims);
     // Setters and Getters
   };
 

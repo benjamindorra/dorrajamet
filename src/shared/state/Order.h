@@ -20,6 +20,7 @@ namespace state {
   public:
     virtual bool checkConsistency () = 0;
     virtual void debug () = 0;
+    virtual bool nextStep () = 0;
     // Setters and Getters
     const std::string& getOriginProvinceId() const;
     void setOriginProvinceId(const std::string& originProvinceId);

@@ -1,5 +1,5 @@
 #include "Duchy.h"
-#include "../json.hpp"
+#include <json.hpp>
 #include <iostream>
 
 namespace state

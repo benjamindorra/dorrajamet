@@ -25,7 +25,7 @@ ENDIF(CMAKE_COMPILER_IS_GNUCC)
 set(DIA2CODE "${PROJECT_SOURCE_DIR}/bin/dia2code")
 exec_program(${DIA2CODE} ARGS -ns state  -d ../src/shared -t cpp ../src/state.dia)
 exec_program(${DIA2CODE} ARGS -ns render -d ../src/client -t cpp ../src/render.dia)
-#exec_program(${DIA2CODE} ARGS -ns engine -d ../src/shared -t cpp ../src/engine.dia)
+exec_program(${DIA2CODE} ARGS -ns engine -d ../src/shared -t cpp ../src/engine.dia)
 #exec_program(${DIA2CODE} ARGS -ns ai     -d ../src/shared -t cpp ../src/ai.dia)
 #exec_program(${DIA2CODE} ARGS -ns client -d ../src/client -t cpp ../src/module.dia)
 #exec_program(${DIA2CODE} ARGS -ns server -d ../src/server -t cpp ../src/module.dia)
@@ -39,10 +39,15 @@ file(GLOB_RECURSE shared_sources src/shared/*.cpp)
 #include_directories ("${PROJECT_SOURCE_DIR}/extern/jsoncpp-1.8.0")
 #file(GLOB_RECURSE jsoncpp_sources extern/jsoncpp-1.8.0/*.cpp)
 
+#nlohmann_json
+set(JSON_BuildTests OFF CACHE INTERNAL "")
+add_subdirectory(extern/nlohmann_json)
 
 # Executables
 add_executable(client ${client_sources} ${shared_sources})
 #add_executable(server ${server_sources} ${shared_sources} ${jsoncpp_sources})
+
+target_link_libraries(client PRIVATE nlohmann_json::nlohmann_json)
 
 # SFML
 if(WIN32)
@@ -58,7 +63,7 @@ endif($ENV{MACHINE_ENSEA})
 find_package(SFML 2 COMPONENTS graphics window system network)
 if(SFML_FOUND)
   include_directories(${SFML_INCLUDE_DIR})
-  target_link_libraries(client sfml-graphics sfml-window sfml-system)
+  target_link_libraries(client PRIVATE sfml-graphics sfml-window sfml-system)
 endif()
 
 # libmicrohttpd

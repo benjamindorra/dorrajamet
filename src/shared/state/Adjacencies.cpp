@@ -132,7 +132,11 @@ namespace state
     std::vector<std::string> Adjacencies::computeShortestPath(std::string origId, std::string destId)
     {
         if(origId == destId)
-            return std::vector<std::string>();
+        {
+            std::vector<std::string> r;
+            r.push_back(destId);
+            return r;
+        }
         // Init of Dijkstra's alg
         std::map<std::string, int> d;
         std::map<std::string, std::string> p;
@@ -181,6 +185,7 @@ namespace state
             if(security++ > val.size())
                 throw std::runtime_error("Error: no path found.");
         }
+        std::reverse(std::begin(A), std::end(A));
         return A;
     }
     std::vector<std::pair<std::string, int>> Adjacencies::getShortestPath(std::string origId, std::string destId)
@@ -194,6 +199,34 @@ namespace state
             prev = step;
         }
         return res;
+    }
+    nlohmann::json Adjacencies::getOrderJson (std::string origId, std::string destId)
+    {
+        nlohmann::json j, o;
+        j["originProvinceId"] = origId;
+        j["destinationProvinceId"] = destId;
+        j["orders"] = nlohmann::json::array();
+        auto path = getShortestPath(origId, destId);
+        int duration = 0, dist;
+        std::string dest, orig = origId;
+        for(auto const& step:path)
+        {
+            o = nlohmann::json::object();
+            dest = step.first;
+            dist = step.second;
+            o["originProvinceId"] = orig;
+            o["destinationProvinceId"] = dest;
+            o["duration"] = dist / 5;
+            o["elapsed"] = 0;
+
+            j["orders"].push_back(o);
+            duration += dist/5;
+            orig = dest;
+        }
+        j["duration"] = duration;
+        j["elapsed"] = 0;
+
+        return j;
     }
 }
 

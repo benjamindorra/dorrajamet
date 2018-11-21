@@ -3,25 +3,23 @@
 #define STATE__PLAYER__H
 
 #include <string>
-
-namespace state {
-  class AIPlayer;
-  class HumanPlayer;
-}
-
-#include "AIPlayer.h"
-#include "HumanPlayer.h"
+#include <json.hpp>
 
 namespace state {
 
   /// class Player - 
   class Player {
-    // Associations
     // Attributes
   private:
     std::string id;
     std::string currentCharacter;
     int score;
+    // Operations
+  public:
+    Player ();
+    Player (nlohmann::json initJson);
+    ~Player ();
+    std::string getId ();
     // Setters and Getters
   };
 

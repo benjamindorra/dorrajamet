@@ -144,5 +144,151 @@
     {
         "adjacenciesPath": "./res/adjacencies.csv",
         "traitsPath": "./res/traits.json"
+    },
+    "gameMap":
+    {
+        "provinces":
+        [
+            {
+                "id": "prov_one",
+                "name": "Oneland",
+                "colorCode": 123456,
+                "development": 50,
+                "prosperity": 12,
+                "baseLevy":
+                {
+                    "men": 500,
+                    "isRaised": false,
+                    "reinforcementRate": 1
+                },
+                "levy":
+                {
+                    "men": 500,
+                    "isRaised": true,
+                    "reinforcementRate": 1 
+                },
+                "baseTaxIncome": 200,
+                "taxIncome": 200,
+                "dispPosX": 
+            },
+            {
+                "id": "prov_two",
+                "name": "Twoland",
+                "colorCode": 234561,
+                "development": 40,
+                "prosperity": 6,
+                "baseLevy":
+                {
+                    "men": 400,
+                    "isRaised": false,
+                    "reinforcementRate": 1
+                },
+                "levy":
+                {
+                    "men": 400,
+                    "isRaised": false,
+                    "reinforcementRate": 1 
+                },
+                "baseTaxIncome": 150,
+                "taxIncome": 150
+            },
+            {
+                "id": "prov_three",
+                "name": "Threeland",
+                "colorCode": 345612,
+                "development": 60,
+                "prosperity": 15,
+                "baseLevy":
+                {
+                    "men": 600,
+                    "isRaised": false,
+                    "reinforcementRate": 1
+                },
+                "levy":
+                {
+                    "men": 600,
+                    "isRaised": false,
+                    "reinforcementRate": 1 
+                },
+                "baseTaxIncome": 250,
+                "taxIncome": 250
+            },
+            {
+                "id": "prov_four",
+                "name": "Fourland",
+                "colorCode": 456123,
+                "development": 50,
+                "prosperity": 12,
+                "baseLevy":
+                {
+                    "men": 500,
+                    "isRaised": false,
+                    "reinforcementRate": 1
+                },
+                "levy":
+                {
+                    "men": 500,
+                    "isRaised": false,
+                    "reinforcementRate": 1 
+                },
+                "baseTaxIncome": 200,
+                "taxIncome": 200
+            },
+            {
+                "id": "prov_five",
+                "name": "Fiveland",
+                "colorCode": 561234,
+                "development": 50,
+                "prosperity": 12,
+                "baseLevy":
+                {
+                    "men": 500,
+                    "isRaised": false,
+                    "reinforcementRate": 1
+                },
+                "levy":
+                {
+                    "men": 500,
+                    "isRaised": false,
+                    "reinforcementRate": 1 
+                },
+                "baseTaxIncome": 200,
+                "taxIncome": 200
+            },
+            {
+                "id": "prov_six",
+                "name": "Sixland",
+                "colorCode": 612345,
+                "development": 50,
+                "prosperity": 12,
+                "baseLevy":
+                {
+                    "men": 500,
+                    "isRaised": false,
+                    "reinforcementRate": 1
+                },
+                "levy":
+                {
+                    "men": 500,
+                    "isRaised": false,
+                    "reinforcementRate": 1 
+                },
+                "baseTaxIncome": 200,
+                "taxIncome": 200
+            }
+        ],
+        "armies":
+        [
+            {
+                "levies":
+                [
+                    "prov_one"
+                ],
+                "currentProvince":
+                [
+                    "prov_one"
+                ]
+            }
+        ]
     }
 }
