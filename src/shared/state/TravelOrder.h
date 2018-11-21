@@ -7,6 +7,7 @@
 
 namespace state {
   class OneProvinceOrder;
+  class Army;
   class Order;
 }
 
@@ -20,13 +21,17 @@ namespace state {
     // Attributes
   private:
     std::vector<OneProvinceOrder> orderList;
+    Army * parent;
     // Operations
   public:
     TravelOrder ();
-    TravelOrder (std::string strJson);
+    TravelOrder (Army * parent, std::string strJson);
     ~TravelOrder ();
     bool checkConsistency ();
     void debug ();
+    /// Advances the current step's progression and returns true if a step is cleared
+    bool nextStep ();
+    unsigned int size ();
     // Setters and Getters
   };
 

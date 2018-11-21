@@ -6,11 +6,16 @@
 #include <vector>
 
 namespace state {
+  class GameMap;
+}
+
+namespace state {
 
   /// class Battle - A class describing an ongoing battle on the map
   class Battle {
     // Attributes
   private:
+    GameMap * parent;
     std::string id;
     /// Location of the battle (pointer)
     std::string province;
@@ -21,10 +26,11 @@ namespace state {
     // Operations
   public:
     Battle ();
-    Battle (std::string strJson);
+    Battle (GameMap * parent, std::string strJson);
     ~Battle ();
     bool checkConsistency ();
     void debug ();
+    void advance ();
     // Setters and Getters
   };
 

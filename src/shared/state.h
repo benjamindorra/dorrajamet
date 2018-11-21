@@ -23,8 +23,6 @@
 #include "state/Traits.h"
 #include "state/Adjacencies.h"
 #include "state/Ressources.h"
-#include "state/AIPlayer.h"
-#include "state/HumanPlayer.h"
 #include "state/Player.h"
 #include "state/GameState.h"
 #endif

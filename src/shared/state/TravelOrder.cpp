@@ -1,5 +1,8 @@
 #include "TravelOrder.h"
-#include "../json.hpp"
+
+#include "Army.h"
+
+#include <json.hpp>
 #include <iostream>
 
 namespace state
@@ -15,8 +18,9 @@ namespace state
         unsigned int elapsed;
         */
     }
-    TravelOrder::TravelOrder (std::string strJson)
+    TravelOrder::TravelOrder (Army * parent, std::string strJson)
     {
+        this->parent = parent;
         using json = nlohmann::json;
         
         try
@@ -54,5 +58,19 @@ namespace state
             std::cout << "    - ";
             order.debug();
         }
+    }
+    bool TravelOrder::nextStep ()
+    {
+        elapsed ++;
+        if(orderList[0].nextStep())
+        {
+            parent->setPosition(orderList[0].getDestinationProvinceId());
+            orderList.erase(orderList.begin());
+        }
+        return elapsed >= duration;
+    }
+    unsigned int TravelOrder::size ()
+    {
+        return orderList.size();
     }
 }

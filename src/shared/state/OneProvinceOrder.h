@@ -21,6 +21,8 @@ namespace state {
     ~OneProvinceOrder ();
     bool checkConsistency ();
     void debug ();
+    bool nextStep ();
+    std::string getDestination ();
     // Setters and Getters
   };
 

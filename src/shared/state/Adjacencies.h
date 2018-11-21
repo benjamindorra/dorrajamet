@@ -5,6 +5,7 @@
 #include <string>
 #include <map>
 #include <vector>
+#include <json.hpp>
 
 namespace state {
 
@@ -25,6 +26,7 @@ namespace state {
     void updateDists (std::map<std::string, int> * d, std::map<std::string, std::string> * p, std::vector<std::string> * Q, int weight, std::string s1, std::string s2);
     std::vector<std::string> computeShortestPath (std::string origId, std::string destId);
     std::vector<std::pair<std::string, int>> getShortestPath (std::string origId, std::string destId);
+    nlohmann::json getOrderJson (std::string origId, std::string destId);
     // Setters and Getters
   };
 

@@ -1,6 +1,6 @@
 #include "Politics.h"
 #include "../tools.hpp"
-#include "../json.hpp"
+#include <json.hpp>
 #include <iostream>
 #include <fstream>
 

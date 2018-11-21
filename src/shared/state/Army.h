@@ -4,8 +4,10 @@
 
 #include <string>
 #include <vector>
+#include <json.hpp>
 
 namespace state {
+  class GameMap;
   class TravelOrder;
 }
 
@@ -18,6 +20,7 @@ namespace state {
     // Associations
     // Attributes
   private:
+    GameMap * parent;
     std::string id;
     /// Id(s) of the province(s) of which levies are in this army
     std::vector<std::string> levies;
@@ -29,10 +32,19 @@ namespace state {
     // Operations
   public:
     Army ();
-    Army (std::string strJson);
+    Army (GameMap * parent, std::string strJson);
     ~Army ();
     bool checkConsistency ();
     void debug ();
+    std::string getCurrentProvince ();
+    void setOrders (nlohmann::json orderJson);
+    std::string getCurrentBattle ();
+    bool isInBattle ();
+    bool hasOrder ();
+    void advanceOrders ();
+    int getMen ();
+    void killMen (int victims);
+    void setPosition (std::string provinceId);
     // Setters and Getters
   };
 

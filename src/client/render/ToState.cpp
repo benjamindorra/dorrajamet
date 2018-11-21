@@ -1,3 +1,7 @@
+/***************************
+ToState.cpp
+Get data from the game state
+****************************/
 #include "ToState.h"
 
 namespace render {

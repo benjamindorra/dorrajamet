@@ -3,6 +3,7 @@
 #define STATE__RESSOURCES__H
 
 #include <string>
+#include <json.hpp>
 
 namespace state {
   class Traits;
@@ -31,6 +32,7 @@ namespace state {
     void debug ();
     void loadAdjacencies (std::string adjacenciesPath);
     void loadTraits (std::string traitsPath);
+    nlohmann::json getOrderJson (std::string origId, std::string destId);
     // Setters and Getters
   };
 

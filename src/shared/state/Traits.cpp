@@ -1,6 +1,6 @@
 #include "Traits.h"
-#include "../json.hpp"
 #include <iostream>
+#include <json.hpp>
 
 namespace state
 {

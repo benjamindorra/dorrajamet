@@ -2,6 +2,7 @@
 #ifndef STATE__GAMESTATE__H
 #define STATE__GAMESTATE__H
 
+#include <state.h>
 #include <vector>
 #include <string>
 
@@ -24,10 +25,12 @@ namespace state {
     // Associations
     // Attributes
   private:
-    Politics politics;
-    GameMap gameMap;
-    Ressources ressources;
-    std::vector<Player> players;
+    state::Politics politics;
+    state::GameMap gameMap;
+    state::Ressources ressources;
+    std::vector<state::Player> players;
+    unsigned int currentPlayer;
+    int currentTurn;
     // Operations
   public:
     GameState ();
@@ -35,6 +38,11 @@ namespace state {
     GameState (const std::string saveFilePath);
     ~GameState ();
     void debug ();
+    void setArmyOrder (std::string armyId, std::string destId);
+    bool turnAdvance ();
+    void updateArmiesOrders ();
+    void checkNewBattles ();
+    void updateBattles ();
     // Setters and Getters
   };
 

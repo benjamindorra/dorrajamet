@@ -33,6 +33,10 @@ namespace state {
     unsigned int baseTaxIncome;
     /// Tax income from this province for a turn.
     unsigned int taxIncome;
+    /// x position for display of armies 
+    int dispPosX;
+    /// y position for display of armies
+    int dispPosY;
     // Operations
   public:
     Province ();
@@ -40,6 +44,8 @@ namespace state {
     ~Province ();
     bool checkConsistency ();
     void debug ();
+    int getLevyMen ();
+    void killMenFromLevy (int victims);
     // Setters and Getters
   };
 
