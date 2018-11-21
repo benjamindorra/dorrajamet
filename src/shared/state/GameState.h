@@ -43,6 +43,8 @@ namespace state {
     void updateArmiesOrders ();
     void checkNewBattles ();
     void updateBattles ();
+    bool checkWarStatus (std::string characterA, std::string characterB);
+    int getCurrentTurn ();
     // Setters and Getters
   };
 

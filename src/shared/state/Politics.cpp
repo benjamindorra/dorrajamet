@@ -48,4 +48,11 @@ namespace state
         std::cout << "\n\n\n";
         characters.debug();
     }
+    bool Politics::checkWarStatus (std::string characterA, std::string characterB)
+    {
+        for(unsigned int i = 0; i < relations.size(); i++)
+            if(relations[i].isBetween(characterA, characterB))
+                return relations[i].getType() == Relation::war;
+        return false;
+    }
 }

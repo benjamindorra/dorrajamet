@@ -702,6 +702,8 @@ struct stdlib_includes {
    int jsoncpp;
    int nlohmann_json;
    int state;// Gamestate package
+   int engine;// Gameengine package
+   int render;// Gamerender package
 };
 
 void print_include_stdlib(struct stdlib_includes* si,char* name) {
@@ -815,6 +817,16 @@ void print_include_stdlib(struct stdlib_includes* si,char* name) {
            print ("#include <state.h>\n");
            si->state = 1;
        }
+       if (!si->engine
+       && (strstr(name,"engine::") == name)) {
+           print ("#include <engine.h>\n");
+           si->engine = 1;
+       }
+       if (!si->render
+       && (strstr(name,"render::") == name)) {
+           print ("#include <render.h>\n");
+           si->render = 1;
+       }
     }
 }
 
@@ -869,7 +881,9 @@ gen_namespace(batch *b, declaration *nsd) {
             if (d->u.this_class->parents != NULL) {
                 umlclasslist parent = d->u.this_class->parents;
                 while (parent != NULL) {
-                    if(!strstr(fqname(parent, 0), "state")) // None of stat classes inherits from a class outside of its package and this caused inclusion errors
+                    if(!strstr(fqname(parent, 0), "state")
+                    && !strstr(fqname(parent, 0), "render")
+                    && !strstr(fqname(parent, 0), "engine")) // None of stat classes inherits from a class outside of its package and this caused inclusion errors
                     {
                         print_include_stdlib(&si, fqname (parent, 0));
                         parent = parent->next;

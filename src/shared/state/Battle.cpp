@@ -71,4 +71,8 @@ namespace state
             parent->getArmy(e)->killMen(whiteKills * (parent->getArmy(e)->getMen() / blackMen));
 
     }
+    std::string Battle::getProvince()
+    {
+        return province;
+    }
 }

@@ -11,6 +11,7 @@ namespace state
     {
         /*
         std::string id;
+        std::string ownerCharacter;
         /// Id(s) of the province(s) of which levies are in this army
         std::vector<std::string> levies;
         /// Pointer of the province where the army is currently located
@@ -28,6 +29,8 @@ namespace state
         try
         {
             json j = json::parse(strJson);
+            id = j["id"].get<std::string>();
+            ownerCharacter = j["ownerCharacter"].get<std::string>();
             levies = j["levies"].get<std::vector<std::string>>();
             currentProvince = j["currentProvince"].get<std::string>();
             currentBattle = j["currentBattle"].get<std::string>();
@@ -56,6 +59,14 @@ namespace state
         std::cout << "Army debug\nCurrentProvince: " << currentProvince << "\nCurrentBattle: " << currentBattle << "\nLevies: \n";
         for(auto levy : levies)
             std::cout << " - Province: " << levy << std::endl;
+    }
+    std::string Army::getId ()
+    {
+        return id;
+    }
+    std::string Army::getOwnerCharacter()
+    {
+        return ownerCharacter;
     }
     std::string Army::getCurrentProvince()
     {
