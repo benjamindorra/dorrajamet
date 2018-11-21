@@ -8,20 +8,15 @@ namespace render {
   class Image;
   class Render;
   class Element;
-};
-namespace state {
-  class Army;
 }
 
 #include "Image.h"
 #include "Element.h"
-#include "state/Army.h"
 
 namespace render {
 
   /// class ShowArmy - 
   class ShowArmy : public render::Element {
-    // Associations
     // Attributes
   private:
     Image armyImg;

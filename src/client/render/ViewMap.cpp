@@ -40,7 +40,7 @@ namespace render {
                 this->view.setCenter(x, sizeY);
                 this->view.zoom(zoom);
             }
-            else if ((y+oldSizeY<=mapY) & (y+sizeY>mapY) & (2*sizeY<=mapY)) {
+            else if ((y+oldSizeY<=mapY) & (y+sizeY>mapY)) {
                 this->view.setCenter(x, mapY-sizeY);
                 this->view.zoom(zoom);
             }

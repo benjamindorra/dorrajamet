@@ -7,8 +7,9 @@ Simple bar to show informations about the player's character.
 
 namespace render {
     PlayerData::PlayerData () {}
-    PlayerData::PlayerData (Render * mainRender) {
-        this->mainRender=mainRender;
+    PlayerData::PlayerData (Render * mainRender, ToState * state) {
+        this->mainRender = mainRender;
+        this->state = state;
         // text
         font.loadFromFile("./res/DejaVuSerifCondensed.ttf");
         text.setFont(font);
@@ -26,12 +27,10 @@ namespace render {
         frame.setFillColor(sf::Color(200,200,0,255));
         frame.setOutlineColor(sf::Color::Black);
         frame.setOutlineThickness(-1);
-        // add to draw
-        this->mainRender->Render::loadPlayerData(this);
     }
     PlayerData::~PlayerData () {}
-    void PlayerData::selectCharacter(std::string data) {
-        this->data = data;
+    void PlayerData::selectCharacter(std::string id) {
+        this->data = state->getCharacter(id);
         text.setString(data);
     }
     void  PlayerData::draw() {

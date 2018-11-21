@@ -5,6 +5,11 @@ All graphical armies and methods to manipulate them.
 #include "ShowArmies.h"
 namespace render {
     ShowArmies::ShowArmies () {}
+    ShowArmies::ShowArmies (ToState * state, ToEngine * engine) {
+        this->state = state;
+        this->engine = engine;
+        std::string stateArmies = state->getArmies();
+    }
     ShowArmies::~ShowArmies () {}
     void ShowArmies::addArmy(ShowArmy * showArmy) {
         armies.push_back(showArmy);

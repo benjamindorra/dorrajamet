@@ -7,8 +7,12 @@
 
 namespace render {
   class ShowArmy;
+  class ToState;
+  class ToEngine;
 }
 
+#include "ToEngine.h"
+#include "ToState.h"
 #include "ShowArmy.h"
 
 namespace render {
@@ -19,11 +23,15 @@ namespace render {
     // Attributes
   private:
     std::vector<ShowArmy*> armies;
+    ToState * state;
+    ToEngine * engine;
     // Operations
   public:
     ShowArmies ();
+    ShowArmies (ToState * state, ToEngine * engine);
     ~ShowArmies ();
     void addArmy (ShowArmy * showArmy);
+    void newArmy ();
     std::vector<ShowArmy*> * getArmies ();
     std::string selectArmy (int x, int y);
     std::string moveSelected (int x, int y);

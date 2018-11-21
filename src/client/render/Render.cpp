@@ -17,13 +17,42 @@ namespace render {
         this->window.create(sf::VideoMode(width, height), "Window", sf::Style::Close);
     }
     Render::~Render () {
-
+        delete data;
+        delete playerData;
     }
+
+    // main loop, handles render and events
     void Render::renderLoop ()
-    {
-        this->window.setFramerateLimit(60);
+    {   
+        // create objects
+        // create objects to interact with state and engine
+        //this->state = ToState();
+        //this->engine = ToEngine();    
+        // create the map image
+        Image map;
+        // import the image
+        map.importFile("./res/provinces.bmp");
+        // create the ShowArmies
+        ShowArmies showArmies(&state, &engine);
+        // create an army image
+        Image armyImg;
+        armyImg.importFile("./res/army.bmp");
+        // create a ShowArmy
+        ShowArmy showArmy(this, armyImg);
+        // add the ShowArmy in ShowArmies
+        showArmies.addArmy(&showArmy);
+        // create the viewmap
+        this->viewMap = ViewMap(this, map, sf::Vector2f(224.f, 162.f), sf::Vector2f(200.f,200.f), showArmies);
+        // create the colormap
+        this->colorMap = ColorMap("./res/provinces.bmp");
+        // show data
+        this->data = new Data(this, &state, &engine);
+        // show player data
+        this->playerData = new PlayerData(this, &state);
+        // end turn button
         Button endTurn(this, window.getSize().x*0.8, 0, "end turn", sf::Color::Red, sf::Vector2i(window.getSize().x*0.2, window.getSize().y*0.1));
         // run the program as long as the window is open
+        this->window.setFramerateLimit(60);
         while (this->window.isOpen())
         {
             // check all the window's events that were triggered since the last iteration of the loop
@@ -51,41 +80,48 @@ namespace render {
                         // check if click is in the end turn button
                         else if (endTurn.contains(x,y)) {
                             if (event.mouseButton.button==sf::Mouse::Button::Left) {
-                                std::cout<<"End player turn"<<std::endl;
+                                engine.addCommand("idjoueur","endTurn");
                             }
                         }
                         // check if click is in the map
-                        else if (viewMap->contains(x, y)) {
-                            sf::Vector2f pixel = window.mapPixelToCoords (sf::Vector2i(x,y), *viewMap->getView());
+                        else if (viewMap.contains(x, y)) {
+                            sf::Vector2f pixel = window.mapPixelToCoords (sf::Vector2i(x,y), *viewMap.getView());
                             if (event.mouseButton.button==sf::Mouse::Button::Left) {
-                                std::string leftclick = viewMap->leftClick(pixel);
+                                std::string leftclick = viewMap.leftClick(pixel);
                                 if (leftclick=="province") {
                                     unsigned int mapX = (unsigned int)pixel.x;
                                     unsigned int mapY = (unsigned int)pixel.y;
-                                    unsigned int pix = colorMap->ColorMap::getPixel(mapX,mapY);
+                                    unsigned int pix = colorMap.ColorMap::getPixel(mapX,mapY);
                                     std::cout<<"pix: "<<pix<<std::endl;
                                     std::cout<<"x: "<<mapX<<"y: "<<mapY<<std::endl;
                                     std::string text = "Province : Wales\n"
                                     "This is a test for the world to witness.\n" 
                                     "No one can change it now. There is no escape from my empire.\nTruly a marvel for the ages. Big if true.\n";
-                                    data->Data::select(Data::Province,text);
+                                    data->select(Data::Province,text);
                                 }
                                 else {
                                     std::cout<<"army !"<<std::endl;
+                                    data->select(Data::Army,"plop");
                                 }
 
                             }
                             if (event.mouseButton.button==sf::Mouse::Button::Right) {
-                                std::string leftclick = viewMap->rightClick(pixel);
-                                if (leftclick=="province") {
+                                std::string rightclick = viewMap.rightClick(pixel);
+                                if (rightclick=="province") {
                                     unsigned int mapX = (unsigned int)pixel.x;
                                     unsigned int mapY = (unsigned int)pixel.y;
-                                    unsigned int pix = colorMap->ColorMap::getPixel(mapX,mapY);
+                                    unsigned int pix = colorMap.ColorMap::getPixel(mapX,mapY);
                                     std::cout<<"pix: "<<pix<<std::endl;
                                     std::cout<<"x: "<<mapX<<"y: "<<mapY<<std::endl;
                                     std::string text = "William Thomson\n"
                                     "Titles:\nDuchy of Wales\n\nStatistics:\nIntelligence 10\nFighting 2\n\nTraits:\nGluttony\n";
                                     data->Data::select(Data::Character, text);
+                                }
+                                else {
+                                    unsigned int mapX = (unsigned int)pixel.x;
+                                    unsigned int mapY = (unsigned int)pixel.y;
+                                    std::string pix = std::to_string(colorMap.getPixel(mapX,mapY));
+                                    engine.addCommand(rightclick, pix);
                                 }
                             }
                         }
@@ -94,16 +130,16 @@ namespace render {
                     }
                     case sf::Event::KeyPressed: {
                         if (sf::Keyboard::isKeyPressed(sf::Keyboard::D)) {
-                            viewMap->moveView(10,0);
+                            viewMap.moveView(10,0);
                         }
                          if (sf::Keyboard::isKeyPressed(sf::Keyboard::Q)) {
-                            viewMap->moveView(-10,0);
+                            viewMap.moveView(-10,0);
                         }
                         if (sf::Keyboard::isKeyPressed(sf::Keyboard::Z)) {
-                            viewMap->moveView(0,-10);
+                            viewMap.moveView(0,-10);
                         }
                         if (sf::Keyboard::isKeyPressed(sf::Keyboard::S)) {
-                            viewMap->moveView(0,10);
+                            viewMap.moveView(0,10);
                         }
                         break;
                     }
@@ -118,11 +154,11 @@ namespace render {
                             else data->scroll(10);
                         }
                         // zoom the map
-                        else if (viewMap->contains(x,y)) {
+                        else if (viewMap.contains(x,y)) {
                             if (event.mouseWheelScroll.delta>0) {
-                                viewMap->changeZoom(0.9);
+                                viewMap.changeZoom(0.9);
                             }
-                            else viewMap->changeZoom(1.1);
+                            else viewMap.changeZoom(1.1);
                         }
                         break;
                     }
@@ -134,9 +170,9 @@ namespace render {
             this->window.clear(sf::Color::Black);
 
             //draw the map
-            viewMap->ViewMap::draw();
+            viewMap.ViewMap::draw();
             // draw the data
-            data->Data::draw();
+            data->draw();
             // draw the playerdata
             playerData->draw();
             // draw end turn button
@@ -160,19 +196,5 @@ namespace render {
     }
     void Render::removeToDraw(std::string id) {
         this->toDraw.erase(id);
-    }
-    void Render::loadColormap (ColorMap * colorMap) {
-        this->colorMap=colorMap;
-    }
-    void Render::loadMap (ViewMap * viewMap) {
-        this->viewMap=viewMap;
-    }
-
-    void Render::loadData (Data * data) {
-        this->data = data;
-    }
-    
-    void Render::loadPlayerData (PlayerData * playerData) {
-        this->playerData = playerData;
     }
 }

@@ -6,17 +6,22 @@
 #include <string>
 
 namespace render {
+  class ToState;
   class Render;
   class Element;
 }
 
 #include "Element.h"
+#include "ToState.h"
 
 namespace render {
 
   /// class PlayerData - 
   class PlayerData : public render::Element {
+    // Associations
     // Attributes
+  public:
+    ToState * state;
   private:
     sf::Text text;
     sf::Font font;
@@ -26,7 +31,7 @@ namespace render {
     // Operations
   public:
     PlayerData ();
-    PlayerData (Render * mainRender);
+    PlayerData (Render * mainRender, ToState * state);
     ~PlayerData ();
     void draw ();
     void selectCharacter (std::string id);

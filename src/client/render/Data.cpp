@@ -10,8 +10,10 @@ Displays game state data and buttons to interact with them.
 
 namespace render {
     Data::Data () {}
-    Data::Data (Render * mainRender) {
+    Data::Data (Render * mainRender, ToState * state, ToEngine * engine) {
         this->mainRender=mainRender;
+        this->state = state;
+        this->engine = engine;
         // text
         font.loadFromFile("./res/DejaVuSerifCondensed.ttf");
         text.setFont(font);
@@ -26,28 +28,82 @@ namespace render {
         float widthText = width*(float)mainRender->getWindow()->getSize().x;
         float heightText = height*(float)mainRender->getWindow()->getSize().y;
         view.setViewport(sf::FloatRect(0, 0.1, width, height));
+         // view size
+        view.setSize(widthText,heightText-0.1);
+        view.setCenter(widthText/2, (heightText-0.1)/2);
         // frame
         frame.setFillColor(sf::Color(128,128,128,255));
         frame.setSize(view.getSize());
         sf::Color color(160,160,160,255);
         buttons.push_back(new Button(mainRender, 0, heightText+0.1, "", color, sf::Vector2i(widthText, mainRender->getWindow()->getSize().y-heightText)));
-        // view size
-        view.setSize(widthText,heightText-0.1);
-        view.setCenter(widthText/2, (heightText-0.1)/2);
-        // add to draw
-        this->mainRender->Render::loadData(this);
     }
     Data::~Data () {
         for (Button *button : buttons) {
             delete button;
         }
     }
-    void Data::select(Types type,std::string data) {
+    void Data::select(Types type,std::string id) {
         this->type = type;
-        this->data = data;
-        for (int i=0;i<15;i++) {this->data += data;}
-        // insert endline characters into the text so that if fits the window
+        this->id = id;
+        // select data type
         float width = view.getSize().x;
+        float top = view.getViewport().top;
+        float height = view.getViewport().height;
+        float spaceV = (1-top-height)*mainRender->getWindow()->getSize().y;
+        float y1 = mainRender->getWindow()->getSize().y*(height+top);
+        float left = view.getViewport().left;
+        float x1 = left*mainRender->getWindow()->getSize().x;
+        sf::Color color(160,160,160,255);
+        // reset the view
+        view.setCenter(view.getSize().x/2, view.getSize().y/2);
+        text.setPosition(0,0);
+        // create buttons
+        if (type==Types::Character) {
+            for (Button *button : buttons) {
+                delete button;
+            }
+            buttons={};
+            buttons.push_back(new Button(mainRender, x1, y1, "Relations", color, sf::Vector2i(width, spaceV/3)));
+            buttons.push_back(new Button(mainRender, x1, y1+spaceV/3, "Alliance", color, sf::Vector2i(width/2, spaceV/3)));
+            buttons.push_back(new Button(mainRender, x1+width/2, y1+spaceV/3, "Murder", color, sf::Vector2i(width/2, spaceV/3)));
+            buttons.push_back(new Button(mainRender, x1, y1+2*spaceV/3, "War", color, sf::Vector2i(width/2, spaceV/3)));
+            buttons.push_back(new Button(mainRender, x1+width/2, y1+2*spaceV/3, "Peace", color, sf::Vector2i(width/2, spaceV/3)));
+            this->data = state->getCharacter(id);
+        }
+        if (type==Types::Province) {
+            for (Button *button : buttons) {
+                delete button;
+            }
+            buttons={};
+            buttons.push_back(new Button(mainRender, x1, y1, "Levy", color, sf::Vector2i(width/2, spaceV/2)));
+            buttons.push_back(new Button(mainRender, x1+width/2, y1, "Claim", color, sf::Vector2i(width/2, spaceV/2)));
+            buttons.push_back(new Button(mainRender, x1, y1+spaceV/2, "", color, sf::Vector2i(width, spaceV/2)));
+            this->data = state->getProvince(id);
+        }
+        
+        if (type==Types::Army) {
+            for (Button *button : buttons) {
+                delete button;
+            }
+            buttons={};
+            buttons.push_back(new Button(mainRender, x1, y1, "", color, sf::Vector2i(width, spaceV)));
+            this->data = state->getArmy(id);
+        }
+
+        if (type==Types::Relations) {
+            for (Button *button : buttons) {
+                delete button;
+            } 
+            buttons={};
+            buttons.push_back(new Button(mainRender, x1, y1, "Character", color, sf::Vector2i(width, spaceV/3)));
+            buttons.push_back(new Button(mainRender, x1, y1+spaceV/3, "", color, sf::Vector2i(width, 2*spaceV/3)));
+            buttons.push_back(new Button(mainRender, x1, y1+spaceV/3, "", color, sf::Vector2i(width, 2*spaceV/3)));
+            buttons.push_back(new Button(mainRender, x1, y1+spaceV/3, "", color, sf::Vector2i(width, 2*spaceV/3)));
+            buttons.push_back(new Button(mainRender, x1, y1+spaceV/3, "", color, sf::Vector2i(width, 2*spaceV/3)));
+            this->data = state->getRelations(id);
+        }
+        for (int i=0;i<9;i++) {this->data += data;}
+        // insert endline characters into the text so that if fits the window
         float charSize = text.getCharacterSize()*1.9*view.getViewport().width;
         size_t length = this->data.length();
         float lineSize = 0;
@@ -77,60 +133,6 @@ namespace render {
             }
         }
         text.setString(this->data);
-        // select data type
-        float top = view.getViewport().top;
-        float height = view.getViewport().height;
-        float spaceV = (1-top-height)*mainRender->getWindow()->getSize().y;
-        float y1 = mainRender->getWindow()->getSize().y*(height+top);
-        float left = view.getViewport().left;
-        float x1 = left*mainRender->getWindow()->getSize().x;
-        sf::Color color(160,160,160,255);
-        // reset the view
-        view.setSize(width,y1-0.1);
-        view.setCenter(width/2, (y1-0.1)/2);
-        text.setPosition(0,0);
-        // create buttons
-        if (type==Types::Character) {
-            for (Button *button : buttons) {
-                delete button;
-            }
-            buttons={};
-            buttons.push_back(new Button(mainRender, x1, y1, "Relations", color, sf::Vector2i(width, spaceV/3)));
-            buttons.push_back(new Button(mainRender, x1, y1+spaceV/3, "Alliance", color, sf::Vector2i(width/2, spaceV/3)));
-            buttons.push_back(new Button(mainRender, x1+width/2, y1+spaceV/3, "Murder", color, sf::Vector2i(width/2, spaceV/3)));
-            buttons.push_back(new Button(mainRender, x1, y1+2*spaceV/3, "War", color, sf::Vector2i(width/2, spaceV/3)));
-            buttons.push_back(new Button(mainRender, x1+width/2, y1+2*spaceV/3, "Peace", color, sf::Vector2i(width/2, spaceV/3)));
-        }
-        if (type==Types::Province) {
-            for (Button *button : buttons) {
-                delete button;
-            }
-            buttons={};
-            buttons.push_back(new Button(mainRender, x1, y1, "Levy", color, sf::Vector2i(width/2, spaceV/2)));
-            buttons.push_back(new Button(mainRender, x1+width/2, y1, "Claim", color, sf::Vector2i(width/2, spaceV/2)));
-            buttons.push_back(new Button(mainRender, x1, y1+spaceV/2, "", color, sf::Vector2i(width, spaceV/2)));
-        }
-        
-        if (type==Types::Army) {
-            for (Button *button : buttons) {
-                delete button;
-            }
-            buttons={};
-            buttons.push_back(new Button(mainRender, x1, y1, "", color, sf::Vector2i(width, spaceV)));
-
-        }
-
-        if (type==Types::Relations) {
-            for (Button *button : buttons) {
-                delete button;
-            } 
-            buttons={};
-            buttons.push_back(new Button(mainRender, x1, y1, "Character", color, sf::Vector2i(width, spaceV/3)));
-            buttons.push_back(new Button(mainRender, x1, y1+spaceV/3, "", color, sf::Vector2i(width, 2*spaceV/3)));
-            buttons.push_back(new Button(mainRender, x1, y1+spaceV/3, "", color, sf::Vector2i(width, 2*spaceV/3)));
-            buttons.push_back(new Button(mainRender, x1, y1+spaceV/3, "", color, sf::Vector2i(width, 2*spaceV/3)));
-            buttons.push_back(new Button(mainRender, x1, y1+spaceV/3, "", color, sf::Vector2i(width, 2*spaceV/3)));
-        }
     }
     void  Data::draw() {
         for (Button *button : buttons) {
@@ -179,13 +181,16 @@ namespace render {
             else if (button=="Murder") {}
             else if (button=="War") {}
             else if (button=="Peace") {}
+            engine->addCommand(id,button);
         }
         else if (type==Types::Province) {
             if (button=="Levy") {}
             else if (button =="Claim") {}
+            engine->addCommand(id,button);
         }
         
         else if (type==Types::Army) {
+            engine->addCommand(id,button);
         }
 
         else if (type==Types::Relations) {
@@ -194,18 +199,17 @@ namespace render {
     }
 
     void Data::scroll(int deltaY) {
-        float x = view.getCenter().x;
-        float y = view.getCenter().y;
-        float newY = y+deltaY;
-        float sizeY = view.getSize().y/2.0;
         float frameH = frame.getSize().y;
         float newTextPos = text.getPosition().y-deltaY;
-        float newTextBottom = text.getGlobalBounds().top+text.getGlobalBounds().height-deltaY;
-        if ((newY-sizeY>=0) & (newY+sizeY<=frameH)) {
-            view.setCenter(x,newY);
-        }
-        else if ((newTextPos<=0) & (newTextBottom>=frameH)){
+        float newTextBottom = text.getPosition().y+text.getLocalBounds().height-deltaY;
+        if ((newTextPos<=0) & (newTextBottom>=frameH)){
             text.setPosition(0, newTextPos);
+        }
+        else if ((text.getPosition().y<=0) & (newTextPos>0)) {
+            text.setPosition(0, 0);
+        }
+        else if (((text.getPosition().y+text.getLocalBounds().height)>=frameH) & (newTextBottom<frameH)) {
+            text.setPosition(0, frameH-text.getLocalBounds().height);
         }
     }
 

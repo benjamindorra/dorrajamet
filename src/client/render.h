@@ -2,14 +2,16 @@
 #ifndef __RENDER__H
 #define __RENDER__H
 
-#include "render/Element.h"
-#include "render/Button.h"
-#include "render/PlayerData.h"
-#include "render/Data.h"
 #include "render/ColorMap.h"
+#include "render/Element.h"
 #include "render/Image.h"
+#include "render/ToEngine.h"
+#include "render/ToState.h"
 #include "render/ShowArmy.h"
 #include "render/ShowArmies.h"
 #include "render/ViewMap.h"
+#include "render/Button.h"
+#include "render/PlayerData.h"
+#include "render/Data.h"
 #include "render/Render.h"
 #endif
