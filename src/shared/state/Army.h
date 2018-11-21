@@ -22,6 +22,7 @@ namespace state {
   private:
     GameMap * parent;
     std::string id;
+    std::string ownerCharacter;
     /// Id(s) of the province(s) of which levies are in this army
     std::vector<std::string> levies;
     /// Pointer of the province where the army is currently located
@@ -36,6 +37,8 @@ namespace state {
     ~Army ();
     bool checkConsistency ();
     void debug ();
+    std::string getId ();
+    std::string getOwnerCharacter ();
     std::string getCurrentProvince ();
     void setOrders (nlohmann::json orderJson);
     std::string getCurrentBattle ();

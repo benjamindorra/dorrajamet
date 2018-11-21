@@ -1,4 +1,7 @@
 #include "GameMap.h"
+
+#include "GameState.h"
+
 #include <json.hpp>
 #include <iostream>
 
@@ -89,27 +92,59 @@ namespace state
     {
         provinces[idProvince].killMenFromLevy(victims);
     }
+    bool GameMap::checkForOngoingBattles (std::string province)
+    {
+        for(auto const& e: battles)
+            if(battles[e.first].getProvince() == province)
+                return true;
+        return false;
+    }
     void GameMap::checkNewBattles()
     {
-        std::map<std::string, std::vector<std::string>> pos;
+        std::map<std::string, std::vector<std::string>> pos; // pos contains all the armies contained in each province
         for(auto const& e: armies)
             pos[armies[e.first].getCurrentProvince()].push_back(e.first);
-        for(auto const& e: pos)
+        for(auto const& e: pos) // for each province
         {
-            if(e.second.size() >= 2)
+            if(checkForOngoingBattles(e.first))
+                continue;
+            if(e.second.size() >= 2) // If there are two armies or more in a province
             {
-                /*
-                std::string province;
-                std::vector<std::string> whiteArmies;
-                std::vector<std::string> blackArmies;
-                int startTurn;
-                int endTurn;
-                */
                 // For each pair of armies get owners
                 // Check if owners are at war
                 // If it is the case create a battle
-                nlohmann::json j;
-                j["province"] = e.first;
+                unsigned int i, j;
+                std::string character1, character2, army1, army2;
+                for(i = 0; i < e.second.size() - 1; i++)
+                {
+                    if(checkForOngoingBattles(e.first))
+                        continue;
+                    army1 = e.second[i];
+                    for(j = i + 1; i < e.second.size(); j++)
+                    {
+                        if(checkForOngoingBattles(e.first))
+                            continue;
+                        army2 = e.second[j];
+                        character1 = armies[army1].getOwnerCharacter();
+                        character2 = armies[army2].getOwnerCharacter();
+                        if(parent->checkWarStatus(character1, character2)) // If characters are at war, start a battle!
+                        {
+                            nlohmann::json battle, wArmies, bArmies;
+                            battle["province"] = e.first;
+                            auto battleId = armies[army1].getId() + "_vs_" + armies[army2].getId() + "_t" + std::to_string(parent->getCurrentTurn());
+                            battle["id"] = battleId;
+                            wArmies.push_back(army1);
+                            bArmies.push_back(army2);
+                            battle["whiteArmies"] = wArmies;
+                            battle["blackArmies"] = bArmies;
+                            battle["startTurn"] = parent->getCurrentTurn();
+                            battle["endTurn"] = -1;
+                            battles[battleId] = Battle(this, battle.dump());
+                            // For now we will only consider 1 battle of 1 army vs 1 army per province
+                        }
+                    }
+                }
+                
 
             }
         }

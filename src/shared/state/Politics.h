@@ -31,6 +31,7 @@ namespace state {
     Politics (std::string strJson);
     ~Politics ();
     void debug ();
+    bool checkWarStatus (std::string characterA, std::string characterB);
     // Setters and Getters
   };
 

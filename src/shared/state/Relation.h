@@ -9,8 +9,9 @@ namespace state {
   /// class Relation - 
   class Relation {
     // Attributes
-  private:
+  public:
     enum relType{non_aggression = 0, alliance = 1, friendship = 2, rivalry = 3, war = 4};
+  private:
     std::string characterA;
     std::string characterB;
     relType type;
@@ -22,6 +23,8 @@ namespace state {
     ~Relation ();
     bool checkConsistency ();
     void debug ();
+    bool isBetween (std::string characterA, std::string characterB);
+    relType getType ();
     // Setters and Getters
   };
 

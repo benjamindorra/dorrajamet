@@ -70,4 +70,12 @@ namespace state
     {
         std::cout << "Debug relation\nType: " << type << "\nCharacter A: " << characterA << "\nCharacterB: " << characterB << "\nEnd Turn: " << endTurn << std::endl;
     }
+    bool Relation::isBetween (std::string characterA, std::string characterB)
+    {
+        return(this->characterA == characterA && this->characterB == characterB);
+    }
+    Relation::relType Relation::getType ()
+    {
+        return type;
+    }
 }

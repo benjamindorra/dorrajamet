@@ -76,4 +76,12 @@ namespace state
     {
         gameMap.checkNewBattles();
     }
+    bool GameState::checkWarStatus (std::string characterA, std::string characterB)
+    {
+        return politics.checkWarStatus(characterA, characterB);
+    }
+    int GameState::getCurrentTurn ()
+    {
+        return currentTurn;
+    }
 }
