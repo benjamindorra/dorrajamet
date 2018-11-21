@@ -24,6 +24,12 @@ namespace state
             json j = json::parse(fileContent);
             this->politics = Politics(j["politics"].dump());
             this->ressources = Ressources(j["ressources"].dump());
+            this->gameMap = GameMap(this, j["gameMap"].dump());
+            Player p;
+            for(json::iterator it = j["players"].begin(); it != j["players"].end(); ++it)
+                players.push_back(Player(it.value()));
+            this->currentPlayer = j["currentPlayer"].get<int>();
+            this->currentTurn = j["currentTurn"].get<int>();
         }
         catch(const std::exception& e)
         {
@@ -39,5 +45,35 @@ namespace state
     {
         this->politics.debug();
         this->ressources.debug();
+        this->gameMap.debug();
+    }
+    void GameState::setArmyOrder(std::string armyId, std::string destId)
+    {
+        auto origId = gameMap.getArmyPosition(armyId);
+        auto path = ressources.getOrderJson(origId, destId);
+        gameMap.setArmyOrder(armyId, path);
+    }
+    bool GameState::turnAdvance()
+    {
+        currentPlayer++;
+        if(currentPlayer <= players.size())
+        {
+            currentPlayer = 0;
+            return true;
+        }
+        else
+            return false;
+    }
+    void GameState::updateArmiesOrders ()
+    {
+        gameMap.updateArmiesOrders();
+    }
+    void GameState::updateBattles()
+    {
+        gameMap.updateBattles();
+    }
+    void GameState::checkNewBattles()
+    {
+        gameMap.checkNewBattles();
     }
 }

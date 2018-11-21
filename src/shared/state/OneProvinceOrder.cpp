@@ -46,4 +46,13 @@ namespace state
     {
         std::cout << "Debug OP Order\nOrigin: " << originProvinceId << "\nDestination: " << destinationProvinceId << "\nDuration: " << duration << "\nElapsed: " << elapsed << std::endl;
     }
+    bool OneProvinceOrder::nextStep()
+    {
+        elapsed++;
+        return elapsed >= duration;
+    }
+    std::string OneProvinceOrder::getDestination()
+    {
+        return destinationProvinceId;
+    }
 }

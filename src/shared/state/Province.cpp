@@ -71,4 +71,12 @@ namespace state
     {
         std::cout << "Debug Province\nId: " << id << "\nName: " << name << "\nColor Code: " << std::hex << colorCode << "\nDevelopment score: " << development << "\nProsperity level: " << prosperity << std::endl;
     }
+    int Province::getLevyMen()
+    {
+        return levy.getMen();
+    }
+    void Province::killMenFromLevy (int victims)
+    {
+        levy.killMen(victims);
+    }
 }

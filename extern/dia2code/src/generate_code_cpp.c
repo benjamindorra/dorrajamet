@@ -701,6 +701,7 @@ struct stdlib_includes {
    int sfmlGraphics;
    int jsoncpp;
    int nlohmann_json;
+   int state;// Gamestate package
 };
 
 void print_include_stdlib(struct stdlib_includes* si,char* name) {
@@ -761,7 +762,7 @@ void print_include_stdlib(struct stdlib_includes* si,char* name) {
            print ("#include <thread>\n");
            si->thread = 1;
        }
-       if (!si->memory 
+       if (!si->queue 
        && (strstr(name,"std::queue")
        ||  strstr(name,"std::priority_queue"))) {
            print ("#include <queue>\n");
@@ -805,7 +806,13 @@ void print_include_stdlib(struct stdlib_includes* si,char* name) {
        if (!si->nlohmann_json
        && (strstr(name,"nlohmann::") == name)) {
            print ("#include <json.hpp>\n");
-       }      
+           si->nlohmann_json = 1;
+       }
+       if (!si->state
+       && (strstr(name,"state::") == name)) {
+           print ("#include <state.h>\n");
+           si->state = 1;
+       }
     }
 }
 
@@ -860,8 +867,13 @@ gen_namespace(batch *b, declaration *nsd) {
             if (d->u.this_class->parents != NULL) {
                 umlclasslist parent = d->u.this_class->parents;
                 while (parent != NULL) {
-                    print_include_stdlib(&si, fqname (parent, 0));
-                    parent = parent->next;
+                    if(!strstr(fqname(parent, 0), "state")) // None of stat classes inherits from a class outside of its package and this caused inclusion errors
+                    {
+                        print_include_stdlib(&si, fqname (parent, 0));
+                        parent = parent->next;
+                    }
+                    else
+                        parent = parent->next;
                 }
             }
 

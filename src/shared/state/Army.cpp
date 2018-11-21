@@ -1,4 +1,7 @@
 #include "Army.h"
+
+#include "GameMap.h"
+
 #include <json.hpp>
 #include <iostream>
 
@@ -17,8 +20,9 @@ namespace state
         std::vector<TravelOrder> orders;
         */
     }
-    Army::Army (std::string strJson)
+    Army::Army (GameMap * parent, std::string strJson)
     {
+        this->parent = parent;
         using json = nlohmann::json;
         
         try
@@ -30,7 +34,7 @@ namespace state
             json jOrders = j["orders"];
             for(json::iterator it = jOrders.begin(); it != jOrders.end(); ++it)
             {
-                orders.push_back(TravelOrder(it.value().dump()));
+                orders.push_back(TravelOrder(this, it.value().dump()));
             }
         }
         catch(const std::exception& e)
@@ -52,5 +56,57 @@ namespace state
         std::cout << "Army debug\nCurrentProvince: " << currentProvince << "\nCurrentBattle: " << currentBattle << "\nLevies: \n";
         for(auto levy : levies)
             std::cout << " - Province: " << levy << std::endl;
+    }
+    std::string Army::getCurrentProvince()
+    {
+        return currentProvince;
+    }
+    void Army::setOrders(nlohmann::json orderJson)
+    {
+        TravelOrder order(this, orderJson.dump());
+        orders.clear();
+        orders.push_back(order);
+    }
+    std::string Army::getCurrentBattle ()
+    {
+        return currentBattle;
+    }
+    bool Army::isInBattle ()
+    {
+        return currentBattle.size();
+    }
+    bool Army::hasOrder()
+    {
+        return orders.size();
+    }
+    void Army::advanceOrders()
+    {
+        auto travelOrder = orders[0];
+        if(travelOrder.nextStep())
+        {
+            orders.clear();
+        }
+    }
+    int Army::getMen()
+    {
+        int res = 0;
+        for(auto const& levy: levies)
+        {
+            res += parent->getLevyMen(levy);
+        }
+        return res;
+    }
+    void Army::killMen(int victims)
+    {
+        int totalMen = getMen();
+        for(auto const& e: levies)
+        {
+            int men = parent->getLevyMen(e);
+            parent->killMenFromLevy(e, victims * (men / totalMen));
+        }
+    }
+    void Army::setPosition(std::string provinceId)
+    {
+        currentProvince = provinceId;
     }
 }

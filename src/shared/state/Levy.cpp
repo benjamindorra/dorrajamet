@@ -21,7 +21,7 @@ namespace state
         try
         {
             json j = json::parse(strJson);
-            men = j["men"].get<unsigned int>();
+            men = j["men"].get<int>();
             isRaised = j["isRaised"].get<bool>();
             reinforcementRate = j["reinforcementRate"].get<float>();
         }
@@ -42,5 +42,15 @@ namespace state
     void Levy::debug ()
     {
         std::cout << "Debug Levy\nMen: " << men << "\nIs raised: " << isRaised << "\nReinforcement rate: " << reinforcementRate << std::endl;
+    }
+    int Levy::getMen()
+    {
+        return men;
+    }
+    void Levy::killMen(int victims)
+    {
+        men -= victims;
+        if(men < 0)
+            men = 0;
     }
 }

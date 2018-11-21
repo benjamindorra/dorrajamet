@@ -2,6 +2,6 @@
 #ifndef __ENGINE__H
 #define __ENGINE__H
 
-#include "engine/EngineEvent.h"
+#include "engine/Command.h"
 #include "engine/EngineCore.h"
 #endif

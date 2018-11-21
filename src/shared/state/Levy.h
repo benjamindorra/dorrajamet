@@ -11,7 +11,7 @@ namespace state {
     // Attributes
   private:
     /// Number of men in the levy
-    int unsigned men;
+    int men;
     bool isRaised;
     /// Ranges from 0 (0%) to 150 (150%).
     float reinforcementRate;
@@ -22,6 +22,8 @@ namespace state {
     ~Levy ();
     bool checkConsistency ();
     void debug ();
+    int getMen ();
+    void killMen (int victims);
     // Setters and Getters
   };
 

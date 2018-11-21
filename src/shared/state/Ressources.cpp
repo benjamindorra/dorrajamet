@@ -86,5 +86,9 @@ namespace state
             throw std::runtime_error("Error: could not load traits.");
         }
     }
+    nlohmann::json Ressources::getOrderJson (std::string origId, std::string destId)
+    {
+        return adjacencies.getOrderJson(origId, destId);
+    }
 
 }
