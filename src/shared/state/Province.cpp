@@ -35,11 +35,11 @@ namespace state
             json j = json::parse(strJson);
             id = j["id"].get<std::string>();
             name = j["name"].get<std::string>();
-            colorCode = std::stoi(j["colorCode"].get<std::string>(), nullptr, 16);
+            colorCode = j["colorCode"].get<int>();
             development = j["development"].get<int>();
             prosperity = j["prosperity"].get<char>();
-            baseLevy = Levy(j["baseLevy"].get<std::string>());
-            levy = Levy(j["levy"].get<std::string>());
+            baseLevy = Levy(j["baseLevy"].dump());
+            levy = Levy(j["levy"].dump());
             baseTaxIncome = j["baseTaxIncome"].get<unsigned int>();
             taxIncome = j["taxIncome"].get<unsigned int>();
         }

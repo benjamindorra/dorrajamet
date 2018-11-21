@@ -1,4 +1,39 @@
 {
+    "players":
+    [
+        {
+            "id": "player_one",
+            "currentCharacter": "chara_0001",
+            "score": 100
+        },
+        {
+            "id": "player_two",
+            "currentCharacter": "chara_0002",
+            "score": 100
+        },
+        {
+            "id": "player_three",
+            "currentCharacter": "chara_0003",
+            "score": 100
+        },
+        {
+            "id": "player_four",
+            "currentCharacter": "chara_0004",
+            "score": 100
+        },
+        {
+            "id": "player_five",
+            "currentCharacter": "chara_0005",
+            "score": 100
+        },
+        {
+            "id": "player_six",
+            "currentCharacter": "chara_0006",
+            "score": 100
+        }
+    ],
+    "currentPlayer": 0,
+    "currentTurn": 0,
     "politics": {
         "titles":
         [
@@ -279,14 +314,16 @@
         "armies":
         [
             {
+                "id": "army_chara0001_xx",
+                "ownerCharacter": "chara_0001",
                 "levies":
                 [
                     "prov_one"
                 ],
-                "currentProvince":
-                [
-                    "prov_one"
-                ]
+                "currentProvince": "prov_one",
+                "currentBattle": "",
+                "orders":
+                []
             }
         ]
     }
