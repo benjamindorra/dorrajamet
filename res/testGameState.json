@@ -168,8 +168,7 @@
                     "reinforcementRate": 1 
                 },
                 "baseTaxIncome": 200,
-                "taxIncome": 200,
-                "dispPosX": 
+                "taxIncome": 200
             },
             {
                 "id": "prov_two",

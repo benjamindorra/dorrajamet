@@ -33,7 +33,7 @@ namespace state
         try
         {
             json j = json::parse(strJson);
-            id = j["id"].get<int>();
+            id = j["id"].get<std::string>();
             name = j["name"].get<std::string>();
             colorCode = std::stoi(j["colorCode"].get<std::string>(), nullptr, 16);
             development = j["development"].get<int>();
