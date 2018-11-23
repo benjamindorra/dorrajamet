@@ -1,4 +1,7 @@
 #include "Levy.h"
+
+#include "Province.h"
+
 #include <json.hpp>
 #include <iostream>
 
@@ -9,20 +12,21 @@ namespace state
         /*
         /// Number of men in the levy
         unsigned int men;
-        bool isRaised;
+        bool raised;
         /// Ranges from 0 (0%) to 150 (150%).
         float reinforcementRate;
         */
     }
-    Levy::Levy (std::string strJson)
-    {
+    Levy::Levy (Province * parent, std::string strJson)
+    {   
+        this-> parent = parent;
         using json = nlohmann::json;
         
         try
         {
             json j = json::parse(strJson);
             men = j["men"].get<int>();
-            isRaised = j["isRaised"].get<bool>();
+            raised = j["isRaised"].get<bool>();
             reinforcementRate = j["reinforcementRate"].get<float>();
         }
         catch(const std::exception& e)
@@ -41,7 +45,7 @@ namespace state
     }
     void Levy::debug ()
     {
-        std::cout << "Debug Levy\nMen: " << men << "\nIs raised: " << isRaised << "\nReinforcement rate: " << reinforcementRate << std::endl;
+        std::cout << "Debug Levy\nMen: " << men << "\nIs raised: " << raised << "\nReinforcement rate: " << reinforcementRate << std::endl;
     }
     int Levy::getMen()
     {
@@ -55,6 +59,22 @@ namespace state
     }
     void Levy::disband ()
     {
-        isRaised = false;
+        raised = false;
+    }
+    bool Levy::isRaised()
+    {
+        return raised;
+    }
+    void Levy::setReinforcementRate(float rate)
+    {
+        reinforcementRate = rate;
+    }
+    void Levy::reinforce(int men)
+    {
+        this->men += men;
+    }
+    float Levy::getReinforcementRate()
+    {
+        return reinforcementRate;
     }
 }

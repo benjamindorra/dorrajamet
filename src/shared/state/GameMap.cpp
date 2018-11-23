@@ -26,7 +26,7 @@ namespace state
             for(it = jArray.begin(); it!= jArray.end(); ++it)
             {
                 jElement = it.value();
-                this->provinces[jElement["id"].get<std::string>()] = Province(jElement.dump());
+                this->provinces[jElement["id"].get<std::string>()] = Province(this, jElement.dump());
             }
             // Armies
             jArray = j["armies"];
@@ -170,5 +170,73 @@ namespace state
             armies[army].disband();
             armies.erase(army);
         }
+    }
+    void GameMap::updateReinforcementRates ()
+    {
+        // For each province
+            // If Levy is not raised
+                // Set its reinforcement rate to 1.0
+            // Else
+                // Get levy's army
+                // If army is in battle
+                    // Set reinforcement rate 0.0
+                // Else
+                    // Get army's position
+                    // Get province owner
+                    // Get army's position's owner
+                    // If the two are the same
+                        // Set reinforcement rate 1.0
+                    // Else If the two are at war
+                        // Set reinforcement rate 0.0
+                    // Else
+                        // Get both owner's top lieges
+                        // If lieges are the same (ie both owners belong to the same realm)
+                            // Set reinforcement rate 0.5
+                        // Else
+                            // Set reinforcement rate 0.0
+
+        for(auto const& e: provinces)
+        {
+            auto levyProvinceId = e.first;
+            if(!provinces[levyProvinceId].isLevyRaised())
+                provinces[levyProvinceId].setLevyReinforcementRate(1);
+            else
+            {
+                auto armyId = getArmyOfLevy(levyProvinceId);
+                if(armies[armyId].isInBattle())
+                    provinces[levyProvinceId].setLevyReinforcementRate(0);
+                else
+                {
+                    auto levyPosition = armies[armyId].getCurrentProvince();
+                    auto levyOwner = parent->getProvinceOwner(levyProvinceId);
+                    auto positionOwner = parent->getProvinceOwner(levyPosition);
+                    if(levyOwner == positionOwner)
+                        provinces[levyProvinceId].setLevyReinforcementRate(1);
+                    else if(parent->checkWarStatus(levyOwner, positionOwner))
+                        provinces[levyProvinceId].setLevyReinforcementRate(0);
+                    else
+                    {
+                        auto levyOwnerTopLiege = parent->getCharacterTopLiege(levyOwner);
+                        auto positionOwnerTopLiege = parent->getCharacterTopLiege(positionOwner);
+                        if(levyOwnerTopLiege == positionOwnerTopLiege)
+                            provinces[levyProvinceId].setLevyReinforcementRate(0.5);
+                        else
+                            provinces[levyProvinceId].setLevyReinforcementRate(0);
+                    }
+                }
+            }
+        }
+    }
+    std::string GameMap::getArmyOfLevy(std::string levyProvinceId)
+    {
+        for(auto const& e: armies)
+            if(armies[e.first].ownsLevy(levyProvinceId))
+                return e.first;
+        return std::string("");
+    }
+    void GameMap::reinforceLevies ()
+    {
+        for(auto const& e: provinces)
+            provinces[e.first].reinforceLevy();
     }
 }

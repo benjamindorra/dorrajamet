@@ -92,4 +92,17 @@ namespace state
     {
         gameMap.clearDeadArmies();
     }
+    void GameState::updateLevies ()
+    {
+        gameMap.updateReinforcementRates();
+        gameMap.reinforceLevies();
+    }
+    std::string GameState::getProvinceOwner (std::string provinceId)
+    {
+        return politics.getProvinceOwner(provinceId);
+    }
+    std::string GameState::getCharacterTopLiege (std::string characterId)
+    {
+        return politics.getCharacterTopLiege(characterId);
+    }
 }

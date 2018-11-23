@@ -32,6 +32,8 @@ namespace state {
     ~Politics ();
     void debug ();
     bool checkWarStatus (std::string characterA, std::string characterB);
+    std::string getProvinceOwner (std::string provinceId);
+    std::string getCharacterTopLiege (std::string characterId);
     // Setters and Getters
   };
 

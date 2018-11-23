@@ -4,8 +4,10 @@ ENGINE:
         ✔ Check for new battles @done(18-11-21 09:31)
         ✔ Process ongoing battles @done(18-11-19 16:40)
         ✔ Clear finished battles @done(18-11-21 12:01)
-        [] Disband defeated armies
-        [] Reinforce armies
+        ✔ Disband defeated armies @done(18-11-23 08:27)
+        ✔ Reinforce armies: @done(18-11-23 11:44)
+            ✔ Update reinforcement rates @done(18-11-23 11:44)
+            ✔ Apply reinforcement @done(18-11-23 11:44)
         [] Process player gains and expenses
     ProcessPlayerActions:
         [] New Army orders

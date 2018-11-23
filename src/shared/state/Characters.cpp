@@ -84,4 +84,8 @@ namespace state
         for(auto chara : characters)
             chara.second.debug();
     }
+    std::string Characters::getMainTitle(std::string characterId)
+    {
+        return characters[characterId].getMainTitle();
+    }
 }

@@ -50,6 +50,7 @@ namespace state {
     void setPosition (std::string provinceId);
     bool isDead ();
     void disband ();
+    bool ownsLevy (std::string levyProvinceId);
     // Setters and Getters
   };
 

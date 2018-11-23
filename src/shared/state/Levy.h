@@ -5,6 +5,10 @@
 #include <string>
 
 namespace state {
+  class Province;
+}
+
+namespace state {
 
   /// class Levy - A class representing the levies supported by a province
   class Levy {
@@ -12,19 +16,25 @@ namespace state {
   private:
     /// Number of men in the levy
     int men;
-    bool isRaised;
+    bool raised;
     /// Ranges from 0 (0%) to 150 (150%).
     float reinforcementRate;
+    Province * parent;
     // Operations
   public:
     Levy ();
-    Levy (std::string strJson);
+    Levy (Province * parent, std::string strJson);
     ~Levy ();
     bool checkConsistency ();
     void debug ();
     int getMen ();
     void killMen (int victims);
     void disband ();
+    void update ();
+    bool isRaised ();
+    void setReinforcementRate (float rate);
+    void reinforce (int men);
+    float getReinforcementRate ();
     // Setters and Getters
   };
 

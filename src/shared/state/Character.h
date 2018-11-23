@@ -14,6 +14,7 @@ namespace state {
     std::string id;
     std::string name;
     std::string dynastyName;
+    std::string mainTitle;
     /// In turns number
     int age;
     std::vector<std::string> traits;
@@ -37,6 +38,7 @@ namespace state {
     ~Character ();
     void debug ();
     bool checkConsistency ();
+    std::string getMainTitle ();
     // Setters and Getters
   };
 

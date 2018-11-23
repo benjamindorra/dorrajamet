@@ -49,6 +49,9 @@ namespace state {
     bool checkForOngoingBattles (std::string province);
     void clearFinishedBattles ();
     void clearDeadArmies ();
+    void updateReinforcementRates ();
+    void reinforceLevies ();
+    std::string getArmyOfLevy (std::string levyProvinceId);
     // Setters and Getters
   };
 

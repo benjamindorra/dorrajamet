@@ -5,6 +5,7 @@
 #include <string>
 
 namespace state {
+  class GameMap;
   class Levy;
 }
 
@@ -16,6 +17,8 @@ namespace state {
   class Province {
     // Associations
     // Attributes
+  public:
+    GameMap * parent;
   private:
     std::string id;
     std::string name;
@@ -40,13 +43,16 @@ namespace state {
     // Operations
   public:
     Province ();
-    Province (std::string strJson);
+    Province (GameMap * parent, std::string strJson);
     ~Province ();
     bool checkConsistency ();
     void debug ();
     int getLevyMen ();
     void killMenFromLevy (int victims);
     void disbandLevy ();
+    bool isLevyRaised ();
+    void setLevyReinforcementRate (float rate);
+    void reinforceLevy ();
     // Setters and Getters
   };
 

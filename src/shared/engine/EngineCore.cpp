@@ -76,6 +76,7 @@ namespace engine
         gameState.updateBattles();
         gameState.clearFinishedBattles();
         gameState.clearDeadArmies();
+        gameState.updateLevies();
         //gameState.updateValues();
     }
 }
