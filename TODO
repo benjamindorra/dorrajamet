@@ -8,7 +8,14 @@ ENGINE:
         ✔ Reinforce armies: @done(18-11-23 11:44)
             ✔ Update reinforcement rates @done(18-11-23 11:44)
             ✔ Apply reinforcement @done(18-11-23 11:44)
-        [] Process player gains and expenses
+        [] Update characters
+        [] Update provinces:
+            [] Check new sieges
+            [] Update sieges
+            [] Update and apply province earnings
+        [] Process war scores:
+            [] Update war scores
+            ☐ Finish won wars
     ProcessPlayerActions:
         [] New Army orders
         [] Plot action
@@ -20,5 +27,7 @@ GAMESTATE:
     Missing parts:
         [] Diplomatic proposal (member of Player)
         [] Battle report (member of Player)
+        [] War score (member of Relation)
+        [] Siege data (member of Province)
 
     
