@@ -24,6 +24,7 @@ namespace state {
     void debug ();
     int getMen ();
     void killMen (int victims);
+    void disband ();
     // Setters and Getters
   };
 

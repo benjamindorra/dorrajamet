@@ -84,4 +84,12 @@ namespace state
     {
         return currentTurn;
     }
+    void GameState::clearFinishedBattles ()
+    {
+        gameMap.clearFinishedBattles();
+    }
+    void GameState::clearDeadArmies ()
+    {
+        gameMap.clearDeadArmies();
+    }
 }

@@ -46,6 +46,7 @@ namespace state {
     void debug ();
     int getLevyMen ();
     void killMenFromLevy (int victims);
+    void disbandLevy ();
     // Setters and Getters
   };
 

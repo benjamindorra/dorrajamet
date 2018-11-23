@@ -120,4 +120,13 @@ namespace state
     {
         currentProvince = provinceId;
     }
+    bool Army::isDead ()
+    {
+        return(getMen());
+    }
+    void Army::disband ()
+    {
+        for(auto const& e: levies)
+            parent->disbandLevy(e);
+    }
 }

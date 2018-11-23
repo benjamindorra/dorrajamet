@@ -53,4 +53,8 @@ namespace state
         if(men < 0)
             men = 0;
     }
+    void Levy::disband ()
+    {
+        isRaised = false;
+    }
 }

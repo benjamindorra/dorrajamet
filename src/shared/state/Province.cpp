@@ -79,4 +79,8 @@ namespace state
     {
         levy.killMen(victims);
     }
+    void Province::disbandLevy ()
+    {
+        levy.disband();
+    }
 }

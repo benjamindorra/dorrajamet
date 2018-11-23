@@ -92,6 +92,10 @@ namespace state
     {
         provinces[idProvince].killMenFromLevy(victims);
     }
+    void GameMap::disbandLevy (std::string idProvince)
+    {
+        provinces[idProvince].disbandLevy();
+    }
     bool GameMap::checkForOngoingBattles (std::string province)
     {
         for(auto const& e: battles)
@@ -147,6 +151,24 @@ namespace state
                 
 
             }
+        }
+    }
+    void GameMap::clearFinishedBattles ()
+    {
+        for(auto const& e: battles)
+            if(battles[e.first].isFinished())
+                battles[e.first].close(parent->getCurrentTurn());                
+    }
+    void GameMap::clearDeadArmies ()
+    {
+        std::vector<std::string> deadArmies;
+        for(auto const& e:armies)
+            if(armies[e.first].isDead())
+                deadArmies.push_back(e.first);
+        for(auto const& army:deadArmies)
+        {
+            armies[army].disband();
+            armies.erase(army);
         }
     }
 }
