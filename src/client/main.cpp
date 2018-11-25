@@ -12,9 +12,11 @@ void debug(int c)
     std::cout << "Jusqu'ici tout va bien : " << c << std::endl;
 }
 
-void testRender(){
+void testRender(state::GameState testState, engine::EngineCore testEngine){
     // create the window
     render::Render render1(1280,720);
+    //init the render
+    render1.init(&testState, &testEngine);
     // start the renderloop
     render1.render::Render::renderLoop();
 }
@@ -31,12 +33,14 @@ int main(int argc, char ** argv)
         }
         else if(command == "render")
         {
-            testRender();
+            state::GameState testState("./res/testGameState.json");
+            engine::EngineCore testEngine(testState);
+            testRender(testState, testEngine);
         }
         else if(command == "engine")
         {
             state::GameState testState("./res/testGameState.json");
-
+            engine::EngineCore testEngine(testState);
         }
         else
             std::cout << "Unknown parameter: " << command << std::endl;
