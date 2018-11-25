@@ -2,6 +2,7 @@
 #ifndef RENDER__TOSTATE__H
 #define RENDER__TOSTATE__H
 
+#include <state.h>
 #include <string>
 
 namespace state {
@@ -28,6 +29,7 @@ namespace render {
     std::string getArmy (std::string id);
     std::string getArmies ();
     std::string getRelations (std::string id);
+    std::string getPlayer (std::string id);
     // Setters and Getters
   };
 

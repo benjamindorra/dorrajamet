@@ -11,6 +11,24 @@ namespace render {
     ViewMap::ViewMap () {
         
     }
+    ViewMap::ViewMap (Render * mainRender,ToState * state, ToEngine * engine) {
+        this->mainRender=mainRender;
+        try {
+            // import the image
+            this->map.importFile("./res/provinces.bmp");
+        }
+        catch(const std::exception& e)
+        {
+            std::cerr << e.what() << std::endl ;
+            throw std::runtime_error("Error when importing the texture.");
+        }
+        view.setViewport(sf::FloatRect(0.3, 0.1, 0.7, 0.9));
+        view.setSize(map.getSize().x, map.getSize().y*view.getViewport().width/view.getViewport().height);
+        sf::Vector2f viewCenter = sf::Vector2f(map.getSize().x/2, map.getSize().y/2);
+        view.setCenter(viewCenter);
+        // create the ShowArmies
+        this->showArmies = ShowArmies(mainRender,state,engine);
+    }
     ViewMap::ViewMap (Render * mainRender, Image map, ShowArmies& showArmies) : map(map), showArmies(showArmies){
         this->mainRender=mainRender;
     }
@@ -29,6 +47,9 @@ namespace render {
         // check if zooming over the y axis is possible
         float x = ViewMap::getCenter().x;
         float y = ViewMap::getCenter().y;
+        /*sf::Vector2f mouse = mainRender->getWindow()->mapPixelToCoords (sf::Mouse::getPosition(*mainRender->getWindow()), view);
+        float x = mouse.x;
+        float y = mouse.y;*/
         float oldSizeY = view.getSize().y/2.0;
         float sizeY = oldSizeY*zoom;
         float mapY = map.getSize().y;
@@ -51,6 +72,9 @@ namespace render {
         // check that zooming doesn't get the view out of image
         float x = ViewMap::getCenter().x;
         float y = ViewMap::getCenter().y;
+        /*sf::Vector2f mouse = mainRender->getWindow()->mapPixelToCoords (sf::Mouse::getPosition(*mainRender->getWindow()), view);
+        float x = mouse.x;
+        float y = mouse.y;*/
         float oldSizeX = view.getSize().x/2.0;
         float sizeX = oldSizeX*zoom;
         float mapX = map.getSize().x;
@@ -98,6 +122,7 @@ namespace render {
         else if ((x+sizeX<mapX) & (newX+sizeX>mapX)) {
             this->view.setCenter(mapX-sizeX, y);
         }
+        showArmies.newArmy("army1",200,200);
     }
 
     sf::View * ViewMap::getView() {
@@ -109,11 +134,11 @@ namespace render {
         // change view
         mainRender->getWindow()->setView(view);
         // render map
-        mainRender->Render::getWindow()->draw(map.Image::getSprite());
+        mainRender->getWindow()->draw(map.getSprite());
         // render armies
         showArmies.draw();
         // restore view
-        mainRender->Render::getWindow()->setView(mainRender->Render::getWindow()->getDefaultView());
+        mainRender->getWindow()->setView(mainRender->getWindow()->getDefaultView());
     }
 
     bool ViewMap::contains(int x, int y) {
@@ -136,7 +161,7 @@ namespace render {
         int pixY=(int)pixel.y;
         std::string armyId = showArmies.selectArmy(pixX,pixY);
         if (armyId != "") {
-            return "army";
+            return armyId;
         }
         return "province";
     }
@@ -146,8 +171,12 @@ namespace render {
         int pixY=(int)pixel.y;
         std::string armyId = showArmies.moveSelected(pixX,pixY);
         if (armyId != "") {
-            return "army";
+            return armyId;
         }
         return "province";
+    }
+
+    void ViewMap::newArmy() {
+        showArmies.newArmy("army1",200,200);
     }
 }

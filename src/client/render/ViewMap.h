@@ -8,6 +8,8 @@ namespace render {
   class Image;
   class ShowArmies;
   class Render;
+  class ToState;
+  class ToEngine;
   class Element;
 }
 
@@ -28,8 +30,9 @@ namespace render {
     // Operations
   public:
     ViewMap ();
-    ViewMap (Render * render, Image map, ShowArmies& showArmies);
-    ViewMap (Render * render, Image map, sf::Vector2f size, sf::Vector2f center, ShowArmies& showArmies);
+    ViewMap (Render * mainRender, ToState * state, ToEngine * engine);
+    ViewMap (Render * mainRender, Image map, ShowArmies& showArmies);
+    ViewMap (Render * mainRender, Image map, sf::Vector2f size, sf::Vector2f center, ShowArmies& showArmies);
     ~ViewMap ();
     sf::Vector2f getSize ();
     void changeZoom (float zoom);
@@ -41,6 +44,7 @@ namespace render {
     std::string leftClick (sf::Vector2f pixel);
     std::string rightClick (sf::Vector2f pixel);
     void checkZoomY (float zoom);
+    void newArmy ();
     // Setters and Getters
   };
 

@@ -4,9 +4,10 @@ Displays game state data and buttons to interact with them.
 ***********************************************************/
 #include "Data.h"
 #include "Render.h"
-#include <memory>
-
+#include <json.hpp>
 #include <iostream>
+
+using json = nlohmann::json;
 
 namespace render {
     Data::Data () {}
@@ -68,7 +69,20 @@ namespace render {
             buttons.push_back(new Button(mainRender, x1+width/2, y1+spaceV/3, "Murder", color, sf::Vector2i(width/2, spaceV/3)));
             buttons.push_back(new Button(mainRender, x1, y1+2*spaceV/3, "War", color, sf::Vector2i(width/2, spaceV/3)));
             buttons.push_back(new Button(mainRender, x1+width/2, y1+2*spaceV/3, "Peace", color, sf::Vector2i(width/2, spaceV/3)));
-            this->data = state->getCharacter(id);
+            try {
+                json j = json::parse(state->getCharacter(this->id));
+                this->data = "Name: "+j["name"].dump()+"\n"+"Dynasty name: "+j["dynastyName"].dump()+"\n"
+                +"Age: "+j["age"].dump()+"\n"+"Traits: "+j["traits"].dump()+"\n"+"Statistics: "+"\n"
+                +"Diplomacy: "+j["diplomacy"].dump()+"\n"+"Stewardship: "+j["stewardship"].dump()+"\n"
+                +"Martial: "+j["martial"].dump()+"\n"+"Intrigue: "+j["intrigue"].dump()+"\n"+"\n"+"Alive: "
+                +j["alive"].dump()+"\n"+"Prestige: "+j["prestige"].dump()+"\n"+"Gold: "+j["gold"].dump()+"\n"
+                +"Plot active: "+j["hasPlot"].dump();
+            }
+            catch(const std::exception& e) {
+                std::cerr << e.what() <<std::endl;
+                throw std::runtime_error("Incorrect data for character "+id);
+            }
+                
         }
         if (type==Types::Province) {
             for (Button *button : buttons) {
@@ -78,7 +92,16 @@ namespace render {
             buttons.push_back(new Button(mainRender, x1, y1, "Levy", color, sf::Vector2i(width/2, spaceV/2)));
             buttons.push_back(new Button(mainRender, x1+width/2, y1, "Claim", color, sf::Vector2i(width/2, spaceV/2)));
             buttons.push_back(new Button(mainRender, x1, y1+spaceV/2, "", color, sf::Vector2i(width, spaceV/2)));
-            this->data = state->getProvince(id);
+            try {
+                json j = json::parse(state->getProvince(this->id));
+                this->data = "Name: "+j["name"].dump()+"\n"+"Development: "+j["development"].dump()+"\n"
+                +"Prosperity: "+j["prosperity"].dump()+"\n"+"Levy: "+j["levy"].dump()+"\n"
+                +"Tax income: "+j["taxIncome"].dump()+"\n";
+            }
+            catch(const std::exception& e) {
+                std::cerr << e.what() <<std::endl;
+                throw std::runtime_error("Incorrect data for province "+id);
+            }
         }
         
         if (type==Types::Army) {
@@ -87,7 +110,16 @@ namespace render {
             }
             buttons={};
             buttons.push_back(new Button(mainRender, x1, y1, "", color, sf::Vector2i(width, spaceV)));
-            this->data = state->getArmy(id);
+            try {
+                json j = json::parse(state->getArmy(this->id));
+                this->data = "Owner: "+j["owner"].dump()+"\n"+"Levies: "+j["levies"].dump()+"\n"
+                +"Current province: "+j["currentProvince"].dump()+"\n"+"Current battle: "+j["currentBattle"].dump()+"\n"
+                +"Orders: "+j["jOrders"].dump()+"\n";
+            }
+            catch(const std::exception& e) {
+                std::cerr << e.what() <<std::endl;
+                throw std::runtime_error("Incorrect data for army "+id);
+            }
         }
 
         if (type==Types::Relations) {
@@ -100,14 +132,30 @@ namespace render {
             buttons.push_back(new Button(mainRender, x1, y1+spaceV/3, "", color, sf::Vector2i(width, 2*spaceV/3)));
             buttons.push_back(new Button(mainRender, x1, y1+spaceV/3, "", color, sf::Vector2i(width, 2*spaceV/3)));
             buttons.push_back(new Button(mainRender, x1, y1+spaceV/3, "", color, sf::Vector2i(width, 2*spaceV/3)));
-            this->data = state->getRelations(id);
+            try {
+                json j = json::parse(state->getRelations(this->id));
+                this->data = "Character: "+json::parse(state->getCharacter(this->id))["name"].get<std::string>()+"\n"+"Relations: "+"\n";
+                for(json::iterator it = j.begin(); it!= j.end(); ++it)
+                {
+                    std::string characterA = it.value()["characterA"].get<std::string>();
+                    if(characterA==this->id) {
+                        std::string characterB = it.value()["characterB"].get<std::string>();
+                        this->data +=json::parse(state->getCharacter(characterB))["name"].get<std::string>()+" ";
+                        this->data +=it.value()["type"].dump()+"\n";
+                    }
+                }
+            }
+            catch(const std::exception& e) {
+                std::cerr << e.what() <<std::endl;
+                throw std::runtime_error("Incorrect data for relations");
+            }
         }
-        for (int i=0;i<9;i++) {this->data += data;}
         // insert endline characters into the text so that if fits the window
         float charSize = text.getCharacterSize()*1.9*view.getViewport().width;
         size_t length = this->data.length();
         float lineSize = 0;
         size_t lastSpace = 0;
+        // modify the text while iterating over it, not very clean but it works
         for (size_t i=0;i<length;i++) {
             lineSize+=charSize;
             if (this->data[i] == ' ') {
@@ -174,27 +222,33 @@ namespace render {
         }
     } 
     void Data::handleButtons(std::string button) {
+        json j;
         if (button =="") {}
+        else if (type==Types::Relations) {
+            if (button=="Character") {this->select(Types::Character, id);}
+        }
         else if (type==Types::Character) {
-            if (button=="Relations") {this->select(Data::Relations, "");}
+            if (button=="Relations") {this->select(Data::Relations, id);}
             else if (button =="Alliance") {}
             else if (button=="Murder") {}
             else if (button=="War") {}
             else if (button=="Peace") {}
-            engine->addCommand(id,button);
+            j["command"] = button;
+            j["id"] = id;
+            engine->addCommand(button, j.dump());
         }
         else if (type==Types::Province) {
             if (button=="Levy") {}
             else if (button =="Claim") {}
-            engine->addCommand(id,button);
+            j["command"] = button;
+            j["colorCode"] = id;
+            engine->addCommand(button, j.dump());
         }
         
         else if (type==Types::Army) {
-            engine->addCommand(id,button);
-        }
-
-        else if (type==Types::Relations) {
-            if (button=="Character") {this->select(Types::Character, "");}
+            j["command"] = button;
+            j["colorCode"] = id;
+            engine->addCommand(button, j.dump());
         }
     }
 

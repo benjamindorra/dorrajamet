@@ -2,9 +2,8 @@
 #ifndef RENDER__TOENGINE__H
 #define RENDER__TOENGINE__H
 
+#include <engine.h>
 #include <string>
-#include <queue>
-#include <queue>
 
 namespace render {
 
@@ -12,11 +11,11 @@ namespace render {
   class ToEngine {
     // Attributes
   public:
-    std::queue<std::string> * commands;
+    engine::EngineCore * engine;
     // Operations
   public:
     ToEngine ();
-    ToEngine (std::queue<std::string> * commands);
+    ToEngine (engine::EngineCore * engine);
     ~ToEngine ();
     void addCommand (std::string idTarget, std::string command);
     // Setters and Getters

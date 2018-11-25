@@ -7,11 +7,20 @@ Send command to the engine
 
 namespace render {
     ToEngine::ToEngine (){}
-    ToEngine::ToEngine (std::queue<std::string> * commands){
-        this->commands = commands;
+    ToEngine::ToEngine (engine::EngineCore * engine){
+        this->engine = engine;
     }
     ToEngine::~ToEngine (){}
-    void ToEngine::addCommand (std::string idTarget, std::string command){
-        std::cout<<"id "<<idTarget<<"command "<<command<<std::endl;
+    void ToEngine::addCommand (std::string command, std::string argument){
+        std::cout<<"command "<<command<<"argument "<<argument<<std::endl;
+        if (command=="moveArmy") {
+            engine->pushCommand(engine::Command(engine::Command::moveArmy, argument));
+        }
+        if (command=="endTurn") {
+            engine->pushCommand(engine::Command(engine::Command::TurnButton, ""));
+        }
+        else {
+            engine->pushCommand(engine::Command(engine::Command::ActionButton, argument));
+        }
     }
 }
