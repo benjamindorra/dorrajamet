@@ -103,4 +103,33 @@ namespace state
         for(auto const& title : titles)
             ((*this)[title.first])->debug();
     }
+    std::string Titles::getProvinceOwner (std::string provinceId)
+    {
+        for(auto const& e: counties)
+            if(counties[e.first].getProvince() == provinceId)
+                return counties[e.first].getHolder();
+        return std::string("");
+    }
+    std::string Titles::getLiege(std::string titleId)
+    {
+        switch(titles[titleId])
+        {
+            case kingdom:
+                return "";
+            case duchy:
+                return duchies[titleId].getLiege();
+            case county:
+                return counties[titleId].getLiege();
+            default:
+                throw std::runtime_error("Error: getLiege(titleId): unknown id: " + titleId + "\n");
+        }
+    }
+    std::string Titles::getTopLiege(std::string titleId)
+    {
+        auto liege = getLiege(titleId);
+        if(liege == "")
+            return titleId;
+        else
+            return getTopLiege(liege);
+    }
 }

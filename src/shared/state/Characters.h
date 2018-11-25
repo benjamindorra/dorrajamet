@@ -31,6 +31,7 @@ namespace state {
     int getOpinion (std::string sourceCharacter, std::string targetCharacter);
     bool checkConsistency ();
     void debug ();
+    std::string getMainTitle (std::string characterId);
     // Setters and Getters
   };
 

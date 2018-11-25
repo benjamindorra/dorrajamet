@@ -32,6 +32,8 @@ namespace state {
     void debug ();
     void advance ();
     std::string getProvince ();
+    bool isFinished ();
+    void close (int turn);
     // Setters and Getters
   };
 

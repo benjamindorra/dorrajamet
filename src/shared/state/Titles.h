@@ -38,6 +38,13 @@ namespace state {
     Title * operator[] (const std::string key);
     bool checkConsistency ();
     void debug ();
+    std::string getProvinceOwner (std::string provinceId);
+    /// If titleId is independant, will return empty string
+    /// @param titleId		(???) 
+    std::string getLiege (std::string titleId);
+    /// If titleId is independant, will return titleId
+    /// @param titleId		(???) 
+    std::string getTopLiege (std::string titleId);
     // Setters and Getters
   };
 

@@ -3,10 +3,19 @@ ENGINE:
         ✔ Process army orders @done(18-11-19 13:30)
         ✔ Check for new battles @done(18-11-21 09:31)
         ✔ Process ongoing battles @done(18-11-19 16:40)
-        [] Clear finished battles
-        [] Disband defeated armies
-        [] Reinforce armies
-        [] Process player gains and expenses
+        ✔ Clear finished battles @done(18-11-21 12:01)
+        ✔ Disband defeated armies @done(18-11-23 08:27)
+        ✔ Reinforce armies: @done(18-11-23 11:44)
+            ✔ Update reinforcement rates @done(18-11-23 11:44)
+            ✔ Apply reinforcement @done(18-11-23 11:44)
+        [] Update characters
+        [] Update provinces:
+            [] Check new sieges
+            [] Update sieges
+            [] Update and apply province earnings
+        [] Process war scores:
+            [] Update war scores
+            ☐ Finish won wars
     ProcessPlayerActions:
         [] New Army orders
         [] Plot action
@@ -18,5 +27,7 @@ GAMESTATE:
     Missing parts:
         [] Diplomatic proposal (member of Player)
         [] Battle report (member of Player)
+        [] War score (member of Relation)
+        [] Siege data (member of Province)
 
     

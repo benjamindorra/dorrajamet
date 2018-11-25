@@ -4,6 +4,7 @@
 
 #include <json.hpp>
 #include <iostream>
+#include <algorithm>
 
 namespace state
 {
@@ -119,5 +120,18 @@ namespace state
     void Army::setPosition(std::string provinceId)
     {
         currentProvince = provinceId;
+    }
+    bool Army::isDead ()
+    {
+        return(getMen());
+    }
+    void Army::disband ()
+    {
+        for(auto const& e: levies)
+            parent->disbandLevy(e);
+    }
+    bool Army::ownsLevy(std::string levyProvinceId)
+    {
+        return (std::find(levies.begin(), levies.end(), levyProvinceId) != levies.end());
     }
 }

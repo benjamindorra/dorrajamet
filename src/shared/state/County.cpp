@@ -63,4 +63,8 @@ namespace state
     {
         return this->deJureLiege;
     }
+    std::string County::getProvince()
+    {
+        return province;
+    }
 }

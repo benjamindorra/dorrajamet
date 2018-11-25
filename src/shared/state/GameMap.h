@@ -45,7 +45,13 @@ namespace state {
     Army * getArmy (std::string idArmy);
     int getLevyMen (std::string idProvince);
     void killMenFromLevy (std::string idProvince, int victims);
+    void disbandLevy (std::string idProvince);
     bool checkForOngoingBattles (std::string province);
+    void clearFinishedBattles ();
+    void clearDeadArmies ();
+    void updateReinforcementRates ();
+    void reinforceLevies ();
+    std::string getArmyOfLevy (std::string levyProvinceId);
     // Setters and Getters
   };
 

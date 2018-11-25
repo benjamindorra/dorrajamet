@@ -8,6 +8,7 @@ namespace state{
         /*
         std::string name;
         std::string dynastyName;
+        std::string mainTitle;
         int age;
         std::vector<std::string> traits;
         int diplomacy;
@@ -34,6 +35,7 @@ namespace state{
             id = j["id"].get<std::string>();
             name = j["name"].get<std::string>();
             dynastyName = j["dynastyName"].get<std::string>();
+            mainTitle = j["mainTitle"].get<std::string>();
             age = j["age"].get<int>();
             if(j["traits"].is_array())
                 traits = j["traits"].get<std::vector<std::string>>();
@@ -125,5 +127,9 @@ namespace state{
         if(!(validAttr(diplomacy) && validAttr(stewardship) && validAttr(intrigue) && validAttr(martial)))
             return false;
         return true;
+    }
+    std::string Character::getMainTitle ()
+    {
+        return mainTitle;        
     }
 }

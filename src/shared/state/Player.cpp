@@ -15,7 +15,7 @@ namespace state
         {
             id = initJson["id"].get<std::string>();
             currentCharacter = initJson["currentCharacter"].get<std::string>();
-            score = initJson["score"];
+            score = initJson["score"].get<int>();
         }
         catch(const std::exception& e)
         {

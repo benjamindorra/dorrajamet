@@ -55,4 +55,13 @@ namespace state
                 return relations[i].getType() == Relation::war;
         return false;
     }
+    std::string Politics::getProvinceOwner (std::string provinceId)
+    {
+        return titles.getProvinceOwner(provinceId);
+    }
+    std::string Politics::getCharacterTopLiege (std::string characterId)
+    {
+        auto mainTitle = characters.getMainTitle(characterId);
+        return titles.getTopLiege(mainTitle);
+    }
 }

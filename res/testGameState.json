@@ -1,4 +1,39 @@
 {
+    "players":
+    [
+        {
+            "id": "player_one",
+            "currentCharacter": "chara_0001",
+            "score": 100
+        },
+        {
+            "id": "player_two",
+            "currentCharacter": "chara_0002",
+            "score": 100
+        },
+        {
+            "id": "player_three",
+            "currentCharacter": "chara_0003",
+            "score": 100
+        },
+        {
+            "id": "player_four",
+            "currentCharacter": "chara_0004",
+            "score": 100
+        },
+        {
+            "id": "player_five",
+            "currentCharacter": "chara_0005",
+            "score": 100
+        },
+        {
+            "id": "player_six",
+            "currentCharacter": "chara_0006",
+            "score": 100
+        }
+    ],
+    "currentPlayer": 0,
+    "currentTurn": 0,
     "politics": {
         "titles":
         [
@@ -62,6 +97,7 @@
                     "id": "chara_0001",
                     "name": "Rayleigh",
                     "dynastyName": "Jones",
+                    "mainTitle": "k_of_numbers",
                     "age": 22,
                     "traits": ["proud", "patient"],
                     "diplomacy": 12,
@@ -77,6 +113,7 @@
                     "id": "chara_0002",
                     "name": "Thomas",
                     "dynastyName": "Stuart",
+                    "mainTitle": "d_of_evens",
                     "age": 22,
                     "traits": ["lustful", "wroth"],
                     "diplomacy": 12,
@@ -93,6 +130,7 @@
                     "id": "chara_0003",
                     "name": "Emile",
                     "dynastyName": "Collins",
+                    "mainTitle": "c_of_three",
                     "age": 22,
                     "traits": ["kind", "slothful"],
                     "diplomacy": 12,
@@ -108,6 +146,7 @@
                     "id": "chara_0004",
                     "name": "Jonas",
                     "dynastyName": "Miles",
+                    "mainTitle": "c_of_four",
                     "age": 22,
                     "traits": ["chaste", "greedy"],
                     "diplomacy": 12,
@@ -168,8 +207,7 @@
                     "reinforcementRate": 1 
                 },
                 "baseTaxIncome": 200,
-                "taxIncome": 200,
-                "dispPosX": 
+                "taxIncome": 200
             },
             {
                 "id": "prov_two",
@@ -280,14 +318,16 @@
         "armies":
         [
             {
+                "id": "army_chara0001_xx",
+                "ownerCharacter": "chara_0001",
                 "levies":
                 [
                     "prov_one"
                 ],
-                "currentProvince":
-                [
-                    "prov_one"
-                ]
+                "currentProvince": "prov_one",
+                "currentBattle": "",
+                "orders":
+                []
             }
         ]
     }

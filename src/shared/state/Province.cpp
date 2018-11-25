@@ -1,4 +1,7 @@
 #include "Province.h"
+
+#include "GameMap.h"
+
 #include <json.hpp>
 #include <iostream>
 #include <iomanip>
@@ -26,20 +29,21 @@ namespace state
         unsigned int taxIncome;
         */
     }
-    Province::Province (std::string strJson)
+    Province::Province (GameMap * parent, std::string strJson)
     {
+        this->parent = parent;
         using json = nlohmann::json;
         
         try
         {
             json j = json::parse(strJson);
-            id = j["id"].get<int>();
+            id = j["id"].get<std::string>();
             name = j["name"].get<std::string>();
-            colorCode = std::stoi(j["colorCode"].get<std::string>(), nullptr, 16);
+            colorCode = j["colorCode"].get<int>();
             development = j["development"].get<int>();
             prosperity = j["prosperity"].get<char>();
-            baseLevy = Levy(j["baseLevy"].get<std::string>());
-            levy = Levy(j["levy"].get<std::string>());
+            baseLevy = Levy(this, j["baseLevy"].dump());
+            levy = Levy(this, j["levy"].dump());
             baseTaxIncome = j["baseTaxIncome"].get<unsigned int>();
             taxIncome = j["taxIncome"].get<unsigned int>();
         }
@@ -78,5 +82,27 @@ namespace state
     void Province::killMenFromLevy (int victims)
     {
         levy.killMen(victims);
+    }
+    void Province::disbandLevy ()
+    {
+        levy.disband();
+    }
+    bool Province::isLevyRaised ()
+    {
+        return levy.isRaised();
+    }
+    void Province::setLevyReinforcementRate (float rate)
+    {
+        levy.setReinforcementRate(rate);
+    }
+    void Province::reinforceLevy()
+    {
+        int maxMen = baseLevy.getMen();
+        int currentMen = levy.getMen();
+        float reinforcementRate = levy.getReinforcementRate();
+        int reinforcements = reinforcementRate * (maxMen / 10);
+        if(currentMen + reinforcements > maxMen)
+            reinforcements = maxMen - currentMen;
+        levy.reinforce(reinforcements);
     }
 }

@@ -75,4 +75,18 @@ namespace state
     {
         return province;
     }
+    bool Battle::isFinished ()
+    {
+        int whiteMen = 0, blackMen = 0;
+        for(auto const& e: whiteArmies)
+            whiteMen += parent->getArmy(e)->getMen();
+        for(auto const& e: blackArmies)
+            blackMen += parent->getArmy(e)->getMen();
+        
+        return !(whiteMen && blackMen);
+    }
+    void Battle::close(int turn)
+    {
+        this->endTurn = turn;
+    }
 }

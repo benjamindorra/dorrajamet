@@ -31,6 +31,7 @@ namespace state {
     bool checkConsistency ();
     std::string getLiege ();
     std::string getDeJureLiege ();
+    std::string getProvince ();
     // Setters and Getters
   };
 

@@ -48,6 +48,9 @@ namespace state {
     int getMen ();
     void killMen (int victims);
     void setPosition (std::string provinceId);
+    bool isDead ();
+    void disband ();
+    bool ownsLevy (std::string levyProvinceId);
     // Setters and Getters
   };
 
