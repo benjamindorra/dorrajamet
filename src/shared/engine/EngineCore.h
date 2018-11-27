@@ -18,13 +18,13 @@ namespace engine {
     // Associations
     // Attributes
   public:
-    std::queue<Command> commands;
-    state::GameState gameState;
+    std::queue<Command> * commands;
+    state::GameState * gameState;
     // Operations
   public:
     EngineCore ();
-    EngineCore (state::GameState gameState);
-    EngineCore (state::GameState gameState, std::queue<Command> events);
+    EngineCore (state::GameState * gameState);
+    EngineCore (state::GameState * gameState, std::queue<Command> * events);
     ~EngineCore ();
     int mainLoop ();
     void pushCommand (Command command);

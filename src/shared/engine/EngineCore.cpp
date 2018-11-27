@@ -8,11 +8,11 @@ namespace engine
     {
 
     }
-    EngineCore::EngineCore (state::GameState gameState)
+    EngineCore::EngineCore (state::GameState * gameState)
     {
 
     }
-    EngineCore::EngineCore (state::GameState gameState, std::queue<Command> commands)
+    EngineCore::EngineCore (state::GameState * gameState, std::queue<Command> * commands)
     {
         this->gameState = gameState;
         this->commands = commands;
@@ -25,15 +25,15 @@ namespace engine
     {
         while(true)
         {
-            processCommand(commands.front());
-            commands.pop();
+            processCommand(commands->front());
+            commands->pop();
             
         }
         return 0;
     }
     void EngineCore::pushCommand (Command command)
     {
-        commands.push(command);
+        commands->push(command);
     }
     void EngineCore::processCommand(Command command)
     {
@@ -46,7 +46,7 @@ namespace engine
                     json j = json::parse(command.getArgument());
                     auto id = j["id"].get<std::string>();
                     auto dest = j["dest"].get<std::string>();
-                    gameState.setArmyOrder(id, dest);
+                    gameState->setArmyOrder(id, dest);
                 }
                 catch(const std::exception& e)
                 {
@@ -58,7 +58,7 @@ namespace engine
 
                 break;
             case Command::TurnButton:
-                if(gameState.turnAdvance())
+                if(gameState->turnAdvance())
                     endTurn();
                 break;
             default:
@@ -71,12 +71,12 @@ namespace engine
     }
     void EngineCore::endTurn()
     {
-        gameState.updateArmiesOrders();
-        gameState.checkNewBattles();
-        gameState.updateBattles();
-        gameState.clearFinishedBattles();
-        gameState.clearDeadArmies();
-        gameState.updateLevies();
-        //gameState.updateValues();
+        gameState->updateArmiesOrders();
+        gameState->checkNewBattles();
+        gameState->updateBattles();
+        gameState->clearFinishedBattles();
+        gameState->clearDeadArmies();
+        gameState->updateLevies();
+        //gameState->updateValues();
     }
 }

@@ -37,13 +37,13 @@ int main(int argc, char ** argv)
         else if(command == "render")
         {
             state::GameState testState("./res/testGameState.json");
-            engine::EngineCore testEngine(testState);
+            engine::EngineCore testEngine(&testState);
             testRender(testState, testEngine);
         }
         else if(command == "engine")
         {
             state::GameState testState("./res/testGameState.json");
-            engine::EngineCore testEngine(testState);
+            engine::EngineCore testEngine(&testState);
         }
         else
             std::cout << "Unknown parameter: " << command << std::endl;
