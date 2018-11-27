@@ -4,6 +4,7 @@
 
 #include <vector>
 #include <string>
+#include <json.hpp>
 
 namespace state {
   class Titles;
@@ -34,6 +35,7 @@ namespace state {
     bool checkWarStatus (std::string characterA, std::string characterB);
     std::string getProvinceOwner (std::string provinceId);
     std::string getCharacterTopLiege (std::string characterId);
+    nlohmann::json fetchAllCharactersData ();
     // Setters and Getters
   };
 

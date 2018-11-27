@@ -64,4 +64,8 @@ namespace state
         auto mainTitle = characters.getMainTitle(characterId);
         return titles.getTopLiege(mainTitle);
     }
+    nlohmann::json Politics::fetchAllCharactersData ()
+    {
+        return characters.fetchAllCharactersData();
+    }
 }

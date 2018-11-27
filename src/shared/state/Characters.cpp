@@ -88,4 +88,13 @@ namespace state
     {
         return characters[characterId].getMainTitle();
     }
+    nlohmann::json Characters::fetchAllCharactersData ()
+    {
+        nlohmann::json res = nlohmann::json::array();
+        for(auto const& e: characters)
+        {
+            res.push_back(characters[e.first].fetchCharacterData());
+        }
+        return res;
+    }
 }

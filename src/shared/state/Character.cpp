@@ -132,4 +132,34 @@ namespace state{
     {
         return mainTitle;        
     }
+    nlohmann::json Character::fetchCharacterData ()
+    {
+        nlohmann::json res;
+        res["id"] = id;
+        res["name"] = name;
+        res["dynastyName"] = dynastyName;
+        res["mainTitle"] = mainTitle;
+        res["age"] = age;
+        res["traits"] = traits;
+        res["diplomacy"] = diplomacy;
+        res["stewardship"] = stewardship;
+        res["martial"] = martial;
+        res["intrigue"] = intrigue;
+        res["alive"] = alive;
+        res["prestige"] = prestige;
+        res["gold"] = gold;
+        res["hasPlot"] = hasPlot;
+        if(hasPlot)
+        {
+            if(plotType == claim)
+                res["plotType"] = 1;
+            else if(plotType == murder)
+                res["plotType"] = 2;
+            else
+                throw std::runtime_error("Error: state::Character::fetchCharacterData() a character has a plot with 'none' type");
+            res["plotTarget"] = plotTarget;
+            res["plotEnd"] = plotEnd;
+        }
+        return res;
+    }
 }

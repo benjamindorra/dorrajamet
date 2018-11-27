@@ -170,9 +170,6 @@ namespace state
                     this->updateDists(&d, &p, &Q, val[s1][s2], s1, s2);
         }
 
-        for(auto const& merde: p)
-            std::cout << merde.first << ": " << merde.second << " - ";
-        std::cout << std::endl;
 
 
         std::vector<std::string> A;

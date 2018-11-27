@@ -52,7 +52,10 @@ int main(int argc, char ** argv)
         if(command == "state")
         {
             state::GameState testGameState("./res/testGameState.json");
-            testGameState.debug();
+            //testGameState.debug();
+
+            // Test of gamestate fetch data
+            std::cout << testGameState.fetchAllCharactersData().dump(4);
         }
         else if(command == "render")
         {

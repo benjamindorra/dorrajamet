@@ -105,4 +105,8 @@ namespace state
     {
         return politics.getCharacterTopLiege(characterId);
     }
+    nlohmann::json GameState::fetchAllCharactersData ()
+    {
+        return politics.fetchAllCharactersData();
+    }
 }

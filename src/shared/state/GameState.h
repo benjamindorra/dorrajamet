@@ -5,6 +5,7 @@
 #include <state.h>
 #include <vector>
 #include <string>
+#include <json.hpp>
 
 namespace state {
   class Politics;
@@ -50,6 +51,7 @@ namespace state {
     void updateLevies ();
     std::string getProvinceOwner (std::string provinceId);
     std::string getCharacterTopLiege (std::string characterId);
+    nlohmann::json fetchAllCharactersData ( );
     // Setters and Getters
   };
 

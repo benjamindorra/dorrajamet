@@ -4,6 +4,7 @@
 
 #include <string>
 #include <vector>
+#include <json.hpp>
 
 namespace state {
 
@@ -39,6 +40,7 @@ namespace state {
     void debug ();
     bool checkConsistency ();
     std::string getMainTitle ();
+    nlohmann::json fetchCharacterData ();
     // Setters and Getters
   };
 
