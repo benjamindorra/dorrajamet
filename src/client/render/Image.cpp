@@ -8,6 +8,7 @@ Load an image to display.
 
 namespace render {
     Image::Image (){
+        this->texture = sf::Texture();
     }
 
     Image::Image (int x, int y){
@@ -27,12 +28,23 @@ namespace render {
     Image::~Image() {}
     
     void Image::importFile (std::string path){
-        if (!this->texture.loadFromFile(path))
+        try {
+            this->texture.loadFromFile(path);
+        }
+        catch(const std::exception& e)
         {
-            throw std::runtime_error("Error when loading texture");
+            std::cerr << e.what() << std::endl ;
+            throw std::runtime_error("Error when loading the texture.");
         }
         sprite.setTexture(this->texture);
         sf::Vector2u size = this->texture.getSize();
+        width=size.x;
+        height=size.y;
+    }
+
+    void Image::addTexture (sf::Texture* texture) {
+        sprite.setTexture(*texture);
+        sf::Vector2u size = texture->getSize();
         width=size.x;
         height=size.y;
     }

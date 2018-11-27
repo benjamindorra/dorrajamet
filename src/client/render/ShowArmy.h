@@ -3,25 +3,21 @@
 #define RENDER__SHOWARMY__H
 
 #include <string>
+#include <SFML/Graphics.hpp>
 
 namespace render {
   class Image;
   class Render;
   class Element;
-};
-namespace state {
-  class Army;
 }
 
 #include "Image.h"
 #include "Element.h"
-#include "state/Army.h"
 
 namespace render {
 
   /// class ShowArmy - 
   class ShowArmy : public render::Element {
-    // Associations
     // Attributes
   private:
     Image armyImg;
@@ -30,8 +26,9 @@ namespace render {
     // Operations
   public:
     ShowArmy ();
-    ShowArmy (Render * mainRender, Image armyImg);
-    ShowArmy (Render * mainRender, Image armyImg, std::string id);
+    ShowArmy (Render * mainRender, Image& armyImg);
+    ShowArmy (Render * mainRender, Image& armyImg, std::string id);
+    ShowArmy (Render * mainRender, sf::Texture * texture, std::string id, int x, int y);
     ~ShowArmy ();
     void draw ();
     void setPosition (int x, int y);

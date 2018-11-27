@@ -33,6 +33,7 @@ namespace render {
     sf::Vector2f getPosition ();
     void setSize (int x, int y, bool keepRatio = false, bool followWidth = true);
     void setColor (sf::Color color);
+    void addTexture (sf::Texture * texture);
     // Setters and Getters
   };
 

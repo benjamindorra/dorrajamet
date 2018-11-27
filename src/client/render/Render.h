@@ -5,20 +5,31 @@
 #include <SFML/Graphics.hpp>
 #include <string>
 #include <map>
+#include <state.h>
+#include <engine.h>
 
 namespace render {
   class ColorMap;
   class ViewMap;
   class Data;
   class PlayerData;
+  class ToState;
+  class ToEngine;
   class Element;
+};
+namespace state {
+  class GameState;
+};
+namespace render {
   class Button;
 }
 
+#include "ColorMap.h"
+#include "ToState.h"
+#include "ToEngine.h"
 #include "Button.h"
 #include "PlayerData.h"
 #include "Data.h"
-#include "ColorMap.h"
 #include "ViewMap.h"
 #include "Element.h"
 
@@ -31,10 +42,12 @@ namespace render {
   private:
     sf::RenderWindow window;
     std::map<std::string,Element*> toDraw;
-    ColorMap * colorMap;
+    ColorMap colorMap;
     ViewMap * viewMap;
     Data * data;
     PlayerData * playerData;
+    ToState state;
+    ToEngine engine;
     // Operations
   public:
     Render ();
@@ -44,10 +57,7 @@ namespace render {
     sf::RenderWindow * getWindow ();
     void addToDraw (std::string id, Element * element);
     void removeToDraw (std::string id);
-    void loadColormap (ColorMap * colorMap);
-    void loadMap (ViewMap * viewMap);
-    void loadData (Data * data);
-    void loadPlayerData (PlayerData * playerData);
+    void init (state::GameState * state, engine::EngineCore * engine);
     // Setters and Getters
   };
 

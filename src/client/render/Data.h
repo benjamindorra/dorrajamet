@@ -8,11 +8,15 @@
 
 namespace render {
   class Button;
+  class ToState;
+  class ToEngine;
   class Render;
   class Element;
 }
 
 #include "Element.h"
+#include "ToEngine.h"
+#include "ToState.h"
 #include "Button.h"
 
 namespace render {
@@ -31,10 +35,13 @@ namespace render {
     sf::View view;
     std::vector<Button *> buttons;
     Types type;
+    ToState * state;
+    ToEngine * engine;
+    std::string id;
     // Operations
   public:
     Data ();
-    Data (Render * mainRender);
+    Data (Render * mainRender, ToState * state, ToEngine * engine);
     ~Data ();
     void draw ();
     void select (Types type, std::string data);
