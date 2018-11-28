@@ -41,6 +41,7 @@ namespace render {
     std::string selectArmy (int x, int y);
     std::string moveSelected (int x, int y);
     void draw ();
+    void deleteArmies ();
     // Setters and Getters
   };
 

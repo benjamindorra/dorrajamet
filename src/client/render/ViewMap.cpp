@@ -6,6 +6,7 @@ and move the view.
 #include "ViewMap.h"
 #include "Render.h"
 #include <iostream>
+#include <json.hpp>
 
 namespace render {
     ViewMap::ViewMap () {
@@ -13,6 +14,8 @@ namespace render {
     }
     ViewMap::ViewMap (Render * mainRender,ToState * state, ToEngine * engine) {
         this->mainRender=mainRender;
+        this->state = state;
+        this->engine = engine;
         try {
             // import the image
             this->map.importFile("./res/provinces.bmp");
@@ -175,9 +178,48 @@ namespace render {
         return "province";
     }
 
-    void ViewMap::newArmy() {
-        showArmies.newArmy("army1",200,200);
+    void ViewMap::update() {
+        // reload the armies if what is shown is different from the data
+        using json = nlohmann::json;
+        try {
+            json j = json::parse(state->fetchAllArmiesData());
+            long unsigned int count = 0;
+            bool isEqual = true;
+            std::vector<render::ShowArmy*> armies = *showArmies.getArmies();
+            for (json::iterator it = j.begin(); it != j.end(); ++it) {
+                if (count>=armies.size()) {
+                    isEqual = false;
+                     break;
+                }
+                else if (armies[count]->getId() != it.value()["id"].get<std::string>()) {
+                    isEqual = false;
+                    break;
+                }
+                else {
+                    json province = json::parse(state->fetchProvinceData(it.value()["currentProvince"].get<std::string>()));
+                    if (armies[count]->getX() != province["dispPosX"].get<int>()) {
+                        isEqual = false;
+                        break;
+                    }
+                    else if (armies[count]->getY() != province["dispPosY"].get<int>()) {
+                        isEqual = false;
+                        break;
+                    }
+                }
+                count++;
+            }
+            if (not isEqual) {
+                showArmies.deleteArmies();
+                for (json::iterator it = j.begin(); it != j.end(); ++it) {
+                    std::string id = it.value()["id"].get<std::string>();
+                    json province = json::parse(state->fetchProvinceData(it.value()["currentProvince"].get<std::string>()));
+                    showArmies.newArmy(id, province["dispPosX"].get<int>(), province["dispPosY"].get<int>());
+                }
+            }
+        }
+        catch(const std::exception& e) {
+            std::cerr<<e.what()<<std::endl;
+            throw std::runtime_error("Error refreshing the armies");
+        }
     }
-
-    void ViewMap::update() {}
 }

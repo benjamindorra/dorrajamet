@@ -46,6 +46,8 @@ namespace state
             levy = Levy(this, j["levy"].dump());
             baseTaxIncome = j["baseTaxIncome"].get<unsigned int>();
             taxIncome = j["taxIncome"].get<unsigned int>();
+            dispPosX = j["dispPosX"].get<int>();
+            dispPosY = j["dispPosY"].get<int>();
         }
         catch(const std::exception& e)
         {
@@ -118,6 +120,8 @@ namespace state
         j["levy"] = levy.getMen();
         j["baseTaxIncome"] = baseTaxIncome;
         j["taxIncome"] = taxIncome;
+        j["dispPosX"] = dispPosX;
+        j["dispPosY"] = dispPosY;
         return j;
     }
 }

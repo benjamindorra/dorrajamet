@@ -40,7 +40,6 @@ namespace render {
         try {
             json j = json::parse(state->fetchAllPlayersData());
             for(json::iterator it = j.begin(); it!= j.end(); ++it){
-                std::cout<<it.value()["id"].get<std::string>()<<" id "<<std::endl;
                 if(it.value()["id"].get<std::string>()==this->id) {
                     this->data = "Score :"+ it.value()["score"].dump()+" ";
                     this->id = it.value()["currentCharacter"].get<std::string>();
@@ -65,5 +64,7 @@ namespace render {
         mainRender->Render::getWindow()->draw(frame);
         mainRender->Render::getWindow()->draw(text);
     }
-    void PlayerData::update() {}
+    void PlayerData::update() {
+        selectCharacter(this->id);
+    }
 }

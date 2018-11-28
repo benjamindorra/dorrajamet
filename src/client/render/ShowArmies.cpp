@@ -49,7 +49,6 @@ namespace render {
     std::string ShowArmies::moveSelected(int x, int y){
         for (ShowArmy * army : armies) {
             if(army->getSelected()) {
-                army->setPosition(x,y);
                 army->select();
                 return army->getId();
             }  
@@ -65,5 +64,11 @@ namespace render {
 
     void ShowArmies::newArmy(std::string id, int x, int y) {
         armies.push_back(new ShowArmy(mainRender, &texture, id, x, y));
+    }
+
+    void ShowArmies::deleteArmies(){
+        for (ShowArmy * army : armies) {
+            delete army;
+        }
     }
 }

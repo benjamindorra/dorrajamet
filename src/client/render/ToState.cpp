@@ -46,7 +46,7 @@ namespace render {
         return state->fetchCharacterData(id);
         
     }
-    std::string ToState::fetchProvinceData (std::string colorCode){
+    std::string ToState::fetchProvinceData (std::string id){
         /*json j = json::parse(R"({"id": "prov_one",
                 "name": "Oneland",
                 "colorCode": 123456,
@@ -68,7 +68,7 @@ namespace render {
                 "taxIncome": 200})");
         return j.dump();*/
         
-        return state->fetchProvinceData(mapColorId[colorCode]);
+        return state->fetchProvinceData(id);
     }
 
     std::string ToState::fetchAllProvincesData (){
@@ -161,12 +161,15 @@ namespace render {
     }
     std::string ToState::fetchCharacterDataFromColor(std::string colorCode) {
         try {
-            json j = json::parse(fetchProvinceData(colorCode));
+            json j = json::parse(fetchProvinceDataFromColor(colorCode));
             return fetchCharacterData(state->getProvinceOwner(j["id"]));
         }
         catch(const std::exception& e) {
             std::cerr << e.what() <<std::endl;
             throw std::runtime_error("No character for color " + colorCode);
         }
+    }
+    std::string ToState::fetchProvinceDataFromColor (std::string colorCode){
+        return fetchProvinceData(mapColorId[colorCode]);
     }
 }

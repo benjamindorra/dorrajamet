@@ -27,13 +27,14 @@ namespace render {
     ToState (state::GameState * state);
     ~ToState ();
     std::string fetchCharacterData (std::string id);
-    std::string fetchProvinceData (std::string colorCode);
+    std::string fetchProvinceData (std::string id);
     std::string fetchArmyData (std::string id);
     std::string fetchAllArmiesData ();
     std::string fetchAllRelationsData ();
     std::string fetchAllPlayersData ();
     std::string fetchAllProvincesData ();
     std::string fetchCharacterDataFromColor (std::string colorCode);
+    std::string fetchProvinceDataFromColor (std::string colorCode);
     // Setters and Getters
   };
 

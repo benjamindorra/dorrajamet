@@ -7,9 +7,9 @@
 namespace render {
   class Image;
   class ShowArmies;
-  class Render;
   class ToState;
   class ToEngine;
+  class Render;
   class Element;
 }
 
@@ -27,6 +27,8 @@ namespace render {
     Image map;
     sf::View view;
     ShowArmies showArmies;
+    ToState * state;
+    ToEngine * engine;
     // Operations
   public:
     ViewMap ();
@@ -44,7 +46,6 @@ namespace render {
     std::string leftClick (sf::Vector2f pixel);
     std::string rightClick (sf::Vector2f pixel);
     void checkZoomY (float zoom);
-    void newArmy ();
     void update ();
     // Setters and Getters
   };

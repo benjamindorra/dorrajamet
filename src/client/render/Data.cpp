@@ -93,7 +93,7 @@ namespace render {
             buttons.push_back(new Button(mainRender, x1+width/2, y1, "Claim", color, sf::Vector2i(width/2, spaceV/2)));
             buttons.push_back(new Button(mainRender, x1, y1+spaceV/2, "", color, sf::Vector2i(width, spaceV/2)));
             try {
-                json j = json::parse(state->fetchProvinceData(this->id));
+                json j = json::parse(state->fetchProvinceDataFromColor(this->id));
                 this->data = "Name: "+j["name"].dump()+"\n"+"Development: "+j["development"].dump()+"\n"
                 +"Prosperity: "+j["prosperity"].dump()+"\n"+"Levy: "+j["levy"].dump()+"\n"
                 +"Tax income: "+j["taxIncome"].dump()+"\n";
@@ -267,6 +267,8 @@ namespace render {
         }
     }
 
-    void Data::update() {}
+    void Data::update() {
+        select(this->type, this->id);
+    }
     
 }

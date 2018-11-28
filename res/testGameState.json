@@ -207,7 +207,9 @@
                     "reinforcementRate": 1 
                 },
                 "baseTaxIncome": 200,
-                "taxIncome": 200
+                "taxIncome": 200,
+                "dispPosX": 100,
+                "dispPosY": 100
             },
             {
                 "id": "prov_two",
@@ -228,7 +230,9 @@
                     "reinforcementRate": 1 
                 },
                 "baseTaxIncome": 150,
-                "taxIncome": 150
+                "taxIncome": 150,
+                "dispPosX": 100,
+                "dispPosY": 200
             },
             {
                 "id": "prov_three",
@@ -249,7 +253,9 @@
                     "reinforcementRate": 1 
                 },
                 "baseTaxIncome": 250,
-                "taxIncome": 250
+                "taxIncome": 250,
+                "dispPosX": 200,
+                "dispPosY": 100
             },
             {
                 "id": "prov_four",
@@ -270,7 +276,9 @@
                     "reinforcementRate": 1 
                 },
                 "baseTaxIncome": 200,
-                "taxIncome": 200
+                "taxIncome": 200,
+                "dispPosX": 200,
+                "dispPosY": 200
             },
             {
                 "id": "prov_five",
@@ -291,7 +299,9 @@
                     "reinforcementRate": 1 
                 },
                 "baseTaxIncome": 200,
-                "taxIncome": 200
+                "taxIncome": 200,
+                "dispPosX": 200,
+                "dispPosY": 300
             },
             {
                 "id": "prov_six",
@@ -312,7 +322,9 @@
                     "reinforcementRate": 1 
                 },
                 "baseTaxIncome": 200,
-                "taxIncome": 200
+                "taxIncome": 200,
+                "dispPosX": 300,
+                "dispPosY": 200
             }
         ],
         "armies":
