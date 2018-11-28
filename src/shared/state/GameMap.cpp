@@ -239,4 +239,15 @@ namespace state
         for(auto const& e: provinces)
             provinces[e.first].reinforceLevy();
     }
+    nlohmann::json GameMap::fetchProvinceData (int provinceColorCode)
+    {
+        return provinces[getProvinceId(provinceColorCode)].toJson();
+    }
+    std::string GameMap::getProvinceId (int provinceColorCode)
+    {
+        for(auto const& e: provinces)
+            if(provinces[e.first].getColorCode() == provinceColorCode)
+                return e.first;
+        throw std::runtime_error("Error: state::GameMap::getProvinceId() : unknown province color code: " + provinceColorCode);
+    }
 }

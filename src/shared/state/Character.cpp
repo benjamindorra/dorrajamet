@@ -132,7 +132,7 @@ namespace state{
     {
         return mainTitle;        
     }
-    nlohmann::json Character::fetchCharacterData ()
+    nlohmann::json Character::toJson ()
     {
         nlohmann::json res;
         res["id"] = id;

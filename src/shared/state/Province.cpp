@@ -61,8 +61,8 @@ namespace state
     {
         if(!(id.length() && name.length()))
             return false;
-        if(colorCode > std::stoul("ffffff", nullptr, 16))
-            return false;
+        /*if(colorCode > std::stoul("ffffff", nullptr, 16))
+            return false;*/
         if(development < 0 || development > 100)
             return false;
         if(prosperity < -100 || prosperity > 100)
@@ -78,6 +78,10 @@ namespace state
     int Province::getLevyMen()
     {
         return levy.getMen();
+    }
+    int Province::getColorCode()
+    {
+        return colorCode;
     }
     void Province::killMenFromLevy (int victims)
     {
@@ -104,5 +108,19 @@ namespace state
         if(currentMen + reinforcements > maxMen)
             reinforcements = maxMen - currentMen;
         levy.reinforce(reinforcements);
+    }
+    nlohmann::json Province::toJson ()
+    {
+        nlohmann::json j;
+        j["id"] = id;
+        j["name"] = name;
+        j["colorCode"] = colorCode;
+        j["development"] = development;
+        j["prosperity"] = prosperity;
+        j["baseLevy"] = baseLevy.toJson();
+        j["levy"] = levy.toJson();
+        j["baseTaxIncome"] = baseTaxIncome;
+        j["taxIncome"] = taxIncome;
+        return j;
     }
 }

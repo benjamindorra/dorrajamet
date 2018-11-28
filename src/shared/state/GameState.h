@@ -51,7 +51,9 @@ namespace state {
     void updateLevies ();
     std::string getProvinceOwner (std::string provinceId);
     std::string getCharacterTopLiege (std::string characterId);
-    nlohmann::json fetchAllCharactersData ( );
+    nlohmann::json fetchAllCharactersData ();
+    nlohmann::json fetchProvinceData (int provinceColorCode);
+    nlohmann::json fetchProvinceOwnerData (int provinceColorCode);
     // Setters and Getters
   };
 

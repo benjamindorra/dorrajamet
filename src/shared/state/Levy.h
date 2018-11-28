@@ -3,6 +3,7 @@
 #define STATE__LEVY__H
 
 #include <string>
+#include <json.hpp>
 
 namespace state {
   class Province;
@@ -35,6 +36,7 @@ namespace state {
     void setReinforcementRate (float rate);
     void reinforce (int men);
     float getReinforcementRate ();
+    nlohmann::json toJson ();
     // Setters and Getters
   };
 

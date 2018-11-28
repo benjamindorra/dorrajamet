@@ -109,4 +109,14 @@ namespace state
     {
         return politics.fetchAllCharactersData();
     }
+    nlohmann::json GameState::fetchProvinceData (int provinceColorCode)
+    {
+        return gameMap.fetchProvinceData(provinceColorCode);
+    }
+    nlohmann::json GameState::fetchProvinceOwnerData (int provinceColorCode)
+    {
+        auto provinceId = gameMap.getProvinceId(provinceColorCode);
+        auto ownerId = politics.getProvinceOwner(provinceId);
+        return politics.fetchCharacterData(ownerId);
+    }
 }

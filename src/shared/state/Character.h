@@ -40,7 +40,7 @@ namespace state {
     void debug ();
     bool checkConsistency ();
     std::string getMainTitle ();
-    nlohmann::json fetchCharacterData ();
+    nlohmann::json toJson ();
     // Setters and Getters
   };
 

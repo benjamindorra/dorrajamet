@@ -52,6 +52,8 @@ namespace state {
     void updateReinforcementRates ();
     void reinforceLevies ();
     std::string getArmyOfLevy (std::string levyProvinceId);
+    nlohmann::json fetchProvinceData (int provinceColorCode);
+    std::string getProvinceId (int provinceColorCode);
     // Setters and Getters
   };
 

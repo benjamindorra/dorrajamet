@@ -33,6 +33,7 @@ namespace state {
     bool checkConsistency ();
     void debug ();
     std::string getMainTitle (std::string characterId);
+    nlohmann::json fetchCharacterData (std::string characterId);
     nlohmann::json fetchAllCharactersData ();
     // Setters and Getters
   };

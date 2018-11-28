@@ -77,4 +77,12 @@ namespace state
     {
         return reinforcementRate;
     }
+    nlohmann::json Levy::toJson ()
+    {
+        nlohmann::json j;
+        j["men"] = men;
+        j["isRaised"] = raised;
+        j["reinforcementRate"] = reinforcementRate;
+        return j;
+    }
 }
