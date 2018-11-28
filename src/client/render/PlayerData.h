@@ -35,6 +35,7 @@ namespace render {
     ~PlayerData ();
     void draw ();
     void selectCharacter (std::string id);
+    void update ();
     // Setters and Getters
   };
 

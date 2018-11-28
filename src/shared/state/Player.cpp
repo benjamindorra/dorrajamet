@@ -31,4 +31,12 @@ namespace state
     {
         return id;
     }
+    nlohmann::json Player::fetchPlayerData() {
+        using json = nlohmann::json;
+        json j;
+        j["id"] = id;
+        j["currentCharacter"] = currentCharacter;
+        j["score"] = score;
+        return j;
+    }
 }

@@ -30,7 +30,7 @@ namespace state
                 id1 = it1.value()["id_source"].get<std::string>();
                 id2 = it1.value()["id_target"].get<std::string>();
                 opinions[id1][id2] = it1.value()["value"].get<int>();
-            }
+            }  
         }
         catch(const std::exception& e)
         {
@@ -87,5 +87,8 @@ namespace state
     std::string Characters::getMainTitle(std::string characterId)
     {
         return characters[characterId].getMainTitle();
+    }
+    std::string Characters::fetchCharacterData (std::string id) {
+        return characters[id].fetchCharacterData().dump();
     }
 }

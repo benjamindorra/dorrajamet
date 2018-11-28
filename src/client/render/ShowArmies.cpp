@@ -13,7 +13,7 @@ namespace render {
         this->mainRender=mainRender;
         this->state = state;
         this->engine = engine;
-        std::string stateArmies = state->getArmies();
+        std::string stateArmies = state->fetchAllArmiesData();
         try {
             this->texture.loadFromFile("./res/army.bmp");
         }

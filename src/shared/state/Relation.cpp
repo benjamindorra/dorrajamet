@@ -78,4 +78,13 @@ namespace state
     {
         return type;
     }
+    nlohmann::json Relation::fetchRelationData() {
+        using json = nlohmann::json;
+        json j;
+        j["type"] = type;
+        j["characterA"] = characterA;
+        j["characterB"] = characterB;
+        j["endTurn"] = endTurn;
+        return j;
+    }
 }

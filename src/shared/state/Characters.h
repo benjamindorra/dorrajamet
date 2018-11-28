@@ -32,6 +32,7 @@ namespace state {
     bool checkConsistency ();
     void debug ();
     std::string getMainTitle (std::string characterId);
+    std::string fetchCharacterData (std::string id);
     // Setters and Getters
   };
 

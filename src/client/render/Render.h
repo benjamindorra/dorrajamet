@@ -43,9 +43,9 @@ namespace render {
     sf::RenderWindow window;
     std::map<std::string,Element*> toDraw;
     ColorMap colorMap;
-    ViewMap * viewMap;
-    Data * data;
-    PlayerData * playerData;
+    ViewMap * viewMap     = nullptr;
+    Data * data     = nullptr;
+    PlayerData * playerData     = nullptr;
     ToState state;
     ToEngine engine;
     // Operations
@@ -58,6 +58,7 @@ namespace render {
     void addToDraw (std::string id, Element * element);
     void removeToDraw (std::string id);
     void init (state::GameState * state, engine::EngineCore * engine);
+    void update ();
     // Setters and Getters
   };
 

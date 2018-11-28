@@ -34,6 +34,8 @@ namespace state {
     bool checkWarStatus (std::string characterA, std::string characterB);
     std::string getProvinceOwner (std::string provinceId);
     std::string getCharacterTopLiege (std::string characterId);
+    std::string fetchCharacterData (std::string id);
+    std::string fetchAllRelationsData ();
     // Setters and Getters
   };
 

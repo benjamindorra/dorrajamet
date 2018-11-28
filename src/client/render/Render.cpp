@@ -20,15 +20,17 @@ namespace render {
         this->window.create(sf::VideoMode(width, height), "Window", sf::Style::Close);
     }
     Render::~Render () {
-        delete data;
-        delete playerData;
-        delete viewMap;
+        if((this->data != nullptr) & (this->playerData != nullptr) & (this->viewMap != nullptr)) {
+            delete data;
+            delete playerData;
+            delete viewMap;
+        }
     }
 
-    void Render::init(state::GameState * gamestate, engine::EngineCore * gameEngine) {
+    void Render::init(state::GameState * gameState, engine::EngineCore * gameEngine) {
         // create objects
         // create objects to interact with state and engine
-        //this->state = ToState();
+        this->state = ToState(gameState);
         this->engine = ToEngine(gameEngine);
         std::cout<<"0"<<std::endl;    
         //std::cout<<"3"<<std::endl;
@@ -179,7 +181,12 @@ namespace render {
 
             // clear the window with black color
             this->window.clear(sf::Color::Black);
-
+            // update
+            update();
+            viewMap->update();
+            data->update();
+            playerData->update();
+            // draw
             //draw the map
             viewMap->ViewMap::draw();
             // draw the data
@@ -208,4 +215,5 @@ namespace render {
     void Render::removeToDraw(std::string id) {
         this->toDraw.erase(id);
     }
+    void Render::update(){}
 }

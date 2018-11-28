@@ -122,7 +122,6 @@ namespace render {
         else if ((x+sizeX<mapX) & (newX+sizeX>mapX)) {
             this->view.setCenter(mapX-sizeX, y);
         }
-        showArmies.newArmy("army1",200,200);
     }
 
     sf::View * ViewMap::getView() {
@@ -179,4 +178,6 @@ namespace render {
     void ViewMap::newArmy() {
         showArmies.newArmy("army1",200,200);
     }
+
+    void ViewMap::update() {}
 }

@@ -45,6 +45,7 @@ namespace render {
     std::string rightClick (sf::Vector2f pixel);
     void checkZoomY (float zoom);
     void newArmy ();
+    void update ();
     // Setters and Getters
   };
 

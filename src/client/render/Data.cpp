@@ -70,7 +70,7 @@ namespace render {
             buttons.push_back(new Button(mainRender, x1, y1+2*spaceV/3, "War", color, sf::Vector2i(width/2, spaceV/3)));
             buttons.push_back(new Button(mainRender, x1+width/2, y1+2*spaceV/3, "Peace", color, sf::Vector2i(width/2, spaceV/3)));
             try {
-                json j = json::parse(state->getCharacter(this->id));
+                json j = json::parse(state->fetchCharacterDataFromColor(this->id));
                 this->data = "Name: "+j["name"].dump()+"\n"+"Dynasty name: "+j["dynastyName"].dump()+"\n"
                 +"Age: "+j["age"].dump()+"\n"+"Traits: "+j["traits"].dump()+"\n"+"Statistics: "+"\n"
                 +"Diplomacy: "+j["diplomacy"].dump()+"\n"+"Stewardship: "+j["stewardship"].dump()+"\n"
@@ -93,7 +93,7 @@ namespace render {
             buttons.push_back(new Button(mainRender, x1+width/2, y1, "Claim", color, sf::Vector2i(width/2, spaceV/2)));
             buttons.push_back(new Button(mainRender, x1, y1+spaceV/2, "", color, sf::Vector2i(width, spaceV/2)));
             try {
-                json j = json::parse(state->getProvince(this->id));
+                json j = json::parse(state->fetchProvinceData(this->id));
                 this->data = "Name: "+j["name"].dump()+"\n"+"Development: "+j["development"].dump()+"\n"
                 +"Prosperity: "+j["prosperity"].dump()+"\n"+"Levy: "+j["levy"].dump()+"\n"
                 +"Tax income: "+j["taxIncome"].dump()+"\n";
@@ -111,8 +111,8 @@ namespace render {
             buttons={};
             buttons.push_back(new Button(mainRender, x1, y1, "", color, sf::Vector2i(width, spaceV)));
             try {
-                json j = json::parse(state->getArmy(this->id));
-                this->data = "Owner: "+j["owner"].dump()+"\n"+"Levies: "+j["levies"].dump()+"\n"
+                json j = json::parse(state->fetchArmyData(this->id));
+                this->data = "Owner: "+j["ownerCharacter"].dump()+"\n"+"Levies: "+j["levies"].dump()+"\n"
                 +"Current province: "+j["currentProvince"].dump()+"\n"+"Current battle: "+j["currentBattle"].dump()+"\n"
                 +"Orders: "+j["jOrders"].dump()+"\n";
             }
@@ -133,14 +133,14 @@ namespace render {
             buttons.push_back(new Button(mainRender, x1, y1+spaceV/3, "", color, sf::Vector2i(width, 2*spaceV/3)));
             buttons.push_back(new Button(mainRender, x1, y1+spaceV/3, "", color, sf::Vector2i(width, 2*spaceV/3)));
             try {
-                json j = json::parse(state->getRelations(this->id));
-                this->data = "Character: "+json::parse(state->getCharacter(this->id))["name"].get<std::string>()+"\n"+"Relations: "+"\n";
+                json j = json::parse(state->fetchAllRelationsData());
+                this->data = "Character: "+json::parse(state->fetchCharacterData(this->id))["name"].get<std::string>()+"\n"+"Relations: "+"\n";
                 for(json::iterator it = j.begin(); it!= j.end(); ++it)
                 {
                     std::string characterA = it.value()["characterA"].get<std::string>();
                     if(characterA==this->id) {
                         std::string characterB = it.value()["characterB"].get<std::string>();
-                        this->data +=json::parse(state->getCharacter(characterB))["name"].get<std::string>()+" ";
+                        this->data +=json::parse(state->fetchCharacterData(characterB))["name"].get<std::string>()+" ";
                         this->data +=it.value()["type"].dump()+"\n";
                     }
                 }
@@ -267,5 +267,6 @@ namespace render {
         }
     }
 
+    void Data::update() {}
     
 }

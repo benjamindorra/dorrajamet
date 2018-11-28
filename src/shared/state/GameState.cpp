@@ -105,4 +105,30 @@ namespace state
     {
         return politics.getCharacterTopLiege(characterId);
     }
+    std::string GameState::fetchCharacterData (std::string id) {
+        return politics.fetchCharacterData(id);
+    }
+    std::string GameState::fetchProvinceData(std::string id) {
+        return gameMap.fetchProvinceData(id);
+    }
+    std::string GameState::fetchAllProvincesData() {
+        return gameMap.fetchAllProvincesData();
+    }
+    std::string GameState::fetchArmyData(std::string id) {
+        return gameMap.fetchArmyData(id);
+    }
+    std::string GameState::fetchAllArmiesData() {
+        return gameMap.fetchAllArmiesData();
+    }
+    std::string GameState::fetchAllRelationsData() {
+        return politics.fetchAllRelationsData();
+    }
+    std::string GameState::fetchAllPlayersData() {
+        using json = nlohmann::json;
+        json allPlayersData;
+        for (Player p : players) {
+            allPlayersData.push_back(p.fetchPlayerData());
+        }
+        return allPlayersData.dump();
+    }
 }

@@ -50,6 +50,13 @@ namespace state {
     void updateLevies ();
     std::string getProvinceOwner (std::string provinceId);
     std::string getCharacterTopLiege (std::string characterId);
+    std::string fetchCharacterData (std::string id);
+    std::string fetchProvinceData (std::string id);
+    std::string fetchAllProvincesData ();
+    std::string fetchArmyData (std::string id);
+    std::string fetchAllArmiesData ();
+    std::string fetchAllRelationsData ();
+    std::string fetchAllPlayersData ();
     // Setters and Getters
   };
 

@@ -239,4 +239,26 @@ namespace state
         for(auto const& e: provinces)
             provinces[e.first].reinforceLevy();
     }
+    std::string GameMap::fetchProvinceData(std::string id) {
+        return provinces[id].fetchProvinceData().dump();
+    }
+    std::string GameMap::fetchAllProvincesData() {
+        using json = nlohmann::json;
+        json allProvincesData;
+        for (auto p : provinces) {
+            allProvincesData.push_back(p.second.fetchProvinceData());
+        }
+        return allProvincesData.dump();
+    }
+    std::string GameMap::fetchArmyData(std::string id) {
+        return armies[id].fetchArmyData().dump();
+    }
+    std::string GameMap::fetchAllArmiesData() {
+        using json = nlohmann::json;
+        json allArmiesData;
+        for (auto a : armies) {
+            allArmiesData.push_back(a.second.fetchArmyData());
+        }
+        return allArmiesData.dump();
+    }
 }

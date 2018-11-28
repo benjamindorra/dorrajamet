@@ -20,6 +20,7 @@ namespace state {
     Player (nlohmann::json initJson);
     ~Player ();
     std::string getId ();
+    nlohmann::json fetchPlayerData ();
     // Setters and Getters
   };
 

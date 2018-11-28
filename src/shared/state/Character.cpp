@@ -132,4 +132,35 @@ namespace state{
     {
         return mainTitle;        
     }
+    nlohmann::json Character::fetchCharacterData () {
+        using json = nlohmann::json;
+        json j;
+        try
+        {
+            j["id"] = id;
+            j["name"] = name;
+            j["dynastyName"] = dynastyName;
+            j["mainTitle"] = mainTitle;
+            j["age"] = age;
+            j["traits"] = traits;
+            j["diplomacy"] = diplomacy;
+            j["stewardship"] = stewardship;
+            j["martial"] = martial;
+            j["intrigue"] = intrigue;
+            j["claims"] = claims;
+            j["alive"] = alive;
+            j["prestige"] = prestige;
+            j["gold"] = gold;
+            j["hasPlot"] = hasPlot;
+            j["plotTarget"] = plotTarget;
+            j["plotEnd"] = plotEnd;
+            j["plotTypes"] = plotType;
+        }
+        catch(const std::exception& e)
+        {
+            std::cerr << e.what() << std::endl;
+            throw std::runtime_error("An error occurred when converting Character data to json.");
+        }
+        return j;
+    }
 }

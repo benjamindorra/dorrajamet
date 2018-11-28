@@ -3,6 +3,7 @@
 #define STATE__RELATION__H
 
 #include <string>
+#include <json.hpp>
 
 namespace state {
 
@@ -25,6 +26,7 @@ namespace state {
     void debug ();
     bool isBetween (std::string characterA, std::string characterB);
     relType getType ();
+    nlohmann::json fetchRelationData ();
     // Setters and Getters
   };
 

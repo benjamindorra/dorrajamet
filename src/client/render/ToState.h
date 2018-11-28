@@ -4,6 +4,7 @@
 
 #include <state.h>
 #include <string>
+#include <map>
 
 namespace state {
   class GameState;
@@ -19,17 +20,20 @@ namespace render {
     // Attributes
   public:
     state::GameState * state;
+    std::map<std::string, std::string> mapColorId;
     // Operations
   public:
     ToState ();
     ToState (state::GameState * state);
     ~ToState ();
-    std::string getCharacter (std::string id);
-    std::string getProvince (std::string idColor);
-    std::string getArmy (std::string id);
-    std::string getArmies ();
-    std::string getRelations (std::string id);
-    std::string getPlayer (std::string id);
+    std::string fetchCharacterData (std::string id);
+    std::string fetchProvinceData (std::string colorCode);
+    std::string fetchArmyData (std::string id);
+    std::string fetchAllArmiesData ();
+    std::string fetchAllRelationsData ();
+    std::string fetchAllPlayersData ();
+    std::string fetchAllProvincesData ();
+    std::string fetchCharacterDataFromColor (std::string colorCode);
     // Setters and Getters
   };
 

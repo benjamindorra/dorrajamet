@@ -27,10 +27,10 @@ namespace state
                 std::cout << "Characters consistency check success\n\n\n";
             else
                 throw std::string("Characters consistency check failed\n");
-            /*for(auto relStr:j["relations"].get<std::vector<std::string>>())
+            for(auto relStr:j["relations"])
             {
-                relations.push_back(Relation(relStr));
-            }*/
+                relations.push_back(Relation(relStr.dump()));
+            }
         }
         catch(const std::exception& e)
         {
@@ -63,5 +63,16 @@ namespace state
     {
         auto mainTitle = characters.getMainTitle(characterId);
         return titles.getTopLiege(mainTitle);
+    }
+    std::string Politics::fetchCharacterData (std::string id) {
+        return characters.fetchCharacterData(id);
+    }
+    std::string Politics::fetchAllRelationsData(){
+        using json = nlohmann::json;
+        json allRelationsData;
+        for (Relation r : relations) {
+            allRelationsData.push_back(r.fetchRelationData());
+        }
+        return allRelationsData.dump();
     }
 }

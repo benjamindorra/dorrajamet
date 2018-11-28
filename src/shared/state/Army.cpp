@@ -134,4 +134,14 @@ namespace state
     {
         return (std::find(levies.begin(), levies.end(), levyProvinceId) != levies.end());
     }
+    nlohmann::json Army::fetchArmyData() {
+        using json = nlohmann::json;
+        json j;
+        j["id"] = id;
+        j["ownerCharacter"] = ownerCharacter;
+        j["levies"] = levies;
+        j["currentProvince"] = currentProvince;
+        j["currentBattle"] = currentBattle;
+        return j;
+    }
 }

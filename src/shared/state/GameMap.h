@@ -52,6 +52,10 @@ namespace state {
     void updateReinforcementRates ();
     void reinforceLevies ();
     std::string getArmyOfLevy (std::string levyProvinceId);
+    std::string fetchProvinceData (std::string id);
+    std::string fetchAllProvincesData ();
+    std::string fetchArmyData (std::string id);
+    std::string fetchAllArmiesData ();
     // Setters and Getters
   };
 

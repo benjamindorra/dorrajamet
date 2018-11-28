@@ -105,4 +105,19 @@ namespace state
             reinforcements = maxMen - currentMen;
         levy.reinforce(reinforcements);
     }
+
+    nlohmann::json Province::fetchProvinceData() {
+        using json = nlohmann::json;
+        json j;
+        j["id"] = id;
+        j["name"] = name;
+        j["colorCode"] = colorCode;
+        j["development"] = development;
+        j["prosperity" ]= prosperity;
+        j["baseLevy"] = baseLevy.getMen();
+        j["levy"] = levy.getMen();
+        j["baseTaxIncome"] = baseTaxIncome;
+        j["taxIncome"] = taxIncome;
+        return j;
+    }
 }

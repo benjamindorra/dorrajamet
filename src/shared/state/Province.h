@@ -3,6 +3,7 @@
 #define STATE__PROVINCE__H
 
 #include <string>
+#include <json.hpp>
 
 namespace state {
   class GameMap;
@@ -53,6 +54,8 @@ namespace state {
     bool isLevyRaised ();
     void setLevyReinforcementRate (float rate);
     void reinforceLevy ();
+    nlohmann::json fetchProvinceData ();
+    std::string getColorCode ();
     // Setters and Getters
   };
 
