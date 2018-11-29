@@ -4,6 +4,7 @@
 
 #include <vector>
 #include <string>
+#include <json.hpp>
 
 namespace state {
   class OneProvinceOrder;
@@ -32,6 +33,7 @@ namespace state {
     /// Advances the current step's progression and returns true if a step is cleared
     bool nextStep ();
     unsigned int size ();
+    nlohmann::json toJson ();
     // Setters and Getters
   };
 

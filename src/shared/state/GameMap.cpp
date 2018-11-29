@@ -324,6 +324,7 @@ namespace state
     }
     std::string GameMap::getProvinceId (int provinceColorCode)
     {
+        std::cout << "DEBUG\n";
         for(auto const& e: provinces)
             if(provinces[e.first].getColorCode() == provinceColorCode)
                 return e.first;
@@ -336,5 +337,16 @@ namespace state
     nlohmann::json GameMap::fetchCharacterData (std::string characterId)
     {
         return parent->fetchCharacterData(characterId);
+    }
+    nlohmann::json GameMap::fetchArmyData (std::string armyId)
+    {
+        return armies[armyId].toJson();
+    }
+    nlohmann::json GameMap::fetchAllArmiesData ()
+    {
+        nlohmann::json res = nlohmann::json::array();
+        for(auto const& e: armies)
+            res.push_back(armies[e.first].toJson());
+        return res;
     }
 }

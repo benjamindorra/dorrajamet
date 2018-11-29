@@ -35,6 +35,8 @@ namespace render {
     ShowArmy::ShowArmy (Render * mainRender, sf::Texture * texture, std::string id, int x, int y) {
         this->selected=false;
         this->mainRender=mainRender;
+        this->x = x;
+        this->y = y;
         this->armyImg=Image(x, y);
         this->armyImg.addTexture(texture);
         this->id = id;
@@ -45,7 +47,7 @@ namespace render {
         mainRender->getWindow()->draw(armyImg.getSprite());
     }
     void ShowArmy::setPosition(int x, int y) {
-        armyImg.Image::setPosition(x,y);
+        armyImg.Image::setPosition(x-armyImg.getWidth()/2,y-armyImg.getHeight()/2);
     }
 
     bool ShowArmy::contains(int x, int y) {
@@ -66,6 +68,14 @@ namespace render {
     std::string ShowArmy::getId() {
         return id;
     }
+
+    int ShowArmy::getX() {
+        return this->x;
+    } 
+
+    int ShowArmy::getY() {
+        return this->y;
+    } 
 
     void ShowArmy::select() {
         selected=!selected;

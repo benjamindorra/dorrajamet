@@ -40,6 +40,8 @@ namespace state
             id = j["id"].get<std::string>();
             name = j["name"].get<std::string>();
             colorCode = j["colorCode"].get<int>();
+            dispPosX = j["dispPosX"].get<int>();
+            dispPosY = j["dispPosY"].get<int>();
             development = j["development"].get<int>();
             prosperity = j["prosperity"].get<int>();
             baseLevy = Levy(this, j["baseLevy"].dump());
@@ -224,6 +226,8 @@ namespace state
         j["id"] = id;
         j["name"] = name;
         j["colorCode"] = colorCode;
+        j["dispPosX"] = dispPosX;
+        j["dispPosY"] = dispPosY;
         j["development"] = development;
         j["prosperity"] = prosperity;
         j["baseLevy"] = baseLevy.toJson();

@@ -50,6 +50,7 @@ namespace state {
     void handleCharacterDeath (std::string characterId, std::string heirId, int score);
     nlohmann::json fetchCharacterData (std::string characterId);
     nlohmann::json fetchAllCharactersData ();
+    nlohmann::json fetchAllRelationsData ();
     // Setters and Getters
   };
 

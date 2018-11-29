@@ -49,6 +49,7 @@ namespace render {
     void click (int x, int y);
     void scroll (int deltaY);
     void handleButtons (std::string button);
+    void update ();
     // Setters and Getters
   };
 

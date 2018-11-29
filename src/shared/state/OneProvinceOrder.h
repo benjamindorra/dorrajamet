@@ -3,6 +3,7 @@
 #define STATE__ONEPROVINCEORDER__H
 
 #include <string>
+#include <json.hpp>
 
 namespace state {
   class Order;
@@ -23,6 +24,7 @@ namespace state {
     void debug ();
     bool nextStep ();
     std::string getDestination ();
+    nlohmann::json toJson ();
     // Setters and Getters
   };
 

@@ -43,4 +43,12 @@ namespace state
     {
         score+=amount;
     }
+    nlohmann::json Player::toJson ()
+    {
+        nlohmann::json j;
+        j["id"] = id;
+        j["currentCharacter"] = currentCharacter;
+        j["score"] = score;
+        return j;
+    }
 }

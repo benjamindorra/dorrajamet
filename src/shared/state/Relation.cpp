@@ -78,4 +78,34 @@ namespace state
     {
         return type;
     }
+    nlohmann::json Relation::toJson ()
+    {
+        nlohmann::json j;
+        j["characterA"] = characterA;
+        j["characterB"] = characterB;
+        j["endTurn"] = endTurn;
+        int t;
+        switch(type)
+        {
+            case non_aggression:
+                t = 0;
+                break;
+            case alliance:
+                t = 1;
+                break;
+            case friendship:
+                t = 2;
+                break;
+            case rivalry:
+                t = 3;
+                break;
+            case war:
+                t = 3;
+                break;
+            default:
+                throw std::string("Error: invalid relation type.");
+        }
+        j["type"] = t;
+        return j;
+    }
 }

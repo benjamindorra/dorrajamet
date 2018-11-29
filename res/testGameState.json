@@ -207,7 +207,9 @@
             {
                 "id": "prov_one",
                 "name": "Oneland",
-                "colorCode": 123456,
+                "colorCode": 65535,
+                "dispPosX": 10,
+                "dispPosY": 10,
                 "development": 50,
                 "prosperity": 12,
                 "baseLevy":
@@ -231,7 +233,9 @@
             {
                 "id": "prov_two",
                 "name": "Twoland",
-                "colorCode": 234561,
+                "colorCode": 16777215,
+                "dispPosX": 20,
+                "dispPosY": 20,
                 "development": 40,
                 "prosperity": 6,
                 "baseLevy":
@@ -255,7 +259,9 @@
             {
                 "id": "prov_three",
                 "name": "Threeland",
-                "colorCode": 345612,
+                "colorCode": 16711935,
+                "dispPosX": 30,
+                "dispPosY": 30,
                 "development": 60,
                 "prosperity": 15,
                 "baseLevy":
@@ -279,7 +285,9 @@
             {
                 "id": "prov_four",
                 "name": "Fourland",
-                "colorCode": 456123,
+                "colorCode": 4294902015,
+                "dispPosX": 40,
+                "dispPosY": 40,
                 "development": 50,
                 "prosperity": 12,
                 "baseLevy":
@@ -303,7 +311,9 @@
             {
                 "id": "prov_five",
                 "name": "Fiveland",
-                "colorCode": 561234,
+                "colorCode": 4278190335,
+                "dispPosX": 50,
+                "dispPosY": 50,
                 "development": 50,
                 "prosperity": 12,
                 "baseLevy":
@@ -327,7 +337,9 @@
             {
                 "id": "prov_six",
                 "name": "Sixland",
-                "colorCode": 612345,
+                "colorCode": 4278255615,
+                "dispPosX": 60,
+                "dispPosY": 60,
                 "development": 50,
                 "prosperity": 12,
                 "baseLevy":
@@ -344,6 +356,32 @@
                 },
                 "baseTaxIncome": 200,
                 "taxIncome": 200,
+                "siegeStatus": 0,
+                "siegingArmy": "none",
+                "controlledBy": "none"
+            },
+            {
+                "id": "sea",
+                "name": "Black Sea",
+                "colorCode": 255,
+                "dispPosX": 0,
+                "dispPosY": 0,
+                "development": 0,
+                "prosperity": 0,
+                "baseLevy":
+                {
+                    "men": 0,
+                    "isRaised": false,
+                    "reinforcementRate": 0
+                },
+                "levy":
+                {
+                    "men": 0,
+                    "isRaised": false,
+                    "reinforcementRate": 0 
+                },
+                "baseTaxIncome": 0,
+                "taxIncome": 0,
                 "siegeStatus": 0,
                 "siegingArmy": "none",
                 "controlledBy": "none"

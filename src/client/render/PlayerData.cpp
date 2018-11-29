@@ -5,6 +5,7 @@ Simple bar to show informations about the player's character.
 #include "PlayerData.h"
 #include "Render.h"
 #include <json.hpp>
+#include <iostream>
 
 using json = nlohmann::json;
 
@@ -35,19 +36,35 @@ namespace render {
     }
     PlayerData::~PlayerData () {}
     void PlayerData::selectCharacter(std::string id) {
-        json j = json::parse(state->getPlayer(this->id));
-        this->data = "Score :"+ j["score"].dump()+" ";
-        j = json::parse(state->getCharacter(this->id));
-        this->data = "Character: "+j["name"].dump()+" "+j["dynastyName"].dump()+" "
-        +"Prestige: "+j["prestige"].dump()+" "+"Gold: "+j["gold"].dump()+" "
-        +"Plot active: "+j["hasPlot"].dump()+"\n"
-        +"Diplomacy: "+j["diplomacy"].dump()+" "+"Stewardship: "+j["stewardship"].dump()+" "
-        +"Martial: "+j["martial"].dump()+" "+"Intrigue: "+j["intrigue"].dump();
-        text.setString(data);
+        this->id = id;
+        try {
+            json j = state->fetchAllPlayersData();
+            for(json::iterator it = j.begin(); it!= j.end(); ++it){
+                if(it.value()["id"].get<std::string>()==this->id) {
+                    this->data = "Score :"+ it.value()["score"].dump()+" ";
+                    this->id = it.value()["currentCharacter"].get<std::string>();
+                    j = state->fetchCharacterData(this->id);
+                    this->data = "Character: "+j["name"].dump()+" "+j["dynastyName"].dump()+" "
+                    +"Prestige: "+j["prestige"].dump()+" "+"Gold: "+j["gold"].dump()+" "
+                    +"Plot active: "+j["hasPlot"].dump()+"\n"
+                    +"Diplomacy: "+j["diplomacy"].dump()+" "+"Stewardship: "+j["stewardship"].dump()+" "
+                    +"Martial: "+j["martial"].dump()+" "+"Intrigue: "+j["intrigue"].dump();
+                    text.setString(data);
+                    break;
+                }  
+            }
+        }
+        catch(const std::exception& e) {
+            std::cerr << e.what() <<std::endl;
+            throw std::runtime_error("Incorrect data for playerData");
+        }
     }
     void  PlayerData::draw() {
         // draw panel
         mainRender->Render::getWindow()->draw(frame);
         mainRender->Render::getWindow()->draw(text);
+    }
+    void PlayerData::update() {
+        selectCharacter(this->id);
     }
 }

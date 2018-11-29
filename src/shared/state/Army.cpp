@@ -141,4 +141,18 @@ namespace state
     {
         return (std::find(levies.begin(), levies.end(), levyProvinceId) != levies.end());
     }
+    nlohmann::json Army::toJson ()
+    {
+        nlohmann::json j;
+        j["id"] = id;
+        j["ownerCharacter"] = ownerCharacter;
+        j["levies"] = levies;
+        j["currentProvince"] = currentProvince;
+        j["currentBattle"] = currentBattle;
+        nlohmann::json jOrders = nlohmann::json::array();
+        for(auto e: orders)
+            jOrders.push_back(e.toJson());
+        j["orders"] = jOrders;
+        return j;
+    }
 }

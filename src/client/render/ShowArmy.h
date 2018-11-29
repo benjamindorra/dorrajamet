@@ -36,6 +36,8 @@ namespace render {
     std::string getId ();
     void select ();
     bool getSelected ();
+    int getX ();
+    int getY ();
     // Setters and Getters
   };
 

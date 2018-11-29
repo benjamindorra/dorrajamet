@@ -52,6 +52,7 @@ namespace state {
     bool isDead ();
     void disband ();
     bool ownsLevy (std::string levyProvinceId);
+    nlohmann::json toJson ();
     // Setters and Getters
   };
 

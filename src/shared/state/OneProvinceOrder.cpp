@@ -55,4 +55,13 @@ namespace state
     {
         return destinationProvinceId;
     }
+    nlohmann::json OneProvinceOrder::toJson ()
+    {
+        nlohmann::json j;
+        j["originProvinceId"] = originProvinceId;
+        j["destinationProvinceId"] = destinationProvinceId;
+        j["duration"] = duration;
+        j["elapsed"] = elapsed;
+        return j;
+    }
 }

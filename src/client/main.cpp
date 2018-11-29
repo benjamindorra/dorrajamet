@@ -12,13 +12,13 @@ void debug(int c)
     std::cout << "Jusqu'ici tout va bien : " << c << std::endl;
 }
 
-void testRender(state::GameState testState, engine::EngineCore testEngine){
+void testRender(state::GameState * testState, engine::EngineCore * testEngine){
     // create the window
     render::Render render1(1280,720);
     //init the render
-    render1.init(&testState, &testEngine);
+    render1.init(testState, testEngine);
     // start the renderloop
-    render1.render::Render::renderLoop();
+    render1.renderLoop();
 }
 
 int main(int argc, char ** argv)
@@ -40,7 +40,7 @@ int main(int argc, char ** argv)
         {
             state::GameState testState("./res/testGameState.json");
             engine::EngineCore testEngine(&testState);
-            testRender(testState, testEngine);
+            testRender(&testState, &testEngine);
         }
         else if(command == "engine")
         {

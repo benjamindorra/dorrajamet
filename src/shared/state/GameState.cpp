@@ -152,10 +152,39 @@ namespace state
     {
         return gameMap->fetchProvinceData(provinceId);
     }
+    /*nlohmann::json GameState::fetchAllProvincesData ()
+    {
+
+    }*/
     nlohmann::json GameState::fetchProvinceOwnerData (int provinceColorCode)
     {
         auto provinceId = gameMap->getProvinceId(provinceColorCode);
+        if(provinceId == "sea")
+        {
+            nlohmann::json j;
+            j = "sea";
+            return j;
+        }
         auto ownerId = politics->getProvinceOwner(provinceId);
         return politics->fetchCharacterData(ownerId);
+    }
+    nlohmann::json GameState::fetchArmyData (std::string armyId)
+    {
+        return gameMap->fetchArmyData(armyId);
+    }
+    nlohmann::json GameState::fetchAllArmiesData ()
+    {
+        return gameMap->fetchAllArmiesData();
+    }
+    nlohmann::json GameState::fetchAllRelationsData ()
+    {
+        return politics->fetchAllRelationsData();
+    }
+    nlohmann::json GameState::fetchAllPlayersData ()
+    {
+        nlohmann::json res = nlohmann::json::array();
+        for(auto player: players)
+            res.push_back(player.toJson());
+        return res;
     }
 }

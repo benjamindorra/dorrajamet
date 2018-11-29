@@ -132,4 +132,11 @@ namespace state
     {
         return characters.fetchAllCharactersData();
     }
+    nlohmann::json Politics::fetchAllRelationsData ()
+    {
+        nlohmann::json res = nlohmann::json::array();
+        for(auto e: relations)
+            res.push_back(e.toJson());
+        return res;
+    }
 }

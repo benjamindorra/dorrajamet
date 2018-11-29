@@ -73,4 +73,17 @@ namespace state
     {
         return orderList.size();
     }
+    nlohmann::json TravelOrder::toJson ()
+    {
+        nlohmann::json j;
+        j["originProvinceId"] = originProvinceId;
+        j["destinationProvinceId"] = destinationProvinceId;
+        j["duration"] = duration;
+        j["elapsed"] = elapsed;
+        nlohmann::json jOrders = nlohmann::json::array();
+        for(auto e: orderList)
+            jOrders.push_back(e.toJson());
+        j["orders"] = jOrders;
+        return j;
+    }
 }

@@ -20,41 +20,28 @@ namespace render {
         this->window.create(sf::VideoMode(width, height), "Window", sf::Style::Close);
     }
     Render::~Render () {
-        delete data;
-        delete playerData;
-        delete viewMap;
+        if((this->data != nullptr) & (this->playerData != nullptr) & (this->viewMap != nullptr)) {
+            delete data;
+            delete playerData;
+            delete viewMap;
+        }
     }
 
-    void Render::init(state::GameState * gamestate, engine::EngineCore * gameEngine) {
+    void Render::init(state::GameState * gameState, engine::EngineCore * gameEngine) {
         // create objects
         // create objects to interact with state and engine
-        //this->state = ToState();
+        this->state = ToState(gameState);
         this->engine = ToEngine(gameEngine);
-        std::cout<<"0"<<std::endl;    
-        //std::cout<<"3"<<std::endl;
-        // create an army image
-        //Image armyImg;
-        //armyImg.importFile("./res/army.bmp");
-        std::cout<<"4"<<std::endl;
-        // create a ShowArmy
-        //ShowArmy showArmy(this, armyImg);
-        std::cout<<"5"<<std::endl;
-        // add the ShowArmy in ShowArmies
-        //showArmies.addArmy(&showArmy);
-        std::cout<<"6"<<std::endl;
         // create the viewmap
         this->viewMap = new ViewMap(this, &state, &engine);
         // sf::Vector2f(224.f, 162.f), sf::Vector2f(200.f,200.f),
-        std::cout<<"7"<<std::endl;
         // create the colormap
-        this->colorMap = ColorMap("./res/provinces.bmp");
-        std::cout<<"8"<<std::endl;
+        this->colorMap = ColorMap("./res/testMap.bmp");
         // show data
         this->data = new Data(this, &state, &engine);
-        std::cout<<"9"<<std::endl;
         // show player data
         this->playerData = new PlayerData(this, &state);
-        std::cout<<"init ok"<<std::endl;
+        std::cout<<"Render init OK"<<std::endl;
     }
 
     // main loop, handles render and events
@@ -179,7 +166,12 @@ namespace render {
 
             // clear the window with black color
             this->window.clear(sf::Color::Black);
-
+            // update
+            update();
+            viewMap->update();
+            ////data->update();
+            playerData->update();
+            // draw
             //draw the map
             viewMap->ViewMap::draw();
             // draw the data
@@ -208,4 +200,5 @@ namespace render {
     void Render::removeToDraw(std::string id) {
         this->toDraw.erase(id);
     }
+    void Render::update(){}
 }
