@@ -10,7 +10,7 @@ namespace state
     GameState::GameState ()
     {
         politics = Politics();
-        gameMap = GameMap();
+        gameMap = new GameMap();
         ressources = Ressources();
         players = std::vector<Player>();
     }
@@ -24,7 +24,7 @@ namespace state
             json j = json::parse(fileContent);
             this->politics = Politics(j["politics"].dump());
             this->ressources = Ressources(j["ressources"].dump());
-            this->gameMap = GameMap(this, j["gameMap"].dump());
+            this->gameMap = new GameMap(nullptr, j["gameMap"].dump());
             Player p;
             for(json::iterator it = j["players"].begin(); it != j["players"].end(); ++it)
                 players.push_back(Player(it.value()));
@@ -36,22 +36,27 @@ namespace state
             std::cerr << e.what();
             throw std::runtime_error("Error: an error occurred when loading GameState from saveFile.");
         }
+        refreshChildParentPointers();
     }
     GameState::~GameState()
     {
-
+        delete gameMap;
+    }
+    void GameState::refreshChildParentPointers()
+    {
+        this->gameMap->setParent(this);
     }
     void GameState::debug()
     {
         this->politics.debug();
         this->ressources.debug();
-        this->gameMap.debug();
+        this->gameMap->debug();
     }
     void GameState::setArmyOrder(std::string armyId, std::string destId)
     {
-        auto origId = gameMap.getArmyPosition(armyId);
+        auto origId = gameMap->getArmyPosition(armyId);
         auto path = ressources.getOrderJson(origId, destId);
-        gameMap.setArmyOrder(armyId, path);
+        gameMap->setArmyOrder(armyId, path);
     }
     bool GameState::turnAdvance()
     {
@@ -66,15 +71,15 @@ namespace state
     }
     void GameState::updateArmiesOrders ()
     {
-        gameMap.updateArmiesOrders();
+        gameMap->updateArmiesOrders();
     }
     void GameState::updateBattles()
     {
-        gameMap.updateBattles();
+        gameMap->updateBattles();
     }
     void GameState::checkNewBattles()
     {
-        gameMap.checkNewBattles();
+        gameMap->checkNewBattles();
     }
     bool GameState::checkWarStatus (std::string characterA, std::string characterB)
     {
@@ -86,16 +91,16 @@ namespace state
     }
     void GameState::clearFinishedBattles ()
     {
-        gameMap.clearFinishedBattles();
+        gameMap->clearFinishedBattles();
     }
     void GameState::clearDeadArmies ()
     {
-        gameMap.clearDeadArmies();
+        gameMap->clearDeadArmies();
     }
     void GameState::updateLevies ()
     {
-        gameMap.updateReinforcementRates();
-        gameMap.reinforceLevies();
+        gameMap->updateReinforcementRates();
+        gameMap->reinforceLevies();
     }
     std::string GameState::getProvinceOwner (std::string provinceId)
     {
@@ -105,17 +110,30 @@ namespace state
     {
         return politics.getCharacterTopLiege(characterId);
     }
+    void GameState::updateProvinces()
+    {
+        // Check for new sieges
+        gameMap->checkNewSieges();
+        // Update ongoing sieges
+        gameMap->updateSieges();
+        // Update prosperity and tax incomes
+        gameMap->updateProvincesData();
+    }
+    nlohmann::json GameState::fetchCharacterData (std::string characterId)
+    {
+        return politics.fetchCharacterData(characterId);
+    }
     nlohmann::json GameState::fetchAllCharactersData ()
     {
         return politics.fetchAllCharactersData();
     }
     nlohmann::json GameState::fetchProvinceData (int provinceColorCode)
     {
-        return gameMap.fetchProvinceData(provinceColorCode);
+        return gameMap->fetchProvinceData(provinceColorCode);
     }
     nlohmann::json GameState::fetchProvinceOwnerData (int provinceColorCode)
     {
-        auto provinceId = gameMap.getProvinceId(provinceColorCode);
+        auto provinceId = gameMap->getProvinceId(provinceColorCode);
         auto ownerId = politics.getProvinceOwner(provinceId);
         return politics.fetchCharacterData(ownerId);
     }

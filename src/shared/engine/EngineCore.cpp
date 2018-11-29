@@ -10,7 +10,7 @@ namespace engine
     }
     EngineCore::EngineCore (state::GameState * gameState)
     {
-
+        this->gameState = gameState;
     }
     EngineCore::EngineCore (state::GameState * gameState, std::queue<Command> * commands)
     {
@@ -76,7 +76,9 @@ namespace engine
         gameState->updateBattles();
         gameState->clearFinishedBattles();
         gameState->clearDeadArmies();
+        gameState->updateProvinces();
         gameState->updateLevies();
-        //gameState->updateValues();
+        std::cout << "End turn procedure finished\n";
+        
     }
 }

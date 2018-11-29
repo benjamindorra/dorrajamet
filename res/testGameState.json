@@ -87,6 +87,22 @@
                 "liege": "d_of_evens",
                 "deJureLiege": "d_of_evens",
                 "province": "prov_four"
+            },
+            {
+                "id": "c_of_five",
+                "name": "County of Five",
+                "holder": "chara_0003",
+                "liege": "d_of_odds",
+                "deJureLiege": "d_of_odds",
+                "province": "prov_five"
+            },
+            {
+                "id": "c_of_six",
+                "name": "County of Six",
+                "holder": "chara_0004",
+                "liege": "d_of_evens",
+                "deJureLiege": "d_of_evens",
+                "province": "prov_six"
             }
         ],
         "characters":
@@ -207,7 +223,10 @@
                     "reinforcementRate": 1 
                 },
                 "baseTaxIncome": 200,
-                "taxIncome": 200
+                "taxIncome": 200,
+                "siegeStatus": 0,
+                "siegingArmy": "none",
+                "controlledBy": "none"
             },
             {
                 "id": "prov_two",
@@ -228,7 +247,10 @@
                     "reinforcementRate": 1 
                 },
                 "baseTaxIncome": 150,
-                "taxIncome": 150
+                "taxIncome": 150,
+                "siegeStatus": 0,
+                "siegingArmy": "none",
+                "controlledBy": "none"
             },
             {
                 "id": "prov_three",
@@ -249,7 +271,10 @@
                     "reinforcementRate": 1 
                 },
                 "baseTaxIncome": 250,
-                "taxIncome": 250
+                "taxIncome": 250,
+                "siegeStatus": 0,
+                "siegingArmy": "none",
+                "controlledBy": "none"
             },
             {
                 "id": "prov_four",
@@ -270,7 +295,10 @@
                     "reinforcementRate": 1 
                 },
                 "baseTaxIncome": 200,
-                "taxIncome": 200
+                "taxIncome": 200,
+                "siegeStatus": 0,
+                "siegingArmy": "none",
+                "controlledBy": "none"
             },
             {
                 "id": "prov_five",
@@ -291,7 +319,10 @@
                     "reinforcementRate": 1 
                 },
                 "baseTaxIncome": 200,
-                "taxIncome": 200
+                "taxIncome": 200,
+                "siegeStatus": 0,
+                "siegingArmy": "none",
+                "controlledBy": "none"
             },
             {
                 "id": "prov_six",
@@ -312,7 +343,10 @@
                     "reinforcementRate": 1 
                 },
                 "baseTaxIncome": 200,
-                "taxIncome": 200
+                "taxIncome": 200,
+                "siegeStatus": 0,
+                "siegingArmy": "none",
+                "controlledBy": "none"
             }
         ],
         "armies":

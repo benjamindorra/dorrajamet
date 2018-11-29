@@ -26,21 +26,21 @@ namespace state
             for(it = jArray.begin(); it!= jArray.end(); ++it)
             {
                 jElement = it.value();
-                this->provinces[jElement["id"].get<std::string>()] = Province(this, jElement.dump());
+                this->provinces[jElement["id"].get<std::string>()] = Province(nullptr, jElement.dump());
             }
             // Armies
             jArray = j["armies"];
             for(it = jArray.begin(); it!= jArray.end(); ++it)
             {
                 jElement = it.value();
-                this->armies[jElement["id"].get<std::string>()] = Army(this, jElement.dump());
+                this->armies[jElement["id"].get<std::string>()] = Army(nullptr, jElement.dump());
             }
             // Battles
             jArray = j["battles"];
             for(it = jArray.begin(); it!= jArray.end(); ++it)
             {
                 jElement = it.value();
-                this->battles[jElement["id"].get<std::string>()] = Battle(this, jElement.dump());
+                this->battles[jElement["id"].get<std::string>()] = Battle(nullptr, jElement.dump());
             }
         }
         catch(const std::exception& e)
@@ -48,10 +48,24 @@ namespace state
             std::cerr << e.what() << std::endl ;
             throw std::runtime_error("Error when loading politics.");
         }
+        refreshChildParentPointers();
     }
     GameMap::~GameMap ()
     {
 
+    }
+    void GameMap::refreshChildParentPointers()
+    {
+        for(auto const& e: provinces)
+            provinces[e.first].setParent(this);
+        for(auto const& e: armies)
+            armies[e.first].setParent(this);
+        for(auto const& e: battles)
+            battles[e.first].setParent(this);
+    }
+    void GameMap::setParent(state::GameState * parent)
+    {
+        this->parent = parent;
     }
     bool GameMap::checkConsistency ()
     {
@@ -59,7 +73,9 @@ namespace state
     }
     void GameMap::debug ()
     {
-
+        //std::cout << "armies on map: " << armies.size() << std::endl;
+        for(auto const& e: provinces)
+            provinces[e.first].debug();
     }
     std::string GameMap::getArmyPosition (std::string armyId)
     {
@@ -71,9 +87,13 @@ namespace state
     }
     void GameMap::updateArmiesOrders ()
     {
-        for(auto const& e : armies)
-            if(!(armies[e.first].isInBattle()))
-                armies[e.first].advanceOrders();
+        for(auto const& e: armies)
+        if(!armies[e.first].isInBattle())
+            armies[e.first].advanceOrders();
+        /*std::map<std::string, state::Army>::iterator it;
+        for(it = armies.begin(); it != armies.end(); it++)
+            if(!(it->second.isInBattle()))
+                it->second.advanceOrders();*/
     }
     void GameMap::updateBattles()
     {
@@ -152,6 +172,7 @@ namespace state
 
             }
         }
+        refreshChildParentPointers();
     }
     void GameMap::clearFinishedBattles ()
     {
@@ -170,6 +191,7 @@ namespace state
             armies[army].disband();
             armies.erase(army);
         }
+        refreshChildParentPointers();
     }
     void GameMap::updateReinforcementRates ()
     {
@@ -199,7 +221,12 @@ namespace state
         {
             auto levyProvinceId = e.first;
             if(!provinces[levyProvinceId].isLevyRaised())
-                provinces[levyProvinceId].setLevyReinforcementRate(1);
+                if(provinces[levyProvinceId].isSieged())
+                    provinces[levyProvinceId].setLevyReinforcementRate(0.5);
+                else if(provinces[levyProvinceId].isCaptured())
+                    provinces[levyProvinceId].setLevyReinforcementRate(0.1);
+                else
+                    provinces[levyProvinceId].setLevyReinforcementRate(1);
             else
             {
                 auto armyId = getArmyOfLevy(levyProvinceId);
@@ -239,6 +266,55 @@ namespace state
         for(auto const& e: provinces)
             provinces[e.first].reinforceLevy();
     }
+    void GameMap::checkNewSieges ()
+    {
+        std::map<std::string, std::vector<std::string>> pos; // pos contains all the armies contained in each province
+        for(auto const& e: armies)
+            pos[armies[e.first].getCurrentProvince()].push_back(e.first);
+        for(auto const& e: pos) // for each province
+        {
+            // Get whoever owns or control the province
+            auto provinceId = e.first;
+            std::string provinceController;
+            if(provinces[provinceId].isCaptured())
+                provinceController = provinces[provinceId].getController();
+            else
+                provinceController = parent->getProvinceOwner(provinceId);
+            // No siege starts if a battle or a siege is ongoing
+            if(checkForOngoingBattles(provinceId) || checkForOngoingSiege(provinceId))
+                continue;
+            // For each army
+            for(auto const& a: e.second)
+            {
+                // Get army owner
+                auto armyOwner = armies[a].getOwnerCharacter();
+                // Check if province controller and army owner are at war
+                if(parent->checkWarStatus(provinceController, armyOwner))
+                {
+                    provinces[provinceId].setSiegingArmy(a);
+                    break;// For now we will only consider the first sieging army
+                }
+            }
+        }
+    }
+    bool GameMap::checkForOngoingSiege (std::string provinceId)
+    {
+        return provinces[provinceId].isSieged();
+    }
+    void GameMap::updateSieges ()
+    {
+        for(auto const& e: provinces)
+            provinces[e.first].updateSiege();
+    }
+    void GameMap::updateProvincesData ()
+    {
+        for(auto const& e: provinces)
+        {
+            auto provinceId = e.first;
+            std::cout << provinceId << std::endl;
+            provinces[provinceId].updateData();
+        }
+    }
     nlohmann::json GameMap::fetchProvinceData (int provinceColorCode)
     {
         return provinces[getProvinceId(provinceColorCode)].toJson();
@@ -249,5 +325,13 @@ namespace state
             if(provinces[e.first].getColorCode() == provinceColorCode)
                 return e.first;
         throw std::runtime_error("Error: state::GameMap::getProvinceId() : unknown province color code: " + provinceColorCode);
+    }
+    std::string GameMap::getProvinceOwner (std::string provinceId)
+    {
+        return parent->getProvinceOwner(provinceId);
+    }
+    nlohmann::json GameMap::fetchCharacterData (std::string characterId)
+    {
+        return parent->fetchCharacterData(characterId);
     }
 }

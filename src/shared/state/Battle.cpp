@@ -43,6 +43,10 @@ namespace state
     {
 
     }
+    void Battle::setParent (GameMap * parent)
+    {
+        this->parent = parent;
+    }
     bool Battle::checkConsistency ()
     {
         if(endTurn != -1)

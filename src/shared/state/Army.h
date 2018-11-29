@@ -35,6 +35,7 @@ namespace state {
     Army ();
     Army (GameMap * parent, std::string strJson);
     ~Army ();
+    void setParent (GameMap * parent);
     bool checkConsistency ();
     void debug ();
     std::string getId ();

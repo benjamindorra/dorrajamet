@@ -41,11 +41,15 @@ namespace state
             name = j["name"].get<std::string>();
             colorCode = j["colorCode"].get<int>();
             development = j["development"].get<int>();
-            prosperity = j["prosperity"].get<char>();
+            prosperity = j["prosperity"].get<int>();
             baseLevy = Levy(this, j["baseLevy"].dump());
             levy = Levy(this, j["levy"].dump());
             baseTaxIncome = j["baseTaxIncome"].get<unsigned int>();
             taxIncome = j["taxIncome"].get<unsigned int>();
+            siegeStatus = j["siegeStatus"].get<int>();
+            siegingArmy = j["siegingArmy"].get<std::string>();
+            controlledBy = j["controlledBy"].get<std::string>();
+            
         }
         catch(const std::exception& e)
         {
@@ -56,6 +60,10 @@ namespace state
     Province::~Province ()
     {
 
+    }
+    void Province::setParent (GameMap * parent)
+    {
+        this->parent = parent;
     }
     bool Province::checkConsistency ()
     {
@@ -73,7 +81,15 @@ namespace state
     }
     void Province::debug ()
     {
-        std::cout << "Debug Province\nId: " << id << "\nName: " << name << "\nColor Code: " << std::hex << colorCode << "\nDevelopment score: " << development << "\nProsperity level: " << prosperity << std::endl;
+        std::cout << "========Province========\n"
+        << "Id: " << id 
+        << "\nName: " << name
+        << "\nDevelopment score: " << development 
+        << "\nProsperity level: " << prosperity 
+        << "\nColor Code: " << colorCode
+        << "\nBase tax income: " << baseTaxIncome
+        << "\nBase levy men: " << baseLevy.getMen()
+        << std::endl;
     }
     int Province::getLevyMen()
     {
@@ -109,6 +125,99 @@ namespace state
             reinforcements = maxMen - currentMen;
         levy.reinforce(reinforcements);
     }
+    void Province::changeSiegeStatusBy(int amount)
+    {
+        siegeStatus += amount;
+        if(siegeStatus < 0)
+            siegeStatus = 0;
+        else if(siegeStatus > 100)
+            siegeStatus = 100;
+    }
+    void Province::changeProsperityBy (int amount)
+    {
+        prosperity += amount;
+        if(prosperity < -100)
+            prosperity = -100;
+        else if(prosperity > 100)
+            prosperity = 100;
+    }
+    void Province::updateController()
+    {
+        if(siegeStatus < 100)
+            return;
+        auto siegingArmyOwner = parent->getArmy(siegingArmy)->getOwnerCharacter();
+        auto provinceOwner = parent->getProvinceOwner(id);
+        if(siegingArmyOwner == provinceOwner)
+            controlledBy = "none";
+        else
+            controlledBy = siegingArmyOwner;
+        siegeStatus = 0;
+        siegingArmy = "none";
+    }
+    void Province::updateSiege()
+    {
+        if(isSieged())
+            changeSiegeStatusBy(34);
+        else
+            changeSiegeStatusBy(-34);
+    }
+    void Province::setSiegingArmy (std::string armyId)
+    {
+        siegingArmy = armyId;
+    }
+    bool Province::isSieged()
+    {
+        return siegingArmy != "none";
+    }
+    bool Province::isCaptured()
+    {
+        return controlledBy != "none";
+    }
+    std::string Province::getController ()
+    {
+        return controlledBy;
+    }
+    void Province::updateData()
+    {
+        // Sieged provinces lose prosperity
+        if(isSieged())
+            changeProsperityBy(-20);
+        // Controlled provinces lose a little prosperity
+        else if(isCaptured())
+            changeProsperityBy(-2);
+        else
+            changeProsperityBy(15);
+        // Base levy is computed from dev + prosperity + owner martial score
+        int men = 1000 + development * 90;
+        if(prosperity <= 0)
+            men *= (0.1+(100-prosperity)*0.009);
+        else
+            men *= (1+prosperity*0.005);
+        auto data = parent->fetchCharacterData(parent->getProvinceOwner(id));
+        auto martial = data["martial"].get<int>();
+        if(martial <= 10)
+            men *= (0.1 + martial * 0.09);
+        else
+            men *= (1 + 0.05*(martial -10));
+        baseLevy.setMen(men);
+        // Income is computed from dev + prosperity + owner stewardship score
+        int bti = 1 + development * 0.49;
+        if(prosperity <= 0)
+            bti *= (0.1 + (100 - prosperity) * 0.009);
+        else
+            bti *= (1 + prosperity * 0.005);
+        auto diplomacy = data["diplomacy"].get<int>();
+        if(diplomacy <= 10)
+            bti *= (0.1 + diplomacy * 0.09);
+        else
+            bti *= (1 + (diplomacy - 20) * 0.05);
+        baseTaxIncome = bti;
+        // Controlled or sieged province have an income malus
+        if(isSieged())
+            taxIncome = baseTaxIncome * 0.5;
+        else if(isCaptured())
+            taxIncome = 0;
+    }
     nlohmann::json Province::toJson ()
     {
         nlohmann::json j;
@@ -121,6 +230,9 @@ namespace state
         j["levy"] = levy.toJson();
         j["baseTaxIncome"] = baseTaxIncome;
         j["taxIncome"] = taxIncome;
+        j["siegeStatus"] = siegeStatus;
+        j["siegingArmy"] = siegingArmy;
+        j["controlledBy"] = controlledBy;
         return j;
     }
 }

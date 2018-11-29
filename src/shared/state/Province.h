@@ -25,9 +25,9 @@ namespace state {
     /// int value of the unique color code of the province (for ui purposes)
     int colorCode;
     /// Ranges from 0 to 100. Represent the current development status of the province. The player can spend money to raise this value. Increase this value will offer better levies and tax income. Later we could replace that with a list of improvable buildings that will have more specific modifiers on the province.
-    unsigned char development;
+    int development;
     /// Representing the prosperity/devastation of the province (impacts the taxes and levies). Ranges from -100 (total devastation) to 100 (maximum prosperity).
-    char prosperity;
+    int prosperity;
     /// Base values used to compute the available levies of this province.
     Levy baseLevy;
     /// Levy of the province.
@@ -40,11 +40,17 @@ namespace state {
     int dispPosX;
     /// y position for display of armies
     int dispPosY;
+    /// 0: no siege, 100: controlled
+    int siegeStatus;
+    /// Sieging army id
+    std::string siegingArmy;
+    std::string controlledBy;
     // Operations
   public:
     Province ();
     Province (GameMap * parent, std::string strJson);
     ~Province ();
+    void setParent (GameMap * parent);
     bool checkConsistency ();
     void debug ();
     int getLevyMen ();
@@ -53,7 +59,16 @@ namespace state {
     void disbandLevy ();
     bool isLevyRaised ();
     void setLevyReinforcementRate (float rate);
+    void setSiegingArmy (std::string armyId);
     void reinforceLevy ();
+    void updateSiege ();
+    void changeSiegeStatusBy (int amount);
+    void changeProsperityBy (int amount);
+    bool isSieged ();
+    bool isCaptured ();
+    std::string getController ();
+    void updateController ();
+    void updateData ();
     nlohmann::json toJson ();
     // Setters and Getters
   };

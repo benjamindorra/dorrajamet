@@ -82,6 +82,7 @@ namespace state
 
         std::cout << "\n\n";
 
+        /*
         for(auto const& l:paths)
             for(auto const& c:l.second)
             {
@@ -91,8 +92,7 @@ namespace state
                     std::cout << step << " - ";
                 std::cout << std::endl;
             }
-
-        
+        */
     }
     //Next functions implement Dijkstra's algorithm
     //-1 being infinity, each inequality test against distance values are preceded by -1 case

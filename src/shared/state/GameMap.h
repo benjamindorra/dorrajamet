@@ -35,6 +35,8 @@ namespace state {
     GameMap ();
     GameMap (GameState * parent, std::string strJson);
     ~GameMap ();
+    void refreshChildParentPointers ();
+    void setParent (GameState * parent);
     bool checkConsistency ();
     void debug ();
     std::string getArmyPosition (std::string armyId);
@@ -51,9 +53,15 @@ namespace state {
     void clearDeadArmies ();
     void updateReinforcementRates ();
     void reinforceLevies ();
+    void checkNewSieges ();
+    bool checkForOngoingSiege (std::string provinceId);
+    void updateSieges ();
+    void updateProvincesData ();
     std::string getArmyOfLevy (std::string levyProvinceId);
     nlohmann::json fetchProvinceData (int provinceColorCode);
     std::string getProvinceId (int provinceColorCode);
+    std::string getProvinceOwner (std::string provinceId);
+    nlohmann::json fetchCharacterData (std::string characterId);
     // Setters and Getters
   };
 

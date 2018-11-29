@@ -15,9 +15,9 @@ namespace state {
 }
 
 #include "Politics.h"
-#include "GameMap.h"
 #include "Ressources.h"
 #include "Player.h"
+#include "GameMap.h"
 
 namespace state {
 
@@ -27,7 +27,7 @@ namespace state {
     // Attributes
   private:
     state::Politics politics;
-    state::GameMap gameMap;
+    state::GameMap * gameMap;
     state::Ressources ressources;
     std::vector<state::Player> players;
     unsigned int currentPlayer;
@@ -38,6 +38,8 @@ namespace state {
     GameState (const char* saveFilePath);
     GameState (const std::string saveFilePath);
     ~GameState ();
+    void testPointer ();
+    void refreshChildParentPointers ();
     void debug ();
     void setArmyOrder (std::string armyId, std::string destId);
     int getCurrentTurn ();
@@ -51,6 +53,8 @@ namespace state {
     void updateLevies ();
     std::string getProvinceOwner (std::string provinceId);
     std::string getCharacterTopLiege (std::string characterId);
+    void updateProvinces ();
+    nlohmann::json fetchCharacterData (std::string characterId);
     nlohmann::json fetchAllCharactersData ();
     nlohmann::json fetchProvinceData (int provinceColorCode);
     nlohmann::json fetchProvinceOwnerData (int provinceColorCode);

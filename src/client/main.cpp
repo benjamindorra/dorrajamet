@@ -46,6 +46,10 @@ int main(int argc, char ** argv)
         {
             state::GameState testState("./res/testGameState.json");
             engine::EngineCore testEngine(&testState);
+            testState.debug();
+            std::cout << "\n\n\n";
+            testEngine.endTurn();
+            testState.debug();
         }
         else
             std::cout << "Unknown parameter: " << command << std::endl;

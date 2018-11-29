@@ -57,6 +57,10 @@ namespace state
         if(men < 0)
             men = 0;
     }
+    void Levy::setMen (int men)
+    {
+        this->men = men;
+    }
     void Levy::disband ()
     {
         raised = false;

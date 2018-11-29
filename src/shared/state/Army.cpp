@@ -51,6 +51,10 @@ namespace state
     {
         
     }
+    void Army::setParent (GameMap * parent)
+    {
+        this->parent = parent;
+    }
     bool Army::checkConsistency ()
     {
         return true;
@@ -85,6 +89,7 @@ namespace state
     }
     bool Army::isInBattle ()
     {
+        return false;
         return currentBattle.size();
     }
     bool Army::hasOrder()
@@ -93,6 +98,8 @@ namespace state
     }
     void Army::advanceOrders()
     {
+        if(orders.empty())
+            return;
         auto travelOrder = orders[0];
         if(travelOrder.nextStep())
         {

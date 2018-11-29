@@ -28,6 +28,7 @@ namespace state {
     Battle ();
     Battle (GameMap * parent, std::string strJson);
     ~Battle ();
+    void setParent (GameMap * parent);
     bool checkConsistency ();
     void debug ();
     void advance ();

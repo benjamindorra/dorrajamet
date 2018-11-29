@@ -30,6 +30,7 @@ namespace state {
     void debug ();
     int getMen ();
     void killMen (int victims);
+    void setMen (int men);
     void disband ();
     void update ();
     bool isRaised ();
