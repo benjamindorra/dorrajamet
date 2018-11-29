@@ -7,6 +7,11 @@
 #include <json.hpp>
 
 namespace state {
+  class Character;
+}
+
+
+namespace state {
 
   /// class Character - 
   class Character {
@@ -39,8 +44,15 @@ namespace state {
     ~Character ();
     void debug ();
     bool checkConsistency ();
+    std::string getId ();
     std::string getMainTitle ();
+    int getPrestige ();
+    void addGold (int amount);
+    void addPrestige (int amount);
+    /// returns true if the character dies
+    bool ageUp ();
     nlohmann::json toJson ();
+    Character generateHeir ();
     // Setters and Getters
   };
 

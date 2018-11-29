@@ -115,7 +115,7 @@ namespace state
         switch(titles[titleId])
         {
             case kingdom:
-                return "";
+                return "none";
             case duchy:
                 return duchies[titleId].getLiege();
             case county:
@@ -124,12 +124,88 @@ namespace state
                 throw std::runtime_error("Error: getLiege(titleId): unknown id: " + titleId + "\n");
         }
     }
+    std::string Titles::getHolder(std::string titleId)
+    {
+        switch(titles[titleId])
+        {
+            case kingdom:
+                return kingdoms[titleId].getHolder();
+            case duchy:
+                return duchies[titleId].getHolder();
+            case county:
+                return counties[titleId].getHolder();
+            default:
+                throw std::runtime_error("Error: getHolder(titleId): unknown id: " + titleId + "\n");
+        }
+    }
     std::string Titles::getTopLiege(std::string titleId)
     {
         auto liege = getLiege(titleId);
-        if(liege == "")
+        if(liege == "none")
             return titleId;
         else
             return getTopLiege(liege);
+    }
+    std::vector<std::string> Titles::getTitlesOf (std::string characterId)
+    {
+        std::vector<std::string> res;
+        for(auto const& e: titles)
+            if(getHolder(e.first) == characterId)
+                res.push_back(e.first);
+        return res;
+    }
+    std::vector<std::string> Titles::getProvincesOf(std::string characterId)
+    {
+        std::vector<std::string> res;
+        for(auto const& e: titles)
+            if(getHolder(e.first) == characterId && titles[e.first] == county)
+                res.push_back(counties[e.first].getProvince());
+        return res;
+    }
+    std::vector<std::string> Titles::getTitleDirectVassals (std::string titleId)
+    {
+        std::vector<std::string> res;
+        for(auto const& e: titles)
+        if(getLiege(e.first) == titleId)
+            res.push_back(e.first);
+        return res;
+    }
+    int Titles::computeCharacterPrestige (std::string characterId)
+    {
+        int res = 0;
+        for(auto const& e: titles)
+            if(getHolder(e.first) == characterId)
+            {
+                switch(titles[e.first])
+                {
+                    case kingdom:
+                        res += 10;
+                        break;
+                    case duchy:
+                        res += 5;
+                        break;
+                    case county:
+                        res += 2;
+                        break;
+                }
+            }
+        return res;
+    }
+    void Titles::setTitleHolder (std::string newHolder, std::string titleId)
+    {
+        switch(titles[titleId])
+        {
+            case kingdom:
+                kingdoms[titleId].setHolder(newHolder);
+                return;
+            case duchy:
+                duchies[titleId].setHolder(newHolder);
+                return;
+            case county:
+                counties[titleId].setHolder(newHolder);
+                return;
+            default:
+                throw std::runtime_error("Error: setHolder(titleId): unknown id: " + titleId + "\n");
+        }
     }
 }

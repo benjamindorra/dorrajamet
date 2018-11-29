@@ -14,9 +14,9 @@ namespace state {
   class Player;
 }
 
-#include "Politics.h"
 #include "Ressources.h"
 #include "Player.h"
+#include "Politics.h"
 #include "GameMap.h"
 
 namespace state {
@@ -26,7 +26,7 @@ namespace state {
     // Associations
     // Attributes
   private:
-    state::Politics politics;
+    state::Politics * politics;
     state::GameMap * gameMap;
     state::Ressources ressources;
     std::vector<state::Player> players;
@@ -43,20 +43,23 @@ namespace state {
     void debug ();
     void setArmyOrder (std::string armyId, std::string destId);
     int getCurrentTurn ();
+    void updatePlayerCharacter (std::string formerCharacterId, std::string newCharacterId, int score);
+    bool checkWarStatus (std::string characterA, std::string characterB);
     bool turnAdvance ();
     void updateArmiesOrders ();
     void checkNewBattles ();
     void updateBattles ();
-    bool checkWarStatus (std::string characterA, std::string characterB);
     void clearFinishedBattles ();
     void clearDeadArmies ();
     void updateLevies ();
+    void updateCharactersData ();
     std::string getProvinceOwner (std::string provinceId);
     std::string getCharacterTopLiege (std::string characterId);
     void updateProvinces ();
     nlohmann::json fetchCharacterData (std::string characterId);
     nlohmann::json fetchAllCharactersData ();
     nlohmann::json fetchProvinceData (int provinceColorCode);
+    nlohmann::json fetchProvinceData (std::string provinceId);
     nlohmann::json fetchProvinceOwnerData (int provinceColorCode);
     // Setters and Getters
   };

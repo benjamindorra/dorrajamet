@@ -311,13 +311,16 @@ namespace state
         for(auto const& e: provinces)
         {
             auto provinceId = e.first;
-            std::cout << provinceId << std::endl;
             provinces[provinceId].updateData();
         }
     }
     nlohmann::json GameMap::fetchProvinceData (int provinceColorCode)
     {
         return provinces[getProvinceId(provinceColorCode)].toJson();
+    }
+    nlohmann::json GameMap::fetchProvinceData (std::string provinceId)
+    {
+        return provinces[provinceId].toJson();
     }
     std::string GameMap::getProvinceId (int provinceColorCode)
     {

@@ -132,6 +132,56 @@ namespace state{
     {
         return mainTitle;        
     }
+    std::string Character::getId ()
+    {
+        return id;
+    }
+    int Character::getPrestige ()
+    {
+        return prestige;
+    }
+    void Character::addGold (int amount)
+    {
+        gold += amount;
+    }
+    void Character::addPrestige (int amount)
+    {
+        prestige += amount;
+    }
+    bool Character::ageUp ()
+    {
+        age++;
+        if(age > 60) // Later we will implement a better death system with randomization
+        {
+            // Death
+            alive = false;
+            return true;
+        }
+        else
+        {
+            return false;
+        }
+    }
+    Character Character::generateHeir ()
+    {
+        // For now heir will be a copy of parent
+        nlohmann::json heir;
+        heir["id"] = id + "-heir";
+        heir["name"] = name + " I";
+        heir["dynastyName"] = dynastyName;
+        heir["mainTitle"] = mainTitle;
+        heir["age"] = age;
+        heir["traits"] = traits;
+        heir["diplomacy"] = diplomacy;
+        heir["stewardship"] = stewardship;
+        heir["martial"] = martial;
+        heir["intrigue"] = intrigue;
+        heir["alive"] = alive;
+        heir["prestige"] = prestige;
+        heir["gold"] = gold;
+        heir["hasPlot"] = false;
+        return Character(heir);
+    }
     nlohmann::json Character::toJson ()
     {
         nlohmann::json res;

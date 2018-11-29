@@ -4,6 +4,7 @@
 
 #include <string>
 #include <map>
+#include <vector>
 
 namespace state {
   class Title;
@@ -39,12 +40,18 @@ namespace state {
     bool checkConsistency ();
     void debug ();
     std::string getProvinceOwner (std::string provinceId);
+    std::vector<std::string> getProvincesOf (std::string characterId);
+    std::vector<std::string> getTitlesOf (std::string characterId);
     /// If titleId is independant, will return empty string
     /// @param titleId		(???) 
     std::string getLiege (std::string titleId);
+    std::string getHolder (std::string titleId);
     /// If titleId is independant, will return titleId
     /// @param titleId		(???) 
     std::string getTopLiege (std::string titleId);
+    std::vector<std::string> getTitleDirectVassals (std::string titleId);
+    int computeCharacterPrestige (std::string characterId);
+    void setTitleHolder (std::string newHolder, std::string titleId);
     // Setters and Getters
   };
 

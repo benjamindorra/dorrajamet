@@ -20,6 +20,9 @@ namespace state {
     Player (nlohmann::json initJson);
     ~Player ();
     std::string getId ();
+    std::string getCharacter ();
+    void setCharacter (std::string newCharacterId);
+    void addScore (int amount);
     // Setters and Getters
   };
 

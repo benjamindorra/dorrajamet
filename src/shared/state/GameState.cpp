@@ -9,7 +9,7 @@ namespace state
 {
     GameState::GameState ()
     {
-        politics = Politics();
+        politics = new Politics();
         gameMap = new GameMap();
         ressources = Ressources();
         players = std::vector<Player>();
@@ -22,7 +22,7 @@ namespace state
         {
             std::string fileContent = loadFile(saveFilePath);
             json j = json::parse(fileContent);
-            this->politics = Politics(j["politics"].dump());
+            this->politics = new Politics(nullptr, j["politics"].dump());
             this->ressources = Ressources(j["ressources"].dump());
             this->gameMap = new GameMap(nullptr, j["gameMap"].dump());
             Player p;
@@ -41,16 +41,29 @@ namespace state
     GameState::~GameState()
     {
         delete gameMap;
+        delete politics;
     }
     void GameState::refreshChildParentPointers()
     {
         this->gameMap->setParent(this);
+        this->politics->setParent(this);
     }
     void GameState::debug()
     {
-        this->politics.debug();
+        this->politics->debug();
         this->ressources.debug();
         this->gameMap->debug();
+    }
+    void GameState::updatePlayerCharacter (std::string formerCharacterId, std::string newCharacterId, int score)
+    {
+        for(auto e: players)
+            if(e.getCharacter() == formerCharacterId)
+            {
+                e.setCharacter(newCharacterId);
+                e.addScore(score);
+                return;
+            }
+        throw std::runtime_error("Error: GameState::updatePlayerCharacter - no player with character id: " + formerCharacterId);
     }
     void GameState::setArmyOrder(std::string armyId, std::string destId)
     {
@@ -83,7 +96,7 @@ namespace state
     }
     bool GameState::checkWarStatus (std::string characterA, std::string characterB)
     {
-        return politics.checkWarStatus(characterA, characterB);
+        return politics->checkWarStatus(characterA, characterB);
     }
     int GameState::getCurrentTurn ()
     {
@@ -102,13 +115,17 @@ namespace state
         gameMap->updateReinforcementRates();
         gameMap->reinforceLevies();
     }
+    void GameState::updateCharactersData ()
+    {
+        politics->updateCharactersData();
+    }
     std::string GameState::getProvinceOwner (std::string provinceId)
     {
-        return politics.getProvinceOwner(provinceId);
+        return politics->getProvinceOwner(provinceId);
     }
     std::string GameState::getCharacterTopLiege (std::string characterId)
     {
-        return politics.getCharacterTopLiege(characterId);
+        return politics->getCharacterTopLiege(characterId);
     }
     void GameState::updateProvinces()
     {
@@ -121,20 +138,24 @@ namespace state
     }
     nlohmann::json GameState::fetchCharacterData (std::string characterId)
     {
-        return politics.fetchCharacterData(characterId);
+        return politics->fetchCharacterData(characterId);
     }
     nlohmann::json GameState::fetchAllCharactersData ()
     {
-        return politics.fetchAllCharactersData();
+        return politics->fetchAllCharactersData();
     }
     nlohmann::json GameState::fetchProvinceData (int provinceColorCode)
     {
         return gameMap->fetchProvinceData(provinceColorCode);
     }
+    nlohmann::json GameState::fetchProvinceData (std::string provinceId)
+    {
+        return gameMap->fetchProvinceData(provinceId);
+    }
     nlohmann::json GameState::fetchProvinceOwnerData (int provinceColorCode)
     {
         auto provinceId = gameMap->getProvinceId(provinceColorCode);
-        auto ownerId = politics.getProvinceOwner(provinceId);
-        return politics.fetchCharacterData(ownerId);
+        auto ownerId = politics->getProvinceOwner(provinceId);
+        return politics->fetchCharacterData(ownerId);
     }
 }

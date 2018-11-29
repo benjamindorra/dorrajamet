@@ -12,10 +12,12 @@ ENGINE:
         ✔ Reinforce armies: @done(18-11-23 11:44)
             ✔ Update reinforcement rates @done(18-11-23 11:44)
             ✔ Apply reinforcement @done(18-11-23 11:44)
-        [] Update characters
         [] Process war scores:
             [] Update war scores
             ☐ Finish won wars
+        [] Update characters:
+            ✔ Update prestige and gold @done(18-11-29 18:08)
+            [] Push diplomatic proposals and battle reports
     ProcessPlayerActions:
         [] New Army orders
         [] Plot action

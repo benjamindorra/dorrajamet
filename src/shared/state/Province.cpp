@@ -206,11 +206,11 @@ namespace state
             bti *= (0.1 + (100 - prosperity) * 0.009);
         else
             bti *= (1 + prosperity * 0.005);
-        auto diplomacy = data["diplomacy"].get<int>();
-        if(diplomacy <= 10)
-            bti *= (0.1 + diplomacy * 0.09);
+        auto stewardship = data["stewardship"].get<int>();
+        if(stewardship <= 10)
+            bti *= (0.1 + stewardship * 0.09);
         else
-            bti *= (1 + (diplomacy - 20) * 0.05);
+            bti *= (1 + (stewardship - 20) * 0.05);
         baseTaxIncome = bti;
         // Controlled or sieged province have an income malus
         if(isSieged())

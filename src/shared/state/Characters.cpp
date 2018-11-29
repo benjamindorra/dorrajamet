@@ -1,4 +1,7 @@
 #include "Characters.h"
+
+#include "Politics.h"
+
 #include <json.hpp>
 #include <iostream>
 
@@ -9,7 +12,7 @@ namespace state
         std::map<std::string, Character> characters;
         std::map<std::string, std::map<std::string, int>> opinions;
     }
-    Characters::Characters (std::string strJson)
+    Characters::Characters (Politics * parent, std::string strJson)
     {
         using json = nlohmann::json;
 
@@ -37,10 +40,15 @@ namespace state
             std::cerr << e.what() << std::endl ;
             throw std::runtime_error("Error when loading characters.");
         }
+        this->parent = parent;
     }
     Characters::~Characters ()
     {
 
+    }
+    void Characters::setParent(Politics * parent)
+    {
+        this->parent = parent;
     }
     Character * Characters::operator[] (const char * a)
     {
@@ -87,6 +95,62 @@ namespace state
     std::string Characters::getMainTitle(std::string characterId)
     {
         return characters[characterId].getMainTitle();
+    }
+    void Characters::updateCharactersData ()
+    {
+        // For each independent leader
+        for(auto const& e: characters)
+        {
+            // Gold and prestige revenues
+            if(parent->getCharacterTopLiege(e.first) == "none")
+                updateCharacterRecursively(e.first);
+            // age progression
+            if(characters[e.first].ageUp())// If the characters dies of old age
+            {
+                // Generate new random heir
+                auto heir = characters[e.first].generateHeir();
+                auto heirId = heir.getId();
+                characters[heirId] = heir;
+                // Transfer titles
+                parent->transferAllTitles(e.first, heirId);
+                // Update player data
+                parent->handleCharacterDeath(e.first, heirId, heir.getPrestige());
+            }
+        }
+    }
+    std::pair<int, int> Characters::updateCharacterRecursively (std::string characterId)
+    {
+        // Compute base income for this character's properties
+        int turnGoldGains = parent->computeCharacterGold(characterId);
+        int turnPrestigeGains = parent->computeCharacterPrestige(characterId);
+        // Compute the added bonus from this character's vassals
+        auto vassals = parent->getCharacterDirectVassals(characterId);
+        for(auto const& vassalId: vassals)
+        {
+            auto temp = updateCharacterRecursively(vassalId);
+            turnGoldGains += temp.first;
+            turnPrestigeGains += temp.second;
+        }
+        // If character is independant
+        if(parent->getCharacterTopLiege(characterId) == "none")
+        {
+            // All his gold and prestige go to him
+            characters[characterId].addGold(turnGoldGains);
+            characters[characterId].addPrestige(turnPrestigeGains);
+            return(std::pair<int, int>(turnGoldGains, turnPrestigeGains));// Return is useless anyway
+        }
+        else
+        {
+            // 75% of his gold and prestige go to him, the rest to his liege
+            int liegeGold = turnGoldGains * 0.25;
+            int liegePrestige = turnPrestigeGains * 0.25;
+            turnGoldGains -= liegeGold;
+            turnPrestigeGains -= liegePrestige;
+            characters[characterId].addGold(turnGoldGains);
+            characters[characterId].addPrestige(turnPrestigeGains);
+            return(std::pair<int, int>(liegeGold, liegePrestige));
+        }
+        
     }
     nlohmann::json Characters::fetchCharacterData (std::string characterId)
     {

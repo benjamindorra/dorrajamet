@@ -8,6 +8,7 @@
 
 namespace state {
   class Titles;
+  class GameState;
   class Relation;
   class Characters;
 }
@@ -24,17 +25,29 @@ namespace state {
     // Attributes
   private:
     Titles titles;
+    GameState * parent;
     std::vector<Relation> relations;
     Characters characters;
     // Operations
   public:
     Politics ();
-    Politics (std::string strJson);
+    Politics (GameState * parent, std::string strJson);
     ~Politics ();
+    void refreshChildParentPointers ();
+    void setParent (GameState * parent);
     void debug ();
+    void updateCharactersData ();
+    int computeCharacterGold (std::string characterId);
+    int computeCharacterPrestige (std::string characterId);
     bool checkWarStatus (std::string characterA, std::string characterB);
     std::string getProvinceOwner (std::string provinceId);
     std::string getCharacterTopLiege (std::string characterId);
+    std::vector<std::string> getCharacterDirectVassals (std::string characterId);
+    std::vector<std::string> getCharacterAllVassals (std::string characterId);
+    std::vector<std::string> getCharacterAllTitles (std::string characterId);
+    void transferTitle (std::string character_from, std::string character_to, std::string titleId);
+    void transferAllTitles (std::string character_from, std::string character_to);
+    void handleCharacterDeath (std::string characterId, std::string heirId, int score);
     nlohmann::json fetchCharacterData (std::string characterId);
     nlohmann::json fetchAllCharactersData ();
     // Setters and Getters

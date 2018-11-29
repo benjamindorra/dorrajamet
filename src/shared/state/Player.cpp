@@ -31,4 +31,16 @@ namespace state
     {
         return id;
     }
+    std::string Player::getCharacter ()
+    {
+        return currentCharacter;
+    }
+    void Player::setCharacter (std::string newCharacterId)
+    {
+        currentCharacter = newCharacterId;
+    }
+    void Player::addScore (int amount)
+    {
+        score+=amount;
+    }
 }

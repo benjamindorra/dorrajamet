@@ -2,6 +2,11 @@
 #ifndef __STATE__H
 #define __STATE__H
 
+#include "state/Trait.h"
+#include "state/Traits.h"
+#include "state/Adjacencies.h"
+#include "state/Ressources.h"
+#include "state/Player.h"
 #include "state/Title.h"
 #include "state/Duchy.h"
 #include "state/Kingdom.h"
@@ -11,11 +16,6 @@
 #include "state/Character.h"
 #include "state/Characters.h"
 #include "state/Politics.h"
-#include "state/Trait.h"
-#include "state/Traits.h"
-#include "state/Adjacencies.h"
-#include "state/Ressources.h"
-#include "state/Player.h"
 #include "state/Battle.h"
 #include "state/Order.h"
 #include "state/OneProvinceOrder.h"
