@@ -169,7 +169,7 @@ namespace render {
             // update
             update();
             viewMap->update();
-            ////data->update();
+            data->update();
             playerData->update();
             // draw
             //draw the map

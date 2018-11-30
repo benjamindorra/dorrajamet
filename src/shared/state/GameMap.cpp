@@ -324,7 +324,6 @@ namespace state
     }
     std::string GameMap::getProvinceId (int provinceColorCode)
     {
-        std::cout << "DEBUG\n";
         for(auto const& e: provinces)
             if(provinces[e.first].getColorCode() == provinceColorCode)
                 return e.first;

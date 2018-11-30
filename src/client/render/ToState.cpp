@@ -48,11 +48,11 @@ namespace render {
         return state->fetchAllPlayersData();
     }
     nlohmann::json ToState::fetchCharacterDataFromColor(std::string colorCode) {
-        std::cout << "color code1: " << colorCode << std::endl;
+        //std::cout << "color code1: " << colorCode << std::endl;
         return state->fetchProvinceOwnerData(std::stoul(colorCode));
     }
     nlohmann::json ToState::fetchProvinceDataFromColor (std::string colorCode){
-        std::cout << "color code2: " << colorCode << std::endl;
+        //std::cout << "color code2: " << colorCode << std::endl;
         return state->fetchProvinceData(std::stoul(colorCode));
     }
 }

@@ -39,7 +39,8 @@ int main(int argc, char ** argv)
         else if(command == "render")
         {
             state::GameState testState("./res/testGameState.json");
-            engine::EngineCore testEngine(&testState);
+            std::queue<engine::Command> commands;
+            engine::EngineCore testEngine(&testState, &commands);
             testRender(&testState, &testEngine);
         }
         else if(command == "engine")
