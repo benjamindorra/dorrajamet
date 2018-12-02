@@ -162,30 +162,34 @@ namespace render {
         }
         // insert endline characters into the text so that if fits the window
         float charSize = text.getCharacterSize()*1.9*view.getViewport().width;
+        float lineMaxSize = width/charSize;
         size_t length = this->data.length();
         float lineSize = 0;
-        size_t lastSpace = 0;
+        size_t lastSpace = 0; //position of last space in text
+        size_t lastSpaceInLine = 0; //position of last space in line
         // modify the text while iterating over it, not very clean but it works
         for (size_t i=0;i<length;i++) {
-            lineSize+=charSize;
+            lineSize+=1;
             if (this->data[i] == ' ') {
                     lastSpace=i; 
+                    lastSpaceInLine = lineSize;
             }
             if (this->data[i] == '\n') {
                     lineSize=0;
                     lastSpace=0; 
             }
-            else if (lineSize>width) {
-                lineSize=0;
+            else if (lineSize>lineMaxSize) {
                 if (lastSpace !=0) {
                     this->data.replace(lastSpace,1,1,'\n');
                     lastSpace=0;
+                    lineSize-=lastSpaceInLine; 
                 }
                 else if (data[i+1]==' ') {
                     this->data.erase(i+1,1);
                 }
                 else {
                     this->data.insert(i,1,'\n');
+                    lineSize=0;
                     length++;
                 }
             }
@@ -279,7 +283,7 @@ namespace render {
 
     void Data::update() {
         if (this->id !="") {
-            select(this->type, this->id);
+            //select(this->type, this->id);
         }
     }
     

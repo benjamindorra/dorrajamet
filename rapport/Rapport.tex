@@ -135,8 +135,32 @@ Nous pouvons également avoir besoin d’images pour les personnages, même si c
 
 \begin{figure}[hbtp]
 \centering
+\includegraphics[width=0.4\textwidth]{provincesShown.jpg}
+\caption{carte affichée - royaume-uni} 
+\end{figure}
+
+\begin{figure}[hbtp]
+\centering
 \includegraphics[width=0.4\textwidth]{ru.jpg}
-\caption{royaume-uni} 
+\caption{carte non affichée - royaume-uni} 
+\end{figure}
+
+\begin{figure}[hbtp]
+\centering
+\includegraphics[width=0.1\textwidth]{army.png}
+\caption{sprite pour une armée (temporaire)} 
+\end{figure}
+
+\begin{figure}[hbtp]
+\centering
+\includegraphics[width=0.4\textwidth]{testMapShown.jpg}
+\caption{carte affichée - test map (temporaire)} 
+\end{figure}
+
+\begin{figure}[hbtp]
+\centering
+\includegraphics[width=0.4\textwidth]{testMap.jpg}
+\caption{carte non affichée - test map (temporaire)} 
 \end{figure}
 
 \clearpage
@@ -147,9 +171,9 @@ Certains éléments de l'état de jeu ont besoin de références à d'autres él
 
 \subsection{Description des états}
 
-\begin{itemize}
-\item GameState\\
-Elle contient :
+L'organisation de l'état du jeu s'organise autour d'une classe principale, GameState. Elle contient les objets qui regroupent les différents éléments du jeu, ainsi que les principales fonctions permettant d'interagir avec l'état de jeu, que ce soit pour le consulter (fonctions fetch<...>, getCurrentTurn) ou le modifier (fonctions setArmyOrder pour assigner des ordres de déplacement aux armées, turnAdvance pour passer au tour suivant, updatePlayerCharacter pour assigner un nouveau personnage à un joueur, etc.).
+Les objets contenus dans la classe GameState sont :\\
+
 \begin{itemize}
 \item un objet ressources de la classe Ressources, chargé de contenir toutes les ressources statiques servant au fonctionnement du jeu. 
 \item un objet gameMap de la classe GameMap, décrivant l'état des éléments dynamiques de la carte, 
@@ -157,6 +181,9 @@ Elle contient :
 \item une liste de joueurs (players) de la classe std::vector<Player> pour suivre l'évolution des différents joueurs, humains ou IA.\\
 \end{itemize}
 
+La classe GameState charge les différents objets au démarrage du jeu à partir d'un fichier de sauvegarde json.\\
+
+\begin{itemize}
 \item Politics\\
 La classe Politics décrit l'ensemble des entités politiques existantes. 
 \begin{itemize}
@@ -338,7 +365,7 @@ Décrit une levée.
 
 \begin{landscape}
 \begin{figure}[p]
-\includegraphics[width=0.9\paperheight]{state.pdf}
+\includegraphics[width=\paperheight]{state.pdf}
 \caption{\label{uml:state}Diagramme des classes d'état.} 
 \end{figure}
 \end{landscape}
@@ -346,150 +373,47 @@ Décrit une levée.
 \clearpage
 \section{Rendu: Stratégie et Conception}
 
-Notre stratégie générale consiste à créer une fenêtre (Window) qui va se rafraîchir régulièrement en utilisant la bibliothèque sfml.\\
-Lors du rafraîchissement de la fenêtre, les divers élément composant la page sont affichés.\\
+\subsection{Classe principale}
+Notre stratégie générale consiste à créer un objet principal Render qui comprend une fenêtre qui va se rafraîchir régulièrement en utilisant la bibliothèque sfml (fonction renderLoop()).\\
+Lors du rafraîchissement de la fenêtre, les divers élément composant la page sont rafraîchis à partir des données du game state, puis affichés. La boucle principale dans renderLoop() comprend aussi la gestion des events, qui permet d'avoir une interactivité. \\
 
-Les élément sont affichés dans des cadres (Frames), eux-mêmes compris dans des Canvas. Les canvas sont placés dans la fenêtre. L'idée est que les Frames peuvent se superposer et potentiellement être ouverts ou fermés à n'importe quel moment, tandis que les canvas sont plus statiques. Cela permet surtout de compartimenter l'affichage.\\
+\subsection{Stratégie de rendu}
+Les éléments graphiques héritent de la classe élément, qui contient un attribut pour la position horizontale, verticale, la hauteur et la largeur. Pour des raisons de simplicité, chaque élément graphique est en effet considéré comme un rectangle.\\
+D'autre part chaque élément graphique dispose d'un pointeur mainRender vers l'objet Render, qui va leur permettre de demander à la fenêtre de les dessiner.\\
+La stratégie de rendu est en effet la suivante : \\
+\begin{itemize}
+\item La boucle principale de renderLoop() appelle la fonction draw() des objets principaux (ViewMap, Data, playerData et le bouton de fin de tour)
+\item La fonction draw() de chacun de ces objets appelle la fonction draw() des objets qu'ils contiennent
+\item La fonction draw() des objets au bout de la chaîne utilisent le pointeur mainRender vers l'objet principal Render pour utiliser la méthode RenderWindow.draw() de sfml sur la fenêtre d'affichage.\\
+\end{itemize}
 
-Ces éléments sont ou bien statiques, ou bien liés à des attributs d'objets composant l'état. Dans le second cas, ils décrivent comment afficher ces données.\\
-D'autre part certains éléments sont interactifs, c'est-à-dire qu'ils peuvent provoquer des changements graphiques ou bien modifier l'état de jeu lorsqu'on interagit avec eux.
-Ainsi cliquer sur une des provinces de la carte ouvre un Frame contenant des cadres de texte (Text) qui décrit l'état de la province en utilisant les informations disponible dans la classe Province des états. Les Frames ainsi créés doivent pouvoir être fermés à tout moment par le joueur à l'aide d'un bouton qui lance le destructeur de l'objet.\\ 
-Si un élément doit modifier l'état de jeu, une commande est envoyée au moteur de jeu qui se charge des modifications.\\
-L'affichage de la carte du monde se fait à partir de l'objet View de sfml qui permet de n'afficher qu'une partie d'une scène. \\
-Les autres éléments sont des rectangles qui contiennent des types de données variables.\\
+La classe Image permet de simplifier la gestion des sprites et des textures de sfml.\\
+
+La classe ShowArmy permet d'afficher une armée, et la classe ShowArmies permet de gérer une liste des armées à afficher.\\
+
+La classe PlayerData permet d'afficher les données du joueur et du personnage qui lui est associé.\\
+
+La classe Data permet d'afficher les informations d'une province, d'un joueur, d'une armée, ou des relations d'un joueur.\\
+
+\subsection{Interactivité}
+La stratégie d'interactivité est basée sur les events de sfml, gérés dans la boucle principale de la méthode renderLoop() de la classe Render.\\
+
+Cette stratégie se base sur un switch selon le type d'event, qui décrit les actions à effectuer selon le type d'évènement et l'objet qui doit être affecté. Un système de vérification auprès de chaque objet sur lequel ce type d'event peut agir est déclenché pour savoir si la souris est dans cet objet (méthode contains() présente dans tous les objets interactifs, qui vont événtuellement appeler les méthode contains des sous-objets contenus dans cet objet), puis une requête qui dépend du type d'event est faite à cet objet. L'objet traite la requête (éventuellement en la transmettant au sous-objet concerné), et exécute l'action demandée.\\
+
+Ainsi il est possible de scroller dans l'objet Data, de cliquer sur les boutons ainsi que de se déplacer et de zoomer dans la carte.\\
+
+D'autre part les clics sur la carte chargent l'armée ou la province concernée (clic gauche) ou le propriétaire de la province (clic droit). Cela permet ensuite d'agir sur l'objet concerné. Si pour l'armée nous pouvons utiliser la méthode d'appels emboîtés décrite précédemment, il faut en revanche une stratégie particulière pour les provinces qui utilise les couleurs (uniques) d'une carte cachée (l'objet ColorMap, qui contient un objet sf::Image de la carte cachée.).\\
 
 \subsection{Stratégie de rendu d'un état}
+Pour effectuer le rendu d'un état nous utilisons les méthodes update() des classes concernées. Ces méthodes font appel à des méthodes de la classe ToState pour appeler les données de l'état de jeu, et adapter l'affichage à ces données. Elles sont appelées à chaque mise à jour du rendu par l'objet Render.\\
 
-\begin{itemize}
-\item Window\\
-Description :\\
-Le c{\oe}ur de la partie rendu. Cette classe utilise un objet RenderWindow de sfml pour créer une fenêtre. Window comprend aussi une fonction renderLoop() qui va rafraîchir l'affichage régulièrement.\\
-Attributs :
-\begin{itemize}
-\item window de type sf::RenderWindow, la fenêtre affichée
-\item width de type int la largeur de la fenêtre
-\item height de type int la hauteur de la fenêtre\\
-\end{itemize}
-\item Canvas\\
-Description :\\
-Un cadre lié à une fenêtre.\\
-Attributs :
-\begin{itemize}
-\item window de type Window  *, pointeur vers la fenêtre à laquelle appartient le canvas
-\item width de type int la largeur du canvas
-\item height de type int la hauteur du canvas
-\item x de type int la position horizontale du canvas dans la fenêtre
-\item y de type int la position verticale du canvas dans la fenêtre\\
-\end{itemize}
-\item Frame\\
-Description :\\
-Un cadre lié à un canvas. Des éléments peuvent y être placés.\\
-Attributs :
-\begin{itemize}
-\item canvas de type Canvas *, pointeur vers le canvas auquel appartient le Frame
-\item width de type int la largeur du Frame
-\item height de type int la hauteur du Frame
-\item x de type int la position horizontale du Frame dans le Canvas
-\item y de type int la position verticale du Frame dans le Canvas\\
-\end{itemize}
-\item Element\\
-Description :\\
-Un élément généraliste dont tous les autres éléments héritent.\\
-Attributs :
-\begin{itemize}
-\item frame de type Frame *, pointeur vers le Frame dans lequel est placé l'élément
-\item width de type int la largeur de l'élément
-\item height de type int la hauteur de l'élément
-\item x de type int la position horizontale de l'élément dans le Frame
-\item y de type int la position verticale de l'élément dans le  Frame\\
-\end{itemize}
-\item interactiveElement\\
-Description :\\
-Un élément iteractif : décrit les éléments qui déclenchent des réactions lors de certaines actions du joueur. Hérite de la classe Element.\\
-Attributs :
-\begin{itemize}
-\item  N/A \\
-\end{itemize}
-\item IObserver\\
-Description :\\
-Une interface d'observer.\\
-Attributs :
-\begin{itemize}
-\item N/A \\
-\end{itemize}
-\item Button\\
-Description :\\
-Un bouton. cliquer dessus déclenche une fonction, si le joueur a la possibilité d'effectuer cette action. Hérite de InteractiveElement.\\
-Attributs :
-\begin{itemize}
-\item available de type bool, décrit si le joueur a la possibilité d'effectuer l'action liée au bouton.
-\item text de type string, le texte affiché sur le bouton\\
-\end{itemize}
-\item ObserverButton\\
-Description :\\
-Observer lié à un bouton, en cas de clic sur le bouton déclenche la fonction associée. Hérite de IObserver.\\
-Attributs :
-\begin{itemize}
-\item N/A\\
-\end{itemize}
-\item ViewMap\\
-Description :\\
-Permet de visualiser une partie plus ou moins grande de la carte du monde. Hérite de InteractiveElement.\\
-Attributs :
-\begin{itemize}
-\item zoom de type int, décrit le niveau de zoom par rapport à la carte complète
-\item mapX de type int, décrit la position horizontale de ViewMap sur la carte
-\item mapY de type int, décrit la position verticale de ViewMap sur la carte\\
-\end{itemize}
-\item ObserverMap\\
-Description :\\
-Observer lié à ViewMap, permet d'observer les commandes liées au zoom et au déplacement de la vue dans la carte. Hérite de IObserver.\\
-Attributs :
-\begin{itemize}
-\item N/A\\
-\end{itemize}
-\item ShowArmy\\
-Description :\\
-Permet de visualiser une armée sur la carte et d'interagir avec elle. Hérite de InteractiveElement.\\
-Attributs :
-\begin{itemize}
-\item army de type Army, l'armée à laquelle est liée l'objet ShowArmy.\\
-\end{itemize}
-\item ObserverArmy\\
-Description :\\
-Observer lié à ShowArmy, permet d'observer les commandes liées à un objet ShowArmy. Hérite de IObserver.\\
-Attributs :
-\begin{itemize}
-\item N/A\\
-\end{itemize}
-\item Text\\
-Description :\\
-Cadre contenant du texte. Hérite de Element.\\
-Attributs :
-\begin{itemize}
-\item characterSize de type int, définit la taille du texte affiché dans l'objet Text.
-\item displayedText de type std::string, décrit le texte affiché
-\item textAdress de type *std::string, l'adresse du texte à afficher\\
-\end{itemize}
-\item Image\\
-Description :\\
-Element permettant d'afficher une image fixe. Hérite d'Element.\\
-Attributs :
-\begin{itemize}
-\item keepRatio de type bool, décrit si l'image doit être adaptée aux dimensions de l'objet ou si elle doit garder son ratio
-\item followWidth de type bool, dans le cas où keepRatio est vrai, cet attribut permet de décider si l'image doit être adaptée selon la largeur ou la hauteur de l'objet
-\item sprite de type sf::sprite, support utilisé pour afficher l'image
-\item texture de type sf::texture, variable dans laquelle on charge l'image à afficher\\
-\end{itemize}
-\end{itemize}
-
- 
+La classe ToState est une interface vers le gamestate, qui va appeler des méthodes fetch<...> de l'objet GameState par l'intermédiaire d'un pointeur.\\   
 
 \subsection{Conception logiciel}
 
 \begin{landscape}
 \begin{figure}[p]
-\includegraphics[width=0.9\paperheight]{render.pdf}
+\includegraphics[width=\paperheight]{render.pdf}
 \caption{\label{uml:render}Diagramme des classes de rendu.} 
 \end{figure}
 \end{landscape}
@@ -497,18 +421,23 @@ Attributs :
 \clearpage
 \section{Règles de changement d'états et moteur de jeu}
 
+Le moteur de jeu est constitué des classes EngineCore et Command.\\
+
+La classe Command décrit une commande transmise au moteur de jeu. Elle comprend une énumération type, qui décrit le type de la commande et peut être un ordre de déplacement donné à une armée (moveArmy), une commande lancée par un bouton d'action ActionButton (qui peut désigner un assassinat, une requête sur une province, une déclaration de guerre ou de paix, une levée de troupes, ...), ou la commande de fin de tour (TurnButton), ainsi qu'un argument qui permet de désigner la cible de l'action.\\
+
+La classe EngineCore ajoute cette commande dans une liste de commandes à l'aide de la méthode pushCommand (commands), puis va traiter cette commande avec la fonction processCommand. si l'action est possible (par exemple on ne peut déplacer que ses propres armées), la commande est utilisée pour modifier l'état de jeu via les commandes de GameState, par l'intermédiaire d'un pointeur vers GameState.\\
+
 \subsection{Règles}
 
-\clearpage
 \subsection{Conception logiciel}
 
 
-%\begin{landscape}
-%\begin{figure}[p]
-%\includegraphics[width=0.9\paperheight]{engine.pdf}
-%\caption{\label{uml:engine}Diagramme des classes de moteur de jeu.} 
-%\end{figure}
-%\end{landscape}
+\begin{landscape}
+\begin{figure}[p]
+\includegraphics[width=0.9\paperheight]{engine.pdf}
+\caption{\label{uml:engine}Diagramme des classes de moteur de jeu.} 
+\end{figure}
+\end{landscape}
 
 
 \section{Intelligence Artificielle}

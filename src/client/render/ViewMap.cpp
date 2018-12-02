@@ -18,7 +18,7 @@ namespace render {
         this->engine = engine;
         try {
             // import the image
-            this->map.importFile("./res/testMap.bmp");
+            this->map.importFile("./res/testMapShown.bmp");
         }
         catch(const std::exception& e)
         {
