@@ -144,11 +144,12 @@ namespace render {
             buttons.push_back(new Button(mainRender, x1, y1+spaceV/3, "", color, sf::Vector2i(width, 2*spaceV/3)));
             try {
                 json j = state->fetchAllRelationsData();
-                this->data = "Character: "+state->fetchCharacterData(this->id)["name"].get<std::string>()+"\n"+"Relations: "+"\n";
+                json character = state->fetchCharacterDataFromColor(this->id);
+                this->data = "Character: "+character["name"].get<std::string>()+"\n"+"Relations: "+"\n";
                 for(json::iterator it = j.begin(); it!= j.end(); ++it)
                 {
                     std::string characterA = it.value()["characterA"].get<std::string>();
-                    if(characterA==this->id) {
+                    if(characterA==character["id"]) {
                         std::string characterB = it.value()["characterB"].get<std::string>();
                         this->data +=state->fetchCharacterData(characterB)["name"].get<std::string>()+" ";
                         this->data +=it.value()["type"].dump()+"\n";

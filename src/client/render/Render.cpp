@@ -193,6 +193,11 @@ namespace render {
     {
         return &this->window;
     }
+
+    unsigned int Render::getColorCode(int x, int y){
+        // return the color of the specified pixel in the colorMap
+        return colorMap.getPixel(x,y);
+    }
     
     void Render::addToDraw(std::string id, Element * element) {
         this->toDraw[id]=element;

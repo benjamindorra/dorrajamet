@@ -180,46 +180,123 @@ namespace render {
 
     void ViewMap::update() {
         // reload the armies if what is shown is different from the data
-        using json = nlohmann::json;
         try {
-            json j = state->fetchAllArmiesData();
-            long unsigned int count = 0;
-            bool isEqual = true;
-            std::vector<render::ShowArmy*> armies = *showArmies.getArmies();
-            for (json::iterator it = j.begin(); it != j.end(); ++it) {
-                if (count>=armies.size()) {
-                    isEqual = false;
-                     break;
-                }
-                else if (armies[count]->getId() != it.value()["id"].get<std::string>()) {
-                    isEqual = false;
-                    break;
-                }
-                else {
-                    json province = state->fetchProvinceData(it.value()["currentProvince"].get<std::string>());
-                    if (armies[count]->getX() != province["dispPosX"].get<int>()) {
-                        isEqual = false;
-                        break;
-                    }
-                    else if (armies[count]->getY() != province["dispPosY"].get<int>()) {
-                        isEqual = false;
-                        break;
-                    }
-                }
-                count++;
-            }
-            if (not isEqual) {
-                showArmies.deleteArmies();
-                for (json::iterator it = j.begin(); it != j.end(); ++it) {
-                    std::string id = it.value()["id"].get<std::string>();
-                    json province = state->fetchProvinceData(it.value()["currentProvince"].get<std::string>());
-                    showArmies.newArmy(id, province["dispPosX"].get<int>(), province["dispPosY"].get<int>());
-                }
-            }
+            updateArmies();
         }
         catch(const std::exception& e) {
             std::cerr<<e.what()<<std::endl;
             throw std::runtime_error("Error refreshing the armies");
         }
+        try {
+            static int slowDown = 0;
+            slowDown = (slowDown+1)%10;
+            if (slowDown == 1) {
+                updateColors();
+            }
+        }
+        catch(const std::exception& e) {
+            std::cerr<<e.what()<<std::endl;
+            throw std::runtime_error("Error refreshing the provinces colors");
+        }
+    }
+
+    void ViewMap::updateArmies() {
+        // update ShowArmies army list to fit the gamestate
+        using json = nlohmann::json;
+        json j = state->fetchAllArmiesData();
+        long unsigned int count = 0;
+        bool isEqual = true;
+        std::vector<render::ShowArmy*> armies = *showArmies.getArmies();
+        for (json::iterator it = j.begin(); it != j.end(); ++it) {
+            if (count>=armies.size()) {
+                isEqual = false;
+                    break;
+            }
+            else if (armies[count]->getId() != it.value()["id"].get<std::string>()) {
+                isEqual = false;
+                break;
+            }
+            else {
+                json province = state->fetchProvinceData(it.value()["currentProvince"].get<std::string>());
+                if (armies[count]->getX() != province["dispPosX"].get<int>()) {
+                    isEqual = false;
+                    break;
+                }
+                else if (armies[count]->getY() != province["dispPosY"].get<int>()) {
+                    isEqual = false;
+                    break;
+                }
+            }
+            count++;
+        }
+        if (not isEqual) {
+            showArmies.deleteArmies();
+            for (json::iterator it = j.begin(); it != j.end(); ++it) {
+                std::string id = it.value()["id"].get<std::string>();
+                json province = state->fetchProvinceData(it.value()["currentProvince"].get<std::string>());
+                showArmies.newArmy(id, province["dispPosX"].get<int>(), province["dispPosY"].get<int>());
+            }
+        }
+    }
+    void ViewMap::updateColors() {
+        using json = nlohmann::json;
+        // update the colors of the map (green : yours, blue : allies, red : enemies, white : neutral)
+        sf::Image modMap = map.getTexture().copyToImage();
+        int modHeight = (int)modMap.getSize().y;
+        int modWidth = (int)modMap.getSize().x;
+        for (int y=0; y<modHeight; y++) {
+            for (int x=0; x<modWidth; x++) {
+                if (modMap.getPixel(x,y).toInteger()!=255) {
+                    unsigned int colorCode = mainRender->getColorCode(x,y);
+                    //std::cout<<state->fetchCharacterDataFromColor(std::to_string(colorCode))["name"]<<std::endl;
+                    //if(state->fetchCharacterDataFromColor(std::to_string(colorCode)) == "sea") {}
+                    std::string playerChar = "chara_0001";
+                    json character = state->fetchCharacterDataFromColor(std::to_string(colorCode));
+                    if(character["id"]==playerChar){
+                        modMap.setPixel(x,y, sf::Color(0,255,0));
+                    }
+                    else{
+                        json relations = state->fetchAllRelationsData();
+                        for(json::iterator it = relations.begin(); it!= relations.end(); ++it)
+                        {
+                            std::string characterA = it.value()["characterA"].get<std::string>();
+                            if(characterA==playerChar) {
+                                if(it.value()["characterB"].get<std::string>()==character["id"]){
+                                    switch(it.value()["type"].get<int>()){
+                                        case 0:
+                                            //type = non_aggression;
+                                            modMap.setPixel(x,y, sf::Color(0,0,127));
+                                            break;
+                                        case 1:
+                                            //type = alliance;
+                                            modMap.setPixel(x,y, sf::Color(0,0,200));
+                                            break;
+                                        case 2:
+                                            //type = friendship;
+                                            modMap.setPixel(x,y, sf::Color(0,0,255));
+                                            break;
+                                        case 3:
+                                            //type = rivalry;
+                                            modMap.setPixel(x,y, sf::Color(127,0,0));
+                                            break;
+                                        case 4:
+                                            //type = war;
+                                            modMap.setPixel(x,y, sf::Color(255,0,0));
+                                            break;
+                                        default:
+                                            throw std::string("Error: invalid relation type.");
+                                    }
+                                }
+                            }
+                        }
+                    }
+
+                }
+            }
+        }
+        //modMap.saveToFile("testModMap.bmp");
+        sf::Texture modTexture;
+        modTexture.loadFromImage(modMap);
+        map.setTexture(modTexture);
     }
 }

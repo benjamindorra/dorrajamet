@@ -100,7 +100,7 @@ namespace state
                 t = 3;
                 break;
             case war:
-                t = 3;
+                t = 4;
                 break;
             default:
                 throw std::string("Error: invalid relation type.");

@@ -49,6 +49,14 @@ namespace render {
         height=size.y;
     }
 
+    void Image::setTexture (sf::Texture texture) {
+        this->texture=texture;
+        sprite.setTexture(this->texture);
+        sf::Vector2u size = texture.getSize();
+        width=size.x;
+        height=size.y;
+    }
+
     sf::Sprite Image::getSprite () {
         return this->sprite;
     }
@@ -86,6 +94,10 @@ namespace render {
 
     void Image::setColor(sf::Color color) {
         this->sprite.setColor(color);
+    }
+
+    sf::Texture Image::getTexture() {
+        return this->texture;
     }
     
     void Image::draw() {}

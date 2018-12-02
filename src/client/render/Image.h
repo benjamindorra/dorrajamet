@@ -34,6 +34,8 @@ namespace render {
     void setSize (int x, int y, bool keepRatio = false, bool followWidth = true);
     void setColor (sf::Color color);
     void addTexture (sf::Texture * texture);
+    sf::Texture getTexture ();
+    void setTexture (sf::Texture texture);
     // Setters and Getters
   };
 

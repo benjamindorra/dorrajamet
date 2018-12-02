@@ -59,6 +59,7 @@ namespace render {
     void removeToDraw (std::string id);
     void init (state::GameState * state, engine::EngineCore * engine);
     void update ();
+    unsigned int getColorCode (int x, int y);
     // Setters and Getters
   };
 
