@@ -283,7 +283,7 @@ namespace render {
 
     void Data::update() {
         if (this->id !="") {
-            //select(this->type, this->id);
+            select(this->type, this->id);
         }
     }
     
