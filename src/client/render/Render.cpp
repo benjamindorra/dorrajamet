@@ -49,10 +49,13 @@ namespace render {
     {   
         // end turn button
         Button endTurn(this, window.getSize().x*0.8, 0, "end turn", sf::Color::Red, sf::Vector2i(window.getSize().x*0.2, window.getSize().y*0.1));
+        // to dynamically select whether or not to update the map 
+        bool updateMap;
         // run the program as long as the window is open
         this->window.setFramerateLimit(60);
         while (this->window.isOpen())
         {
+            updateMap = true;
             // check all the window's events that were triggered since the last iteration of the loop
             sf::Event event;
             while (this->window.pollEvent(event))
@@ -139,6 +142,8 @@ namespace render {
                         if (sf::Keyboard::isKeyPressed(sf::Keyboard::S)) {
                             viewMap->moveView(0,10);
                         }
+                        //do not update th map (avoid stutters)
+                        updateMap = false;
                         break;
                     }
                     case sf::Event::MouseWheelScrolled: {
@@ -158,6 +163,8 @@ namespace render {
                             }
                             else viewMap->changeZoom(1.1);
                         }
+                        //do not update th map (avoid stutters)
+                        updateMap = false;
                         break;
                     }
                     default: {}
@@ -166,11 +173,6 @@ namespace render {
 
             // clear the window with black color
             this->window.clear(sf::Color::Black);
-            // update
-            update();
-            viewMap->update();
-            data->update();
-            playerData->update();
             // draw
             //draw the map
             viewMap->ViewMap::draw();
@@ -184,6 +186,15 @@ namespace render {
             for (auto elem : toDraw) {
                 elem.second->draw();
             }
+            // update
+            update();
+            //do NOT update the map if moving or zooming the view 
+            //(heavy operation that will make the render stutter)
+            if (updateMap) {
+                viewMap->update();
+            }
+            data->update();
+            playerData->update();
             // end the current frame
             this->window.display();
         }

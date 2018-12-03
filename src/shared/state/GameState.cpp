@@ -152,10 +152,10 @@ namespace state
     {
         return gameMap->fetchProvinceData(provinceId);
     }
-    /*nlohmann::json GameState::fetchAllProvincesData ()
+    nlohmann::json GameState::fetchAllProvincesData ()
     {
-
-    }*/
+        return gameMap->fetchAllProvincesData();
+    }
     nlohmann::json GameState::fetchProvinceOwnerData (int provinceColorCode)
     {
         auto provinceId = gameMap->getProvinceId(provinceColorCode);

@@ -322,6 +322,14 @@ namespace state
     {
         return provinces[provinceId].toJson();
     }
+    nlohmann::json GameMap::fetchAllProvincesData() {
+        using json = nlohmann::json;
+        json allProvincesData;
+        for (auto p : provinces) {
+            allProvincesData.push_back(p.second.toJson());
+        }
+        return allProvincesData;
+    }
     std::string GameMap::getProvinceId (int provinceColorCode)
     {
         for(auto const& e: provinces)
