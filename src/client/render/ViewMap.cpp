@@ -189,7 +189,7 @@ namespace render {
         }
         try {
             static int slowDown = 0;
-            slowDown = (slowDown+1)%10;
+            slowDown = (slowDown+1)%60;
             if (slowDown == 1) {
                 updateColors();
             }
@@ -239,59 +239,76 @@ namespace render {
         }
     }
     void ViewMap::updateColors() {
-        using json = nlohmann::json;
         // update the colors of the map (green : yours, blue : allies, red : enemies, white : neutral)
+        using json = nlohmann::json;
+        //player's character
+        std::string playerChar = "chara_0001";
+        //lists all relations of the player's character
+        std::vector<json> relationsList;
+        json relations = state->fetchAllRelationsData();
+        for(json::iterator it = relations.begin(); it!= relations.end(); ++it)
+        {
+            if(it.value()["characterA"].get<std::string>()==playerChar) {
+                relationsList.push_back(it.value());
+            }
+        }
+        //colors the texture accordingly
         sf::Image modMap = map.getTexture().copyToImage();
         int modHeight = (int)modMap.getSize().y;
         int modWidth = (int)modMap.getSize().x;
+        unsigned int colorCode;
+        bool relationExists;
         for (int y=0; y<modHeight; y++) {
             for (int x=0; x<modWidth; x++) {
                 if (modMap.getPixel(x,y).toInteger()!=255) {
-                    unsigned int colorCode = mainRender->getColorCode(x,y);
+                    colorCode = mainRender->getColorCode(x,y);
                     //std::cout<<state->fetchCharacterDataFromColor(std::to_string(colorCode))["name"]<<std::endl;
                     //if(state->fetchCharacterDataFromColor(std::to_string(colorCode)) == "sea") {}
-                    std::string playerChar = "chara_0001";
                     json character = state->fetchCharacterDataFromColor(std::to_string(colorCode));
                     if(character["id"]==playerChar){
                         modMap.setPixel(x,y, sf::Color(0,255,0));
                     }
                     else{
-                        json relations = state->fetchAllRelationsData();
-                        for(json::iterator it = relations.begin(); it!= relations.end(); ++it)
-                        {
-                            std::string characterA = it.value()["characterA"].get<std::string>();
-                            if(characterA==playerChar) {
-                                if(it.value()["characterB"].get<std::string>()==character["id"]){
-                                    switch(it.value()["type"].get<int>()){
-                                        case 0:
-                                            //type = non_aggression;
-                                            modMap.setPixel(x,y, sf::Color(0,0,127));
-                                            break;
-                                        case 1:
-                                            //type = alliance;
-                                            modMap.setPixel(x,y, sf::Color(0,0,200));
-                                            break;
-                                        case 2:
-                                            //type = friendship;
-                                            modMap.setPixel(x,y, sf::Color(0,0,255));
-                                            break;
-                                        case 3:
-                                            //type = rivalry;
-                                            modMap.setPixel(x,y, sf::Color(127,0,0));
-                                            break;
-                                        case 4:
-                                            //type = war;
-                                            modMap.setPixel(x,y, sf::Color(255,0,0));
-                                            break;
-                                        default:
-                                            throw std::string("Error: invalid relation type.");
-                                    }
+                        relationExists = false;
+                        for (json r : relationsList) {
+                            if(r["characterB"].get<std::string>()==character["id"]){
+                                switch(r["type"].get<int>()){
+                                    case 0:
+                                        //type = non_aggression;
+                                        modMap.setPixel(x,y, sf::Color(0,0,127));
+                                        break;
+                                    case 1:
+                                        //type = alliance;
+                                        modMap.setPixel(x,y, sf::Color(0,0,200));
+                                        break;
+                                    case 2:
+                                        //type = friendship;
+                                        modMap.setPixel(x,y, sf::Color(0,0,255));
+                                        break;
+                                    case 3:
+                                        //type = rivalry;
+                                        modMap.setPixel(x,y, sf::Color(127,0,0));
+                                        break;
+                                    case 4:
+                                        //type = war;
+                                        modMap.setPixel(x,y, sf::Color(255,0,0));
+                                        break;
+                                    default:
+                                        throw std::string("Error: invalid relation type.");
                                 }
+                                //no need to continue if a relation has been found
+                                relationExists = true;
+                                break;
                             }
                         }
+                        //if there is no relation between player's character and the province
+                        //owner, color the province in white
+                        if (not relationExists) {
+                            modMap.setPixel(x,y, sf::Color(255,255,255));
+                        }
                     }
-
                 }
+
             }
         }
         //modMap.saveToFile("testModMap.bmp");
