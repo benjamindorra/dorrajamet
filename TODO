@@ -29,7 +29,7 @@ GAMESTATE:
     Missing parts:
         [] Diplomatic proposal (member of Player)
         [] Battle report (member of Player)
-        [] War score (member of Relation)
+        ✔ War data (member of Politics) @done(18-12-04 09:32)
         ✔ Siege data (member of Province) @done(18-11-28 09:30)
 
     

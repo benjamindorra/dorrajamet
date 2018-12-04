@@ -51,7 +51,7 @@ namespace state
     void GameState::debug()
     {
         this->politics->debug();
-        this->ressources.debug();
+        //this->ressources.debug();
         this->gameMap->debug();
     }
     void GameState::updatePlayerCharacter (std::string formerCharacterId, std::string newCharacterId, int score)
@@ -114,6 +114,10 @@ namespace state
     {
         gameMap->updateReinforcementRates();
         gameMap->reinforceLevies();
+    }
+    void GameState::updateWars ()
+    {
+        //politics->updateWars();
     }
     void GameState::updateCharactersData ()
     {

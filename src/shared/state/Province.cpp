@@ -181,6 +181,8 @@ namespace state
     }
     void Province::updateData()
     {
+        if(id=="sea")
+            return;
         // Sieged provinces lose prosperity
         if(isSieged())
             changeProsperityBy(-20);

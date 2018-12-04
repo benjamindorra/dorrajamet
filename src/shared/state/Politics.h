@@ -4,6 +4,7 @@
 
 #include <vector>
 #include <string>
+#include <map>
 #include <json.hpp>
 
 namespace state {
@@ -11,11 +12,13 @@ namespace state {
   class GameState;
   class Relation;
   class Characters;
+  class War;
 }
 
 #include "Titles.h"
 #include "Relation.h"
 #include "Characters.h"
+#include "War.h"
 
 namespace state {
 
@@ -28,6 +31,7 @@ namespace state {
     GameState * parent;
     std::vector<Relation> relations;
     Characters characters;
+    std::map<std::string, War> wars;
     // Operations
   public:
     Politics ();
@@ -49,6 +53,7 @@ namespace state {
     void transferTitle (std::string character_from, std::string character_to, std::string titleId);
     void transferAllTitles (std::string character_from, std::string character_to);
     void handleCharacterDeath (std::string characterId, std::string heirId, int score);
+    void updateWars ();
     nlohmann::json fetchCharacterData (std::string characterId);
     nlohmann::json fetchAllCharactersData ();
     nlohmann::json fetchAllRelationsData ();

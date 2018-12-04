@@ -88,6 +88,7 @@ namespace state
     }
     void Characters::debug()
     {
+        std::cout << "TOTAL CHARACTERS COUNT: " << characters.size() << std::endl;
         std::cout << "====Characters====\n";
         for(auto chara : characters)
             chara.second.debug();

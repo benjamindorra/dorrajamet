@@ -78,6 +78,7 @@ namespace engine
         gameState->clearDeadArmies();
         gameState->updateProvinces();
         gameState->updateLevies();
+        gameState->updateWars();
         gameState->updateCharactersData();
         std::cout << "End turn procedure finished\n";
         

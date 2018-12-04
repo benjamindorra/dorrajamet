@@ -12,6 +12,8 @@ namespace state {
     // Attributes
   public:
     enum relType{non_aggression = 0, alliance = 1, friendship = 2, rivalry = 3, war = 4};
+    /// Indicates war id if type is war
+    std::string warId;
   private:
     std::string characterA;
     std::string characterB;

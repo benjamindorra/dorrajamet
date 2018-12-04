@@ -15,6 +15,7 @@
 #include "state/Relation.h"
 #include "state/Character.h"
 #include "state/Characters.h"
+#include "state/War.h"
 #include "state/Politics.h"
 #include "state/Battle.h"
 #include "state/Order.h"

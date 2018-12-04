@@ -34,6 +34,11 @@ namespace state
             {
                 relations.push_back(Relation(relStr.dump()));
             }
+            for(auto warStr:j["wars"])
+            {
+                auto war = War(warStr.dump());
+                wars[war.getId()] = war;
+            }
         }
         catch(const std::exception& e)
         {
@@ -93,6 +98,7 @@ namespace state
     }
     std::string Politics::getCharacterTopLiege (std::string characterId)
     {
+        std::cout << "getCharacterTopLiege(" << characterId << ")\n";
         auto mainTitle = characters.getMainTitle(characterId);
         return titles.getTopLiege(mainTitle);
     }
@@ -127,6 +133,15 @@ namespace state
     void Politics::handleCharacterDeath (std::string characterId, std::string heirId, int score)
     {
         parent->updatePlayerCharacter(characterId, heirId, score);
+    }
+    void Politics::updateWars ()
+    {
+        // For war in wars
+            // Get all provinces for each camp
+            // Get percentage of occupied provinces for each camp
+            // Compute and set warScore
+            // End finished wars
+            // 
     }
     nlohmann::json Politics::fetchCharacterData (std::string characterId)
     {

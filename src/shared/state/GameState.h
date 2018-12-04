@@ -52,6 +52,7 @@ namespace state {
     void clearFinishedBattles ();
     void clearDeadArmies ();
     void updateLevies ();
+    void updateWars ();
     void updateCharactersData ();
     std::string getProvinceOwner (std::string provinceId);
     std::string getCharacterTopLiege (std::string characterId);

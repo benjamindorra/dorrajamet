@@ -33,6 +33,7 @@ int main(int argc, char ** argv)
 
             // Test of gamestate fetch data
             std::cout << testGameState.fetchAllProvincesTopLiegeColor().dump(2);
+            std::cout << testGameState.fetchAllProvincesTopLiegeColor().dump(2);
             //std::cout << testGameState.fetchAllCharactersData().dump(4);
             //std::cout << testGameState.fetchProvinceData(123456).dump(4);
             //std::cout << testGameState.fetchProvinceOwnerData(456123).dump(4);
@@ -49,9 +50,13 @@ int main(int argc, char ** argv)
             state::GameState testState("./res/testGameState.json");
             engine::EngineCore testEngine(&testState);
             testState.debug();
+            
+            //std::cout << testState.fetchAllProvincesTopLiegeColor().dump(2);
             std::cout << "\n\n\n";
             testEngine.endTurn();
             testState.debug();
+            //std::cout << testState.fetchAllProvincesTopLiegeColor().dump(2);
+
         }
         else
             std::cout << "Unknown parameter: " << command << std::endl;
