@@ -155,7 +155,15 @@ namespace state
     }
     nlohmann::json Characters::fetchCharacterData (std::string characterId)
     {
-        return characters[characterId].toJson();
+        try
+        {
+            return characters.at(characterId).toJson();
+        }
+        catch(const std::exception& e)
+        {
+            std::cerr << e.what() << std::endl;
+            throw std::runtime_error("Error: Characters::fetchCharacterData - unknown id: " + characterId);
+        }
     }
     nlohmann::json Characters::fetchAllCharactersData ()
     {

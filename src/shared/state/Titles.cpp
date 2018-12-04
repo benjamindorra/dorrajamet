@@ -140,7 +140,6 @@ namespace state
     }
     std::string Titles::getTopLiege(std::string titleId)
     {
-        std::cout << "getTopLiege(" << titleId << ")\n";
         auto liege = getLiege(titleId);
         if(liege == "none")
             return titleId;

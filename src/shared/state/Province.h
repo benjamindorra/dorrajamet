@@ -23,7 +23,7 @@ namespace state {
     GameMap * parent;
     std::string name;
     /// int value of the unique color code of the province (for ui purposes)
-    int colorCode;
+    unsigned int colorCode;
     /// Ranges from 0 to 100. Represent the current development status of the province. The player can spend money to raise this value. Increase this value will offer better levies and tax income. Later we could replace that with a list of improvable buildings that will have more specific modifiers on the province.
     int development;
     /// Representing the prosperity/devastation of the province (impacts the taxes and levies). Ranges from -100 (total devastation) to 100 (maximum prosperity).
@@ -54,7 +54,7 @@ namespace state {
     bool checkConsistency ();
     void debug ();
     int getLevyMen ();
-    int getColorCode ();
+    unsigned int getColorCode ();
     void killMenFromLevy (int victims);
     void disbandLevy ();
     bool isLevyRaised ();

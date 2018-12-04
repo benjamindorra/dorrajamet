@@ -314,7 +314,7 @@ namespace state
             provinces[provinceId].updateData();
         }
     }
-    nlohmann::json GameMap::fetchProvinceData (int provinceColorCode)
+    nlohmann::json GameMap::fetchProvinceData (unsigned int provinceColorCode)
     {
         return provinces[getProvinceId(provinceColorCode)].toJson();
     }
@@ -331,7 +331,7 @@ namespace state
         }
         return allProvincesData;
     }
-    std::string GameMap::getProvinceId (int provinceColorCode)
+    std::string GameMap::getProvinceId (unsigned int provinceColorCode)
     {
         for(auto const& e: provinces)
             if(provinces[e.first].getColorCode() == provinceColorCode)

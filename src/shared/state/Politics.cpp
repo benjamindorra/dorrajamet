@@ -98,7 +98,6 @@ namespace state
     }
     std::string Politics::getCharacterTopLiege (std::string characterId)
     {
-        std::cout << "getCharacterTopLiege(" << characterId << ")\n";
         auto mainTitle = characters.getMainTitle(characterId);
         return titles.getTopLiege(mainTitle);
     }

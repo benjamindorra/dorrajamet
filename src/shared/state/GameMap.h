@@ -58,9 +58,9 @@ namespace state {
     void updateSieges ();
     void updateProvincesData ();
     std::string getArmyOfLevy (std::string levyProvinceId);
-    std::string getProvinceId (int provinceColorCode);
+    std::string getProvinceId (unsigned int provinceColorCode);
     std::string getProvinceOwner (std::string provinceId);
-    nlohmann::json fetchProvinceData (int provinceColorCode);
+    nlohmann::json fetchProvinceData (unsigned int provinceColorCode);
     nlohmann::json fetchProvinceData (std::string provinceId);
     nlohmann::json fetchCharacterData (std::string characterId);
     nlohmann::json fetchArmyData (std::string armyId);

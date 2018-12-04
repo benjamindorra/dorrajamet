@@ -39,7 +39,7 @@ namespace state
             json j = json::parse(strJson);
             id = j["id"].get<std::string>();
             name = j["name"].get<std::string>();
-            colorCode = j["colorCode"].get<int>();
+            colorCode = j["colorCode"].get<unsigned int>();
             dispPosX = j["dispPosX"].get<int>();
             dispPosY = j["dispPosY"].get<int>();
             development = j["development"].get<int>();
@@ -97,7 +97,7 @@ namespace state
     {
         return levy.getMen();
     }
-    int Province::getColorCode()
+    unsigned int Province::getColorCode()
     {
         return colorCode;
     }
