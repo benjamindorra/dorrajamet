@@ -32,9 +32,10 @@ int main(int argc, char ** argv)
             //testGameState.debug();
 
             // Test of gamestate fetch data
+            std::cout << testGameState.fetchAllProvincesTopLiegeColor().dump(2);
             //std::cout << testGameState.fetchAllCharactersData().dump(4);
-            std::cout << testGameState.fetchProvinceData(123456).dump(4);
-            std::cout << testGameState.fetchProvinceOwnerData(456123).dump(4);
+            //std::cout << testGameState.fetchProvinceData(123456).dump(4);
+            //std::cout << testGameState.fetchProvinceOwnerData(456123).dump(4);
         }
         else if(command == "render")
         {

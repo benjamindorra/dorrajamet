@@ -12,6 +12,7 @@ namespace state
         liege = std::string("");
         deJureLiege = std::string("");
         province = std::string("");
+        titleColorCode = 0;
     }
     County::County (std::string strJson)
     {
@@ -26,6 +27,7 @@ namespace state
             liege = j["liege"].get<std::string>();
             deJureLiege = j["deJureLiege"].get<std::string>();
             province = j["province"].get<std::string>();
+            titleColorCode = j["titleColorCode"].get<unsigned int>();
         }
         catch(const std::exception& e)
         {

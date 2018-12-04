@@ -187,4 +187,21 @@ namespace state
             res.push_back(player.toJson());
         return res;
     }
+    nlohmann::json GameState::fetchAllProvincesTopLiegeColor ()
+    {
+        auto provinces = gameMap->fetchAllProvincesData();
+        nlohmann::json res = nlohmann::json::array(), obj;
+        for(auto it = provinces.begin(); it != provinces.end(); ++it)
+        {
+            obj["provinceId"] = it.value()["id"].get<std::string>();
+            if(obj["provinceId"] != "sea")
+            {
+                auto owner = this->getProvinceOwner(obj["provinceId"]);
+                auto topLiegeTitle = this->getCharacterTopLiege(owner);
+                obj["color"] = this->politics->getTitleColor(topLiegeTitle);
+                res.push_back(obj);
+            }
+        }
+        return res;
+    }
 }

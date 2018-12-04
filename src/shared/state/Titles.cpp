@@ -170,6 +170,20 @@ namespace state
             res.push_back(e.first);
         return res;
     }
+    unsigned int Titles::getTitleColor (std::string titleId)
+    {
+        switch(titles[titleId])
+        {
+            case kingdom:
+                return kingdoms[titleId].getTitleColorCode();
+            case duchy:
+                return duchies[titleId].getTitleColorCode();
+            case county:
+                return counties[titleId].getTitleColorCode();
+            default:
+                throw std::runtime_error("Error: getTitleColorCode(titleId): unknown id: " + titleId + "\n");
+        }
+    }
     int Titles::computeCharacterPrestige (std::string characterId)
     {
         int res = 0;

@@ -14,6 +14,7 @@ namespace state {
     std::string name;
     /// Pointer to the holder if any
     std::string holder;
+    unsigned int titleColorCode;
     // Operations
   public:
     virtual ~Title () = default;
@@ -28,6 +29,8 @@ namespace state {
     void setName(const std::string& name);
     const std::string& getHolder() const;
     void setHolder(const std::string& holder);
+    unsigned int getTitleColorCode() const;
+    void setTitleColorCode(unsigned int titleColorCode);
   };
 
 };

@@ -45,6 +45,7 @@ namespace state {
     std::vector<std::string> getCharacterDirectVassals (std::string characterId);
     std::vector<std::string> getCharacterAllVassals (std::string characterId);
     std::vector<std::string> getCharacterAllTitles (std::string characterId);
+    unsigned int getTitleColor (std::string titleId);
     void transferTitle (std::string character_from, std::string character_to, std::string titleId);
     void transferAllTitles (std::string character_from, std::string character_to);
     void handleCharacterDeath (std::string characterId, std::string heirId, int score);

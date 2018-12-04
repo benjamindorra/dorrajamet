@@ -50,6 +50,7 @@ namespace state {
     /// @param titleId		(???) 
     std::string getTopLiege (std::string titleId);
     std::vector<std::string> getTitleDirectVassals (std::string titleId);
+    unsigned int getTitleColor (std::string titleId);
     int computeCharacterPrestige (std::string characterId);
     void setTitleHolder (std::string newHolder, std::string titleId);
     // Setters and Getters

@@ -9,6 +9,7 @@ namespace state
         id = std::string("");
         name = std::string("");
         holder = std::string("");
+        titleColorCode = 0;
     }
     Kingdom::Kingdom (std::string strJson)
     {
@@ -20,6 +21,7 @@ namespace state
             id = j["id"].get<std::string>();
             name = j["name"].get<std::string>();
             holder = j["holder"].get<std::string>();
+            titleColorCode = j["titleColorCode"].get<unsigned int>();
         }
         catch(const std::exception& e)
         {

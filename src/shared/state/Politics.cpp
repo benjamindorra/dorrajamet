@@ -111,6 +111,10 @@ namespace state
     {
         return titles.getTitlesOf(characterId);
     }
+    unsigned int Politics::getTitleColor (std::string titleId)
+    {
+        return titles.getTitleColor(titleId);
+    }
     void Politics::transferTitle(std::string character_from, std::string character_to, std::string titleId)
     {
         titles.setTitleHolder(character_to, titleId);

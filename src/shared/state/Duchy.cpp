@@ -11,6 +11,7 @@ namespace state
         holder = std::string("");
         liege = std::string("");
         deJureLiege = std::string("");
+        titleColorCode = 0;
     }
     Duchy::Duchy (std::string strJson)
     {
@@ -24,6 +25,7 @@ namespace state
             holder = j["holder"].get<std::string>();
             liege = j["liege"].get<std::string>();
             deJureLiege = j["deJureLiege"].get<std::string>();
+            titleColorCode = j["titleColorCode"].get<unsigned int>();
         }
         catch(const std::exception& e)
         {

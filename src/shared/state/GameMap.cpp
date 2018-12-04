@@ -324,7 +324,7 @@ namespace state
     }
     nlohmann::json GameMap::fetchAllProvincesData() {
         using json = nlohmann::json;
-        json allProvincesData;
+        json allProvincesData = json::array();
         for (auto p : provinces) {
             allProvincesData.push_back(p.second.toJson());
         }

@@ -27,4 +27,12 @@ namespace state
     {
         this->holder = holder;
     }
+    unsigned int Title::getTitleColorCode() const
+    {
+        return this->titleColorCode;
+    }
+    void Title::setTitleColorCode(unsigned int titleColorCode)
+    {
+        this->titleColorCode = titleColorCode;
+    }
 }

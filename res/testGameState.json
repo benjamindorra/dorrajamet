@@ -40,21 +40,24 @@
             {
                 "id": "k_of_numbers",
                 "name": "Kingdom of Numbers",
-                "holder": "chara_0001"
+                "holder": "chara_0001",
+                "titleColorCode": 4278124032
             },
             {
                 "id": "d_of_evens",
                 "name": "Duchy of Evens",
                 "holder": "chara_0002",
                 "liege": "k_of_numbers",
-                "deJureLiege": "k_of_numbers"
+                "deJureLiege": "k_of_numbers",
+                "titleColorCode": 269541376
             },
             {
                 "id": "d_of_odds",
                 "name": "Duchy of Odds",
                 "holder": "chara_0001",
                 "liege": "k_of_numbers",
-                "deJureLiege": "k_of_numbers"
+                "deJureLiege": "k_of_numbers",
+                "titleColorCode": 3759149056
             },
             {
                 "id": "c_of_one",
@@ -62,7 +65,8 @@
                 "holder": "chara_0001",
                 "liege": "d_of_odds",
                 "deJureLiege": "d_of_odds",
-                "province": "prov_one"
+                "province": "prov_one",
+                "titleColorCode": 3759177728
             },
             {
                 "id": "c_of_two",
@@ -70,7 +74,8 @@
                 "holder": "chara_0002",
                 "liege": "d_of_evens",
                 "deJureLiege": "d_of_evens",
-                "province": "prov_two"
+                "province": "prov_two",
+                "titleColorCode": 276881408
             },
             {
                 "id": "c_of_three",
@@ -78,7 +83,8 @@
                 "holder": "chara_0003",
                 "liege": "d_of_odds",
                 "deJureLiege": "d_of_odds",
-                "province": "prov_three"
+                "province": "prov_three",
+                "titleColorCode": 3766489088
             },
             {
                 "id": "c_of_four",
@@ -86,7 +92,8 @@
                 "holder": "chara_0004",
                 "liege": "d_of_evens",
                 "deJureLiege": "d_of_evens",
-                "province": "prov_four"
+                "province": "prov_four",
+                "titleColorCode": 2148589568
             },
             {
                 "id": "c_of_five",
@@ -94,7 +101,8 @@
                 "holder": "chara_0003",
                 "liege": "d_of_odds",
                 "deJureLiege": "d_of_odds",
-                "province": "prov_five"
+                "province": "prov_five",
+                "titleColorCode": 3766517760
             },
             {
                 "id": "c_of_six",
@@ -102,7 +110,8 @@
                 "holder": "chara_0004",
                 "liege": "d_of_evens",
                 "deJureLiege": "d_of_evens",
-                "province": "prov_six"
+                "province": "prov_six",
+                "titleColorCode": 2155929600
             }
         ],
         "characters":
