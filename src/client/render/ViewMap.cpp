@@ -50,13 +50,14 @@ namespace render {
         // check if zooming over the y axis is possible
         float x = ViewMap::getCenter().x;
         float y = ViewMap::getCenter().y;
-        /*sf::Vector2f mouse = mainRender->getWindow()->mapPixelToCoords (sf::Mouse::getPosition(*mainRender->getWindow()), view);
-        float x = mouse.x;
-        float y = mouse.y;*/
+        sf::Vector2f mouse = mainRender->getWindow()->mapPixelToCoords (sf::Mouse::getPosition(*mainRender->getWindow()), view);
+        x = (x-mouse.x)*zoom+mouse.x;
+        y = (y-mouse.y)*zoom+mouse.y;
         float oldSizeY = view.getSize().y/2.0;
         float sizeY = oldSizeY*zoom;
         float mapY = map.getSize().y;
         if ((y-sizeY>=0) & ((y+sizeY)<=mapY)) {
+            this->view.setCenter(x,y);
             this->view.zoom(zoom);
         }
         else if (2*sizeY<=mapY) {
@@ -75,9 +76,9 @@ namespace render {
         // check that zooming doesn't get the view out of image
         float x = ViewMap::getCenter().x;
         float y = ViewMap::getCenter().y;
-        /*sf::Vector2f mouse = mainRender->getWindow()->mapPixelToCoords (sf::Mouse::getPosition(*mainRender->getWindow()), view);
-        float x = mouse.x;
-        float y = mouse.y;*/
+        sf::Vector2f mouse = mainRender->getWindow()->mapPixelToCoords (sf::Mouse::getPosition(*mainRender->getWindow()), view);
+        x = (x-mouse.x)*zoom+mouse.x;
+        y = (y-mouse.y)*zoom+mouse.y;
         float oldSizeX = view.getSize().x/2.0;
         float sizeX = oldSizeX*zoom;
         float mapX = map.getSize().x;
