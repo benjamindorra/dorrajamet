@@ -67,7 +67,7 @@ namespace render {
         int widthB = 120;
         switch (type){
             case Info:
-                buttons.push_back(new Button(mainRender, x+width/2, y+height/2, "OK", color, sf::Vector2i(40,20)));
+                buttons.push_back(new Button(mainRender, x+width/2-20, y+height/2, "OK", color, sf::Vector2i(40,20)));
                 break;
             case Question:
                 buttons.push_back(new Button(mainRender, x+width/2-widthB, y+height/2, "ACCEPT", color, sf::Vector2i(widthB,20)));
