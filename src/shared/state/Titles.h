@@ -5,6 +5,7 @@
 #include <string>
 #include <map>
 #include <vector>
+#include <json.hpp>
 
 namespace state {
   class Title;
@@ -53,6 +54,7 @@ namespace state {
     unsigned int getTitleColor (std::string titleId);
     int computeCharacterPrestige (std::string characterId);
     void setTitleHolder (std::string newHolder, std::string titleId);
+    nlohmann::json fetchTitleData (std::string titleId);
     // Setters and Getters
   };
 

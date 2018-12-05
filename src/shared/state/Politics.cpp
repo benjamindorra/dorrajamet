@@ -157,4 +157,9 @@ namespace state
             res.push_back(e.toJson());
         return res;
     }
+
+    nlohmann::json Politics::fetchTitleData (std::string titleId)
+    {
+        return titles.fetchTitleData(titleId);
+    }
 }

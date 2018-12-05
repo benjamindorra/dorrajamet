@@ -178,7 +178,7 @@ namespace render {
         return "province";
     }
 
-    void ViewMap::update() {
+    void ViewMap::update(Types type) {
         // reload the armies if what is shown is different from the data
         try {
             updateArmies();
@@ -190,8 +190,13 @@ namespace render {
         try {
             static int slowDown = 0;
             slowDown = (slowDown+1)%60;
-            if (slowDown == 1) {
-                updateColors();
+            if ((slowDown == 1)) {
+                if (type == Types::Kingdoms){
+                    updateColorsKingdoms();
+                }
+                else if (type == Types::Relations){
+                    updateColorsRelations();
+                }
             }
         }
         catch(const std::exception& e) {
@@ -238,7 +243,7 @@ namespace render {
             }
         }
     }
-    void ViewMap::updateColors() {
+    void ViewMap::updateColorsRelations() {
         // update the colors of the map (green : yours, blue : allies, red : enemies, white : neutral)
         using json = nlohmann::json;
         //player's character
@@ -258,7 +263,7 @@ namespace render {
         int modWidth = (int)modMap.getSize().x;
         unsigned int colorCode;
         bool relationExists;
-        for (int y=0; y<modHeight; y++) {
+        for (int y=0;y<modHeight; y++) {
             for (int x=0; x<modWidth; x++) {
                 if (modMap.getPixel(x,y).toInteger()!=255) {
                     colorCode = mainRender->getColorCode(x,y);
@@ -312,6 +317,36 @@ namespace render {
             }
         }
         //modMap.saveToFile("testModMap.bmp");
+        sf::Texture modTexture;
+        modTexture.loadFromImage(modMap);
+        map.setTexture(modTexture);
+    }
+
+    void ViewMap::updateColorsKingdoms() {
+        // update the colors of the map with one color for each kingdom
+        using json = nlohmann::json;
+        //lists all the provinces and their colors
+        json provinces = state->fetchAllProvincesTopLiegeColor();
+        //colors the texture accordingly
+        sf::Image modMap = map.getTexture().copyToImage();
+        int modHeight = (int)modMap.getSize().y;
+        int modWidth = (int)modMap.getSize().x;
+        unsigned int colorCode;
+        for (int y=0;y<modHeight; y++) {
+            for (int x=0; x<modWidth; x++) {
+                if (modMap.getPixel(x,y).toInteger()!=255) {
+                    colorCode = mainRender->getColorCode(x,y);
+                    json provinceId = state->fetchProvinceDataFromColor(std::to_string(colorCode))["id"];
+                    for (json::iterator p=provinces.begin(); p!=provinces.end(); ++p) {
+                        if (p.value()["provinceId"]==provinceId){
+                            modMap.setPixel(x,y, sf::Color(p.value()["color"]));
+                            break;
+                        }
+                    }
+                }
+            }
+        }
+        //modMap.saveToFile("testModMapKingdoms.bmp");
         sf::Texture modTexture;
         modTexture.loadFromImage(modMap);
         map.setTexture(modTexture);

@@ -42,6 +42,7 @@ namespace render {
         // show player data
         this->playerData = new PlayerData(this, &state);
         std::cout<<"Render init OK"<<std::endl;
+        new PopUp(this, PopUp::Type::Question, PopUp::Action::War, "chara_0001", "chara_0002", &state, &engine);
     }
 
     // main loop, handles render and events
@@ -49,8 +50,10 @@ namespace render {
     {   
         // end turn button
         Button endTurn(this, window.getSize().x*0.8, 0, "end turn", sf::Color::Red, sf::Vector2i(window.getSize().x*0.2, window.getSize().y*0.1));
+        Button switchColors(this, 0, 0, "switch\ncolors", sf::Color(0,128,0), sf::Vector2i(window.getSize().x*0.1, window.getSize().y*0.1));
         // to dynamically select whether or not to update the map 
         bool updateMap;
+        ViewMap::Types colorType = ViewMap::Types::Kingdoms;
         // run the program as long as the window is open
         this->window.setFramerateLimit(60);
         while (this->window.isOpen())
@@ -73,9 +76,27 @@ namespace render {
                         int x = event.mouseButton.x;
                         int y = event.mouseButton.y;
                         // check if click is in the data
-                        if (data->contains(x, y)) {
+                        
+                        if(popUpsContains(x,y)) {
+                            for (auto p : popUps) {
+                                if (event.mouseButton.button==sf::Mouse::Button::Left) {
+                                    if (p->contains(x,y)) {
+                                        p->click(x,y);
+                                        break;
+                                    }
+                                }
+                            }  
+                        }
+
+                        else if (data->contains(x, y)) {
                             if (event.mouseButton.button==sf::Mouse::Button::Left) {
                                 data->click(x,y);
+                            }
+                        }
+                        else if (switchColors.contains(x,y)) {
+                            if (event.mouseButton.button==sf::Mouse::Button::Left) {
+                                if (colorType==ViewMap::Types::Kingdoms) colorType=ViewMap::Types::Relations;
+                                else colorType=ViewMap::Types::Kingdoms;
                             }
                         }
                         // check if click is in the end turn button
@@ -167,6 +188,25 @@ namespace render {
                         updateMap = false;
                         break;
                     }
+                    case sf::Event::MouseMoved: {
+                        if (sf::Mouse::isButtonPressed(sf::Mouse::Left)) {
+                            for(auto p: popUps) {
+                                if (p->isSelected()) {
+                                    p->move(event.mouseMove.x,event.mouseMove.y);
+                                    break;
+                                }
+                            }
+                        }
+                        break;
+                    }
+                    case sf::Event::MouseButtonReleased: {
+                        if (event.mouseButton.button==sf::Mouse::Button::Left) {
+                            for(auto p: popUps) {
+                                p->deselect();
+                                break;
+                            }
+                        }
+                    }
                     default: {}
                     }
                 }
@@ -182,16 +222,17 @@ namespace render {
             playerData->draw();
             // draw end turn button
             endTurn.draw();
+            switchColors.draw();
             // calls the drawing functions of each object in ToDraw
-            for (auto elem : toDraw) {
-                elem.second->draw();
+            for (auto p : popUps) {
+                p->draw();
             }
             // update
             update();
             //do NOT update the map if moving or zooming the view 
             //(heavy operation that will make the render stutter)
             if (updateMap) {
-                viewMap->update();
+                viewMap->update(colorType);
             }
             data->update();
             playerData->update();
@@ -210,11 +251,24 @@ namespace render {
         return colorMap.getPixel(x,y);
     }
     
-    void Render::addToDraw(std::string id, Element * element) {
-        this->toDraw[id]=element;
+    void Render::addPopUp(PopUp * popUp) {
+        this->popUps.push_back(popUp);
     }
-    void Render::removeToDraw(std::string id) {
-        this->toDraw.erase(id);
+    void Render::removePopUp(PopUp * popUp) {
+         for (long unsigned int i=0;i<popUps.size();i++) {
+            if(popUps[i]==popUp){
+                popUps.erase(popUps.begin()+i);
+            }
+        }
+    }
+
+    bool Render::popUpsContains(int x, int y){
+        for (auto p : popUps) {
+            if(p->contains(x,y)){
+                return true;
+            }
+        }
+        return false;       
     }
     void Render::update(){}
 }

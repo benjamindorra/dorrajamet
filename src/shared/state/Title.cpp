@@ -1,4 +1,5 @@
 #include "Title.h"
+#include "json.hpp"
 
 
 namespace state
@@ -34,5 +35,15 @@ namespace state
     void Title::setTitleColorCode(unsigned int titleColorCode)
     {
         this->titleColorCode = titleColorCode;
+    }
+    
+    nlohmann::json Title::toJson() {
+        nlohmann::json j;
+        j["id"] = id;
+        j["name"] = name;
+        /// Pointer to the holder if any
+        j["holder"] = holder;
+        j["titleColorCode"] = titleColorCode;
+        return j;
     }
 }

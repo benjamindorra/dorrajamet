@@ -222,4 +222,26 @@ namespace state
                 throw std::runtime_error("Error: setHolder(titleId): unknown id: " + titleId + "\n");
         }
     }
+
+    nlohmann::json Titles::fetchTitleData (std::string titleId)
+    {
+        try
+        {
+            switch (titles.at(titleId)) {
+                case kingdom:
+                    return kingdoms.at(titleId).toJson();
+                case duchy:
+                    return duchies.at(titleId).toJson();
+                case county:
+                    return counties.at(titleId).toJson();
+                default:
+                    throw std::runtime_error("Error: setHolder(titleId): unknown id: " + titleId + "\n");
+            }
+        }
+        catch(const std::exception& e)
+        {
+            std::cerr << e.what() << std::endl;
+            throw std::runtime_error("Error: Titles::fetchTitleData - unknown id: " + titleId);
+        }
+    }
 }

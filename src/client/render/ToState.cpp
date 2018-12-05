@@ -50,10 +50,19 @@ namespace render {
     nlohmann::json ToState::fetchCharacterDataFromColor(std::string colorCode) {
         //std::cout << "color code1: " << colorCode << std::endl;
         return state->fetchProvinceOwnerData(std::stoul(colorCode));
+        //json province = state->fetchProvinceData(std::stoul(mapColorId[colorCode]);
+        //return fetchCharacterData(state->getProvinceOwner(province["id"]));
     }
     nlohmann::json ToState::fetchProvinceDataFromColor (std::string colorCode){
         //std::cout << "color code2: " << colorCode << std::endl;
-        //return state->fetchProvinceData(std::stoul(colorCode));
-        return state->fetchProvinceData(mapColorId[colorCode]);
+        return state->fetchProvinceData(std::stoul(colorCode));
+        //return state->fetchProvinceData(mapColorId[colorCode]);
+    }
+    nlohmann::json ToState::fetchAllProvincesTopLiegeColor () {
+        return state->fetchAllProvincesTopLiegeColor();
+    }
+
+    nlohmann::json ToState::fetchTitleData (std::string id) {
+        return state->fetchTitleData(id);
     }
 }

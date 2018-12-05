@@ -33,6 +33,7 @@ namespace render {
     void draw ();
     void setColor (sf::Color color);
     std::string getDescription ();
+    void move (int x, int y);
     // Setters and Getters
   };
 
