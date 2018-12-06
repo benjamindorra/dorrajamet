@@ -5,6 +5,7 @@
 #include <state.h>
 #include <engine.h>
 #include <render.h>
+#include <ai.h>
 #include <SFML/Graphics.hpp>
 
 void debug(int c)
@@ -55,6 +56,18 @@ int main(int argc, char ** argv)
             std::cout << "\n\n\n";
             testEngine.endTurn();
             testState.debug();
+            //std::cout << testState.fetchAllProvincesTopLiegeColor().dump(2);
+
+        }
+        else if(command == "ai")
+        {
+            state::GameState testState("./res/testGameState.json");
+            std::queue<engine::Command> commands;
+            engine::EngineCore testEngine(&testState, &commands);
+            ai::RandomAI randomAI(&testState, &testEngine);
+            randomAI.randomActions();
+            std::cout<<"AI OK"<<std::endl;
+
             //std::cout << testState.fetchAllProvincesTopLiegeColor().dump(2);
 
         }
