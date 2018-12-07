@@ -26,7 +26,11 @@ namespace render {
             throw std::runtime_error("Error when importing the texture.");
         }
         view.setViewport(sf::FloatRect(0.3, 0.1, 0.7, 0.9));
-        view.setSize(map.getSize().x, map.getSize().y*view.getViewport().width/view.getViewport().height);
+        if (map.getSize().x >= map.getSize().y) {
+            view.setSize(map.getSize().y*view.getViewport().height/view.getViewport().width, map.getSize().y);
+        } else {
+            view.setSize(map.getSize().x, map.getSize().x*view.getViewport().width/view.getViewport().height);
+        }
         sf::Vector2f viewCenter = sf::Vector2f(map.getSize().x/2, map.getSize().y/2);
         view.setCenter(viewCenter);
         // create the ShowArmies
@@ -51,16 +55,21 @@ namespace render {
         float x = ViewMap::getCenter().x;
         float y = ViewMap::getCenter().y;
         sf::Vector2f mouse = mainRender->getWindow()->mapPixelToCoords (sf::Mouse::getPosition(*mainRender->getWindow()), view);
-        x = (x-mouse.x)*zoom+mouse.x;
-        y = (y-mouse.y)*zoom+mouse.y;
+        float newX = (x-mouse.x)*zoom+mouse.x;
+        float newY = (y-mouse.y)*zoom+mouse.y;
         float oldSizeY = view.getSize().y/2.0;
         float sizeY = oldSizeY*zoom;
         float mapY = map.getSize().y;
-        if ((y-sizeY>=0) & ((y+sizeY)<=mapY)) {
-            this->view.setCenter(x,y);
-            this->view.zoom(zoom);
+        if (zoom<1) {
+            if ((newY-sizeY>=0) & ((newY+sizeY)<=mapY)) {
+                this->view.setCenter(newX,newY);
+                this->view.zoom(zoom);
+            }
         }
         else if (2*sizeY<=mapY) {
+            if ((y-sizeY>=0) & ((y+sizeY)<=mapY)) {
+                this->view.zoom(zoom);
+            }
             if ((y-oldSizeY>=0) & (y-sizeY<0)) {
                 this->view.setCenter(x, sizeY);
                 this->view.zoom(zoom);
@@ -76,16 +85,20 @@ namespace render {
         // check that zooming doesn't get the view out of image
         float x = ViewMap::getCenter().x;
         float y = ViewMap::getCenter().y;
-        sf::Vector2f mouse = mainRender->getWindow()->mapPixelToCoords (sf::Mouse::getPosition(*mainRender->getWindow()), view);
-        x = (x-mouse.x)*zoom+mouse.x;
-        y = (y-mouse.y)*zoom+mouse.y;
         float oldSizeX = view.getSize().x/2.0;
         float sizeX = oldSizeX*zoom;
         float mapX = map.getSize().x;
-        if ((x-sizeX>=0) & ((x+sizeX)<=mapX)){
-            checkZoomY(zoom);
+        if (zoom<1) {
+            sf::Vector2f mouse = mainRender->getWindow()->mapPixelToCoords (sf::Mouse::getPosition(*mainRender->getWindow()), view);
+            float newX = (x-mouse.x)*zoom+mouse.x;
+            if ((newX-sizeX>=0) & ((newX+sizeX)<=mapX)){
+                checkZoomY(zoom);
+            }
         }
         else if (2*sizeX<=mapX) {
+            if ((x-sizeX>=0) & ((x+sizeX)<=mapX)){
+                checkZoomY(zoom);
+            }
             if ((x-oldSizeX>=0) & (x-sizeX<0)) {
                 this->view.setCenter(sizeX, y);
                 checkZoomY(zoom);
