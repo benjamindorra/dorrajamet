@@ -69,6 +69,7 @@ namespace state {
     std::string getController ();
     void updateController ();
     void updateData ();
+    std::string getOccupant ();
     nlohmann::json toJson ();
     // Setters and Getters
   };

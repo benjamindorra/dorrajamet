@@ -54,6 +54,7 @@ namespace state {
     void transferAllTitles (std::string character_from, std::string character_to);
     void handleCharacterDeath (std::string characterId, std::string heirId, int score);
     void updateWars ();
+    void endWar (std::string warId);
     nlohmann::json fetchCharacterData (std::string characterId);
     nlohmann::json fetchAllCharactersData ();
     nlohmann::json fetchAllRelationsData ();

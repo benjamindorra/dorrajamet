@@ -57,6 +57,7 @@ namespace state {
     std::string getProvinceOwner (std::string provinceId);
     std::string getCharacterTopLiege (std::string characterId);
     void updateProvinces ();
+    std::string getProvinceOccupant (std::string provinceId);
     nlohmann::json fetchCharacterData (std::string characterId);
     nlohmann::json fetchAllCharactersData ();
     nlohmann::json fetchProvinceData (int provinceColorCode);

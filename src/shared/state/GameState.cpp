@@ -117,7 +117,7 @@ namespace state
     }
     void GameState::updateWars ()
     {
-        //politics->updateWars();
+        politics->updateWars();
     }
     void GameState::updateCharactersData ()
     {
@@ -139,6 +139,10 @@ namespace state
         gameMap->updateSieges();
         // Update prosperity and tax incomes
         gameMap->updateProvincesData();
+    }
+    std::string GameState::getProvinceOccupant (std::string provinceId)
+    {
+        return gameMap->getProvinceOccupant(provinceId);
     }
     nlohmann::json GameState::fetchCharacterData (std::string characterId)
     {

@@ -36,6 +36,8 @@ namespace state {
     bool checkConsistency ();
     void debug ();
     std::string getMainTitle (std::string characterId);
+    void changeScoreBy (std::string characterId, int amount);
+    void removeClaim (std::string characterId, std::string titleId);
     void updateCharactersData ();
     std::pair<int, int> updateCharacterRecursively (std::string characterId);
     nlohmann::json fetchCharacterData (std::string characterId);

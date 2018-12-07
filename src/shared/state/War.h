@@ -14,6 +14,7 @@ namespace state {
   private:
     std::string id;
     std::string targetTitle;
+    std::string claimantCharacter;
     std::vector<std::string> attackerCamp;
     std::vector<std::string> defenderCamp;
     /// 100: attacker victory, -100 defender victory
@@ -26,7 +27,14 @@ namespace state {
     void debug ();
     nlohmann::json toJson ();
     std::string getId ();
+    std::string getTargetTitle ();
     int getScore ();
+    std::string getClaimantCharacter ();
+    std::vector<std::string> getAttackerCamp ();
+    std::vector<std::string> getDefenderCamp ();
+    void setScore (int score);
+    bool attackerWon ();
+    bool defenderWon ();
     // Setters and Getters
   };
 

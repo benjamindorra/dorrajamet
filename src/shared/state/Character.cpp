@@ -182,6 +182,12 @@ namespace state{
         heir["hasPlot"] = false;
         return Character(heir);
     }
+    void Character::removeClaim (std::string titleId)
+    {
+        auto it = std::find(claims.begin(), claims.end(), titleId);
+        if(it != claims.end())
+            claims.erase(it);
+    }
     nlohmann::json Character::toJson ()
     {
         nlohmann::json res;

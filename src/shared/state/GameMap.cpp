@@ -314,6 +314,10 @@ namespace state
             provinces[provinceId].updateData();
         }
     }
+    std::string GameMap::getProvinceOccupant (std::string provinceId)
+    {
+        return provinces[provinceId].getOccupant();
+    }
     nlohmann::json GameMap::fetchProvinceData (unsigned int provinceColorCode)
     {
         return provinces[getProvinceId(provinceColorCode)].toJson();

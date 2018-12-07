@@ -97,6 +97,14 @@ namespace state
     {
         return characters[characterId].getMainTitle();
     }
+    void Characters::changeScoreBy (std::string characterId, int amount)
+    {
+        characters[characterId].addPrestige(amount);
+    }
+    void Characters::removeClaim (std::string characterId, std::string titleId)
+    {
+        characters[characterId].removeClaim(titleId);
+    }
     void Characters::updateCharactersData ()
     {
         // For each independent leader
