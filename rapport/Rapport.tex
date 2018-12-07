@@ -373,6 +373,22 @@ Décrit une levée.
 \clearpage
 \section{Rendu: Stratégie et Conception}
 
+\begin{figure}[htbp]
+\includegraphics[width=0.8\textwidth]{render.png}
+\caption{Affichage du rendu} 
+\end{figure}
+
+\begin{figure}[htbp]
+\includegraphics[width=0.8\textwidth]{renderRelations.png}
+\caption{Affichage des relations entre le personnage joueur et les autres} 
+\end{figure}
+
+\begin{figure}[htbp]
+\includegraphics[width=0.8\textwidth]{renderZoom.png}
+\caption{Zoom et déplacement dans la carte} 
+\end{figure}
+
+\newpage
 \subsection{Classe principale}
 Notre stratégie générale consiste à créer un objet principal Render qui comprend une fenêtre qui va se rafraîchir régulièrement en utilisant la bibliothèque sfml (fonction renderLoop()).\\
 Lors du rafraîchissement de la fenêtre, les divers élément composant la page sont rafraîchis à partir des données du game state, puis affichés. La boucle principale dans renderLoop() comprend aussi la gestion des events, qui permet d'avoir une interactivité. \\
@@ -400,9 +416,11 @@ La stratégie d'interactivité est basée sur les events de sfml, gérés dans l
 
 Cette stratégie se base sur un switch selon le type d'event, qui décrit les actions à effectuer selon le type d'évènement et l'objet qui doit être affecté. Un système de vérification auprès de chaque objet sur lequel ce type d'event peut agir est déclenché pour savoir si la souris est dans cet objet (méthode contains() présente dans tous les objets interactifs, qui vont événtuellement appeler les méthode contains des sous-objets contenus dans cet objet), puis une requête qui dépend du type d'event est faite à cet objet. L'objet traite la requête (éventuellement en la transmettant au sous-objet concerné), et exécute l'action demandée.\\
 
-Ainsi il est possible de scroller dans l'objet Data, de cliquer sur les boutons ainsi que de se déplacer et de zoomer dans la carte.\\
+Ainsi il est possible de scroller dans l'objet Data, de cliquer sur les boutons ainsi que de se déplacer (zqsd) et de zoomer (molette) dans la carte.\\
 
 D'autre part les clics sur la carte chargent l'armée ou la province concernée (clic gauche) ou le propriétaire de la province (clic droit). Cela permet ensuite d'agir sur l'objet concerné. Si pour l'armée nous pouvons utiliser la méthode d'appels emboîtés décrite précédemment, il faut en revanche une stratégie particulière pour les provinces qui utilise les couleurs (uniques) d'une carte cachée (l'objet ColorMap, qui contient un objet sf::Image de la carte cachée.).\\
+
+Les pop-ups sont affichés devant tous les autres objets peuvent être déplacés avec la souris, ou fermés en appuyant sur leurs boutons.\\
 
 \subsection{Stratégie de rendu d'un état}
 Pour effectuer le rendu d'un état nous utilisons les méthodes update() des classes concernées. Ces méthodes font appel à des méthodes de la classe ToState pour appeler les données de l'état de jeu, et adapter l'affichage à ces données. Elles sont appelées à chaque mise à jour du rendu par l'objet Render.\\
@@ -429,6 +447,8 @@ La classe EngineCore ajoute cette commande dans une liste de commandes à l'aide
 
 \subsection{Règles}
 
+Le moteur de jeu gère les fins de tour.
+
 \subsection{Conception logiciel}
 
 
@@ -444,16 +464,23 @@ La classe EngineCore ajoute cette commande dans une liste de commandes à l'aide
 
 \subsection{Stratégies}
 
+\subsubsection{IA aléatoire}
+Pour commencer l'IA nous avons développé une classe simple RandomAI qui envoie des commandes au hasard (1 chance sur 3) parmi les différentes actions possibles : finir son tour, déplacer une armée, ou une action généraliste. La méthode randomAction de RandomAI répète des actions jusqu'à arriver à la fin du tour.\\
+
+Pour les déplacements des armées l'armée et la province vers laquelle l'IA lui ordonne de se déplacer sont choisies aléatoirement.\\
+
+Pour les actions généralistes, les actions sont choisies au hasard parmi toutes les actions possibles (lever une armée, déclarer la guerre, demander la paix, demander une alliance, exiger une province, assassiner un personnage) et la cible est choisie aléatoirement, avec une plus grande probabilité d'interagir avec un personnage qui possède un grand territoire.\\
+
 \clearpage
 \subsection{Conception logiciel}
 
 
-%\begin{landscape}
-%\begin{figure}[p]
-%\includegraphics[width=0.9\paperheight]{ai.pdf}
-%\caption{\label{uml:ai}Diagramme des classes d'intelligence artificielle.} 
-%\end{figure}
-%\end{landscape}
+\begin{landscape}
+\begin{figure}[p]
+\includegraphics[width=0.9\paperheight]{ai.pdf}
+\caption{\label{uml:ai}Diagramme des classes d'intelligence artificielle.} 
+\end{figure}
+\end{landscape}
 
 
 \section{Modularisation}

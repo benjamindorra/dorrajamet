@@ -7,17 +7,18 @@
 \contentsline {subsection}{\numberline {2.1}Description des \IeC {\'e}tats}{5}{subsection.2.1}
 \contentsline {subsection}{\numberline {2.2}Conception Logiciel}{8}{subsection.2.2}
 \contentsline {section}{\numberline {3}Rendu: Strat\IeC {\'e}gie et Conception}{10}{section.3}
-\contentsline {subsection}{\numberline {3.1}Classe principale}{10}{subsection.3.1}
-\contentsline {subsection}{\numberline {3.2}Strat\IeC {\'e}gie de rendu}{10}{subsection.3.2}
-\contentsline {subsection}{\numberline {3.3}Interactivit\IeC {\'e}}{10}{subsection.3.3}
-\contentsline {subsection}{\numberline {3.4}Strat\IeC {\'e}gie de rendu d'un \IeC {\'e}tat}{11}{subsection.3.4}
-\contentsline {subsection}{\numberline {3.5}Conception logiciel}{11}{subsection.3.5}
-\contentsline {section}{\numberline {4}R\IeC {\`e}gles de changement d'\IeC {\'e}tats et moteur de jeu}{13}{section.4}
-\contentsline {subsection}{\numberline {4.1}R\IeC {\`e}gles}{13}{subsection.4.1}
-\contentsline {subsection}{\numberline {4.2}Conception logiciel}{13}{subsection.4.2}
-\contentsline {section}{\numberline {5}Intelligence Artificielle}{15}{section.5}
-\contentsline {subsection}{\numberline {5.1}Strat\IeC {\'e}gies}{15}{subsection.5.1}
-\contentsline {subsection}{\numberline {5.2}Conception logiciel}{16}{subsection.5.2}
-\contentsline {section}{\numberline {6}Modularisation}{16}{section.6}
-\contentsline {subsection}{\numberline {6.1}Organisation des modules}{16}{subsection.6.1}
-\contentsline {subsection}{\numberline {6.2}Conception logiciel}{17}{subsection.6.2}
+\contentsline {subsection}{\numberline {3.1}Classe principale}{11}{subsection.3.1}
+\contentsline {subsection}{\numberline {3.2}Strat\IeC {\'e}gie de rendu}{11}{subsection.3.2}
+\contentsline {subsection}{\numberline {3.3}Interactivit\IeC {\'e}}{12}{subsection.3.3}
+\contentsline {subsection}{\numberline {3.4}Strat\IeC {\'e}gie de rendu d'un \IeC {\'e}tat}{12}{subsection.3.4}
+\contentsline {subsection}{\numberline {3.5}Conception logiciel}{12}{subsection.3.5}
+\contentsline {section}{\numberline {4}R\IeC {\`e}gles de changement d'\IeC {\'e}tats et moteur de jeu}{14}{section.4}
+\contentsline {subsection}{\numberline {4.1}R\IeC {\`e}gles}{14}{subsection.4.1}
+\contentsline {subsection}{\numberline {4.2}Conception logiciel}{14}{subsection.4.2}
+\contentsline {section}{\numberline {5}Intelligence Artificielle}{16}{section.5}
+\contentsline {subsection}{\numberline {5.1}Strat\IeC {\'e}gies}{16}{subsection.5.1}
+\contentsline {subsubsection}{\numberline {5.1.1}IA al\IeC {\'e}atoire}{16}{subsubsection.5.1.1}
+\contentsline {subsection}{\numberline {5.2}Conception logiciel}{17}{subsection.5.2}
+\contentsline {section}{\numberline {6}Modularisation}{19}{section.6}
+\contentsline {subsection}{\numberline {6.1}Organisation des modules}{19}{subsection.6.1}
+\contentsline {subsection}{\numberline {6.2}Conception logiciel}{20}{subsection.6.2}
