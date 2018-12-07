@@ -69,6 +69,7 @@ namespace state {
     nlohmann::json fetchAllRelationsData ();
     nlohmann::json fetchAllPlayersData ();
     nlohmann::json fetchAllProvincesTopLiegeColor ();
+    nlohmann::json fetchTitleData (std::string titleId);
     // Setters and Getters
   };
 

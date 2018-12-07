@@ -3,6 +3,7 @@
 #define STATE__TITLE__H
 
 #include <string>
+#include <json.hpp>
 
 namespace state {
 
@@ -22,6 +23,7 @@ namespace state {
     virtual bool checkConsistency () = 0;
     virtual std::string getLiege () = 0;
     virtual std::string getDeJureLiege () = 0;
+    nlohmann::json toJson ();
     // Setters and Getters
     const std::string& getId() const;
     void setId(const std::string& id);

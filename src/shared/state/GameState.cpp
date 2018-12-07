@@ -212,4 +212,7 @@ namespace state
         }
         return res;
     }
+    nlohmann::json GameState::fetchTitleData (std::string titleId) {
+        return politics->fetchTitleData(titleId);
+    }
 }

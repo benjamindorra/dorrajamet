@@ -11,11 +11,13 @@ namespace render {
   class ToEngine;
   class Render;
   class Element;
+  class PopUp;
 }
 
 #include "Image.h"
 #include "ShowArmies.h"
 #include "Element.h"
+#include "PopUp.h"
 
 namespace render {
 
@@ -23,6 +25,8 @@ namespace render {
   class ViewMap : public render::Element {
     // Associations
     // Attributes
+  public:
+    enum Types{Kingdoms=0,Relations=1};
   private:
     Image map;
     sf::View view;
@@ -46,9 +50,10 @@ namespace render {
     std::string leftClick (sf::Vector2f pixel);
     std::string rightClick (sf::Vector2f pixel);
     void checkZoomY (float zoom);
-    void update ();
-    void updateColors ();
+    void update (Types type);
+    void updateColorsRelations ();
     void updateArmies ();
+    void updateColorsKingdoms ();
     // Setters and Getters
   };
 

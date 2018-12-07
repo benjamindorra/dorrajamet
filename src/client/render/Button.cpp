@@ -102,4 +102,13 @@ namespace render {
     std::string Button::getDescription () {
         return this->description;
     }
+    void Button::move(int x, int y){
+        this->x+=x;
+        this->y+=y;
+        frame.setPosition(sf::Vector2f(this->x,this->y));
+        sf::FloatRect rect = text.getLocalBounds();
+        float deltaX = (this->width-rect.width)/2;
+        float deltaY = (this->height-rect.height-text.getCharacterSize()/2)/2;
+        text.setPosition(sf::Vector2f(this->x+deltaX,this->y+deltaY));
+    }
 }

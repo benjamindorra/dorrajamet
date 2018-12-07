@@ -12,6 +12,7 @@
 #include "render/Image.h"
 #include "render/ShowArmy.h"
 #include "render/ShowArmies.h"
+#include "render/PopUp.h"
 #include "render/ViewMap.h"
 #include "render/Render.h"
 #endif

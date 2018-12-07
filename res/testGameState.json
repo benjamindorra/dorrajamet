@@ -41,7 +41,7 @@
                 "id": "k_of_numbers",
                 "name": "Kingdom of Numbers",
                 "holder": "chara_0001",
-                "titleColorCode": 4278124032
+                "titleColorCode": 215192060
             },
             {
                 "id": "d_of_evens",
@@ -49,7 +49,7 @@
                 "holder": "chara_0002",
                 "liege": "k_of_numbers",
                 "deJureLiege": "k_of_numbers",
-                "titleColorCode": 269541376
+                "titleColorCode": 200056190
             },
             {
                 "id": "d_of_odds",
@@ -57,7 +57,7 @@
                 "holder": "chara_0001",
                 "liege": "k_of_numbers",
                 "deJureLiege": "k_of_numbers",
-                "titleColorCode": 3759149056
+                "titleColorCode": 1517155255
             },
             {
                 "id": "c_of_one",
@@ -66,7 +66,7 @@
                 "liege": "d_of_odds",
                 "deJureLiege": "d_of_odds",
                 "province": "prov_one",
-                "titleColorCode": 3759177728
+                "titleColorCode": 269541376154
             },
             {
                 "id": "c_of_two",
@@ -75,7 +75,7 @@
                 "liege": "d_of_evens",
                 "deJureLiege": "d_of_evens",
                 "province": "prov_two",
-                "titleColorCode": 276881408
+                "titleColorCode": 375917772
             },
             {
                 "id": "c_of_three",
@@ -111,7 +111,7 @@
                 "liege": "d_of_evens",
                 "deJureLiege": "d_of_evens",
                 "province": "prov_six",
-                "titleColorCode": 2155929600
+                "titleColorCode": 276481408
             }
         ],
         "characters":

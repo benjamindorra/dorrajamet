@@ -27,10 +27,12 @@ namespace render {
         float widthText = width*(float)mainRender->getWindow()->getSize().x;
         float heightText = height*(float)mainRender->getWindow()->getSize().y;
         frame.setSize(sf::Vector2f(widthText, heightText));
-        frame.setPosition(sf::Vector2f(0,0));
+        frame.setPosition(sf::Vector2f(mainRender->getWindow()->getSize().x*0.1,0));
         frame.setFillColor(sf::Color(200,200,0,255));
         frame.setOutlineColor(sf::Color::Black);
         frame.setOutlineThickness(-1);
+        //position the text
+        text.setPosition(frame.getPosition());
         //temporary. change to fit the actual player.
         selectCharacter("player_one");
     }

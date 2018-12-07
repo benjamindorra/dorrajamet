@@ -249,7 +249,7 @@ namespace render {
             else if (button=="War") {}
             else if (button=="Peace") {}
             j["command"] = button;
-            j["id"] = id;
+            j["colorCode"] = id;
             engine->addCommand(button, j.dump());
         }
         else if (type==Types::Province) {
