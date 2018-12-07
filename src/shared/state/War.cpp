@@ -55,8 +55,40 @@ namespace state
     {
         return id;
     }
+    std::string War::getTargetTitle ()
+    {
+        return targetTitle;
+    }
     int War::getScore ()
     {
         return warScore;
+    }
+    std::string War::getClaimantCharacter ()
+    {
+        return claimantCharacter;
+    }
+    std::vector<std::string> War::getAttackerCamp ()
+    {
+        return attackerCamp;
+    }
+    std::vector<std::string> War::getDefenderCamp ()
+    {
+        return defenderCamp;
+    }
+    void War::setScore (int score)
+    {
+        warScore = score;
+        if(warScore < -100)
+            warScore = -100;
+        else if(warScore > 100)
+            warScore = 100;
+    }
+    bool War::attackerWon ()
+    {
+        return warScore == 100;
+    }
+    bool War::defenderWon ()
+    {
+        return warScore == -100;
     }
 }

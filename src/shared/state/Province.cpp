@@ -222,6 +222,10 @@ namespace state
         else if(isCaptured())
             taxIncome = 0;
     }
+    std::string Province::getOccupant ()
+    {
+        return controlledBy;
+    }
     nlohmann::json Province::toJson ()
     {
         nlohmann::json j;

@@ -53,6 +53,7 @@ namespace state {
     bool ageUp ();
     nlohmann::json toJson ();
     Character generateHeir ();
+    void removeClaim (std::string titleId);
     // Setters and Getters
   };
 

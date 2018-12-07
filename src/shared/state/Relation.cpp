@@ -42,6 +42,7 @@ namespace state
                     break;
                 case 4:
                     type = war;
+                    warId = j["warId"].get<std::string>();
                     break;
                 default:
                     throw std::string("Error: invalid relation type.");
@@ -72,11 +73,15 @@ namespace state
     }
     bool Relation::isBetween (std::string characterA, std::string characterB)
     {
-        return(this->characterA == characterA && this->characterB == characterB);
+        return(this->characterA == characterA && this->characterB == characterB) || (this->characterA == characterB && this->characterB == characterA);
     }
     Relation::relType Relation::getType ()
     {
         return type;
+    }
+    std::string Relation::getWarId ()
+    {
+        return warId;
     }
     nlohmann::json Relation::toJson ()
     {

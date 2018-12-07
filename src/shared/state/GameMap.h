@@ -60,6 +60,7 @@ namespace state {
     std::string getArmyOfLevy (std::string levyProvinceId);
     std::string getProvinceId (unsigned int provinceColorCode);
     std::string getProvinceOwner (std::string provinceId);
+    std::string getProvinceOccupant (std::string provinceId);
     nlohmann::json fetchProvinceData (unsigned int provinceColorCode);
     nlohmann::json fetchProvinceData (std::string provinceId);
     nlohmann::json fetchCharacterData (std::string characterId);
