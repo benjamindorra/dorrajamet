@@ -24,6 +24,7 @@ namespace state {
     bool checkConsistency ();
     unsigned int getColorCode ();
     nlohmann::json toJson ();
+    std::string getHolder ();
     // Setters and Getters
   };
 

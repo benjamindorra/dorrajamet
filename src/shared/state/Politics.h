@@ -52,6 +52,7 @@ namespace state {
     nlohmann::json fetchCharacterData (std::string characterId);
     nlohmann::json fetchKingdomData (std::string kingdomId);
     nlohmann::json fetchAllRelationsData ();
+    std::string getKingdomHolder (std::string kingdomId);
     // Setters and Getters
   };
 

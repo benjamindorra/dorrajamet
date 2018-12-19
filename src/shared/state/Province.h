@@ -72,6 +72,7 @@ namespace state {
     void updateData ();
     std::string getOccupant ();
     nlohmann::json toJson ();
+    std::string getKingdomId ();
     // Setters and Getters
   };
 

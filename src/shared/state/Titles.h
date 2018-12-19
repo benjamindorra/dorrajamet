@@ -29,6 +29,7 @@ namespace state {
     void debug ();
     unsigned int getKingdomColor (std::string kingdomId);
     nlohmann::json fetchKingdomData (std::string kingdomId);
+    std::string getKingdomHolder (std::string kingdomId);
     // Setters and Getters
   };
 

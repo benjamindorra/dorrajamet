@@ -43,7 +43,7 @@ namespace render {
         this->playerData = new PlayerData(this, &state);
         std::cout<<"Render init OK"<<std::endl;
         new PopUp(this, PopUp::Type::Question, PopUp::Action::War, "chara_0001", "chara_0002", &state, &engine);
-        new PopUp(this, PopUp::Type::Info, PopUp::Action::Claim, "chara_0003", "c_of_three", &state, &engine);
+        new PopUp(this, PopUp::Type::Info, PopUp::Action::Claim, "chara_0003", "prov_one", &state, &engine);
     }
 
     // main loop, handles render and events

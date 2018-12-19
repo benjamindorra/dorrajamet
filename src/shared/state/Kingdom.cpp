@@ -61,4 +61,9 @@ namespace state
 
         return j;
     }
+
+    std::string Kingdom::getHolder()
+    {
+        return holder;
+    }
 }

@@ -279,10 +279,16 @@ namespace render {
         bool relationExists;
         json provinces = state->fetchAllProvincesData();
         for (json::iterator it=provinces.begin(); it !=provinces.end(); it++){
-            color = modMap.getPixel(it.value()["dispPosX"],it.value()["dispPosY"]).toInteger();
+            try {
+                color = modMap.getPixel(it.value()["dispPosX"],it.value()["dispPosY"]).toInteger();
+            }
+            catch(const std::exception& e){
+                std::cerr << e.what() <<std::endl;
+                throw std::runtime_error("Province position out of the map");
+            }
             colorCode = it.value()["colorCode"];
-            json character = state->fetchCharacterDataFromColor(std::to_string(colorCode));
             if (colorCode != 255) {
+                json character = state->fetchCharacterDataFromColor(std::to_string(colorCode));
                 if(character["id"]==playerChar){
                     if(sf::Color(0,255,0).toInteger()!=color) changeColors=true;
                 }
@@ -403,16 +409,22 @@ namespace render {
         json provincesData = state->fetchAllProvincesData();
         for (json::iterator it=provincesData.begin(); it !=provincesData.end(); it++){
             if (it.value()["colorCode"]!=255) {
-                        color = modMap.getPixel(it.value()["dispPosX"],it.value()["dispPosY"]).toInteger();
-                        for (json::iterator p=provinces.begin(); p!=provinces.end(); ++p) {
-                            if (p.value()["provinceId"]==it.value()["id"]){
-                                if (p.value()["color"]!=color) {
-                                    changeColors=true;
-                                    break;
-                                } 
-                            }
-                        }
+                try {
+                    color = modMap.getPixel(it.value()["dispPosX"],it.value()["dispPosY"]).toInteger();
+                }
+                catch(const std::exception& e){
+                    std::cerr << e.what() <<std::endl;
+                    throw std::runtime_error("Province position out of the map");
+                }
+                for (json::iterator p=provinces.begin(); p!=provinces.end(); ++p) {
+                    if (p.value()["provinceId"]==it.value()["id"]){
+                        if (p.value()["color"]!=color) {
+                            changeColors=true;
+                            break;
+                        } 
                     }
+                }
+            }
         }
         // colors the texture accordingly
         int modHeight = (int)modMap.getSize().y;
