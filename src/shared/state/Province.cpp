@@ -39,6 +39,7 @@ namespace state
             json j = json::parse(strJson);
             id = j["id"].get<std::string>();
             name = j["name"].get<std::string>();
+            kingdomId = j["kingdomId"].get<std::string>();
             colorCode = j["colorCode"].get<unsigned int>();
             dispPosX = j["dispPosX"].get<int>();
             dispPosY = j["dispPosY"].get<int>();
@@ -145,7 +146,7 @@ namespace state
     }
     void Province::updateController()
     {
-        if(siegeStatus < 100)
+        /*if(siegeStatus < 100)
             return;
         auto siegingArmyOwner = parent->getArmy(siegingArmy)->getOwnerCharacter();
         auto provinceOwner = parent->getProvinceOwner(id);
@@ -154,7 +155,7 @@ namespace state
         else
             controlledBy = siegingArmyOwner;
         siegeStatus = 0;
-        siegingArmy = "none";
+        siegingArmy = "none";*/
     }
     void Province::updateSiege()
     {
@@ -181,7 +182,7 @@ namespace state
     }
     void Province::updateData()
     {
-        if(id=="sea")
+        /*if(id=="sea")
             return;
         // Sieged provinces lose prosperity
         if(isSieged())
@@ -220,7 +221,7 @@ namespace state
         if(isSieged())
             taxIncome = baseTaxIncome * 0.5;
         else if(isCaptured())
-            taxIncome = 0;
+            taxIncome = 0;*/
     }
     std::string Province::getOccupant ()
     {
@@ -231,6 +232,7 @@ namespace state
         nlohmann::json j;
         j["id"] = id;
         j["name"] = name;
+        j["kingdomId"] = kingdomId;
         j["colorCode"] = colorCode;
         j["dispPosX"] = dispPosX;
         j["dispPosY"] = dispPosY;

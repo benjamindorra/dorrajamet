@@ -9,7 +9,7 @@ namespace state
         id = std::string("");
         name = std::string("");
         holder = std::string("");
-        titleColorCode = 0;
+        kingdomColorCode = 0;
     }
     Kingdom::Kingdom (std::string strJson)
     {
@@ -21,7 +21,7 @@ namespace state
             id = j["id"].get<std::string>();
             name = j["name"].get<std::string>();
             holder = j["holder"].get<std::string>();
-            titleColorCode = j["titleColorCode"].get<unsigned int>();
+            kingdomColorCode = j["kingdomColorCode"].get<unsigned int>();
         }
         catch(const std::exception& e)
         {
@@ -47,12 +47,18 @@ namespace state
                     name.size() == 0 ||
                     holder.size() == 0);
     }
-    std::string Kingdom::getLiege ()
+    unsigned int Kingdom::getColorCode ()
     {
-        return std::string("none");
+        return kingdomColorCode;
     }
-    std::string Kingdom::getDeJureLiege ()
+    nlohmann::json Kingdom::toJson ()
     {
-        return std::string("none");
-    }    
+        nlohmann::json j;
+        j["id"] = id;
+        j["name"] = name;
+        j["holder"] = holder;
+        j["kingdomColorCode"] = kingdomColorCode;
+
+        return j;
+    }
 }

@@ -22,6 +22,7 @@ namespace state {
     std::string id;
     GameMap * parent;
     std::string name;
+    std::string kingdomId;
     /// int value of the unique color code of the province (for ui purposes)
     unsigned int colorCode;
     /// Ranges from 0 to 100. Represent the current development status of the province. The player can spend money to raise this value. Increase this value will offer better levies and tax income. Later we could replace that with a list of improvable buildings that will have more specific modifiers on the province.

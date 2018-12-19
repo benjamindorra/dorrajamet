@@ -88,12 +88,8 @@ namespace state
     void GameMap::updateArmiesOrders ()
     {
         for(auto const& e: armies)
-        if(!armies[e.first].isInBattle())
-            armies[e.first].advanceOrders();
-        /*std::map<std::string, state::Army>::iterator it;
-        for(it = armies.begin(); it != armies.end(); it++)
-            if(!(it->second.isInBattle()))
-                it->second.advanceOrders();*/
+            if(!armies[e.first].isInBattle())
+                armies[e.first].advanceOrders();
     }
     void GameMap::updateBattles()
     {
@@ -217,7 +213,7 @@ namespace state
                         // Else
                             // Set reinforcement rate 0.0
 
-        for(auto const& e: provinces)
+        /*for(auto const& e: provinces)
         {
             auto levyProvinceId = e.first;
             if(!provinces[levyProvinceId].isLevyRaised())
@@ -252,15 +248,15 @@ namespace state
                     }
                 }
             }
-        }
-    }
+        }*/
+    }/*
     std::string GameMap::getArmyOfLevy(std::string levyProvinceId)
     {
         for(auto const& e: armies)
             if(armies[e.first].ownsLevy(levyProvinceId))
                 return e.first;
         return std::string("");
-    }
+    }*/
     void GameMap::reinforceLevies ()
     {
         for(auto const& e: provinces)
@@ -268,7 +264,7 @@ namespace state
     }
     void GameMap::checkNewSieges ()
     {
-        std::map<std::string, std::vector<std::string>> pos; // pos contains all the armies contained in each province
+        /*std::map<std::string, std::vector<std::string>> pos; // pos contains all the armies contained in each province
         for(auto const& e: armies)
             pos[armies[e.first].getCurrentProvince()].push_back(e.first);
         for(auto const& e: pos) // for each province
@@ -295,7 +291,7 @@ namespace state
                     break;// For now we will only consider the first sieging army
                 }
             }
-        }
+        }*/
     }
     bool GameMap::checkForOngoingSiege (std::string provinceId)
     {
@@ -314,40 +310,17 @@ namespace state
             provinces[provinceId].updateData();
         }
     }
-    std::string GameMap::getProvinceOccupant (std::string provinceId)
+    
+    std::string GameMap::getProvinceId (unsigned int colorCode)
     {
-        return provinces[provinceId].getOccupant();
-    }
-    nlohmann::json GameMap::fetchProvinceData (unsigned int provinceColorCode)
-    {
-        return provinces[getProvinceId(provinceColorCode)].toJson();
+        for(auto province: provinces)
+            if(province.second.getColorCode() == colorCode)
+                return province.first;
+        throw std::runtime_error("Error: unknown province color code: " + colorCode);
     }
     nlohmann::json GameMap::fetchProvinceData (std::string provinceId)
     {
         return provinces[provinceId].toJson();
-    }
-    nlohmann::json GameMap::fetchAllProvincesData() {
-        using json = nlohmann::json;
-        json allProvincesData = json::array();
-        for (auto p : provinces) {
-            allProvincesData.push_back(p.second.toJson());
-        }
-        return allProvincesData;
-    }
-    std::string GameMap::getProvinceId (unsigned int provinceColorCode)
-    {
-        for(auto const& e: provinces)
-            if(provinces[e.first].getColorCode() == provinceColorCode)
-                return e.first;
-        throw std::runtime_error("Error: state::GameMap::getProvinceId() : unknown province color code: " + provinceColorCode);
-    }
-    std::string GameMap::getProvinceOwner (std::string provinceId)
-    {
-        return parent->getProvinceOwner(provinceId);
-    }
-    nlohmann::json GameMap::fetchCharacterData (std::string characterId)
-    {
-        return parent->fetchCharacterData(characterId);
     }
     nlohmann::json GameMap::fetchArmyData (std::string armyId)
     {
@@ -356,8 +329,15 @@ namespace state
     nlohmann::json GameMap::fetchAllArmiesData ()
     {
         nlohmann::json res = nlohmann::json::array();
-        for(auto const& e: armies)
-            res.push_back(armies[e.first].toJson());
+        for(auto army: armies)
+            res.push_back(army.second.toJson());
+        return res;
+    }
+    nlohmann::json GameMap::fetchAllProvincesData ()
+    {
+        nlohmann::json res = nlohmann::json::array();
+        for(auto province: provinces)
+            res.push_back(province.second.toJson());
         return res;
     }
 }

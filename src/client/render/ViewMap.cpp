@@ -395,7 +395,7 @@ namespace render {
         // update the colors of the map with one color for each kingdom
         using json = nlohmann::json;
         //lists all the provinces and their colors
-        json provinces = state->fetchAllProvincesTopLiegeColor();
+        json provinces = state->fetchAllProvincesKingdomColor();
         // check if the colors need to be changed
         sf::Image modMap = map.getTexture().copyToImage();
         unsigned int color;

@@ -25,44 +25,48 @@ namespace render {
         }
     }
     ToState::~ToState () {}
-    nlohmann::json ToState::fetchCharacterData (std::string id) {
-        return state->fetchCharacterData(id);  
+    nlohmann::json ToState::fetchCharacterData (std::string id)
+    {
+        return state->fetchCharacterData(id);
     }
-    nlohmann::json ToState::fetchProvinceData (std::string id){
+    nlohmann::json ToState::fetchProvinceData (std::string id)
+    {
         return state->fetchProvinceData(id);
     }
-
-    nlohmann::json ToState::fetchAllProvincesData (){
-        return state->fetchAllProvincesData();
-    }
-    nlohmann::json ToState::fetchArmyData (std::string id){
+    nlohmann::json ToState::fetchArmyData (std::string id)
+    {
         return state->fetchArmyData(id);
     }
-    nlohmann::json ToState::fetchAllArmiesData (){
+    nlohmann::json ToState::fetchAllArmiesData ()
+    {
         return state->fetchAllArmiesData();
     }
-    nlohmann::json ToState::fetchAllRelationsData (){
+    nlohmann::json ToState::fetchAllRelationsData ()
+    {
         return state->fetchAllRelationsData();
     }
-    nlohmann::json ToState::fetchAllPlayersData(){
+    nlohmann::json ToState::fetchAllPlayersData ()
+    {
         return state->fetchAllPlayersData();
     }
-    nlohmann::json ToState::fetchCharacterDataFromColor(std::string colorCode) {
-        //std::cout << "color code1: " << colorCode << std::endl;
-        return state->fetchProvinceOwnerData(std::stoul(colorCode));
-        //json province = state->fetchProvinceData(std::stoul(mapColorId[colorCode]);
-        //return fetchCharacterData(state->getProvinceOwner(province["id"]));
+    nlohmann::json ToState::fetchAllProvincesData ()
+    {
+        return state->fetchAllProvincesData();
     }
-    nlohmann::json ToState::fetchProvinceDataFromColor (std::string colorCode){
-        //std::cout << "color code2: " << colorCode << std::endl;
+    nlohmann::json ToState::fetchCharacterDataFromColor (std::string colorCode)
+    {
+        return state->fetchCharacterData(std::stoul(colorCode));
+    }
+    nlohmann::json ToState::fetchProvinceDataFromColor (std::string colorCode)
+    {
         return state->fetchProvinceData(std::stoul(colorCode));
-        //return state->fetchProvinceData(mapColorId[colorCode]);
     }
-    nlohmann::json ToState::fetchAllProvincesTopLiegeColor () {
-        return state->fetchAllProvincesTopLiegeColor();
+    nlohmann::json ToState::fetchAllProvincesKingdomColor ()
+    {
+        return state->fetchAllProvincesKingdomColor();
     }
-
-    nlohmann::json ToState::fetchTitleData (std::string id) {
-        return state->fetchTitleData(id);
+    nlohmann::json ToState::fetchKingdomData (std::string id)
+    {
+        return state->fetchKingdomData(id);
     }
 }

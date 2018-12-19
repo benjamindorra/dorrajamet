@@ -36,8 +36,8 @@ namespace render {
     nlohmann::json fetchAllProvincesData ();
     nlohmann::json fetchCharacterDataFromColor (std::string colorCode);
     nlohmann::json fetchProvinceDataFromColor (std::string colorCode);
-    nlohmann::json fetchAllProvincesTopLiegeColor ();
-    nlohmann::json fetchTitleData (std::string id);
+    nlohmann::json fetchAllProvincesKingdomColor ();
+    nlohmann::json fetchKingdomData (std::string id);
     // Setters and Getters
   };
 

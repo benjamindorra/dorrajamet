@@ -8,7 +8,7 @@ namespace state{
         /*
         std::string name;
         std::string dynastyName;
-        std::string mainTitle;
+        std::string kingdomId;
         int age;
         std::vector<std::string> traits;
         int diplomacy;
@@ -35,7 +35,7 @@ namespace state{
             id = j["id"].get<std::string>();
             name = j["name"].get<std::string>();
             dynastyName = j["dynastyName"].get<std::string>();
-            mainTitle = j["mainTitle"].get<std::string>();
+            kingdomId = j["kingdomId"].get<std::string>();
             age = j["age"].get<int>();
             if(j["traits"].is_array())
                 traits = j["traits"].get<std::vector<std::string>>();
@@ -128,10 +128,6 @@ namespace state{
             return false;
         return true;
     }
-    std::string Character::getMainTitle ()
-    {
-        return mainTitle;        
-    }
     std::string Character::getId ()
     {
         return id;
@@ -169,7 +165,7 @@ namespace state{
         heir["id"] = id + "-heir";
         heir["name"] = name + " I";
         heir["dynastyName"] = dynastyName;
-        heir["mainTitle"] = mainTitle;
+        heir["kingdomId"] = kingdomId;
         heir["age"] = age;
         heir["traits"] = traits;
         heir["diplomacy"] = diplomacy;
@@ -188,13 +184,17 @@ namespace state{
         if(it != claims.end())
             claims.erase(it);
     }
+    std::string Character::getKingdom ()
+    {
+        return kingdomId;
+    }
     nlohmann::json Character::toJson ()
     {
         nlohmann::json res;
         res["id"] = id;
         res["name"] = name;
         res["dynastyName"] = dynastyName;
-        res["mainTitle"] = mainTitle;
+        res["kingdomId"] = kingdomId;
         res["age"] = age;
         res["traits"] = traits;
         res["diplomacy"] = diplomacy;

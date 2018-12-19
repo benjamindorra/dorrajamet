@@ -123,14 +123,6 @@ namespace state
     {
         politics->updateCharactersData();
     }
-    std::string GameState::getProvinceOwner (std::string provinceId)
-    {
-        return politics->getProvinceOwner(provinceId);
-    }
-    std::string GameState::getCharacterTopLiege (std::string characterId)
-    {
-        return politics->getCharacterTopLiege(characterId);
-    }
     void GameState::updateProvinces()
     {
         // Check for new sieges
@@ -140,45 +132,33 @@ namespace state
         // Update prosperity and tax incomes
         gameMap->updateProvincesData();
     }
-    std::string GameState::getProvinceOccupant (std::string provinceId)
+    nlohmann::json GameState::fetchCharacterData (std::string id)
     {
-        return gameMap->getProvinceOccupant(provinceId);
+        return politics->fetchCharacterData(id);
     }
-    nlohmann::json GameState::fetchCharacterData (std::string characterId)
+    nlohmann::json GameState::fetchCharacterData (unsigned int colorCode)
     {
-        return politics->fetchCharacterData(characterId);
+        return fetchCharacterData(gameMap->getProvinceId(colorCode));
     }
-    nlohmann::json GameState::fetchAllCharactersData ()
+    nlohmann::json GameState::fetchProvinceData (std::string id)
     {
-        return politics->fetchAllCharactersData();
+        return gameMap->fetchProvinceData(id);
     }
-    nlohmann::json GameState::fetchProvinceData (int provinceColorCode)
+    nlohmann::json GameState::fetchProvinceData (unsigned int colorCode)
     {
-        return gameMap->fetchProvinceData(provinceColorCode);
+        return gameMap->fetchProvinceData(gameMap->getProvinceId(colorCode));
     }
-    nlohmann::json GameState::fetchProvinceData (std::string provinceId)
+    nlohmann::json GameState::fetchKingdomData (std::string id)
     {
-        return gameMap->fetchProvinceData(provinceId);
+        return politics->fetchKingdomData(id);
     }
-    nlohmann::json GameState::fetchAllProvincesData ()
+    nlohmann::json GameState::fetchKingdomData (unsigned int colorCode)
     {
-        return gameMap->fetchAllProvincesData();
+        return politics->fetchKingdomData(gameMap->getProvinceId(colorCode));
     }
-    nlohmann::json GameState::fetchProvinceOwnerData (int provinceColorCode)
+    nlohmann::json GameState::fetchArmyData (std::string id)
     {
-        auto provinceId = gameMap->getProvinceId(provinceColorCode);
-        if(provinceId == "sea")
-        {
-            nlohmann::json j;
-            j = "sea";
-            return j;
-        }
-        auto ownerId = politics->getProvinceOwner(provinceId);
-        return politics->fetchCharacterData(ownerId);
-    }
-    nlohmann::json GameState::fetchArmyData (std::string armyId)
-    {
-        return gameMap->fetchArmyData(armyId);
+        return gameMap->fetchArmyData(id);
     }
     nlohmann::json GameState::fetchAllArmiesData ()
     {
@@ -195,7 +175,11 @@ namespace state
             res.push_back(player.toJson());
         return res;
     }
-    nlohmann::json GameState::fetchAllProvincesTopLiegeColor ()
+    nlohmann::json GameState::fetchAllProvincesData ()
+    {
+        return gameMap->fetchAllProvincesData();
+    }
+    nlohmann::json GameState::fetchAllProvincesKingdomColor ()
     {
         auto provinces = gameMap->fetchAllProvincesData();
         nlohmann::json res = nlohmann::json::array(), obj;
@@ -204,15 +188,10 @@ namespace state
             obj["provinceId"] = it.value()["id"].get<std::string>();
             if(obj["provinceId"] != "sea")
             {
-                auto owner = this->getProvinceOwner(obj["provinceId"]);
-                auto topLiegeTitle = this->getCharacterTopLiege(owner);
-                obj["color"] = this->politics->getTitleColor(topLiegeTitle);
+                obj["color"] = this->politics->getKingdomColor(it.value()["kingdomId"]);
                 res.push_back(obj);
             }
         }
         return res;
-    }
-    nlohmann::json GameState::fetchTitleData (std::string titleId) {
-        return politics->fetchTitleData(titleId);
     }
 }

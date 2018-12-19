@@ -21,8 +21,6 @@ namespace state {
     // Attributes
   private:
     std::map<std::string, Character> characters;
-    /// opinions["chara_0001"]["chara_0002"] contains the -100 to +100 opinion score of chara_0001 about chara_0002
-    std::map<std::string, std::map<std::string, int>> opinions;
     Politics * parent;
     // Operations
   public:
@@ -32,14 +30,12 @@ namespace state {
     void setParent (Politics * parent);
     Character * operator[] (const char * a);
     Character * operator[] (const std::string a);
-    int getOpinion (std::string sourceCharacter, std::string targetCharacter);
     bool checkConsistency ();
     void debug ();
     std::string getMainTitle (std::string characterId);
     void changeScoreBy (std::string characterId, int amount);
-    void removeClaim (std::string characterId, std::string titleId);
+    void removeClaim (std::string characterId, std::string provinceId);
     void updateCharactersData ();
-    std::pair<int, int> updateCharacterRecursively (std::string characterId);
     nlohmann::json fetchCharacterData (std::string characterId);
     nlohmann::json fetchAllCharactersData ();
     // Setters and Getters

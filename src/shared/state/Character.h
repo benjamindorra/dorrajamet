@@ -20,7 +20,7 @@ namespace state {
     std::string id;
     std::string name;
     std::string dynastyName;
-    std::string mainTitle;
+    std::string kingdomId;
     /// In turns number
     int age;
     std::vector<std::string> traits;
@@ -45,15 +45,15 @@ namespace state {
     void debug ();
     bool checkConsistency ();
     std::string getId ();
-    std::string getMainTitle ();
     int getPrestige ();
     void addGold (int amount);
     void addPrestige (int amount);
     /// returns true if the character dies
     bool ageUp ();
-    nlohmann::json toJson ();
     Character generateHeir ();
-    void removeClaim (std::string titleId);
+    void removeClaim (std::string provinceId);
+    std::string getKingdom ();
+    nlohmann::json toJson ();
     // Setters and Getters
   };
 

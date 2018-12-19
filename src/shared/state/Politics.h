@@ -44,21 +44,14 @@ namespace state {
     int computeCharacterGold (std::string characterId);
     int computeCharacterPrestige (std::string characterId);
     bool checkWarStatus (std::string characterA, std::string characterB);
-    std::string getProvinceOwner (std::string provinceId);
-    std::string getCharacterTopLiege (std::string characterId);
-    std::vector<std::string> getCharacterDirectVassals (std::string characterId);
-    std::vector<std::string> getCharacterAllVassals (std::string characterId);
-    std::vector<std::string> getCharacterAllTitles (std::string characterId);
-    unsigned int getTitleColor (std::string titleId);
-    void transferTitle (std::string character_from, std::string character_to, std::string titleId);
-    void transferAllTitles (std::string character_from, std::string character_to);
+    void transferKingdom (std::string character_from, std::string character_to, std::string kingdomId);
     void handleCharacterDeath (std::string characterId, std::string heirId, int score);
     void updateWars ();
     void endWar (std::string warId);
+    nlohmann::json getKingdomColor (std::string kingdomId);
     nlohmann::json fetchCharacterData (std::string characterId);
-    nlohmann::json fetchAllCharactersData ();
+    nlohmann::json fetchKingdomData (std::string kingdomId);
     nlohmann::json fetchAllRelationsData ();
-    nlohmann::json fetchTitleData (std::string titleId);
     // Setters and Getters
   };
 

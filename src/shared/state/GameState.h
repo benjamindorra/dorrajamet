@@ -54,22 +54,19 @@ namespace state {
     void updateLevies ();
     void updateWars ();
     void updateCharactersData ();
-    std::string getProvinceOwner (std::string provinceId);
-    std::string getCharacterTopLiege (std::string characterId);
     void updateProvinces ();
-    std::string getProvinceOccupant (std::string provinceId);
-    nlohmann::json fetchCharacterData (std::string characterId);
-    nlohmann::json fetchAllCharactersData ();
-    nlohmann::json fetchProvinceData (int provinceColorCode);
-    nlohmann::json fetchProvinceData (std::string provinceId);
-    nlohmann::json fetchAllProvincesData ();
-    nlohmann::json fetchProvinceOwnerData (int provinceColorCode);
-    nlohmann::json fetchArmyData (std::string armyId);
+    nlohmann::json fetchCharacterData (std::string id);
+    nlohmann::json fetchCharacterData (unsigned int colorCode);
+    nlohmann::json fetchProvinceData (std::string id);
+    nlohmann::json fetchProvinceData (unsigned int colorCode);
+    nlohmann::json fetchKingdomData (std::string id);
+    nlohmann::json fetchKingdomData (unsigned int colorCode);
+    nlohmann::json fetchArmyData (std::string id);
     nlohmann::json fetchAllArmiesData ();
     nlohmann::json fetchAllRelationsData ();
     nlohmann::json fetchAllPlayersData ();
-    nlohmann::json fetchAllProvincesTopLiegeColor ();
-    nlohmann::json fetchTitleData (std::string titleId);
+    nlohmann::json fetchAllProvincesData ();
+    nlohmann::json fetchAllProvincesKingdomColor ();
     // Setters and Getters
   };
 

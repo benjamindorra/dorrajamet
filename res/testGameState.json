@@ -35,83 +35,31 @@
     "currentPlayer": 0,
     "currentTurn": 0,
     "politics": {
-        "titles":
+        "kingdoms":
         [
             {
-                "id": "k_of_numbers",
-                "name": "Kingdom of Numbers",
+                "id": "k_one",
+                "name": "Kingdom of One",
                 "holder": "chara_0001",
-                "titleColorCode": 215192060
+                "kingdomColorCode": 215192060
             },
             {
-                "id": "d_of_evens",
-                "name": "Duchy of Evens",
+                "id": "k_two",
+                "name": "Kingdom of Two",
                 "holder": "chara_0002",
-                "liege": "k_of_numbers",
-                "deJureLiege": "k_of_numbers",
-                "titleColorCode": 200056190
+                "kingdomColorCode": 200056190
             },
             {
-                "id": "d_of_odds",
-                "name": "Duchy of Odds",
-                "holder": "chara_0001",
-                "liege": "k_of_numbers",
-                "deJureLiege": "k_of_numbers",
-                "titleColorCode": 1517155255
-            },
-            {
-                "id": "c_of_one",
-                "name": "County of One",
-                "holder": "chara_0001",
-                "liege": "d_of_odds",
-                "deJureLiege": "d_of_odds",
-                "province": "prov_one",
-                "titleColorCode": 269541376154
-            },
-            {
-                "id": "c_of_two",
-                "name": "County of Two",
-                "holder": "chara_0002",
-                "liege": "d_of_evens",
-                "deJureLiege": "d_of_evens",
-                "province": "prov_two",
-                "titleColorCode": 375917772
-            },
-            {
-                "id": "c_of_three",
-                "name": "County of Three",
+                "id": "k_three",
+                "name": "Kingdom of Three",
                 "holder": "chara_0003",
-                "liege": "d_of_odds",
-                "deJureLiege": "d_of_odds",
-                "province": "prov_three",
-                "titleColorCode": 3766489088
+                "kingdomColorCode": 1517155255
             },
             {
-                "id": "c_of_four",
-                "name": "County of Four",
+                "id": "k_four",
+                "name": "Kingdom of Four",
                 "holder": "chara_0004",
-                "liege": "d_of_evens",
-                "deJureLiege": "d_of_evens",
-                "province": "prov_four",
-                "titleColorCode": 2148589568
-            },
-            {
-                "id": "c_of_five",
-                "name": "County of Five",
-                "holder": "chara_0003",
-                "liege": "d_of_odds",
-                "deJureLiege": "d_of_odds",
-                "province": "prov_five",
-                "titleColorCode": 3766517760
-            },
-            {
-                "id": "c_of_six",
-                "name": "County of Six",
-                "holder": "chara_0004",
-                "liege": "d_of_evens",
-                "deJureLiege": "d_of_evens",
-                "province": "prov_six",
-                "titleColorCode": 276481408
+                "kingdomColorCode": 269541376154
             }
         ],
         "characters":
@@ -122,7 +70,7 @@
                     "id": "chara_0001",
                     "name": "Rayleigh",
                     "dynastyName": "Jones",
-                    "mainTitle": "k_of_numbers",
+                    "kingdomId": "k_one",
                     "age": 22,
                     "traits": ["proud", "patient"],
                     "diplomacy": 12,
@@ -138,14 +86,14 @@
                     "id": "chara_0002",
                     "name": "Thomas",
                     "dynastyName": "Stuart",
-                    "mainTitle": "d_of_evens",
+                    "kingdomId": "k_two",
                     "age": 22,
                     "traits": ["lustful", "wroth"],
                     "diplomacy": 12,
                     "stewardship": 10,
                     "martial": 21,
                     "intrigue": 15,
-                    "claims": ["c_of_four"],
+                    "claims": ["prov_four"],
                     "alive": true,
                     "prestige": 200,
                     "gold": 500,
@@ -155,7 +103,7 @@
                     "id": "chara_0003",
                     "name": "Emile",
                     "dynastyName": "Collins",
-                    "mainTitle": "c_of_three",
+                    "kingdomId": "k_three",
                     "age": 22,
                     "traits": ["kind", "slothful"],
                     "diplomacy": 12,
@@ -171,7 +119,7 @@
                     "id": "chara_0004",
                     "name": "Jonas",
                     "dynastyName": "Miles",
-                    "mainTitle": "c_of_four",
+                    "kingdomId": "k_four",
                     "age": 22,
                     "traits": ["chaste", "greedy"],
                     "diplomacy": 12,
@@ -216,6 +164,7 @@
             {
                 "id": "prov_one",
                 "name": "Oneland",
+                "kingdomId": "k_one",
                 "colorCode": 65535,
                 "dispPosX": 225,
                 "dispPosY": 194,
@@ -242,6 +191,7 @@
             {
                 "id": "prov_two",
                 "name": "Twoland",
+                "kingdomId": "k_two",
                 "colorCode": 16777215,
                 "dispPosX": 372,
                 "dispPosY": 207,
@@ -268,6 +218,7 @@
             {
                 "id": "prov_three",
                 "name": "Threeland",
+                "kingdomId": "k_three",
                 "colorCode": 16711935,
                 "dispPosX": 217,
                 "dispPosY": 330,
@@ -294,6 +245,7 @@
             {
                 "id": "prov_four",
                 "name": "Fourland",
+                "kingdomId": "k_four",
                 "colorCode": 4294902015,
                 "dispPosX": 366,
                 "dispPosY": 341,
@@ -320,6 +272,7 @@
             {
                 "id": "prov_five",
                 "name": "Fiveland",
+                "kingdomId": "k_three",
                 "colorCode": 4278190335,
                 "dispPosX": 224,
                 "dispPosY": 461,
@@ -346,6 +299,7 @@
             {
                 "id": "prov_six",
                 "name": "Sixland",
+                "kingdomId": "k_four",
                 "colorCode": 4278255615,
                 "dispPosX": 354,
                 "dispPosY": 475,
@@ -372,6 +326,7 @@
             {
                 "id": "sea",
                 "name": "Black Sea",
+                "kingdomId": "k_none",
                 "colorCode": 255,
                 "dispPosX": 0,
                 "dispPosY": 0,

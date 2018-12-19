@@ -44,7 +44,7 @@ namespace render {
                 toDisplay = state->fetchCharacterData(causeId)["name"].get<std::string>()+" makes an alliance with "+state->fetchCharacterData(targetId)["name"].get<std::string>()+".";
                 break;
             case Claim:
-                toDisplay = state->fetchCharacterData(causeId)["name"].get<std::string>()+" claims "+state->fetchTitleData(targetId)["name"].get<std::string>()+".";
+                toDisplay = state->fetchCharacterData(causeId)["name"].get<std::string>()+" claims "+state->fetchProvinceData(targetId)["name"].get<std::string>()+".";
                 break;
             case Plot:
                 toDisplay = state->fetchCharacterData(causeId)["name"].get<std::string>()+" assassinated "+state->fetchCharacterData(targetId)["name"].get<std::string>()+" !";

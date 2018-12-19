@@ -21,7 +21,7 @@ namespace state
         try
         {
             json j = json::parse(strJson);
-            titles = Titles(j["titles"].dump());
+            titles = Titles(j["kingdoms"].dump());
             if(titles.checkConsistency())
                 std::cout << "Titles consistency check success\n\n\n";
             else
@@ -73,18 +73,19 @@ namespace state
     }
     int Politics::computeCharacterGold (std::string characterId)
     {
-        auto ownedProvinces = titles.getProvincesOf(characterId);
+        /*auto ownedProvinces = titles.getProvincesOf(characterId);
         int gold = 0;
         for(auto const& provinceId: ownedProvinces)
         {
             auto provData = parent->fetchProvinceData(provinceId);
             gold += provData["taxIncome"].get<int>();
         }
-        return gold;
+        return gold;*/
+        return 0;
     }
     int Politics::computeCharacterPrestige (std::string characterId)
     {
-        return titles.computeCharacterPrestige(characterId);
+        return 0;
     }
     bool Politics::checkWarStatus (std::string characterA, std::string characterB)
     {
@@ -93,50 +94,13 @@ namespace state
                 return relations[i].getType() == Relation::war;
         return false;
     }
-    std::string Politics::getProvinceOwner (std::string provinceId)
-    {
-        return titles.getProvinceOwner(provinceId);
-    }
-    std::string Politics::getCharacterTopLiege (std::string characterId)
-    {
-        auto mainTitle = characters.getMainTitle(characterId);
-        return titles.getTopLiege(mainTitle);
-    }
-    std::vector<std::string> Politics::getCharacterDirectVassals (std::string characterId)
-    {
-        std::vector<std::string> res;
-        auto ownedTitles = getCharacterAllTitles(characterId);
-        for(auto const& title: ownedTitles)
-        {
-            auto temp = titles.getTitleDirectVassals(title);
-            res.insert(res.end(), temp.begin(), temp.end());
-        }
-        return res;
-    }
-    std::vector<std::string> Politics::getCharacterAllTitles (std::string characterId)
-    {
-        return titles.getTitlesOf(characterId);
-    }
-    unsigned int Politics::getTitleColor (std::string titleId)
-    {
-        return titles.getTitleColor(titleId);
-    }
-    void Politics::transferTitle(std::string character_from, std::string character_to, std::string titleId)
-    {
-        titles.setTitleHolder(character_to, titleId);
-    }
-    void Politics::transferAllTitles (std::string character_from, std::string character_to)
-    {
-        for(auto const& e: getCharacterAllTitles(character_from))
-            transferTitle(character_from, character_to, e);
-    }
     void Politics::handleCharacterDeath (std::string characterId, std::string heirId, int score)
     {
         parent->updatePlayerCharacter(characterId, heirId, score);
     }
     void Politics::updateWars ()
     {
-        // For war in wars
+        /*// For war in wars
             // Get all provinces for each camp
             // Get percentage of occupied provinces for each camp
             // Compute and set warScore
@@ -168,11 +132,11 @@ namespace state
         }
         for(auto const& e: finishedWars)
             endWar(e);
-        
+        */
     }
     void Politics::endWar (std::string warId)
     {
-        auto attackers = wars[warId].getAttackerCamp();
+        /*auto attackers = wars[warId].getAttackerCamp();
         auto defenders = wars[warId].getDefenderCamp();
         auto title = wars[warId].getTargetTitle();
         auto claimant = wars[warId].getClaimantCharacter();
@@ -182,7 +146,7 @@ namespace state
                 characters.changeScoreBy(a, -40);
             for(auto const& a: defenders)
                 characters.changeScoreBy(a, 40);
-            transferTitle(titles.getHolder(title), claimant, title);
+            transferKingdom(titles.getOwner(title), claimant, title);
             characters.removeClaim(claimant, title);
         }
         else if(wars[warId].defenderWon())
@@ -222,26 +186,25 @@ namespace state
         }
         for(auto j: toPush)
             relations.push_back(Relation(j.dump()));
-        wars.erase(warId);
+        wars.erase(warId);*/
+    }
+    nlohmann::json Politics::getKingdomColor (std::string kingdomId)
+    {
+        return titles.getKingdomColor(kingdomId);
     }
     nlohmann::json Politics::fetchCharacterData (std::string characterId)
     {
         return characters.fetchCharacterData(characterId);
     }
-    nlohmann::json Politics::fetchAllCharactersData ()
+    nlohmann::json Politics::fetchKingdomData (std::string kingdomId)
     {
-        return characters.fetchAllCharactersData();
+        return titles.fetchKingdomData(kingdomId);
     }
     nlohmann::json Politics::fetchAllRelationsData ()
     {
         nlohmann::json res = nlohmann::json::array();
-        for(auto e: relations)
-            res.push_back(e.toJson());
+        for(auto relation: relations)
+            res.push_back(relation.toJson());
         return res;
-    }
-
-    nlohmann::json Politics::fetchTitleData (std::string titleId)
-    {
-        return titles.fetchTitleData(titleId);
     }
 }

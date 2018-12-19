@@ -3,17 +3,18 @@
 #define STATE__KINGDOM__H
 
 #include <string>
-
-namespace state {
-  class Title;
-}
-
-#include "Title.h"
+#include <json.hpp>
 
 namespace state {
 
   /// class Kingdom - 
-  class Kingdom : public state::Title {
+  class Kingdom {
+    // Attributes
+  private:
+    std::string id;
+    std::string name;
+    std::string holder;
+    unsigned int kingdomColorCode;
     // Operations
   public:
     Kingdom ();
@@ -21,8 +22,8 @@ namespace state {
     ~Kingdom ();
     void debug ();
     bool checkConsistency ();
-    std::string getLiege ();
-    std::string getDeJureLiege ();
+    unsigned int getColorCode ();
+    nlohmann::json toJson ();
     // Setters and Getters
   };
 
