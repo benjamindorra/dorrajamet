@@ -202,14 +202,18 @@ namespace render {
             throw std::runtime_error("Error refreshing the armies");
         }
         try {
+            //always reloads the colors if the colors type changed
+            static Types lastType;
             static int slowDown = 0;
             slowDown = (slowDown+1)%6;
             if ((slowDown == 1)) {
                 if (type == Types::Kingdoms){
-                    updateColorsKingdoms();
+                    updateColorsKingdoms(type !=lastType);
+                    lastType = type;
                 }
                 else if (type == Types::Relations){
-                    updateColorsRelations();
+                    updateColorsRelations(type !=lastType);
+                    lastType = type;
                 }
             }
         }
@@ -257,9 +261,8 @@ namespace render {
             }
         }
     }
-    void ViewMap::updateColorsRelations() {
+    void ViewMap::updateColorsRelations(bool updateAnyway) {
         // update the colors of the map (green : yours, blue : allies, red : enemies, white : neutral)
-        
         using json = nlohmann::json;
         
         //player's character
@@ -330,7 +333,7 @@ namespace render {
                 }
             }
         }
-        if (changeColors) {
+        if (changeColors | updateAnyway) {
             //colors the texture accordingly
             sf::Image modMap = map.getTexture().copyToImage();
             int modHeight = (int)modMap.getSize().y;
@@ -400,7 +403,7 @@ namespace render {
         }
     }
 
-    void ViewMap::updateColorsKingdoms() {
+    void ViewMap::updateColorsKingdoms(bool updateAnyway) {
         //currently displayed colors
         static std::map<std::string, unsigned int> colorsCache;
         // update the colors of the map with one color for each kingdom
@@ -418,7 +421,7 @@ namespace render {
             }
         }
         // colors the texture accordingly
-        if (changeColors){
+        if (changeColors | updateAnyway){
             sf::Image modMap = map.getTexture().copyToImage();
             int modHeight = (int)modMap.getSize().y;
             int modWidth = (int)modMap.getSize().x;
