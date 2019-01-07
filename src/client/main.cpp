@@ -18,8 +18,12 @@ void testRender(state::GameState * testState, engine::EngineCore * testEngine){
     render::Render render1(1280,720);
     //init the render
     render1.init(testState, testEngine);
-    // start the renderloop
-    render1.renderLoop();
+    while (render1.getWindow()->isOpen())
+    {
+        // start the renderloop
+        render1.renderLoop();
+        testEngine->mainLoop();
+    }
 }
 
 int main(int argc, char ** argv)
@@ -41,6 +45,7 @@ int main(int argc, char ** argv)
             std::queue<engine::Command> commands;
             engine::EngineCore testEngine(&testState, &commands);
             testRender(&testState, &testEngine);
+         
         }
         else if(command == "engine")
         {
