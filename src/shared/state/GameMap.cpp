@@ -407,4 +407,8 @@ namespace state
     {
         return parent->fetchCharacterData(characterId);
     }
+    std::string GameMap::getArmyOwner (std::string armyId)
+    {
+        return armies[armyId].getOwnerCharacter();
+    }
 }

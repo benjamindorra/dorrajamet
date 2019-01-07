@@ -140,6 +140,10 @@ namespace state
     {
         return politics->getCharacterOfKingdom(kingdomId);
     }
+    std::string GameState::getArmyOwner (std::string armyId)
+    {
+        return gameMap->getArmyOwner(armyId);
+    }
     nlohmann::json GameState::fetchCharacterData (std::string id)
     {
         return politics->fetchCharacterData(id);
@@ -204,5 +208,13 @@ namespace state
             }
         }
         return res;
+    }
+    std::string GameState::getCurrentPlayer ()
+    {
+        return players[currentPlayer].getId();
+    }
+    std::string GameState::getCurrentPlayerCharacter ()
+    {
+        return players[currentPlayer].getCharacter();
     }
 }
