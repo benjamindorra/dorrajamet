@@ -67,8 +67,10 @@ namespace render {
     }
 
     void ShowArmies::deleteArmies(){
-        for (ShowArmy * army : armies) {
-            delete army;
+        for (int i=0;i<armies.size();i++) {
+            std::cout<<armies[i]<<std::endl;
+            delete armies[i];
+            armies.erase(armies.begin()+i);
         }
     }
 }
