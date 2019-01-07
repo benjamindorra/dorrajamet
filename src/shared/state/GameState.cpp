@@ -146,8 +146,11 @@ namespace state
     }
     nlohmann::json GameState::fetchCharacterData (unsigned int colorCode)
     {
-        return fetchCharacterData(gameMap->getProvinceId(colorCode));
+        std::string kingdomId = gameMap->getProvinceKingdomId(colorCode);
+        std::string characterId =  politics->getCharacterOfKingdom(kingdomId);
+        return fetchCharacterData(characterId);
     }
+
     nlohmann::json GameState::fetchProvinceData (std::string id)
     {
         return gameMap->fetchProvinceData(id);

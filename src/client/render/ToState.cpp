@@ -51,6 +51,7 @@ namespace render {
     }
     nlohmann::json ToState::fetchAllProvincesData ()
     {
+        //std::cout << state->fetchAllProvincesData()[0]["dispPosX"] << " " << state->fetchAllProvincesData()[0]["dispPosY"] << std::endl;
         return state->fetchAllProvincesData();
     }
     nlohmann::json ToState::fetchCharacterDataFromColor (std::string colorCode)

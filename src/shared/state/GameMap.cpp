@@ -82,11 +82,24 @@ namespace state
     }
     std::string GameMap::getArmyPosition (std::string armyId)
     {
-        return armies[armyId].getCurrentProvince();
+        
+        try {
+            return armies.at(armyId).getCurrentProvince();
+        }
+        catch (const std::exception& e) {
+            std::cerr << e.what()<<std::endl;
+            throw std::runtime_error("Unknown army in GameMap::getArmyPosition");
+        }
     }
     void GameMap::setArmyOrder (std::string armyId, nlohmann::json orderJson)
     {
-        armies[armyId].setOrders(orderJson);
+        try {
+            armies.at(armyId).setOrders(orderJson);
+        }
+        catch (const std::exception& e) {
+            std::cerr << e.what()<<std::endl;
+            throw std::runtime_error("Unknown army in GameMap::setArmyOrder");
+        }
     }
     void GameMap::updateArmiesOrders ()
     {
@@ -101,7 +114,13 @@ namespace state
     }
     Army * GameMap::getArmy (std::string idArmy)
     {
-        return &armies[idArmy];
+        try {
+            return &armies.at(idArmy);
+        }
+        catch (const std::exception& e) {
+            std::cerr << e.what()<<std::endl;
+            throw std::runtime_error("Unknown army in GameMap::getArmy");
+        }
     }
     int GameMap::getLevyMen (std::string idProvince)
     {
@@ -306,7 +325,13 @@ namespace state
     }
     bool GameMap::checkForOngoingSiege (std::string provinceId)
     {
-        return provinces[provinceId].isSieged();
+        try {
+            return provinces.at(provinceId).isSieged();
+        }
+        catch (const std::exception& e) {
+            std::cerr << e.what()<<std::endl;
+            throw std::runtime_error("Unknown province in GameMap::checkForOngoingSiege");
+        }
     }
     void GameMap::updateSieges ()
     {
@@ -329,13 +354,40 @@ namespace state
                 return province.first;
         throw std::runtime_error("Error: unknown province color code: " + colorCode);
     }
+
+    std::string GameMap::getProvinceKingdomId(unsigned int colorCode) {
+        return getProvinceKingdomId(getProvinceId(colorCode));
+    }
+    
+    std::string GameMap::getProvinceKingdomId(std::string provinceId) {
+        try {
+            return provinces.at(provinceId).getKingdom();
+        }
+        catch (const std::exception& e) {
+            std::cerr << e.what()<<std::endl;
+            throw std::runtime_error("Error: unknown province in GameMap::getProvinceKingdomId");
+        }
+    }
+
     nlohmann::json GameMap::fetchProvinceData (std::string provinceId)
     {
-        return provinces[provinceId].toJson();
+        try {
+            return provinces.at(provinceId).toJson();
+        }
+        catch (const std::exception& e) {
+            std::cerr << e.what()<<std::endl;
+            throw std::runtime_error("Unknown province in GameMap::fetchProvinceData");
+        }
     }
     nlohmann::json GameMap::fetchArmyData (std::string armyId)
     {
-        return armies[armyId].toJson();
+        try {
+            return armies.at(armyId).toJson();
+        }
+        catch (const std::exception& e) {
+            std::cerr << e.what()<<std::endl;
+            throw std::runtime_error("Unknown army in GameMap::fetchArmyData");
+        }
     }
     nlohmann::json GameMap::fetchAllArmiesData ()
     {

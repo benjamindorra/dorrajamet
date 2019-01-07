@@ -23,11 +23,10 @@ namespace engine
     }
     int EngineCore::mainLoop ()
     {
-        while(true)
+        while(!commands->empty())
         {
             processCommand(commands->front());
             commands->pop();
-            
         }
         return 0;
     }

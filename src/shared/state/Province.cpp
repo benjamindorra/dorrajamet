@@ -92,6 +92,8 @@ namespace state
         << "\nColor Code: " << colorCode
         << "\nBase tax income: " << baseTaxIncome
         << "\nBase levy men: " << baseLevy.getMen()
+        << "\nDispPosX: " << dispPosX
+        << "\nDispPosY: " << dispPosY
         << std::endl;
     }
     int Province::getLevyMen()
@@ -235,6 +237,7 @@ namespace state
     {
         return controlledBy;
     }
+
     nlohmann::json Province::toJson ()
     {
         nlohmann::json j;
