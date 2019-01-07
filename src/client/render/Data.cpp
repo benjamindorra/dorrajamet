@@ -124,7 +124,7 @@ namespace render {
                 json j = state->fetchArmyData(this->id);
                 this->data = "Owner: "+j["ownerCharacter"].dump()+"\n"+"Levies: "+j["levies"].dump()+"\n"
                 +"Current province: "+j["currentProvince"].dump()+"\n"+"Current battle: "+j["currentBattle"].dump()+"\n"
-                +"Orders: "+j["jOrders"].dump()+"\n";
+                +"Orders: "+j["orders"].dump()+"\n";
             }
             catch(const std::exception& e) {
                 std::cerr << e.what() <<std::endl;

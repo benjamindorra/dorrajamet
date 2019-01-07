@@ -39,6 +39,7 @@ namespace engine
         switch(command.getType())
         {
             case Command::moveArmy:
+                gameState->debug();
                 using json = nlohmann::json;
                 try
                 {
@@ -46,12 +47,14 @@ namespace engine
                     auto id = j["id"].get<std::string>();
                     auto dest = j["dest"].get<std::string>();
                     gameState->setArmyOrder(id, dest);
+                    std::cout<<"Orders given to army"<<std::endl;
                 }
                 catch(const std::exception& e)
                 {
                     std::cerr << e.what() << std::endl;
                     throw std::runtime_error("Error: could not parse command arguments\n");
                 }
+                gameState->debug();
                 break;
             case Command::ActionButton:
 
