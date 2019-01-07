@@ -259,7 +259,9 @@ namespace render {
     }
     void ViewMap::updateColorsRelations() {
         // update the colors of the map (green : yours, blue : allies, red : enemies, white : neutral)
+        
         using json = nlohmann::json;
+        
         //player's character
         std::string playerChar = "chara_0001";
         //lists all relations of the player's character
@@ -271,24 +273,19 @@ namespace render {
                 relationsList.push_back(it.value());
             }
         }
+        //currently displayed colors
+        static std::map<std::string, unsigned int> colorsCache;
         // test if the colors need to be changed
-        sf::Image modMap = map.getTexture().copyToImage();
         unsigned int colorCode;
         unsigned int color;
         bool changeColors = false;
         bool relationExists;
         json provinces = state->fetchAllProvincesData();
         for (json::iterator it=provinces.begin(); it !=provinces.end(); it++){
-            try {
-                color = modMap.getPixel(it.value()["dispPosX"],it.value()["dispPosY"]).toInteger();
-            }
-            catch(const std::exception& e){
-                std::cerr << e.what() <<std::endl;
-                throw std::runtime_error("Province position out of the map");
-            }
             colorCode = it.value()["colorCode"];
             if (colorCode != 255) {
                 json character = state->fetchCharacterDataFromColor(std::to_string(colorCode));
+                color = colorsCache[character["id"]];
                 if(character["id"]==playerChar){
                     if(sf::Color(0,255,0).toInteger()!=color) changeColors=true;
                 }
@@ -335,16 +332,16 @@ namespace render {
         }
         if (changeColors) {
             //colors the texture accordingly
+            sf::Image modMap = map.getTexture().copyToImage();
             int modHeight = (int)modMap.getSize().y;
             int modWidth = (int)modMap.getSize().x;
             for (int y=0;y<modHeight; y++) {
                 for (int x=0; x<modWidth; x++) {
                     if (modMap.getPixel(x,y).toInteger()!=255) {
                         colorCode = mainRender->getColorCode(x,y);
-                        //std::cout<<state->fetchCharacterDataFromColor(std::to_string(colorCode))["name"]<<std::endl;
-                        //if(state->fetchCharacterDataFromColor(std::to_string(colorCode)) == "sea") {}
                         json character = state->fetchCharacterDataFromColor(std::to_string(colorCode));
                         if(character["id"]==playerChar){
+                            colorsCache[playerChar]=sf::Color(0,255,0).toInteger();
                             modMap.setPixel(x,y, sf::Color(0,255,0));
                         }
                         else{
@@ -354,22 +351,27 @@ namespace render {
                                     switch(r["type"].get<int>()){
                                         case 0:
                                             //type = non_aggression;
+                                            colorsCache[character["id"]]=sf::Color(0,0,127).toInteger();
                                             modMap.setPixel(x,y, sf::Color(0,0,127));
                                             break;
                                         case 1:
                                             //type = alliance;
+                                            colorsCache[character["id"]]=sf::Color(0,0,200).toInteger();
                                             modMap.setPixel(x,y, sf::Color(0,0,200));
                                             break;
                                         case 2:
                                             //type = friendship;
+                                            colorsCache[character["id"]]=sf::Color(0,0,255).toInteger();
                                             modMap.setPixel(x,y, sf::Color(0,0,255));
                                             break;
                                         case 3:
                                             //type = rivalry;
+                                            colorsCache[character["id"]]=sf::Color(127,0,0).toInteger();
                                             modMap.setPixel(x,y, sf::Color(127,0,0));
                                             break;
                                         case 4:
                                             //type = war;
+                                            colorsCache[character["id"]]=sf::Color(255,0,0).toInteger();
                                             modMap.setPixel(x,y, sf::Color(255,0,0));
                                             break;
                                         default:
@@ -380,9 +382,10 @@ namespace render {
                                     break;
                                 }
                             }
-                            //if there is no relation between player's character and the province
+                             //if there is no relation between player's character and the province
                             //owner, color the province in white
                             if (not relationExists) {
+                                colorsCache[character["id"]]=sf::Color(255,255,255).toInteger();
                                 modMap.setPixel(x,y, sf::Color(255,255,255));
                             }
                         }
@@ -398,39 +401,28 @@ namespace render {
     }
 
     void ViewMap::updateColorsKingdoms() {
+        //currently displayed colors
+        static std::map<std::string, unsigned int> colorsCache;
         // update the colors of the map with one color for each kingdom
         using json = nlohmann::json;
         //lists all the provinces and their colors
         json provinces = state->fetchAllProvincesKingdomColor();
         // check if the colors need to be changed
-        sf::Image modMap = map.getTexture().copyToImage();
-        unsigned int color;
         bool changeColors = false;
         json provincesData = state->fetchAllProvincesData();
         for (json::iterator it=provincesData.begin(); it !=provincesData.end(); it++){
             if (it.value()["colorCode"]!=255) {
-                try {
-                    color = modMap.getPixel(it.value()["dispPosX"],it.value()["dispPosY"]).toInteger();
-                }
-                catch(const std::exception& e){
-                    std::cerr << e.what() <<std::endl;
-                    throw std::runtime_error("Province position out of the map");
-                }
-                for (json::iterator p=provinces.begin(); p!=provinces.end(); ++p) {
-                    if (p.value()["provinceId"]==it.value()["id"]){
-                        if (p.value()["color"]!=color) {
-                            changeColors=true;
-                            break;
-                        } 
-                    }
+                if (colorsCache[it.value()["id"]] != it.value()["colorCode"]){
+                    changeColors=true;
                 }
             }
         }
         // colors the texture accordingly
-        int modHeight = (int)modMap.getSize().y;
-        int modWidth = (int)modMap.getSize().x;
-        unsigned int colorCode;
         if (changeColors){
+            sf::Image modMap = map.getTexture().copyToImage();
+            int modHeight = (int)modMap.getSize().y;
+            int modWidth = (int)modMap.getSize().x;
+            unsigned int colorCode;
             for (int y=0;y<modHeight; y++) {
                 for (int x=0; x<modWidth; x++) {
                     if (modMap.getPixel(x,y).toInteger()!=255) {
@@ -438,6 +430,7 @@ namespace render {
                         json provinceId = state->fetchProvinceDataFromColor(std::to_string(colorCode))["id"];
                         for (json::iterator p=provinces.begin(); p!=provinces.end(); ++p) {
                             if (p.value()["provinceId"]==provinceId){
+                                colorsCache[provinceId]=colorCode;
                                 modMap.setPixel(x,y, sf::Color(p.value()["color"]));
                                 break;
                             }
