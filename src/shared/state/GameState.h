@@ -57,6 +57,8 @@ namespace state {
     void updateProvinces ();
     std::string getKingdomOfCharacter (std::string characterId);
     std::string getKingdomOwner (std::string kingdomId);
+    std::string getArmyOwner (std::string armyId);
+    bool canArmyMove (std::string armyId);
     nlohmann::json fetchCharacterData (std::string id);
     nlohmann::json fetchCharacterData (unsigned int colorCode);
     nlohmann::json fetchProvinceData (std::string id);
@@ -69,6 +71,8 @@ namespace state {
     nlohmann::json fetchAllPlayersData ();
     nlohmann::json fetchAllProvincesData ();
     nlohmann::json fetchAllProvincesKingdomColor ();
+    std::string getCurrentPlayer ();
+    std::string getCurrentPlayerCharacter ();
     // Setters and Getters
   };
 

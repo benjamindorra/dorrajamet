@@ -407,4 +407,12 @@ namespace state
     {
         return parent->fetchCharacterData(characterId);
     }
+    std::string GameMap::getArmyOwner (std::string armyId)
+    {
+        return armies[armyId].getOwnerCharacter();
+    }
+    bool GameMap::canArmyMove (std::string armyId)
+    {
+        return armies[armyId].canMove();
+    }
 }

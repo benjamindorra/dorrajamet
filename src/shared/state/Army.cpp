@@ -144,6 +144,10 @@ namespace state
     {
         return (std::find(levies.begin(), levies.end(), levyProvinceId) != levies.end());
     }
+    bool Army::canMove ()
+    {
+        return !isInBattle();
+    }
     nlohmann::json Army::toJson ()
     {
         nlohmann::json j;

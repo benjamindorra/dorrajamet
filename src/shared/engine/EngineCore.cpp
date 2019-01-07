@@ -46,8 +46,15 @@ namespace engine
                     json j = json::parse(command.getArgument());
                     auto id = j["id"].get<std::string>();
                     auto dest = j["dest"].get<std::string>();
-                    gameState->setArmyOrder(id, dest);
-                    std::cout<<"Orders given to army"<<std::endl;
+                    auto currentCharacter = gameState->getCurrentPlayerCharacter();
+                    auto armyOwner = gameState->getArmyOwner(id);
+                    if(currentCharacter == armyOwner)
+                    {
+                        gameState->setArmyOrder(id, dest);
+                        std::cout<<"Orders given to army"<<std::endl;
+                    }
+                    else
+                        std::cout << "Can't give the order\n";
                 }
                 catch(const std::exception& e)
                 {
@@ -79,8 +86,8 @@ namespace engine
         gameState->clearFinishedBattles();
         gameState->clearDeadArmies();
         gameState->updateProvinces();
-        /*gameState->updateLevies();
-        gameState->updateWars();
+        gameState->updateLevies();
+        /*gameState->updateWars();
         gameState->updateCharactersData();*/
         std::cout << "End turn procedure finished\n";
         

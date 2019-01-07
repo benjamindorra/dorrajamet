@@ -67,7 +67,12 @@ namespace render {
     }
 
     void ShowArmies::deleteArmies(){
+<<<<<<< HEAD
         for (long unsigned int i=0;i<armies.size();i++) {
+=======
+        for (unsigned int i=0;i<armies.size();i++) {
+            std::cout<<armies[i]<<std::endl;
+>>>>>>> ce4470f8b9e4081667d9005ccf738bee60c5b961
             delete armies[i];
             armies.erase(armies.begin()+i);
         }
