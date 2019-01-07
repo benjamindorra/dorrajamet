@@ -411,4 +411,8 @@ namespace state
     {
         return armies[armyId].getOwnerCharacter();
     }
+    bool GameMap::canArmyMove (std::string armyId)
+    {
+        return armies[armyId].canMove();
+    }
 }

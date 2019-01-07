@@ -144,6 +144,10 @@ namespace state
     {
         return gameMap->getArmyOwner(armyId);
     }
+    bool GameState::canArmyMove (std::string armyId)
+    {
+        return gameMap->canArmyMove(armyId);
+    }
     nlohmann::json GameState::fetchCharacterData (std::string id)
     {
         return politics->fetchCharacterData(id);
