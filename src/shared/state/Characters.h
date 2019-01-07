@@ -35,6 +35,7 @@ namespace state {
     std::string getMainTitle (std::string characterId);
     void changeScoreBy (std::string characterId, int amount);
     void removeClaim (std::string characterId, std::string provinceId);
+    std::string getKingdomOfCharacter (std::string characterId);
     void updateCharactersData ();
     nlohmann::json fetchCharacterData (std::string characterId);
     nlohmann::json fetchAllCharactersData ();

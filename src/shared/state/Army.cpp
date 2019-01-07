@@ -63,7 +63,12 @@ namespace state
     {
         std::cout << "Army debug\nCurrentProvince: " << currentProvince << "\nCurrentBattle: " << currentBattle << "\nLevies: \n";
         for(auto levy : levies)
-            std::cout << " - Province: " << levy << std::endl;
+        {
+            std::cout << " - Province: " << levy << ": " << parent->getLevyMen(levy) << " men" << std::endl;
+        }
+        std::cout << "Orders:\n";
+        for(auto e: orders)
+            std::cout << e.toJson().dump(2) << std::endl;
     }
     std::string Army::getId ()
     {
@@ -102,15 +107,14 @@ namespace state
             return;
         auto travelOrder = orders[0];
         if(travelOrder.nextStep())
-        {
             orders.clear();
-        }
     }
     int Army::getMen()
     {
         int res = 0;
         for(auto const& levy: levies)
         {
+            std::cout << "Levy of province: " << levy << " has still " << parent->getLevyMen(levy) << std::endl;
             res += parent->getLevyMen(levy);
         }
         return res;
@@ -130,7 +134,7 @@ namespace state
     }
     bool Army::isDead ()
     {
-        return(getMen());
+        return(getMen() <= 0);
     }
     void Army::disband ()
     {

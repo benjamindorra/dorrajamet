@@ -50,7 +50,7 @@ namespace state
     }
     void GameState::debug()
     {
-        this->politics->debug();
+        //this->politics->debug();
         //this->ressources.debug();
         this->gameMap->debug();
     }
@@ -131,6 +131,14 @@ namespace state
         gameMap->updateSieges();
         // Update prosperity and tax incomes
         gameMap->updateProvincesData();
+    }
+    std::string GameState::getKingdomOfCharacter (std::string characterId)
+    {
+        return politics->getKingdomOfCharacter(characterId);
+    }
+    std::string GameState::getKingdomOwner (std::string kingdomId)
+    {
+        return politics->getCharacterOfKingdom(kingdomId);
     }
     nlohmann::json GameState::fetchCharacterData (std::string id)
     {

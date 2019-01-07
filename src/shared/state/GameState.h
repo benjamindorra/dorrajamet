@@ -55,6 +55,8 @@ namespace state {
     void updateWars ();
     void updateCharactersData ();
     void updateProvinces ();
+    std::string getKingdomOfCharacter (std::string characterId);
+    std::string getKingdomOwner (std::string kingdomId);
     nlohmann::json fetchCharacterData (std::string id);
     nlohmann::json fetchCharacterData (unsigned int colorCode);
     nlohmann::json fetchProvinceData (std::string id);

@@ -50,8 +50,13 @@ int main(int argc, char ** argv)
             
             //std::cout << testState.fetchAllProvincesTopLiegeColor().dump(2);
             std::cout << "\n\n\n";
+            testState.setArmyOrder("army_chara0001_xx", "prov_three");
+            testState.debug();
+            std::cout << "\n\n\n";
+            
             testEngine.endTurn();
             testState.debug();
+
             //std::cout << testState.fetchAllProvincesTopLiegeColor().dump(2);
 
         }

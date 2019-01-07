@@ -51,6 +51,10 @@ namespace state
     {
         return kingdomColorCode;
     }
+    std::string Kingdom::getHolder ()
+    {
+        return holder;
+    }
     nlohmann::json Kingdom::toJson ()
     {
         nlohmann::json j;

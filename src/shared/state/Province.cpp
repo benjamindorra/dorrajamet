@@ -146,16 +146,16 @@ namespace state
     }
     void Province::updateController()
     {
-        /*if(siegeStatus < 100)
+        if(siegeStatus < 100)
             return;
-        auto siegingArmyOwner = parent->getArmy(siegingArmy)->getOwnerCharacter();
-        auto provinceOwner = parent->getProvinceOwner(id);
+        auto siegingArmyOwner = parent->getKingdomOfCharacter(parent->getArmy(siegingArmy)->getOwnerCharacter());
+        auto provinceOwner = kingdomId;
         if(siegingArmyOwner == provinceOwner)
             controlledBy = "none";
         else
             controlledBy = siegingArmyOwner;
         siegeStatus = 0;
-        siegingArmy = "none";*/
+        siegingArmy = "none";
     }
     void Province::updateSiege()
     {
@@ -180,9 +180,17 @@ namespace state
     {
         return controlledBy;
     }
+    std::string Province::getKingdom ()
+    {
+        return kingdomId;
+    }
+    void Province::setKingdom (std::string kingdomId)
+    {
+        this->kingdomId = kingdomId;
+    }
     void Province::updateData()
     {
-        /*if(id=="sea")
+        if(id=="sea")
             return;
         // Sieged provinces lose prosperity
         if(isSieged())
@@ -198,7 +206,7 @@ namespace state
             men *= (0.1+(100-prosperity)*0.009);
         else
             men *= (1+prosperity*0.005);
-        auto data = parent->fetchCharacterData(parent->getProvinceOwner(id));
+        auto data = parent->fetchCharacterData(parent->getKingdomOwner(kingdomId));
         auto martial = data["martial"].get<int>();
         if(martial <= 10)
             men *= (0.1 + martial * 0.09);
@@ -221,7 +229,7 @@ namespace state
         if(isSieged())
             taxIncome = baseTaxIncome * 0.5;
         else if(isCaptured())
-            taxIncome = 0;*/
+            taxIncome = 0;
     }
     std::string Province::getOccupant ()
     {

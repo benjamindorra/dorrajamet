@@ -55,6 +55,10 @@ namespace state
     {
         return kingdoms[kingdomId].getColorCode();
     }
+    std::string Titles::getKingdomOwner (std::string kingdomId)
+    {
+        return kingdoms[kingdomId].getHolder();
+    }
     nlohmann::json Titles::fetchKingdomData (std::string kingdomId)
     {
         return kingdoms[kingdomId].toJson();

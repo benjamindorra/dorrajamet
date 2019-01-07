@@ -73,9 +73,12 @@ namespace state
     }
     void GameMap::debug ()
     {
-        std::cout << "TOTAL PROVINCES COUNT: " << provinces.size() << std::endl;
+        /*std::cout << "TOTAL PROVINCES COUNT: " << provinces.size() << std::endl;
         for(auto const& e: provinces)
-            provinces[e.first].debug();
+            provinces[e.first].debug();*/
+        std::cout << "ARMIES(" << armies.size() << ")\n\n";
+        for(auto const& e: armies)
+            armies[e.first].debug();
     }
     std::string GameMap::getArmyPosition (std::string armyId)
     {
@@ -103,6 +106,14 @@ namespace state
     int GameMap::getLevyMen (std::string idProvince)
     {
         return provinces[idProvince].getLevyMen();
+    }
+    std::string GameMap::getKingdomOfCharacter (std::string characterId)
+    {
+        return parent->getKingdomOfCharacter(characterId);
+    }
+    std::string GameMap::getKingdomOwner (std::string kingdomId)
+    {
+        return parent->getKingdomOwner(kingdomId);
     }
     void GameMap::killMenFromLevy (std::string idProvince, int victims)
     {
@@ -264,7 +275,7 @@ namespace state
     }
     void GameMap::checkNewSieges ()
     {
-        /*std::map<std::string, std::vector<std::string>> pos; // pos contains all the armies contained in each province
+        std::map<std::string, std::vector<std::string>> pos; // pos contains all the armies contained in each province
         for(auto const& e: armies)
             pos[armies[e.first].getCurrentProvince()].push_back(e.first);
         for(auto const& e: pos) // for each province
@@ -275,7 +286,7 @@ namespace state
             if(provinces[provinceId].isCaptured())
                 provinceController = provinces[provinceId].getController();
             else
-                provinceController = parent->getProvinceOwner(provinceId);
+                parent->fetchKingdomData(provinces[provinceId].getKingdom())["holder"];
             // No siege starts if a battle or a siege is ongoing
             if(checkForOngoingBattles(provinceId) || checkForOngoingSiege(provinceId))
                 continue;
@@ -291,7 +302,7 @@ namespace state
                     break;// For now we will only consider the first sieging army
                 }
             }
-        }*/
+        }
     }
     bool GameMap::checkForOngoingSiege (std::string provinceId)
     {
@@ -339,5 +350,9 @@ namespace state
         for(auto province: provinces)
             res.push_back(province.second.toJson());
         return res;
+    }
+    nlohmann::json GameMap::fetchCharacterData (std::string characterId)
+    {
+        return parent->fetchCharacterData(characterId);
     }
 }

@@ -72,12 +72,12 @@ namespace engine
     void EngineCore::endTurn()
     {
         gameState->updateArmiesOrders();
-        /*gameState->checkNewBattles();
+        gameState->checkNewBattles();
         gameState->updateBattles();
         gameState->clearFinishedBattles();
         gameState->clearDeadArmies();
         gameState->updateProvinces();
-        gameState->updateLevies();
+        /*gameState->updateLevies();
         gameState->updateWars();
         gameState->updateCharactersData();*/
         std::cout << "End turn procedure finished\n";

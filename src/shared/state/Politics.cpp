@@ -192,6 +192,14 @@ namespace state
     {
         return titles.getKingdomColor(kingdomId);
     }
+    std::string Politics::getKingdomOfCharacter (std::string characterId)
+    {
+        return characters.getKingdomOfCharacter(characterId);
+    }
+    std::string Politics::getCharacterOfKingdom (std::string kingdomId)
+    {
+        return titles.getKingdomOwner(kingdomId);
+    }
     nlohmann::json Politics::fetchCharacterData (std::string characterId)
     {
         return characters.fetchCharacterData(characterId);

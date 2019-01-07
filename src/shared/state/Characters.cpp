@@ -77,6 +77,10 @@ namespace state
     {
         characters[characterId].removeClaim(titleId);
     }
+    std::string Characters::getKingdomOfCharacter (std::string characterId)
+    {
+        return characters[characterId].getKingdom();
+    }
     void Characters::updateCharactersData ()
     {
         // For each independent leader

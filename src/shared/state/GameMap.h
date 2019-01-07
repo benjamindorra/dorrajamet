@@ -46,6 +46,8 @@ namespace state {
     void updateBattles ();
     Army * getArmy (std::string idArmy);
     int getLevyMen (std::string idProvince);
+    std::string getKingdomOfCharacter (std::string characterId);
+    std::string getKingdomOwner (std::string kingdomId);
     void killMenFromLevy (std::string idProvince, int victims);
     void disbandLevy (std::string idProvince);
     bool checkForOngoingBattles (std::string province);
@@ -62,6 +64,7 @@ namespace state {
     nlohmann::json fetchArmyData (std::string armyId);
     nlohmann::json fetchAllArmiesData ();
     nlohmann::json fetchAllProvincesData ();
+    nlohmann::json fetchCharacterData (std::string characterId);
     // Setters and Getters
   };
 
