@@ -26,7 +26,7 @@ namespace ai {
             randInt = dist(mt);
             switch (randInt) {
                 case 0:
-                    command = "endTurn";
+                    command = "TurnButton";
                     toEngine.addCommand(command, "");
                     break;
                 case 1: {
@@ -39,7 +39,7 @@ namespace ai {
                     j = toState.fetchAllProvincesData();
                     std::uniform_int_distribution<int> dist3(0,j.size()-1);
                     posList = dist3(mt);
-                    jarg["dest"] = j[posList]["colorCode"];
+                    jarg["dest"] = j[posList]["id"];
 
                     toEngine.addCommand("moveArmy", jarg.dump());
                     break;
@@ -62,6 +62,6 @@ namespace ai {
                     throw std::string ("Illegal decision from ai");
             }
         }
-        while(command != "endTurn");
+        while(command != "TurnButton");
     }
 }

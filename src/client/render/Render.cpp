@@ -50,7 +50,7 @@ namespace render {
     void Render::renderLoop ()
     {
         // end turn button
-        Button endTurn(this, window.getSize().x*0.8, 0, "end turn", sf::Color::Red, sf::Vector2i(window.getSize().x*0.2, window.getSize().y*0.1));
+        Button turnButton(this, window.getSize().x*0.8, 0, "end turn", sf::Color::Red, sf::Vector2i(window.getSize().x*0.2, window.getSize().y*0.1));
         Button switchColors(this, 0, 0, "switch\ncolors", sf::Color(0,128,0), sf::Vector2i(window.getSize().x*0.1, window.getSize().y*0.1));
         // to dynamically select whether or not to update the map 
         bool updateMap;
@@ -99,9 +99,9 @@ namespace render {
                         }
                     }
                     // check if click is in the end turn button
-                    else if (endTurn.contains(x,y)) {
+                    else if (turnButton.contains(x,y)) {
                         if (event.mouseButton.button==sf::Mouse::Button::Left) {
-                            engine.addCommand("endTurn", "");
+                            engine.addCommand("TurnButton", "");
                         }
                     }
                     // check if click is in the map
@@ -140,7 +140,13 @@ namespace render {
                                 unsigned int mapY = (unsigned int)pixel.y;
                                 std::string pix = std::to_string(colorMap.getPixel(mapX,mapY));
                                 json j;
-                                j["dest"] = pix;
+                                try {
+                                    j["dest"] = state.fetchProvinceDataFromColor(pix)["id"];
+                                }
+                                catch(const std::exception& e) {
+                                    std::cerr << e.what() <<std::endl;
+                                    throw std::runtime_error("problem in Render->renderLoop : unknown army destination");
+                                }
                                 j["id"] = rightclick;
                                 engine.addCommand("moveArmy", j.dump());
                             }
@@ -220,7 +226,7 @@ namespace render {
         // draw the playerdata
         playerData->draw();
         // draw end buttons
-        endTurn.draw();
+        turnButton.draw();
         switchColors.draw();
         // calls the drawing functions of each object in ToDraw
         for (auto i = popUps.rbegin(); i != popUps.rend(); ++i){

@@ -16,7 +16,7 @@ namespace render {
         if (command=="moveArmy") {
             engine->pushCommand(engine::Command(engine::Command::moveArmy, argument));
         }
-        if (command=="endTurn") {
+        if (command=="TurnButton") {
             engine->pushCommand(engine::Command(engine::Command::TurnButton, ""));
         }
        //TODO for PopUps
