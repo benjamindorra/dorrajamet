@@ -55,14 +55,19 @@ int main(int argc, char ** argv)
             
             //std::cout << testState.fetchAllProvincesTopLiegeColor().dump(2);
             std::cout << "\n\n\n";
-            testState.setArmyOrder("army_chara0001_xx", "prov_three");
+            testState.setArmyOrder("army_chara0001_xx", "prov_two");
             std::cout << testState.fetchArmyData("army_chara0001_xx").dump(2) << std::endl;
             std::cout << "\n\n\n";
             
-            if(testState.turnAdvance()) std::cout << "true\n";
-            if(testState.turnAdvance()) std::cout << "true\n";
-            if(testState.turnAdvance()) std::cout << "true\n";
-            if(testState.turnAdvance()) std::cout << "true\n";
+            testEngine.turnButton();
+            testEngine.turnButton();
+            testEngine.turnButton();
+            testEngine.turnButton();
+            std::cout << testState.fetchArmyData("army_chara0001_xx").dump(2) << std::endl;
+            testEngine.turnButton();
+            testEngine.turnButton();
+            testEngine.turnButton();
+            testEngine.turnButton();
             std::cout << testState.fetchArmyData("army_chara0001_xx").dump(2) << std::endl;
 
             //std::cout << testState.fetchAllProvincesTopLiegeColor().dump(2);

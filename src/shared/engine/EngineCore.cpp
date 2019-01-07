@@ -60,8 +60,7 @@ namespace engine
 
                 break;
             case Command::TurnButton:
-                if(gameState->turnAdvance())
-                    endTurn();
+                turnButton();
                 break;
             default:
                 throw std::runtime_error("Error: unknown command type.\n");
@@ -69,7 +68,8 @@ namespace engine
     }
     void EngineCore::turnButton()
     {
-
+        if(gameState->turnAdvance())
+            endTurn();
     }
     void EngineCore::endTurn()
     {

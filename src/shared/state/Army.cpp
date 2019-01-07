@@ -105,8 +105,7 @@ namespace state
     {
         if(orders.empty())
             return;
-        auto travelOrder = orders[0];
-        if(travelOrder.nextStep())
+        if(orders[0].nextStep())
             orders.clear();
     }
     int Army::getMen()
