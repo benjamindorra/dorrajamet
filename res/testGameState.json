@@ -20,16 +20,6 @@
             "id": "player_four",
             "currentCharacter": "chara_0004",
             "score": 100
-        },
-        {
-            "id": "player_five",
-            "currentCharacter": "chara_0005",
-            "score": 100
-        },
-        {
-            "id": "player_six",
-            "currentCharacter": "chara_0006",
-            "score": 100
         }
     ],
     "currentPlayer": 0,

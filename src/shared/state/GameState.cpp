@@ -74,7 +74,7 @@ namespace state
     bool GameState::turnAdvance()
     {
         currentPlayer++;
-        if(currentPlayer <= players.size())
+        if(currentPlayer >= players.size())
         {
             currentPlayer = 0;
             return true;

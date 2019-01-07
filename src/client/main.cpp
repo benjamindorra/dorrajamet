@@ -51,16 +51,19 @@ int main(int argc, char ** argv)
         {
             state::GameState testState("./res/testGameState.json");
             engine::EngineCore testEngine(&testState);
-            testState.debug();
+            std::cout << testState.fetchArmyData("army_chara0001_xx").dump(2) << std::endl;
             
             //std::cout << testState.fetchAllProvincesTopLiegeColor().dump(2);
             std::cout << "\n\n\n";
             testState.setArmyOrder("army_chara0001_xx", "prov_three");
-            testState.debug();
+            std::cout << testState.fetchArmyData("army_chara0001_xx").dump(2) << std::endl;
             std::cout << "\n\n\n";
             
-            testEngine.endTurn();
-            testState.debug();
+            if(testState.turnAdvance()) std::cout << "true\n";
+            if(testState.turnAdvance()) std::cout << "true\n";
+            if(testState.turnAdvance()) std::cout << "true\n";
+            if(testState.turnAdvance()) std::cout << "true\n";
+            std::cout << testState.fetchArmyData("army_chara0001_xx").dump(2) << std::endl;
 
             //std::cout << testState.fetchAllProvincesTopLiegeColor().dump(2);
 
