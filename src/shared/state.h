@@ -6,6 +6,7 @@
 #include "state/Traits.h"
 #include "state/Adjacencies.h"
 #include "state/Ressources.h"
+#include "state/Message.h"
 #include "state/Player.h"
 #include "state/Kingdom.h"
 #include "state/Titles.h"

@@ -3,17 +3,26 @@
 #define STATE__PLAYER__H
 
 #include <string>
+#include <vector>
 #include <json.hpp>
+
+namespace state {
+  class Message;
+}
+
+#include "Message.h"
 
 namespace state {
 
   /// class Player - 
   class Player {
+    // Associations
     // Attributes
   private:
     std::string id;
     std::string currentCharacter;
     int score;
+    std::vector<state::Message> pendingMessages;
     // Operations
   public:
     Player ();
