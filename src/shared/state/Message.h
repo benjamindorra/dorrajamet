@@ -22,6 +22,7 @@ namespace state {
     Message (nlohmann::json initJson);
     Message (std::string id, std::string type, std::string source, bool requiresAnswer);
     ~Message ();
+    nlohmann::json toJson ();
     // Setters and Getters
   };
 

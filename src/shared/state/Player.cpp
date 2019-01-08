@@ -51,4 +51,11 @@ namespace state
         j["score"] = score;
         return j;
     }
+    nlohmann::json Player::getMessages () {
+        nlohmann::json messages;
+        for(auto message : pendingMessages) {
+            messages.push_back(message.toJson());
+        }
+        return messages;
+    }
 }

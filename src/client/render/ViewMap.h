@@ -11,13 +11,11 @@ namespace render {
   class ToEngine;
   class Render;
   class Element;
-  class PopUp;
 }
 
 #include "Image.h"
 #include "ShowArmies.h"
 #include "Element.h"
-#include "PopUp.h"
 
 namespace render {
 

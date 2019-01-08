@@ -70,4 +70,8 @@ namespace render {
     {
         return state->fetchKingdomData(id);
     }
+    
+    nlohmann::json ToState::fetchPlayerMessagesData(std::string playerId){
+        return state->fetchPlayerMessages(playerId);
+    }
 }

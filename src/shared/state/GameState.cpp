@@ -259,4 +259,13 @@ namespace state
     {
         return gameMap->getProvinceId(colorCode);
     }
+    nlohmann::json GameState::fetchPlayerMessages (std::string playerId) {
+        for (Player player : players) {
+            if (player.getId()==playerId) {
+                return player.getMessages();
+            }
+        }
+        nlohmann::json j;
+        return j;
+    }
 }

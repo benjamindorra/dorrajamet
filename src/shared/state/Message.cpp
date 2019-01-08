@@ -18,5 +18,14 @@ namespace state
   {
 
   }
+  nlohmann::json Message::toJson(){
+    nlohmann::json j;
+    j["id"] = id;
+    /// warDeclaration, peaceProclamation, claimProclamation, allianceRequest, allianceBreakup
+    j["type"] = type;
+    j["sourceCharacter"] = sourceCharacter;
+    j["requireAnswer"] = requiresAnswer;
+    return j;
+  }
 
 };

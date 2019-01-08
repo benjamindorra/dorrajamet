@@ -3,30 +3,30 @@
 #define RENDER__RENDER__H
 
 #include <SFML/Graphics.hpp>
-#include <vector>
 #include <state.h>
 #include <engine.h>
 
 namespace render {
-  class PopUp;
+  class PopUps;
   class ColorMap;
   class ViewMap;
   class Data;
   class PlayerData;
   class ToState;
   class ToEngine;
+  class Button;
 };
 namespace state {
   class GameState;
 };
 namespace render {
-  class Button;
   class Element;
 }
 
 #include "ColorMap.h"
 #include "ToState.h"
 #include "ToEngine.h"
+#include "PopUps.h"
 #include "Button.h"
 #include "PlayerData.h"
 #include "Data.h"
@@ -41,13 +41,15 @@ namespace render {
     // Attributes
   private:
     sf::RenderWindow window;
-    std::vector<PopUp*> popUps;
+    PopUps * popUps;
     ColorMap colorMap;
     ViewMap * viewMap     = nullptr;
     Data * data     = nullptr;
     PlayerData * playerData     = nullptr;
     ToState state;
     ToEngine engine;
+    Button * turnButton;
+    Button * switchColors;
     // Operations
   public:
     Render ();
@@ -55,12 +57,10 @@ namespace render {
     ~Render ();
     void renderLoop ();
     sf::RenderWindow * getWindow ();
-    void addPopUp (PopUp * popUp);
     void init (state::GameState * state, engine::EngineCore * engine);
-    void update ();
+    void update (ViewMap::Types colorType);
     unsigned int getColorCode (int x, int y);
-    bool popUpsContains (int x, int y);
-    void removePopUp (PopUp * popUp);
+    void draw ();
     // Setters and Getters
   };
 

@@ -43,7 +43,7 @@ namespace render {
     void select (Type type, Action action, std::string causeId, std::string targetId);
     void draw ();
     bool contains (int x, int y);
-    void click (int x, int y);
+    bool click (int x, int y);
     void handleButtons (std::string button);
     void move (int x, int y);
     void deselect ();

@@ -22,14 +22,14 @@ namespace render {
         frame.setOutlineColor(sf::Color::Black);
         frame.setOutlineThickness(-1);
         select(type, action, causeId, targetId);
-        // add to the list of PopUps in mainRender
-        mainRender->addPopUp(this);
     }
+    
     PopUp::~PopUp () {
         for (Button *button : buttons) {
             delete button;
         }        
     }
+    
     void PopUp::select (Type type, Action action, std::string causeId, std::string targetId) {
         // select text, buttons and frame size
         std::string toDisplay;
@@ -77,6 +77,7 @@ namespace render {
                 throw std::string("unknown type");
         }
     }
+    
     void PopUp::draw () {
         // draw panel
         mainRender->Render::getWindow()->draw(frame);
@@ -86,6 +87,7 @@ namespace render {
             button->draw();
         }
     }
+    
     bool PopUp::contains (int x, int y) {
         for (Button *button : buttons) {
             if (button->contains(x,y)) {
@@ -103,15 +105,18 @@ namespace render {
         }
         return false;
     }
-    void PopUp::click(int x,int y) {
+    
+    bool PopUp::click(int x,int y) {
         this->selected=true;
         this->clickX = x;
         this->clickY = y;
         for (Button *button : buttons) {
             if (button->contains(x,y)) {
                 handleButtons(button->getDescription());
+                return true;
             }
         }
+        return false;
     }
 
     void PopUp::move(int x, int y) {
@@ -128,18 +133,12 @@ namespace render {
 
     void PopUp::handleButtons (std::string button){
         //TODO
-        if(button=="OK"){
-            mainRender->removePopUp(this);
-            this->~PopUp();
-        }
-        else {
+        if(button!="OK"){
             nlohmann::json j;
             j["command"] = button;
             j["causeId"] = causeId;
             j["targetId"] = targetId;
             engine->addCommand(button, j.dump());
-            mainRender->removePopUp(this);
-            this->~PopUp();
         }
     }
     

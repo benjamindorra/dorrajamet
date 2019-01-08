@@ -79,6 +79,7 @@ namespace state {
     std::string getProvinceOwner (std::string provinceId);
     void addClaim (std::string characterId, std::string provinceId);
     std::string getProvinceFromColor (unsigned int colorCode);
+    nlohmann::json fetchPlayerMessages (std::string playerId);
     // Setters and Getters
   };
 

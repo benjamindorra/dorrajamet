@@ -33,6 +33,7 @@ namespace state {
     void setCharacter (std::string newCharacterId);
     void addScore (int amount);
     nlohmann::json toJson ();
+    nlohmann::json getMessages ();
     // Setters and Getters
   };
 
