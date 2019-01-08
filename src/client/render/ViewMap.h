@@ -51,9 +51,9 @@ namespace render {
     std::string rightClick (sf::Vector2f pixel);
     void checkZoomY (float zoom);
     void update (Types type);
-    void updateColorsRelations ();
+    void updateColorsRelations (bool updateAnyway = false);
     void updateArmies ();
-    void updateColorsKingdoms ();
+    void updateColorsKingdoms (bool updateAnyway = false);
     // Setters and Getters
   };
 
