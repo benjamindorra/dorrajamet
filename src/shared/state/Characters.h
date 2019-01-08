@@ -5,6 +5,7 @@
 #include <string>
 #include <map>
 #include <json.hpp>
+#include <vector>
 
 namespace state {
   class Politics;
@@ -39,6 +40,8 @@ namespace state {
     void updateCharactersData ();
     nlohmann::json fetchCharacterData (std::string characterId);
     nlohmann::json fetchAllCharactersData ();
+    std::vector<std::string> getClaims (std::string characterId);
+    void addClaim (std::string claimant, std::string provinceId);
     // Setters and Getters
   };
 

@@ -117,4 +117,12 @@ namespace state
         }
         return res;
     }
+    std::vector<std::string> Characters::getClaims (std::string characterId)
+    {
+        return characters[characterId].getClaims();
+    }
+    void Characters::addClaim (std::string claimant, std::string provinceId)
+    {
+        characters[claimant].addClaim(provinceId);
+    }
 }

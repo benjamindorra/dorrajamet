@@ -83,6 +83,18 @@ namespace state
     {
         return warId;
     }
+    bool Relation::concerns (std::string characterId)
+    {
+        return characterA == characterId || characterB == characterId;        
+    }
+    std::string Relation::getOther (std::string characterId)
+    {
+        if(characterA == characterId)
+            return characterB;
+        if(characterB == characterId)
+            return characterA;
+        return "";
+    }
     nlohmann::json Relation::toJson ()
     {
         nlohmann::json j;
@@ -106,6 +118,7 @@ namespace state
                 break;
             case war:
                 t = 4;
+                j["warId"] = warId;
                 break;
             default:
                 throw std::string("Error: invalid relation type.");

@@ -54,6 +54,12 @@ namespace state {
     nlohmann::json fetchCharacterData (std::string characterId);
     nlohmann::json fetchKingdomData (std::string kingdomId);
     nlohmann::json fetchAllRelationsData ();
+    std::vector<std::string> getClaims (std::string characterId);
+    std::vector<std::string> getAllies (std::string characterId);
+    std::string createWar (std::vector<std::string> attackerCamp, std::vector<std::string> defenderCamp, std::string claimantId, std::string mainDefender, std::string targetClaim, unsigned int turn);
+    void setWar (std::string characterA, std::string characterB, std::string warId);
+    bool areAtWar (std::string characterA, std::string characterB);
+    void addClaim (std::string claimant, std::string provinceId);
     // Setters and Getters
   };
 

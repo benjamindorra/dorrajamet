@@ -29,6 +29,8 @@ namespace state {
     bool isBetween (std::string characterA, std::string characterB);
     relType getType ();
     std::string getWarId ();
+    bool concerns (std::string characterId);
+    std::string getOther (std::string characterId);
     nlohmann::json toJson ();
     // Setters and Getters
   };

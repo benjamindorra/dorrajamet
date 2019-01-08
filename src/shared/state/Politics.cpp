@@ -215,4 +215,62 @@ namespace state
             res.push_back(relation.toJson());
         return res;
     }
+    std::vector<std::string> Politics::getClaims (std::string characterId)
+    {
+        return characters.getClaims(characterId);
+    }
+    std::vector<std::string> Politics::getAllies (std::string characterId)
+    {
+        std::vector<std::string> res;
+        for(auto r: relations)
+        {
+            if(r.concerns(characterId) && r.getType() == Relation::alliance)
+            {
+                auto other = r.getOther(characterId);
+                if(!isIn(res, other))
+                    res.push_back(other);
+            }
+        }
+        return res;
+    }
+    std::string Politics::createWar (std::vector<std::string> attackerCamp, std::vector<std::string> defenderCamp, std::string claimantId, std::string mainDefender, std::string targetClaim, unsigned int turn)
+    {
+        nlohmann::json initJson;
+        initJson["id"] = "war_" + claimantId + "-" + mainDefender + "_turn" + std::to_string(turn) + "_for:" + targetClaim;
+        initJson["targetProvince"] = targetClaim;
+        initJson["claimantCharacter"] = claimantId;
+        initJson["mainDefender"] = mainDefender;
+        initJson["attackerCamp"] = attackerCamp;
+        initJson["defenderCamp"] = defenderCamp;
+        initJson["warScore"] = 0;
+        wars[initJson["id"]] = War(initJson.dump());
+        return initJson["id"];
+    }
+    void Politics::setWar (std::string characterA, std::string characterB, std::string warId)
+    {
+        for(auto r: relations)
+        {
+            if(!(r.isBetween(characterA, characterB) && r.getType() == Relation::alliance))
+            {
+                nlohmann::json initJson;
+                initJson["characterA"] = characterA;
+                initJson["characterB"] = characterB;
+                initJson["endTurn"] = -1;
+                initJson["type"] = 4;
+                initJson["warId"] = warId;
+                relations.push_back(Relation(initJson.dump()));
+            }
+        }
+    }
+    bool Politics::areAtWar (std::string characterA, std::string characterB)
+    {
+        for(auto r: relations)
+            if((r.isBetween(characterA, characterB) && r.getType() == Relation::war))
+                return true;
+        return false;
+    }
+    void Politics::addClaim (std::string claimant, std::string provinceId)
+    {
+        characters.addClaim(claimant, provinceId);
+    }
 }

@@ -53,6 +53,8 @@ namespace state {
     Character generateHeir ();
     void removeClaim (std::string provinceId);
     std::string getKingdom ();
+    std::vector<std::string> getClaims ();
+    void addClaim (std::string provinceId);
     nlohmann::json toJson ();
     // Setters and Getters
   };

@@ -13,8 +13,9 @@ namespace state {
     // Attributes
   private:
     std::string id;
-    std::string targetTitle;
+    std::string targetProvince;
     std::string claimantCharacter;
+    std::string mainDefender;
     std::vector<std::string> attackerCamp;
     std::vector<std::string> defenderCamp;
     /// 100: attacker victory, -100 defender victory

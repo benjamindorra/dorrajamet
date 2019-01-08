@@ -11,7 +11,7 @@ namespace engine {
     // Attributes
   public:
     /// Possible types of command
-    enum commandType{moveArmy = 0, ActionButton = 1, TurnButton = 2};
+    enum commandType{army = 0, claim = 1, turn = 2, war = 3};
   private:
     /// Type of command
     commandType type;

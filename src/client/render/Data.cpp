@@ -80,7 +80,7 @@ namespace render {
                     +"Diplomacy: "+j["diplomacy"].dump()+"\n"+"Stewardship: "+j["stewardship"].dump()+"\n"
                     +"Martial: "+j["martial"].dump()+"\n"+"Intrigue: "+j["intrigue"].dump()+"\n"+"\n"+"Alive: "
                     +j["alive"].dump()+"\n"+"Prestige: "+j["prestige"].dump()+"\n"+"Gold: "+j["gold"].dump()+"\n"
-                    +"Plot active: "+j["hasPlot"].dump();
+                    +"Plot active: "+j["hasPlot"].dump()+"\nClaims: "+j["claims"].dump(2);
                 }
             }
             catch(const std::exception& e) {
@@ -256,7 +256,7 @@ namespace render {
             if (button=="Levy") {}
             else if (button =="Claim") {}
             j["command"] = button;
-            j["colorCode"] = id;
+            j["colorCode"] = std::stoul(id);
             engine->addCommand(button, j.dump());
         }
         

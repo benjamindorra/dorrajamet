@@ -5,6 +5,7 @@
 #include <string>
 #include <map>
 #include <json.hpp>
+#include <vector>
 
 namespace state {
   class GameState;
@@ -69,6 +70,7 @@ namespace state {
     std::string getProvinceKingdomId (unsigned int colorCode);
     std::string getArmyOwner (std::string armyId);
     bool canArmyMove (std::string armyId);
+    std::vector<std::string> getProvincesOfKingdom (std::string kingdomId);
     // Setters and Getters
   };
 

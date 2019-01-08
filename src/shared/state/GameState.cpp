@@ -221,4 +221,42 @@ namespace state
     {
         return players[currentPlayer].getCharacter();
     }
+    std::string GameState::hasClaim (std::string claimantId, std::string targetCharacterId)
+    {
+        auto targetKingdom = politics->getKingdomOfCharacter(targetCharacterId);
+        auto targetProvinces = gameMap->getProvincesOfKingdom(targetKingdom);
+        auto claims = politics->getClaims(claimantId);
+        for(auto p: targetProvinces)
+            for(auto c: claims)
+                if(p == c)
+                    return p;
+        return "";
+    }
+    bool GameState::areAtWar (std::string characterA, std::string characterB)
+    {
+        return politics->areAtWar(characterA, characterB);
+    }
+    void GameState::declareWar (std::string claim, std::string attackerId, std::string defenderId)
+    {
+        auto attackerCamp = politics->getAllies(attackerId);
+        auto defenderCamp = politics->getAllies(defenderId);
+        auto warId = politics->createWar(attackerCamp, defenderCamp, attackerId, defenderId, claim, currentTurn);
+        for(auto a: attackerCamp)
+            for(auto d: defenderCamp)
+                politics->setWar(a, d, warId);
+
+    }
+    std::string GameState::getProvinceOwner (std::string provinceId)
+    {
+        auto kingdomId = gameMap->getProvinceKingdomId(provinceId);
+        return politics->getCharacterOfKingdom(kingdomId);
+    }
+    void GameState::addClaim (std::string characterId, std::string provinceId)
+    {
+        politics->addClaim(characterId, provinceId);
+    }
+    std::string GameState::getProvinceFromColor (unsigned int colorCode)
+    {
+        return gameMap->getProvinceId(colorCode);
+    }
 }

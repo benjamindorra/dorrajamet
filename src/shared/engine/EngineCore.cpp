@@ -36,17 +36,17 @@ namespace engine
     }
     void EngineCore::processCommand(Command command)
     {
+        auto currentCharacter = gameState->getCurrentPlayerCharacter();
+        nlohmann::json j;
         switch(command.getType())
         {
-            case Command::moveArmy:
+            case Command::army:
                 gameState->debug();
-                using json = nlohmann::json;
                 try
                 {
-                    json j = json::parse(command.getArgument());
+                    j = nlohmann::json::parse(command.getArgument());
                     auto id = j["id"].get<std::string>();
                     auto dest = j["dest"].get<std::string>();
-                    auto currentCharacter = gameState->getCurrentPlayerCharacter();
                     auto armyOwner = gameState->getArmyOwner(id);
                     if(currentCharacter == armyOwner)
                     {
@@ -59,14 +59,32 @@ namespace engine
                 catch(const std::exception& e)
                 {
                     std::cerr << e.what() << std::endl;
-                    throw std::runtime_error("Error: could not parse command arguments\n");
+                    throw std::runtime_error("Error: could not parse move army command arguments\n");
                 }
                 gameState->debug();
                 break;
-            case Command::ActionButton:
-
+            case Command::claim:
+                try
+                {
+                    j = nlohmann::json::parse(command.getArgument());
+                    auto targetProvColor = j["colorCode"].get<unsigned int>();
+                    auto targetProv = gameState->getProvinceFromColor(targetProvColor);
+                    auto targetOwner = gameState->getProvinceOwner(targetProv);
+                    if(targetOwner != currentCharacter)
+                    {
+                        gameState->addClaim(currentCharacter, targetProv);
+                        std::cout << "added claim\n";
+                    }
+                    else
+                        std::cout << "can't claim your own provinces\n";
+                }
+                catch(const std::exception& e)
+                {
+                    std::cerr << e.what() << std::endl;
+                    throw std::runtime_error("Error: could not parse claim command arguments\n");
+                }
                 break;
-            case Command::TurnButton:
+            case Command::turn:
                 turnButton();
                 break;
             default:

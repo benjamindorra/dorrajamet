@@ -2,6 +2,8 @@
 #include <json.hpp>
 #include <iostream>
 
+#include "../tools.hpp"
+
 namespace state{
     Character::Character ()
     {
@@ -188,6 +190,15 @@ namespace state{
     {
         return kingdomId;
     }
+    std::vector<std::string> Character::getClaims ()
+    {
+        return claims;
+    }
+    void Character::addClaim (std::string provinceId)
+    {
+        if(!isIn(claims, provinceId))
+            claims.push_back(provinceId);
+    }
     nlohmann::json Character::toJson ()
     {
         nlohmann::json res;
@@ -205,6 +216,7 @@ namespace state{
         res["prestige"] = prestige;
         res["gold"] = gold;
         res["hasPlot"] = hasPlot;
+        res["claims"] = claims;
         if(hasPlot)
         {
             if(plotType == claim)

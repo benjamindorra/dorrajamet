@@ -9,7 +9,9 @@ namespace state
     {
     /*
     std::string id;
-    std::string targetTitle;
+    std::string targetProvince;
+    std::string claimantCharacter;
+    std::string mainDefender;
     std::vector<std::string> attackerCamp;
     std::vector<std::string> defenderCamp;
     /// 100: attacker victory, -100 defender victory
@@ -22,7 +24,9 @@ namespace state
         {
             auto j = nlohmann::json::parse(strJson);
             id = j["id"];
-            targetTitle = j["targetTitle"];
+            targetProvince = j["targetProvince"];
+            claimantCharacter = j["claimantCharacter"];
+            mainDefender = j["mainDefender"];
             attackerCamp = j["attackerCamp"].get<std::vector<std::string>>();
             defenderCamp = j["defenderCamp"].get<std::vector<std::string>>();
             warScore = j["warScore"].get<int>();
@@ -45,7 +49,9 @@ namespace state
     {
         nlohmann::json res;
         res["id"] = id;
-        res["targetTitle"] = targetTitle;
+        res["targetProvince"] = targetProvince;
+        res["claimantCharacter"] = claimantCharacter;
+        res["mainDefender"] = mainDefender;
         res["attackerCamp"] = attackerCamp;
         res["defenderCamp"] = defenderCamp;
         res["warScore"] = warScore;
@@ -57,7 +63,7 @@ namespace state
     }
     std::string War::getTargetTitle ()
     {
-        return targetTitle;
+        return targetProvince;
     }
     int War::getScore ()
     {

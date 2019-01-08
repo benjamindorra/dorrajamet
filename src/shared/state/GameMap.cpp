@@ -415,4 +415,12 @@ namespace state
     {
         return armies[armyId].canMove();
     }
+    std::vector<std::string> GameMap::getProvincesOfKingdom (std::string kingdomId)
+    {
+        std::vector<std::string> res;
+        for(auto p: provinces)
+            if(p.second.getKingdom() == kingdomId)
+                res.push_back(p.first);
+        return res;
+    }
 }

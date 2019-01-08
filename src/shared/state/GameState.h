@@ -73,8 +73,12 @@ namespace state {
     nlohmann::json fetchAllProvincesKingdomColor ();
     std::string getCurrentPlayer ();
     std::string getCurrentPlayerCharacter ();
-    bool hasClaim (std::string claimantId, std::string targetCharacterId);
-    void declareWar (std::string attackerId, std::string defenderId);
+    std::string hasClaim (std::string claimantId, std::string targetCharacterId);
+    bool areAtWar (std::string characterA, std::string characterB);
+    void declareWar (std::string claim, std::string attackerId, std::string defenderId);
+    std::string getProvinceOwner (std::string provinceId);
+    void addClaim (std::string characterId, std::string provinceId);
+    std::string getProvinceFromColor (unsigned int colorCode);
     // Setters and Getters
   };
 
