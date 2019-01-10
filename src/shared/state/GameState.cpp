@@ -30,6 +30,10 @@ namespace state
                 players.push_back(Player(it.value()));
             this->currentPlayer = j["currentPlayer"].get<int>();
             this->currentTurn = j["currentTurn"].get<int>();
+            for(auto p: players)
+            {
+                std::cout << "player: " << p.getId() << std::endl;
+            }
         }
         catch(const std::exception& e)
         {
@@ -77,10 +81,14 @@ namespace state
         if(currentPlayer >= players.size())
         {
             currentPlayer = 0;
+            std::cout << "player " << players[currentPlayer].getId() << " has " << players[currentPlayer].getMessages().size() << " messages\n";
             return true;
         }
         else
+        {
+            std::cout << "player " << players[currentPlayer].getId() << " has " << players[currentPlayer].getMessages().size() << " messages\n";
             return false;
+        }
     }
     void GameState::updateArmiesOrders ()
     {
@@ -260,12 +268,41 @@ namespace state
         return gameMap->getProvinceId(colorCode);
     }
     nlohmann::json GameState::fetchPlayerMessages (std::string playerId) {
+        //std::cout << "Fetching player " << playerId << "'s message\n";
         for (Player player : players) {
             if (player.getId()==playerId) {
-                return player.getMessages();
+                auto messages = player.getMessages();
+                if(messages.size())
+                    std::cout << "found " << messages.size() << " messages for player: " << playerId << std::endl;
+                return messages;
             }
         }
-        nlohmann::json j;
-        return j;
+        std::cerr << "FetchMessages\n";
+        throw std::runtime_error("No player of id: " + playerId + "\n");
+    }
+    std::string GameState::getPlayerOfCharacter (std::string characterId)
+    {
+        for(auto p: players)
+            if(p.getCharacter() == characterId)
+                return p.getId();
+        std::cerr << "getPlayerOfChar\n";
+        throw std::runtime_error("No player for character id: " + characterId + "\n");
+    }
+    void GameState::pushMessageToPlayer (std::string playerId, nlohmann::json initJson)
+    {
+        for(unsigned int i = 0; i < players.size(); i++)
+            if(players[i].getId() == playerId)
+            {
+                players[i].addMessage(initJson);
+                return;
+            }
+        std::cerr << "pushMessage\n";
+        throw std::runtime_error("No player of id: " + playerId + "\n");
+    }
+    void GameState::removeMessage (std::string playerId, std::string messageId)
+    {
+        for(unsigned i = 0; i < players.size(); i++)
+            if(players[i].getId() == playerId)
+                players[i].removeMessage(messageId);
     }
 }

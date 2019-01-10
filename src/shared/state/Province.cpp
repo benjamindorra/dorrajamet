@@ -162,9 +162,9 @@ namespace state
     void Province::updateSiege()
     {
         if(isSieged())
-            changeSiegeStatusBy(34);
+            changeSiegeStatusBy(50);
         else
-            changeSiegeStatusBy(-34);
+            changeSiegeStatusBy(-50);
     }
     void Province::setSiegingArmy (std::string armyId)
     {

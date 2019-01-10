@@ -37,6 +37,8 @@ namespace engine
     void EngineCore::processCommand(Command command)
     {
         auto currentCharacter = gameState->getCurrentPlayerCharacter();
+        auto currentPlayer = gameState->getCurrentPlayer();
+        auto currentTurn = gameState->getCurrentTurn();
         nlohmann::json j;
         switch(command.getType())
         {
@@ -70,10 +72,18 @@ namespace engine
                     auto targetProvColor = j["colorCode"].get<unsigned int>();
                     auto targetProv = gameState->getProvinceFromColor(targetProvColor);
                     auto targetOwner = gameState->getProvinceOwner(targetProv);
+                    auto targetPlayer = gameState->getPlayerOfCharacter(targetOwner);
                     if(targetOwner != currentCharacter)
                     {
                         gameState->addClaim(currentCharacter, targetProv);
                         std::cout << "added claim\n";
+                        nlohmann::json mess;
+                        mess["id"] = currentCharacter + "_claim_" + targetProv + "_from_" + targetOwner + "_turn_" + std::to_string(currentTurn);
+                        mess["type"] = 3;
+                        mess["sourceCharacter"] = currentCharacter;
+                        mess["requiresAnswer"] = false;
+                        mess["data"] = targetProv;
+                        gameState->pushMessageToPlayer(targetPlayer, mess);
                     }
                     else
                         std::cout << "can't claim your own provinces\n";
@@ -86,6 +96,51 @@ namespace engine
                 break;
             case Command::turn:
                 turnButton();
+                break;
+            case Command::ok:
+                try
+                {
+                    j = nlohmann::json::parse(command.getArgument());
+                    auto messageId = j["messageId"];
+                    gameState->removeMessage(currentPlayer, messageId);
+                }
+                catch(const std::exception& e)
+                {
+                    std::cerr << e.what() << std::endl;
+                    throw std::runtime_error("Error: could not parse ok command\n");
+                }
+                break;
+            case Command::yes:
+                try
+                {
+                    j = nlohmann::json::parse(command.getArgument());
+                    auto messageId = j["messageId"];
+
+                    // TODO: process message
+
+                    gameState->removeMessage(currentPlayer, messageId);
+                }
+                catch(const std::exception& e)
+                {
+                    std::cerr << e.what() << std::endl;
+                    throw std::runtime_error("Error: could not parse yes command\n");
+                }
+                break;
+            case Command::no:
+                try
+                {
+                    j = nlohmann::json::parse(command.getArgument());
+                    auto messageId = j["messageId"];
+
+                    // TODO: process message
+
+                    gameState->removeMessage(currentPlayer, messageId);
+                }
+                catch(const std::exception& e)
+                {
+                    std::cerr << e.what() << std::endl;
+                    throw std::runtime_error("Error: could not parse no command\n");
+                }
                 break;
             default:
                 throw std::runtime_error("Error: unknown command type.\n");

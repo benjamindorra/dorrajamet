@@ -376,7 +376,7 @@ namespace state
         }
         catch (const std::exception& e) {
             std::cerr << e.what()<<std::endl;
-            throw std::runtime_error("Unknown province in GameMap::fetchProvinceData");
+            throw std::runtime_error("Unknown province in GameMap::fetchProvinceData: " + provinceId + "\n");
         }
     }
     nlohmann::json GameMap::fetchArmyData (std::string armyId)

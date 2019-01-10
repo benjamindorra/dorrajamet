@@ -34,6 +34,8 @@ namespace state {
     void addScore (int amount);
     nlohmann::json toJson ();
     nlohmann::json getMessages ();
+    void addMessage (nlohmann::json initJson);
+    void removeMessage (std::string messageId);
     // Setters and Getters
   };
 

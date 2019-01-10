@@ -74,4 +74,8 @@ namespace render {
     nlohmann::json ToState::fetchPlayerMessagesData(std::string playerId){
         return state->fetchPlayerMessages(playerId);
     }
+    std::string ToState::getCurrentPlayer ()
+    {
+        return state->getCurrentPlayer();
+    }
 }

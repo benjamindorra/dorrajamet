@@ -1,5 +1,6 @@
 #include "PopUps.h"
 #include <json.hpp>
+#include <iostream>
 
 using json = nlohmann::json;
 
@@ -11,12 +12,12 @@ namespace render {
         this->playerId = playerId;
     }
     PopUps::~PopUps ( ){}
-    void PopUps::newPopUp (bool requireAnswer, PopUp::Action action, std::string causeId, std::string targetId, std::string id){
+    void PopUps::newPopUp (bool requireAnswer, PopUp::Action action, std::string causeId, std::string targetId, std::string id, std::string data){
         if (requireAnswer) {
-            popUps[id] = new PopUp(mainRender, PopUp::Type::Question, action, causeId, targetId, state, engine);
+            popUps[id] = new PopUp(mainRender, PopUp::Type::Question, action, causeId, targetId, state, engine, data, id);
         }
         else {
-            popUps[id] = new PopUp(mainRender, PopUp::Type::Info, action, causeId, targetId, state, engine);
+            popUps[id] = new PopUp(mainRender, PopUp::Type::Info, action, causeId, targetId, state, engine, data, id);
         }
     }
     void PopUps::deletePopUp (std::string id){
@@ -24,15 +25,18 @@ namespace render {
         popUps.erase(popUps.find(id));
     }
     void PopUps::update (){
-        //temporary
-        playerId = "player_one";
-        //
+        //std::cout << "Popups update\n";
+        playerId = state->getCurrentPlayer();
+        
+
         for (auto popUp : popUps) {
             deletePopUp(popUp.first);
         }
-        json messages = state->fetchPlayerMessagesData(playerId);
-        for (json::iterator message = messages.begin(); message != messages.end(); ++message) {
-            newPopUp(message.value()["requireAnswer"], message.value()["type"], message.value()["sourceCharacter"], playerId, message.value()["id"]);
+        json playerMessages = state->fetchPlayerMessagesData(playerId);
+        if(playerMessages.size())
+            std::cout << "found " << playerMessages.size();
+        for (json::iterator playerMessage = playerMessages.begin(); playerMessage != playerMessages.end(); ++playerMessage) {
+            newPopUp(playerMessage.value()["requireAnswer"], playerMessage.value()["type"], playerMessage.value()["sourceCharacter"], playerId, playerMessage.value()["id"], playerMessage.value()["data"]);
         }
 
     }

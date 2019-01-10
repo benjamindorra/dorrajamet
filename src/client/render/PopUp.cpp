@@ -5,12 +5,14 @@
 
 namespace render {
     PopUp::PopUp (Render * mainRender, Type type, Action action, std::string causeId, 
-    std::string targetId, ToState * state, ToEngine * engine){
+    std::string targetId, ToState * state, ToEngine * engine, std::string data, std::string messageId){
         this->mainRender=mainRender;
         this->state = state;
         this->engine = engine;
         this->causeId = causeId;
         this->targetId = targetId;
+        this->data = data;
+        this->messageId = messageId;
         // text
         font.loadFromFile("./res/DejaVuSerifCondensed.ttf");
         text.setFont(font);
@@ -44,7 +46,7 @@ namespace render {
                 toDisplay = state->fetchCharacterData(causeId)["name"].get<std::string>()+" makes an alliance with "+state->fetchCharacterData(targetId)["name"].get<std::string>()+".";
                 break;
             case Claim:
-                toDisplay = state->fetchCharacterData(causeId)["name"].get<std::string>()+" claims "+state->fetchProvinceData(targetId)["name"].get<std::string>()+".";
+                toDisplay = state->fetchCharacterData(causeId)["name"].get<std::string>()+" claims "+state->fetchProvinceData(data)["name"].get<std::string>()+".";
                 break;
             case Plot:
                 toDisplay = state->fetchCharacterData(causeId)["name"].get<std::string>()+" assassinated "+state->fetchCharacterData(targetId)["name"].get<std::string>()+" !";
@@ -132,14 +134,12 @@ namespace render {
     }
 
     void PopUp::handleButtons (std::string button){
-        //TODO
-        if(button!="OK"){
-            nlohmann::json j;
-            j["command"] = button;
-            j["causeId"] = causeId;
-            j["targetId"] = targetId;
-            engine->addCommand(button, j.dump());
-        }
+        nlohmann::json j;
+        j["command"] = button;
+        j["causeId"] = causeId;
+        j["targetId"] = targetId;
+        j["messageId"] = messageId;
+        engine->addCommand(button, j.dump());
     }
     
     bool PopUp::isSelected() {

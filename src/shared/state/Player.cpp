@@ -52,10 +52,21 @@ namespace state
         return j;
     }
     nlohmann::json Player::getMessages () {
-        nlohmann::json messages;
+        nlohmann::json messages = nlohmann::json::array();
         for(auto message : pendingMessages) {
             messages.push_back(message.toJson());
         }
         return messages;
+    }
+    void Player::addMessage (nlohmann::json initJson)
+    {
+        std::cout << "player " << id << " had " << pendingMessages.size() << " pending messages\n";
+        pendingMessages.push_back(Message(initJson));
+        std::cout << "player " << id << " has " << pendingMessages.size() << " pending messages\n";
+    }
+
+    void Player::removeMessage (std::string messageId)
+    {
+        pendingMessages.erase(std::find_if(pendingMessages.begin(), pendingMessages.end(), [messageId](Message m) -> bool{ return m.getId() == messageId; }));
     }
 }

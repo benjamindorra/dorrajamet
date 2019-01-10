@@ -80,6 +80,9 @@ namespace state {
     void addClaim (std::string characterId, std::string provinceId);
     std::string getProvinceFromColor (unsigned int colorCode);
     nlohmann::json fetchPlayerMessages (std::string playerId);
+    std::string getPlayerOfCharacter (std::string characterId);
+    void pushMessageToPlayer (std::string playerId, nlohmann::json initJson);
+    void removeMessage (std::string playerId, std::string messageId);
     // Setters and Getters
   };
 

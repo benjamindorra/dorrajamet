@@ -36,9 +36,11 @@ namespace render {
     std::string targetId;
     ToState * state;
     ToEngine * engine;
+    std::string data;
+    std::string messageId;
     // Operations
   public:
-    PopUp (Render * mainRender, Type type, Action action, std::string causeId, std::string targetId, ToState * state, ToEngine * engine);
+    PopUp (Render * mainRender, Type type, Action action, std::string causeId, std::string targetId, ToState * state, ToEngine * engine, std::string data, std::string messageId);
     ~PopUp ();
     void select (Type type, Action action, std::string causeId, std::string targetId);
     void draw ();

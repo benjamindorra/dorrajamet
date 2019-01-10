@@ -22,10 +22,18 @@ namespace render {
         if (command=="Claim") {
             engine->pushCommand(engine::Command(engine::Command::claim, argument));
         }
-       //TODO for PopUps
-        /*else {
-            engine->pushCommand(engine::Command(engine::Command::ActionButton, argument));
-        }*/
+        if (command=="OK")
+        {
+            engine->pushCommand(engine::Command(engine::Command::ok, argument));
+        }
+        if (command=="ACCEPT")
+        {
+            engine->pushCommand(engine::Command(engine::Command::yes, argument));
+        }
+        if (command=="REFUSE")
+        {
+            engine->pushCommand(engine::Command(engine::Command::no, argument));
+        }
 
     }
 }

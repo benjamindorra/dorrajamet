@@ -13,16 +13,18 @@ namespace state {
   private:
     std::string id;
     /// warDeclaration, peaceProclamation, claimProclamation, allianceRequest, allianceBreakup
-    std::string type;
+    int type;
     std::string sourceCharacter;
     bool requiresAnswer;
+    std::string data;
     // Operations
   public:
     Message ();
     Message (nlohmann::json initJson);
-    Message (std::string id, std::string type, std::string source, bool requiresAnswer);
+    Message (std::string id, int type, std::string source, bool requiresAnswer);
     ~Message ();
     nlohmann::json toJson ();
+    std::string getId ();
     // Setters and Getters
   };
 
