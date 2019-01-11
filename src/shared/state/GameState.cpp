@@ -317,4 +317,12 @@ namespace state
             if(players[i].getId() == playerId)
                 players[i].removeMessage(messageId);
     }
+    std::string GameState::fetchPlayerCharacter(std::string playerId){
+        for(Player player : players) {
+            if(player.getId()==playerId){
+                return player.getCharacter();
+            }
+        }
+        throw std::runtime_error("No player of id: " + playerId + "\n");
+    }
 }
