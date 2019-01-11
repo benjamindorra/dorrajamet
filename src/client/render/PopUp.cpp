@@ -34,10 +34,11 @@ namespace render {
     
     void PopUp::select (Type type, Action action, std::string causeId, std::string targetId) {
         // select text, buttons and frame size
+        std::cout << "new popup cause: " << causeId << " -- target id: " << targetId << std::endl;;
         std::string toDisplay;
         switch (action) {
             case War:
-                toDisplay = state->fetchCharacterData(causeId)["name"].get<std::string>()+" declares war to "+state->fetchCharacterData(targetId)["name"].get<std::string>()+" !";
+                toDisplay = state->fetchCharacterData(causeId)["name"].get<std::string>()+" declares war to "+state->fetchCharacterData( state->getCharacterOfPlayer(targetId))["name"].get<std::string>()+" !";
                 break;
             case Peace:
                 toDisplay = state->fetchCharacterData(causeId)["name"].get<std::string>()+" makes peace with "+state->fetchCharacterData(targetId)["name"].get<std::string>()+".";

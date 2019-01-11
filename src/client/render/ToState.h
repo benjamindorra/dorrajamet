@@ -40,6 +40,7 @@ namespace render {
     nlohmann::json fetchKingdomData (std::string id);
     nlohmann::json fetchPlayerMessagesData (std::string playerId);
     std::string getCurrentPlayer ();
+    std::string getCharacterOfPlayer (std::string playerId);
     // Setters and Getters
   };
 

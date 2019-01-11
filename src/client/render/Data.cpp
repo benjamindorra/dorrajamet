@@ -246,10 +246,12 @@ namespace render {
             if (button=="Relations") {this->select(Data::Relations, id);}
             else if (button =="Alliance") {}
             else if (button=="Murder") {}
-            else if (button=="War") {}
+            else if (button=="War") {
+                std::cout << "War... War never changes.\n";
+            }
             else if (button=="Peace") {}
             j["command"] = button;
-            j["colorCode"] = id;
+            j["colorCode"] = std::stoul(id);
             engine->addCommand(button, j.dump());
         }
         else if (type==Types::Province) {
