@@ -12,6 +12,7 @@ namespace state {
   class GameMap;
   class Ressources;
   class Player;
+  class GameState;
 }
 
 #include "Ressources.h"
@@ -37,6 +38,7 @@ namespace state {
     GameState ();
     GameState (const char* saveFilePath);
     GameState (const std::string saveFilePath);
+    GameState operator= (const GameState& original);
     ~GameState ();
     void testPointer ();
     void refreshChildParentPointers ();

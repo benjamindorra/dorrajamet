@@ -47,6 +47,18 @@ namespace state
         delete gameMap;
         delete politics;
     }
+    GameState GameState::operator= (const GameState& original){
+        GameState copy;
+        *copy.politics = *original.politics;
+        copy.politics->setParent(&copy);
+        *copy.gameMap = *original.gameMap;
+        copy.gameMap->setParent(&copy);
+        copy.ressources = original.ressources;
+        copy.players = original.players;
+        copy.currentPlayer = original.currentPlayer;
+        copy.currentTurn = original.currentTurn;
+        return copy;
+    }
     void GameState::refreshChildParentPointers()
     {
         this->gameMap->setParent(this);
@@ -318,6 +330,10 @@ namespace state
     }
     std::string GameState::getCharacterOfPlayer (std::string playerId)
     {
-        return std::find_if(players.begin(), players.end(), [playerId](Player p) -> bool{ return p.getId() == playerId; })->getCharacter();
+        auto res = std::find_if(players.begin(), players.end(), [playerId](Player p) -> bool{ return p.getId() == playerId; });
+        if(res != players.end())
+            return res->getCharacter();
+        else
+            throw std::runtime_error("No player of id: " + playerId + "\n");
     }
 }
