@@ -12,6 +12,7 @@ namespace state {
   class GameMap;
   class Ressources;
   class Player;
+  class GameState;
 }
 
 #include "Ressources.h"
@@ -83,6 +84,7 @@ namespace state {
     std::string getPlayerOfCharacter (std::string characterId);
     void pushMessageToPlayer (std::string playerId, nlohmann::json initJson);
     void removeMessage (std::string playerId, std::string messageId);
+    GameState operator= (const GameState& original);
     // Setters and Getters
   };
 
