@@ -170,8 +170,11 @@ namespace engine
                     j = nlohmann::json::parse(command.getArgument());
                     auto messageId = j["messageId"];
 
-                    // TODO: process message
-
+                    // Check the nature of the message
+                    // If peace proposition and both characters are at war
+                        // peace out
+                    
+                    
                     gameState->removeMessage(currentPlayer, messageId);
                 }
                 catch(const std::exception& e)
@@ -194,6 +197,21 @@ namespace engine
                 {
                     std::cerr << e.what() << std::endl;
                     throw std::runtime_error("Error: could not parse no command\n");
+                }
+                break;
+            case Command::peace:
+                try
+                {
+                    j = nlohmann::json::parse(command.getArgument());
+                    // Fetch target's character
+                    // Check if both characters are the main antagonists of an existing war
+                    // Check if a peace proposition is not pending 
+                    // Push a Peace proposition message
+                }
+                catch(const std::exception& e)
+                {
+                    std::cerr << e.what() << std::endl;
+                    throw std::runtime_error("Error: could not parse peace command\n");
                 }
                 break;
             default:
