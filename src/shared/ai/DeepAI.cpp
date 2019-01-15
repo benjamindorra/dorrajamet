@@ -178,7 +178,7 @@ namespace ai {
         json provinces = oneState->fetchAllProvincesData();
         for(json::iterator it=provinces.begin(); it != provinces.end(); it++){
             // count how many provinces a player owns
-            if (oneState->getProvinceOwner(it.value()["id"])==oneState->fetchPlayerCharacter(playerId)){
+            if (oneState->getProvinceOwner(it.value()["id"])==oneState->getCharacterOfPlayer(playerId)){
                 score++;
             }
         }

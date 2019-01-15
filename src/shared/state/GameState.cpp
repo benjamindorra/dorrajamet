@@ -244,15 +244,17 @@ namespace state
     {
         return politics->areAtWar(characterA, characterB);
     }
-    void GameState::declareWar (std::string claim, std::string attackerId, std::string defenderId)
+    std::string GameState::declareWar (std::string claim, std::string attackerId, std::string defenderId)
     {
         auto attackerCamp = politics->getAllies(attackerId);
         auto defenderCamp = politics->getAllies(defenderId);
+        attackerCamp.push_back(attackerId);
+        defenderCamp.push_back(defenderId);
         auto warId = politics->createWar(attackerCamp, defenderCamp, attackerId, defenderId, claim, currentTurn);
         for(auto a: attackerCamp)
             for(auto d: defenderCamp)
                 politics->setWar(a, d, warId);
-
+        return warId;
     }
     std::string GameState::getProvinceOwner (std::string provinceId)
     {
@@ -305,13 +307,22 @@ namespace state
             if(players[i].getId() == playerId)
                 players[i].removeMessage(messageId);
     }
-    std::string GameState::fetchPlayerCharacter(std::string playerId){
-        for(Player player : players) {
-            if(player.getId()==playerId){
-                return player.getCharacter();
-            }
-        }
-        throw std::runtime_error("No player of id: " + playerId + "\n");
+    bool GameState::areAllies (std::string characterA, std::string characterB)
+    {
+        auto temp = politics->getAllies(characterA);
+        return std::find(temp.begin(), temp.end(), characterB) != temp.end();
+    }
+    std::pair<std::vector<std::string>, std::vector<std::string>> GameState::getWarCamps (std::string warId)
+    {
+        return politics->getWarCamps(warId);
+    }
+    std::string GameState::getCharacterOfPlayer (std::string playerId)
+    {
+        auto res = std::find_if(players.begin(), players.end(), [playerId](Player p) -> bool{ return p.getId() == playerId; });
+        if(res != players.end())
+            return res->getCharacter();
+        else
+            throw std::runtime_error("No player of id: " + playerId + "\n");
     }
     GameState GameState::copy(){
         GameState copy;

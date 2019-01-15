@@ -76,7 +76,7 @@ namespace state {
     std::string getCurrentPlayerCharacter ();
     std::string hasClaim (std::string claimantId, std::string targetCharacterId);
     bool areAtWar (std::string characterA, std::string characterB);
-    void declareWar (std::string claim, std::string attackerId, std::string defenderId);
+    std::string declareWar (std::string claim, std::string attackerId, std::string defenderId);
     std::string getProvinceOwner (std::string provinceId);
     void addClaim (std::string characterId, std::string provinceId);
     std::string getProvinceFromColor (unsigned int colorCode);
@@ -87,6 +87,9 @@ namespace state {
     std::string fetchPlayerCharacter (std::string playerId);
     GameState copy ();
     nlohmann::json fetchAllCharactersData ();
+    std::pair<std::vector<std::string>,std::vector<std::string>> getWarCamps (std::string warId);
+    bool areAllies (std::string characterA, std::string characterB);
+    std::string getCharacterOfPlayer (std::string playerId);
     // Setters and Getters
   };
 

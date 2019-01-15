@@ -276,4 +276,19 @@ namespace state
     nlohmann::json Politics::fetchAllCharactersData(){
         return characters.fetchAllCharactersData();
     }
+    std::pair<std::vector<std::string>, std::vector<std::string>> Politics::getWarCamps (std::string warId)
+    {
+        try
+        {
+            std::pair<std::vector<std::string>, std::vector<std::string>> res;
+            res.first = wars.at(warId).getAttackerCamp();
+            res.second = wars.at(warId).getDefenderCamp();
+            return res;
+        }
+        catch(const std::exception& e)
+        {
+            std::cerr << e.what() << std::endl;
+            throw std::runtime_error("Politics::getWarCamps with id: " + warId + "\n");
+        }
+    }
 }

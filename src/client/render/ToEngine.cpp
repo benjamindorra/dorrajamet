@@ -34,6 +34,10 @@ namespace render {
         {
             engine->pushCommand(engine::Command(engine::Command::no, argument));
         }
+        if (command=="War")
+        {
+            engine->pushCommand(engine::Command(engine::Command::war, argument));
+        }
 
     }
 }

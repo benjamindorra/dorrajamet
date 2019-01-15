@@ -97,6 +97,60 @@ namespace engine
             case Command::turn:
                 turnButton();
                 break;
+            case Command::war:
+                try
+                {
+                    j = nlohmann::json::parse(command.getArgument());
+                    auto targetOwner = gameState->getProvinceOwner(gameState->getProvinceFromColor(j["colorCode"].get<unsigned int>()));
+                    if(targetOwner == currentCharacter)
+                        std::cout << "Can't declare war on yourself you madman!\n";
+                    else if(gameState->areAllies(targetOwner, currentCharacter))
+                        std::cout << "Can't declare ass on allies you jerk!\n";
+                    else
+                    {
+                        auto claim = gameState->hasClaim(currentCharacter, targetOwner);
+                        if(claim.size())
+                        {
+                            auto warId = gameState->declareWar(claim, currentCharacter, targetOwner);
+                            auto camps = gameState->getWarCamps(warId);
+                            std::cout << "attackers: \n";
+                            for(auto character: camps.first)//attacking camp
+                            {
+                                std::cout << character << std::endl;
+                                if(character == currentCharacter)
+                                    continue;
+                                nlohmann::json mess;
+                                mess["id"] = currentCharacter + "_atk_war:" + warId + "_on_" + targetOwner + "_turn_" + std::to_string(currentTurn);
+                                mess["type"] = 0;
+                                mess["sourceCharacter"] = currentCharacter;
+                                mess["requiresAnswer"] = false;
+                                mess["data"] = warId;
+                                gameState->pushMessageToPlayer(gameState->getPlayerOfCharacter(character), mess);
+                            }
+                            std::cout << "defenders: \n";
+                            for(auto character: camps.second)//defending camp
+                            {
+                                std::cout << character << std::endl;
+                                nlohmann::json mess;
+                                mess["id"] = currentCharacter + "_def_war:" + warId + "_on_" + targetOwner + "_turn_" + std::to_string(currentTurn);
+                                mess["type"] = 0;
+                                mess["sourceCharacter"] = currentCharacter;
+                                mess["requiresAnswer"] = false;
+                                mess["data"] = warId;
+                                gameState->pushMessageToPlayer(gameState->getPlayerOfCharacter(character), mess);
+                            }
+                            
+                        }
+                        else
+                            std::cout << "You have no claim over this character\n";
+                    }
+                }
+                catch(const std::exception& e)
+                {
+                    std::cerr << e.what() << std::endl;
+                    throw std::runtime_error("Error: could not parse War declaration command arguments\n");
+                }
+                break;
             case Command::ok:
                 try
                 {
