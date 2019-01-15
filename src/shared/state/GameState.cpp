@@ -47,18 +47,6 @@ namespace state
         delete gameMap;
         delete politics;
     }
-    GameState GameState::operator= (const GameState& original){
-        GameState copy;
-        *copy.politics = *original.politics;
-        copy.politics->setParent(&copy);
-        *copy.gameMap = *original.gameMap;
-        copy.gameMap->setParent(&copy);
-        copy.ressources = original.ressources;
-        copy.players = original.players;
-        copy.currentPlayer = original.currentPlayer;
-        copy.currentTurn = original.currentTurn;
-        return copy;
-    }
     void GameState::refreshChildParentPointers()
     {
         this->gameMap->setParent(this);
@@ -325,4 +313,20 @@ namespace state
         }
         throw std::runtime_error("No player of id: " + playerId + "\n");
     }
+    GameState GameState::copy(){
+        GameState copy;
+        *copy.politics = *this->politics;
+        copy.politics->setParent(&copy);
+        *copy.gameMap = *this->gameMap;
+        copy.gameMap->setParent(&copy);
+        copy.ressources = this->ressources;
+        copy.players = this->players;
+        copy.currentPlayer = this->currentPlayer;
+        copy.currentTurn = this->currentTurn;
+        return copy;
+    }
+    nlohmann::json GameState::fetchAllCharactersData(){
+        return politics->fetchAllCharactersData();
+    }
+
 }

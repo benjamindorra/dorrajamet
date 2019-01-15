@@ -273,4 +273,7 @@ namespace state
     {
         characters.addClaim(claimant, provinceId);
     }
+    nlohmann::json Politics::fetchAllCharactersData(){
+        return characters.fetchAllCharactersData();
+    }
 }

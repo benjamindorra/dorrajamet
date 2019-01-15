@@ -84,8 +84,9 @@ namespace state {
     std::string getPlayerOfCharacter (std::string characterId);
     void pushMessageToPlayer (std::string playerId, nlohmann::json initJson);
     void removeMessage (std::string playerId, std::string messageId);
-    GameState operator= (const GameState& original);
     std::string fetchPlayerCharacter (std::string playerId);
+    GameState copy ();
+    nlohmann::json fetchAllCharactersData ();
     // Setters and Getters
   };
 
