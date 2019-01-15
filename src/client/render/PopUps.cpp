@@ -33,8 +33,8 @@ namespace render {
             deletePopUp(popUp.first);
         }
         json playerMessages = state->fetchPlayerMessagesData(playerId);
-        if(playerMessages.size())
-            std::cout << "found " << playerMessages.size();
+        /*if(playerMessages.size())
+            std::cout << "found " << playerMessages.size();*/
         for (json::iterator playerMessage = playerMessages.begin(); playerMessage != playerMessages.end(); ++playerMessage) {
             newPopUp(playerMessage.value()["requireAnswer"], playerMessage.value()["type"], playerMessage.value()["sourceCharacter"], playerId, playerMessage.value()["id"], playerMessage.value()["data"]);
         }
