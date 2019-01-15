@@ -41,7 +41,10 @@ namespace render {
                 toDisplay = state->fetchCharacterData(causeId)["name"].get<std::string>()+" declares war to "+state->fetchCharacterData( state->getCharacterOfPlayer(targetId))["name"].get<std::string>()+" !";
                 break;
             case Peace:
-                toDisplay = state->fetchCharacterData(causeId)["name"].get<std::string>()+" makes peace with "+state->fetchCharacterData(targetId)["name"].get<std::string>()+".";
+                toDisplay = state->fetchCharacterData(causeId)["name"].get<std::string>()+" offers peace to "+state->fetchCharacterData(state->getCharacterOfPlayer(targetId))["name"].get<std::string>()+".";
+                break;
+            case Surr:
+                toDisplay = state->fetchCharacterData(causeId)["name"].get<std::string>()+" surrenders to "+state->fetchCharacterData(state->getCharacterOfPlayer(targetId))["name"].get<std::string>()+".";
                 break;
             case Alliance:
                 toDisplay = state->fetchCharacterData(causeId)["name"].get<std::string>()+" makes an alliance with "+state->fetchCharacterData(targetId)["name"].get<std::string>()+".";

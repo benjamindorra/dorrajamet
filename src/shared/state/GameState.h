@@ -88,6 +88,11 @@ namespace state {
     bool areAllies (std::string characterA, std::string characterB);
     std::pair<std::vector<std::string>, std::vector<std::string>> getWarCamps (std::string warId);
     std::string getCharacterOfPlayer (std::string playerId);
+    std::string getWar (std::string characterA, std::string characterB);
+    void peaceOffer (std::string warId, std::string offeringCharacter);
+    void surrender (std::string warId, std::string surrenderingCharacter);
+    void endWar (std::string warId, std::string winner);
+    void transferProvince (std::string provinceId, std::string kingdomId);
     // Setters and Getters
   };
 

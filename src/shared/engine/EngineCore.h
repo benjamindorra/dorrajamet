@@ -4,6 +4,7 @@
 
 #include <queue>
 #include <state.h>
+#include <string>
 
 namespace engine {
   class Command;
@@ -29,6 +30,7 @@ namespace engine {
     int mainLoop ();
     void pushCommand (Command command);
     void processCommand (Command command);
+    void endWar (std::string warId, std::string winner);
     void turnButton ();
     void endTurn ();
     // Setters and Getters

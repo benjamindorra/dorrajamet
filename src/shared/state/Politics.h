@@ -47,7 +47,7 @@ namespace state {
     void transferKingdom (std::string character_from, std::string character_to, std::string kingdomId);
     void handleCharacterDeath (std::string characterId, std::string heirId, int score);
     void updateWars ();
-    void endWar (std::string warId);
+    void endWar (std::string warId, std::string winner);
     nlohmann::json getKingdomColor (std::string kingdomId);
     std::string getKingdomOfCharacter (std::string characterId);
     std::string getCharacterOfKingdom (std::string kingdomId);
@@ -61,6 +61,8 @@ namespace state {
     bool areAtWar (std::string characterA, std::string characterB);
     void addClaim (std::string claimant, std::string provinceId);
     std::pair<std::vector<std::string>, std::vector<std::string>> getWarCamps (std::string warId);
+    std::string getWar (std::string characterA, std::string characterB);
+    void setWarScore (std::string warId, int score);
     // Setters and Getters
   };
 

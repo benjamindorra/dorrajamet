@@ -31,6 +31,7 @@ namespace state {
     std::string getTargetTitle ();
     int getScore ();
     std::string getClaimantCharacter ();
+    std::string getDefendingCharacter ();
     std::vector<std::string> getAttackerCamp ();
     std::vector<std::string> getDefenderCamp ();
     void setScore (int score);

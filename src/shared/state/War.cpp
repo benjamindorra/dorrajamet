@@ -73,6 +73,10 @@ namespace state
     {
         return claimantCharacter;
     }
+    std::string War::getDefendingCharacter ()
+    {
+        return mainDefender;
+    }
     std::vector<std::string> War::getAttackerCamp ()
     {
         return attackerCamp;

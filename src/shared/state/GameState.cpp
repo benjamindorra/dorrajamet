@@ -336,4 +336,24 @@ namespace state
         else
             throw std::runtime_error("No player of id: " + playerId + "\n");
     }
+    std::string GameState::getWar (std::string characterA, std::string characterB)
+    {
+        return politics->getWar(characterA, characterB);
+    }
+    void GameState::peaceOffer (std::string warId, std::string offeringCharacter)
+    {
+        
+    }
+    void GameState::surrender (std::string warId, std::string surrenderingCharacter)
+    {
+
+    }
+    void GameState::endWar (std::string warId, std::string winner)
+    {
+        politics->endWar(warId, winner);
+    }
+    void GameState::transferProvince (std::string provinceId, std::string kingdomId)
+    {
+        gameMap->transferProvince(provinceId, kingdomId);
+    }
 }

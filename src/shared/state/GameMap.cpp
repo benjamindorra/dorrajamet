@@ -423,4 +423,16 @@ namespace state
                 res.push_back(p.first);
         return res;
     }
+    void GameMap::transferProvince (std::string provinceId, std::string kingdomId)
+    {
+        try
+        {
+            provinces.at(provinceId).setKingdom(kingdomId);
+        }
+        catch(const std::exception& e)
+        {
+            std::cerr << e.what() << std::endl;
+            throw std::runtime_error("Error: GameMap::transferProvince( " + provinceId + ", " + kingdomId + " )\n");
+        }
+    }
 }

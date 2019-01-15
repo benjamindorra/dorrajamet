@@ -134,59 +134,77 @@ namespace state
             endWar(e);
         */
     }
-    void Politics::endWar (std::string warId)
+    void Politics::endWar (std::string warId, std::string winner)
     {
-        /*auto attackers = wars[warId].getAttackerCamp();
-        auto defenders = wars[warId].getDefenderCamp();
-        auto title = wars[warId].getTargetTitle();
-        auto claimant = wars[warId].getClaimantCharacter();
-        if(wars[warId].attackerWon())
+        try
         {
-            for(auto const& a: attackers)
-                characters.changeScoreBy(a, -40);
-            for(auto const& a: defenders)
-                characters.changeScoreBy(a, 40);
-            transferKingdom(titles.getOwner(title), claimant, title);
-            characters.removeClaim(claimant, title);
-        }
-        else if(wars[warId].defenderWon())
-        {
-            for(auto const& a: attackers)
-                characters.changeScoreBy(a, -50);
-            for(auto const& a: defenders)
-                characters.changeScoreBy(a, 50);
-            characters.removeClaim(claimant, title);
-        }
-        else // White peace
-        {
-            
-        }
-        std::vector<unsigned int> toRemove;
-        std::vector<nlohmann::json> toPush;
-        for(auto const& attacker: attackers)
-            for(auto const& defender: defenders)
+            War war = wars.at(warId);
+            auto attackers = war.getAttackerCamp();
+            auto defenders = war.getDefenderCamp();
+            auto title = war.getTargetTitle();
+            auto claimant = war.getClaimantCharacter();
+            auto mainDefender = war.getDefendingCharacter();
+            if(winner == mainDefender)
+                war.setScore(-100);
+            else if(winner == claimant)
+                war.setScore(100);
+            else
+                throw std::runtime_error("Error: attempted to end a war of id: " + warId + " with invalid winner id: " + winner + "\n");
+            if(war.attackerWon())
             {
-                for(unsigned int i = 0; i < relations.size(); i++)
-                    if(relations[i].isBetween(attacker, defender) && relations[i].getType() == Relation::war && relations[i].getWarId() == warId)
-                        toRemove.push_back(i);
-                nlohmann::json j;
-                j["type"] = 0;
-                j["characterA"] = attacker;
-                j["characterB"] = defender;
-                j["endTurn"] = (parent->getCurrentTurn()) + 10;
-                toPush.push_back(j);
-                j["characterA"] = defender;
-                j["characterB"] = attacker;
-                toPush.push_back(j);
+                for(auto const& a: attackers)
+                    characters.changeScoreBy(a, -40);
+                for(auto const& a: defenders)
+                    characters.changeScoreBy(a, 40);
+                parent->transferProvince(title, characters.getKingdomOfCharacter(claimant));
+                characters.removeClaim(claimant, title);
             }
-        for(auto i: toRemove)
-        {
-            relations[i] = relations.back();
-            relations.pop_back();
+            else if(war.defenderWon())
+            {
+                for(auto const& a: attackers)
+                    characters.changeScoreBy(a, -50);
+                for(auto const& a: defenders)
+                    characters.changeScoreBy(a, 50);
+                characters.removeClaim(claimant, title);
+            }
+            else // White peace
+            {
+                
+            }
+            std::vector<unsigned int> toRemove;
+            std::vector<nlohmann::json> toPush;
+            for(auto const& attacker: attackers)
+                for(auto const& defender: defenders)
+                {
+                    for(unsigned int i = 0; i < relations.size(); i++)
+                        if(relations[i].isBetween(attacker, defender) && relations[i].getType() == Relation::war && relations[i].getWarId() == warId)
+                            toRemove.push_back(i);
+                    nlohmann::json j;
+                    j["type"] = 0;
+                    j["characterA"] = attacker;
+                    j["characterB"] = defender;
+                    j["endTurn"] = (parent->getCurrentTurn()) + 10;
+                    toPush.push_back(j);
+                    j["characterA"] = defender;
+                    j["characterB"] = attacker;
+                    toPush.push_back(j);
+                }
+            for(auto i: toRemove)
+            {
+                relations[i] = relations.back();
+                relations.pop_back();
+            }
+            for(auto j: toPush)
+                relations.push_back(Relation(j.dump()));
+            wars.erase(warId);
         }
-        for(auto j: toPush)
-            relations.push_back(Relation(j.dump()));
-        wars.erase(warId);*/
+        catch(const std::exception& e)
+        {
+            std::cerr << e.what() << std::endl;
+            throw std::runtime_error("Error: Politics::endWar( " + warId + " )\n");
+        }
+
+        
     }
     nlohmann::json Politics::getKingdomColor (std::string kingdomId)
     {
@@ -287,5 +305,12 @@ namespace state
             std::cerr << e.what() << std::endl;
             throw std::runtime_error("Politics::getWarCamps with id: " + warId + "\n");
         }
+    }
+    std::string Politics::getWar (std::string characterA, std::string characterB)
+    {
+        for(auto war: wars)
+            if((war.second.getClaimantCharacter() == characterA && war.second.getDefendingCharacter() == characterB) || (war.second.getClaimantCharacter() == characterB && war.second.getDefendingCharacter() == characterA))
+                return war.first;
+        return "";
     }
 }
