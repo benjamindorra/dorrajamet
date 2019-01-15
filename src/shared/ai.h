@@ -3,4 +3,7 @@
 #define __AI__H
 
 #include "ai/RandomAI.h"
+#include "ai/BasicAI.h"
+#include "ai/ScoreNode.h"
+#include "ai/DeepAI.h"
 #endif
