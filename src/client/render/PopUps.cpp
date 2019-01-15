@@ -32,6 +32,8 @@ namespace render {
         if(playerMessages.size())
             std::cout << "found " << playerMessages.size();
         bool alreadyExist;
+        /*if(playerMessages.size())
+            std::cout << "found " << playerMessages.size();*/
         for (json::iterator playerMessage = playerMessages.begin(); playerMessage != playerMessages.end(); ++playerMessage) {
             alreadyExist=false;
             for (auto popUp : popUps) {

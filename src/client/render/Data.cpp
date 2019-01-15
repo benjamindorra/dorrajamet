@@ -66,7 +66,7 @@ namespace render {
             buttons={};
             buttons.push_back(new Button(mainRender, x1, y1, "Relations", color, sf::Vector2i(width, spaceV/3)));
             buttons.push_back(new Button(mainRender, x1, y1+spaceV/3, "Alliance", color, sf::Vector2i(width/2, spaceV/3)));
-            buttons.push_back(new Button(mainRender, x1+width/2, y1+spaceV/3, "Murder", color, sf::Vector2i(width/2, spaceV/3)));
+            buttons.push_back(new Button(mainRender, x1+width/2, y1+spaceV/3, "Surrender", color, sf::Vector2i(width/2, spaceV/3)));
             buttons.push_back(new Button(mainRender, x1, y1+2*spaceV/3, "War", color, sf::Vector2i(width/2, spaceV/3)));
             buttons.push_back(new Button(mainRender, x1+width/2, y1+2*spaceV/3, "Peace", color, sf::Vector2i(width/2, spaceV/3)));
             try {
@@ -245,11 +245,13 @@ namespace render {
         else if (type==Types::Character) {
             if (button=="Relations") {this->select(Data::Relations, id);}
             else if (button =="Alliance") {}
-            else if (button=="Murder") {}
+            else if (button=="Surrender") {}
             else if (button=="War") {
                 std::cout << "War... War never changes.\n";
             }
-            else if (button=="Peace") {}
+            else if (button=="Peace") {
+                std::cout << "Wars begin when you will...\n";
+            }
             j["command"] = button;
             j["colorCode"] = std::stoul(id);
             engine->addCommand(button, j.dump());

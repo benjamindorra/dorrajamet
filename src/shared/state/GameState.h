@@ -38,6 +38,7 @@ namespace state {
     GameState ();
     GameState (const char* saveFilePath);
     GameState (const std::string saveFilePath);
+    GameState operator= (const GameState& original);
     ~GameState ();
     void testPointer ();
     void refreshChildParentPointers ();
@@ -84,12 +85,16 @@ namespace state {
     std::string getPlayerOfCharacter (std::string characterId);
     void pushMessageToPlayer (std::string playerId, nlohmann::json initJson);
     void removeMessage (std::string playerId, std::string messageId);
-    std::string fetchPlayerCharacter (std::string playerId);
+    bool areAllies (std::string characterA, std::string characterB);
+    std::pair<std::vector<std::string>, std::vector<std::string>> getWarCamps (std::string warId);
+    std::string getCharacterOfPlayer (std::string playerId);
+    std::string getWar (std::string characterA, std::string characterB);
+    void peaceOffer (std::string warId, std::string offeringCharacter);
+    void surrender (std::string warId, std::string surrenderingCharacter);
+    void endWar (std::string warId, std::string winner);
+    void transferProvince (std::string provinceId, std::string kingdomId);
     GameState copy ();
     nlohmann::json fetchAllCharactersData ();
-    std::pair<std::vector<std::string>,std::vector<std::string>> getWarCamps (std::string warId);
-    bool areAllies (std::string characterA, std::string characterB);
-    std::string getCharacterOfPlayer (std::string playerId);
     // Setters and Getters
   };
 

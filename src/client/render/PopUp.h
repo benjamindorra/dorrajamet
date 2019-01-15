@@ -23,7 +23,7 @@ namespace render {
     // Attributes
   public:
     enum Type{Info=0, Question=1};
-    enum Action{War=0, Peace=1, Alliance=2, Claim=3, Plot=4 };
+    enum Action{War=0,Peace=1,Alliance=2,Claim=3,Plot=4,Surr=5};
     int clickX;
     int clickY;
     bool selected     = false;
