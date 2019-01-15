@@ -291,6 +291,9 @@ namespace state
     {
         characters.addClaim(claimant, provinceId);
     }
+    nlohmann::json Politics::fetchAllCharactersData(){
+        return characters.fetchAllCharactersData();
+    }
     std::pair<std::vector<std::string>, std::vector<std::string>> Politics::getWarCamps (std::string warId)
     {
         try

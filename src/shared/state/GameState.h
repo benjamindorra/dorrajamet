@@ -93,6 +93,8 @@ namespace state {
     void surrender (std::string warId, std::string surrenderingCharacter);
     void endWar (std::string warId, std::string winner);
     void transferProvince (std::string provinceId, std::string kingdomId);
+    GameState copy ();
+    nlohmann::json fetchAllCharactersData ();
     // Setters and Getters
   };
 

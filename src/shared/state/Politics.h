@@ -63,6 +63,7 @@ namespace state {
     std::pair<std::vector<std::string>, std::vector<std::string>> getWarCamps (std::string warId);
     std::string getWar (std::string characterA, std::string characterB);
     void setWarScore (std::string warId, int score);
+    nlohmann::json fetchAllCharactersData ();
     // Setters and Getters
   };
 

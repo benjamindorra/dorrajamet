@@ -106,6 +106,23 @@ int main(int argc, char ** argv)
             //std::cout << testState.fetchAllProvincesTopLiegeColor().dump(2);
 
         }
+        else if(command == "deepai"){
+            state::GameState testState("./res/testGameState.json");
+            std::queue<engine::Command> commands;
+            engine::EngineCore testEngine(&testState, &commands);
+            ai::DeepAI deepAI(&testState, &testEngine);
+            deepAI.fillTree("player_one", 1);
+            deepAI.minimax();
+            /*render::Render render1(1280,720);
+            //init the render
+            render1.init(&testState, &testEngine);
+            while (render1.getWindow()->isOpen())
+            {
+                // start the renderloop
+                render1.renderLoop();
+                testEngine.mainLoop();
+            }*/
+        }
         else
             std::cout << "Unknown parameter: " << command << std::endl;
     }
