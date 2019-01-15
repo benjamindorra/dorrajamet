@@ -28,15 +28,28 @@ namespace render {
         //std::cout << "Popups update\n";
         playerId = state->getCurrentPlayer();
         
-
-        for (auto popUp : popUps) {
-            deletePopUp(popUp.first);
-        }
         json playerMessages = state->fetchPlayerMessagesData(playerId);
         if(playerMessages.size())
             std::cout << "found " << playerMessages.size();
+        bool alreadyExist;
         for (json::iterator playerMessage = playerMessages.begin(); playerMessage != playerMessages.end(); ++playerMessage) {
-            newPopUp(playerMessage.value()["requireAnswer"], playerMessage.value()["type"], playerMessage.value()["sourceCharacter"], playerId, playerMessage.value()["id"], playerMessage.value()["data"]);
+            alreadyExist=false;
+            for (auto popUp : popUps) {
+                if(popUp.first==playerMessage.value()["id"]) alreadyExist=true;
+            }
+            if (not alreadyExist){
+                newPopUp(playerMessage.value()["requireAnswer"], playerMessage.value()["type"], playerMessage.value()["sourceCharacter"], playerId, playerMessage.value()["id"], playerMessage.value()["data"]);
+            }
+        }
+        bool alreadyDeleted;
+        for (auto popUp : popUps) {
+            alreadyDeleted=true;
+            for (json::iterator playerMessage = playerMessages.begin(); playerMessage != playerMessages.end(); ++playerMessage) {
+                if(popUp.first==playerMessage.value()["id"]) alreadyDeleted=false;
+            }
+            if (alreadyDeleted){
+                deletePopUp(popUp.first);
+            }
         }
 
     }
