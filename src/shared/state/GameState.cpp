@@ -359,5 +359,24 @@ namespace state
     nlohmann::json GameState::fetchAllCharactersData(){
         return politics->fetchAllCharactersData();
     }
+    nlohmann::json GameState::toJson (){
+            nlohmann::json gameState;
+            nlohmann::json allPlayers = nlohmann::json::array();
+            for(auto player : players) {
+                allPlayers.push_back(player.toJson());
+            }
+            gameState["players"] = allPlayers;
+            gameState["currentPlayer"] = this->currentPlayer;
+            gameState["currentTurn"] = this->currentTurn;
+            gameState["politics"] = this->politics->toJson();
+            gameState["ressources"] = this->ressources.toJson();
+            gameState["gameMap"] = this->gameMap->toJson();
+
+            return gameState;
+    }
+    void GameState::save(std::string savePath){
+        nlohmann::json gameState = this->toJson();
+        saveFile(savePath, gameState.dump(4));
+    }
 
 }

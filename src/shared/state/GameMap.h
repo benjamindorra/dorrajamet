@@ -72,6 +72,7 @@ namespace state {
     bool canArmyMove (std::string armyId);
     std::vector<std::string> getProvincesOfKingdom (std::string kingdomId);
     void transferProvince (std::string provinceId, std::string kingdomId);
+    nlohmann::json toJson ();
     // Setters and Getters
   };
 

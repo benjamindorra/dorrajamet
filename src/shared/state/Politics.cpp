@@ -316,4 +316,20 @@ namespace state
                 return war.first;
         return "";
     }
+    nlohmann::json Politics::toJson (){
+        nlohmann::json politics;
+        politics["kingdoms"] = titles.toJson();
+        politics["characters"]["list"] = characters.toJson();
+        nlohmann::json allRelations = nlohmann::json::array();
+        for(Relation relation : relations){
+            allRelations.push_back(relation.toJson());
+        }
+        politics["characters"]["relations"] = allRelations;
+        nlohmann::json allWars = nlohmann::json::array();
+        for(auto war: wars){
+            allWars.push_back(war.second.toJson());
+        }
+        politics["wars"] = allWars;
+        return politics;
+    }
 }

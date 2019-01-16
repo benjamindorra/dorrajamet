@@ -4,6 +4,7 @@
 
 #include <string>
 #include <vector>
+#include <json.hpp>
 
 namespace state {
   class GameMap;
@@ -35,6 +36,7 @@ namespace state {
     std::string getProvince ();
     bool isFinished ();
     void close (int turn);
+    nlohmann::json toJson ();
     // Setters and Getters
   };
 

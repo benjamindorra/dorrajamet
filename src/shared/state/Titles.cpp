@@ -63,4 +63,11 @@ namespace state
     {
         return kingdoms[kingdomId].toJson();
     }
+    nlohmann::json Titles::toJson (){
+        nlohmann::json allTitles = nlohmann::json::array();
+        for(auto kingdom : kingdoms){
+            allTitles.push_back(kingdom.second.toJson());
+        }
+        return allTitles;
+    }
 }

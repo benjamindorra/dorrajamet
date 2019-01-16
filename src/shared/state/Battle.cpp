@@ -93,4 +93,15 @@ namespace state
     {
         this->endTurn = turn;
     }
+    nlohmann::json Battle::toJson (){
+        nlohmann::json j;
+
+        j["province"] = province;
+        j["whiteArmies"] = whiteArmies;
+        j["blackArmies"] = blackArmies;
+        j["startTurn"] = startTurn;
+        j["endTurn"] = endTurn;
+
+        return j;
+    }
 }

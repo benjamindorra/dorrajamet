@@ -125,4 +125,13 @@ namespace state
     {
         characters[claimant].addClaim(provinceId);
     }
+    nlohmann::json Characters::toJson (){
+        nlohmann::json allCharacters = nlohmann::json::array();
+        
+        for(auto character : characters) {
+            allCharacters.push_back(character.second.toJson());
+        }
+        
+        return allCharacters;
+    }
 }
