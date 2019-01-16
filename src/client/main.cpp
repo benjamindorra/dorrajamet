@@ -107,7 +107,7 @@ int main(int argc, char ** argv)
             testState.save(savePath);
 
         }
-        else if(command == "deepai"){
+        else if(command == "deep_ai"){
             state::GameState testState("./res/testGameState.json");
             std::queue<engine::Command> commands;
             engine::EngineCore testEngine(&testState, &commands);
