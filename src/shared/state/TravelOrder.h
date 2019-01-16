@@ -34,6 +34,7 @@ namespace state {
     bool nextStep ();
     unsigned int size ();
     nlohmann::json toJson ();
+    void setParent (Army* parent);
     // Setters and Getters
   };
 

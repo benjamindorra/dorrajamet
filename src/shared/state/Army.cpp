@@ -8,6 +8,14 @@
 
 namespace state
 {
+    /*Army& Army::operator= (const Army& army){
+        currentProvince=army.currentProvince;
+        std::cout<<"Copy= current Province for army one is: "<<currentProvince<<" Address "<<(unsigned long)this<<" Address army: "<<(unsigned long)&army<<std::endl;
+        return *this;
+    }
+    Army::Army (const Army& army) : currentProvince(army.currentProvince){
+         std::cout<<"Copy current Province for army one is: "<<currentProvince<<" Address "<<(unsigned long)this<<" Address army: "<<(unsigned long)&army<<std::endl;
+    }*/
     Army::Army()
     {
         /*
@@ -50,6 +58,22 @@ namespace state
     Army::~Army ()
     {
         
+    }
+    Army& Army::operator= (const Army& army){
+        this->parent = army.parent;
+        this->id=army.id;
+        this->ownerCharacter=army.ownerCharacter;
+        /// Id(s) of the province(s) of which levies are in this army
+        this->levies =army.levies;
+        /// Pointer of the province where the army is currently located
+        this->currentProvince=army.currentProvince;
+        this->currentBattle=army.currentBattle;
+        /// Queue of ongoing moving orders for the army
+        this->orders = army.orders;
+        for (auto& e : orders) {
+            e.setParent(this);
+        }
+        return *this;
     }
     void Army::setParent (GameMap * parent)
     {
@@ -103,10 +127,12 @@ namespace state
     }
     void Army::advanceOrders()
     {
-        if(orders.empty())
+        if(orders.empty()){
             return;
-        if(orders[0].nextStep())
+        }
+        if(orders[0].nextStep()){
             orders.clear();
+        }
     }
     int Army::getMen()
     {

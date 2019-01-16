@@ -124,7 +124,7 @@ int main(int argc, char ** argv)
                 testEngine.mainLoop();
             }*/
         }
-        else if(command == "loadSave"){
+        else if(command == "load"){
             state::GameState testState(savePath);
             std::queue<engine::Command> commands;
             engine::EngineCore testEngine(&testState, &commands);
