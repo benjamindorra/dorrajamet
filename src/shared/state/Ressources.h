@@ -2,8 +2,8 @@
 #ifndef STATE__RESSOURCES__H
 #define STATE__RESSOURCES__H
 
-#include <string>
 #include <json.hpp>
+#include <string>
 
 namespace state {
   class Traits;
@@ -22,6 +22,8 @@ namespace state {
   private:
     Traits traits;
     Adjacencies adjacencies;
+    /// A json object containing the paths to the static ressources. Used in toJson(). Needed to save the game state.
+    nlohmann::json ressourcesPaths;
     // Operations
   public:
     Ressources ();
@@ -33,6 +35,7 @@ namespace state {
     void loadAdjacencies (std::string adjacenciesPath);
     void loadTraits (std::string traitsPath);
     nlohmann::json getOrderJson (std::string origId, std::string destId);
+    nlohmann::json toJson ();
     // Setters and Getters
   };
 

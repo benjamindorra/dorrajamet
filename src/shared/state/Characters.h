@@ -42,6 +42,7 @@ namespace state {
     nlohmann::json fetchAllCharactersData ();
     std::vector<std::string> getClaims (std::string characterId);
     void addClaim (std::string claimant, std::string provinceId);
+    nlohmann::json toJson ();
     // Setters and Getters
   };
 

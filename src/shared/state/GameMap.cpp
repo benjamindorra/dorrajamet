@@ -435,4 +435,25 @@ namespace state
             throw std::runtime_error("Error: GameMap::transferProvince( " + provinceId + ", " + kingdomId + " )\n");
         }
     }
+    nlohmann::json GameMap::toJson (){
+        nlohmann::json gameMap;
+
+        nlohmann::json allProvinces = nlohmann::json::array();
+        for(auto province : provinces) {
+            allProvinces.push_back(province.second.toJson());
+        }
+        gameMap["provinces"] = allProvinces;
+        nlohmann::json allArmies = nlohmann::json::array();
+        for(auto army : armies) {
+            allArmies.push_back(army.second.toJson());
+        }
+        gameMap["armies"] = allArmies;
+        nlohmann::json allBattles = nlohmann::json::array();
+        for(auto battle : battles) {
+            allBattles.push_back(battle.second.toJson());
+        }
+        gameMap["battles"] = allBattles;
+
+        return gameMap;
+    }
 }

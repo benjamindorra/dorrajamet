@@ -73,6 +73,9 @@ namespace state
     {
         return orderList.size();
     }
+    void TravelOrder::setParent(Army* parent){
+        this->parent = parent;
+    }
     nlohmann::json TravelOrder::toJson ()
     {
         nlohmann::json j;

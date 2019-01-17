@@ -15,13 +15,13 @@ namespace state
 
         try
         {
-            json j = json::parse(strJson);
-            this->loadAdjacencies(j["adjacenciesPath"].get<std::string>());
+            this->ressourcesPaths = json::parse(strJson);
+            this->loadAdjacencies(ressourcesPaths["adjacenciesPath"].get<std::string>());
             if(adjacencies.checkConsistency())
                 std::cout << "Adjacencies consistency check success\n\n\n";
             else
                 throw std::string("Adjacencies consistency check failed\n");
-            this->loadTraits(j["traitsPath"].get<std::string>());
+            this->loadTraits(ressourcesPaths["traitsPath"].get<std::string>());
             if(traits.checkConsistency())
                 std::cout << "Traits consistency check success\n\n\n";
             else
@@ -89,6 +89,9 @@ namespace state
     nlohmann::json Ressources::getOrderJson (std::string origId, std::string destId)
     {
         return adjacencies.getOrderJson(origId, destId);
+    }
+    nlohmann::json Ressources::toJson (){
+        return this->ressourcesPaths;
     }
 
 }

@@ -9,6 +9,7 @@
 namespace state {
   class GameMap;
   class TravelOrder;
+  class Army;
 }
 
 #include "TravelOrder.h"
@@ -35,6 +36,7 @@ namespace state {
     Army ();
     Army (GameMap * parent, std::string strJson);
     ~Army ();
+    Army& operator= (const Army& army);
     void setParent (GameMap * parent);
     bool checkConsistency ();
     void debug ();
