@@ -38,7 +38,6 @@ namespace engine
     {
         auto currentCharacter = gameState->getCurrentPlayerCharacter();
         auto currentPlayer = gameState->getCurrentPlayer();
-        auto currentTurn = gameState->getCurrentTurn();
         std::string warId;
         std::string targetCharacter;
         nlohmann::json j;
