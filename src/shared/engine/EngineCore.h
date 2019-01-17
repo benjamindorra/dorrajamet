@@ -5,6 +5,7 @@
 #include <queue>
 #include <state.h>
 #include <string>
+#include <json.hpp>
 
 namespace engine {
   class Command;
@@ -33,6 +34,16 @@ namespace engine {
     void endWar (std::string warId, std::string winner);
     void turnButton ();
     void endTurn ();
+    void moveArmy (std::string arguments);
+    void claim (std::string arguments);
+    void war (std::string arguments);
+    void peace (std::string arguments);
+    void surrender (std::string arguments);
+    void okButton (std::string arguments);
+    void yesButton (std::string arguments);
+    void noButton (std::string arguments);
+    void processSurrenderMessageReply (bool repliedYes, std::string arguments, nlohmann::json message);
+    void processPeaceMessageReply (bool repliedYes, std::string arguments, nlohmann::json message);
     // Setters and Getters
   };
 
