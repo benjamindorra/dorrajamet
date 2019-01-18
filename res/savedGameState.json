@@ -1,0 +1,341 @@
+{
+    "currentPlayer": 1,
+    "currentTurn": 0,
+    "gameMap": {
+        "armies": [
+            {
+                "currentBattle": "",
+                "currentProvince": "prov_two",
+                "id": "army_chara0001_xx",
+                "levies": [
+                    "prov_one"
+                ],
+                "orders": [],
+                "ownerCharacter": "chara_0001"
+            }
+        ],
+        "battles": [],
+        "provinces": [
+            {
+                "baseLevy": {
+                    "isRaised": false,
+                    "men": 12232,
+                    "reinforcementRate": 1.0
+                },
+                "baseTaxIncome": 34,
+                "colorCode": 4278190335,
+                "controlledBy": "none",
+                "development": 50,
+                "dispPosX": 224,
+                "dispPosY": 461,
+                "id": "prov_five",
+                "kingdomId": "k_three",
+                "levy": {
+                    "isRaised": false,
+                    "men": 5975,
+                    "reinforcementRate": 1.0
+                },
+                "name": "Fiveland",
+                "prosperity": 87,
+                "siegeStatus": 0,
+                "siegingArmy": "none",
+                "taxIncome": 200
+            },
+            {
+                "baseLevy": {
+                    "isRaised": false,
+                    "men": 12232,
+                    "reinforcementRate": 1.0
+                },
+                "baseTaxIncome": 34,
+                "colorCode": 4294902015,
+                "controlledBy": "none",
+                "development": 50,
+                "dispPosX": 366,
+                "dispPosY": 341,
+                "id": "prov_four",
+                "kingdomId": "k_four",
+                "levy": {
+                    "isRaised": false,
+                    "men": 5975,
+                    "reinforcementRate": 1.0
+                },
+                "name": "Fourland",
+                "prosperity": 87,
+                "siegeStatus": 0,
+                "siegingArmy": "none",
+                "taxIncome": 200
+            },
+            {
+                "baseLevy": {
+                    "isRaised": false,
+                    "men": 12232,
+                    "reinforcementRate": 1.0
+                },
+                "baseTaxIncome": 34,
+                "colorCode": 65535,
+                "controlledBy": "none",
+                "development": 50,
+                "dispPosX": 225,
+                "dispPosY": 194,
+                "id": "prov_one",
+                "kingdomId": "k_one",
+                "levy": {
+                    "isRaised": true,
+                    "men": 5975,
+                    "reinforcementRate": 1.0
+                },
+                "name": "Oneland",
+                "prosperity": 87,
+                "siegeStatus": 0,
+                "siegingArmy": "none",
+                "taxIncome": 200
+            },
+            {
+                "baseLevy": {
+                    "isRaised": false,
+                    "men": 12232,
+                    "reinforcementRate": 1.0
+                },
+                "baseTaxIncome": 34,
+                "colorCode": 4278255615,
+                "controlledBy": "none",
+                "development": 50,
+                "dispPosX": 354,
+                "dispPosY": 475,
+                "id": "prov_six",
+                "kingdomId": "k_four",
+                "levy": {
+                    "isRaised": false,
+                    "men": 5975,
+                    "reinforcementRate": 1.0
+                },
+                "name": "Sixland",
+                "prosperity": 87,
+                "siegeStatus": 0,
+                "siegingArmy": "none",
+                "taxIncome": 200
+            },
+            {
+                "baseLevy": {
+                    "isRaised": false,
+                    "men": 14384,
+                    "reinforcementRate": 1.0
+                },
+                "baseTaxIncome": 42,
+                "colorCode": 16711935,
+                "controlledBy": "none",
+                "development": 60,
+                "dispPosX": 217,
+                "dispPosY": 330,
+                "id": "prov_three",
+                "kingdomId": "k_three",
+                "levy": {
+                    "isRaised": false,
+                    "men": 7046,
+                    "reinforcementRate": 1.0
+                },
+                "name": "Threeland",
+                "prosperity": 90,
+                "siegeStatus": 0,
+                "siegingArmy": "none",
+                "taxIncome": 250
+            },
+            {
+                "baseLevy": {
+                    "isRaised": false,
+                    "men": 10017,
+                    "reinforcementRate": 1.0
+                },
+                "baseTaxIncome": 27,
+                "colorCode": 16777215,
+                "controlledBy": "none",
+                "development": 40,
+                "dispPosX": 372,
+                "dispPosY": 207,
+                "id": "prov_two",
+                "kingdomId": "k_one",
+                "levy": {
+                    "isRaised": false,
+                    "men": 4871,
+                    "reinforcementRate": 1.0
+                },
+                "name": "Twoland",
+                "prosperity": 81,
+                "siegeStatus": 0,
+                "siegingArmy": "none",
+                "taxIncome": 150
+            },
+            {
+                "baseLevy": {
+                    "isRaised": false,
+                    "men": 0,
+                    "reinforcementRate": 0.0
+                },
+                "baseTaxIncome": 0,
+                "colorCode": 255,
+                "controlledBy": "none",
+                "development": 0,
+                "dispPosX": 0,
+                "dispPosY": 0,
+                "id": "sea",
+                "kingdomId": "k_none",
+                "levy": {
+                    "isRaised": false,
+                    "men": 0,
+                    "reinforcementRate": 0.0
+                },
+                "name": "Black Sea",
+                "prosperity": 0,
+                "siegeStatus": 0,
+                "siegingArmy": "none",
+                "taxIncome": 0
+            }
+        ]
+    },
+    "players": [
+        {
+            "currentCharacter": "chara_0001",
+            "id": "player_one",
+            "score": 100
+        },
+        {
+            "currentCharacter": "chara_0002",
+            "id": "player_two",
+            "score": 100
+        },
+        {
+            "currentCharacter": "chara_0003",
+            "id": "player_three",
+            "score": 100
+        },
+        {
+            "currentCharacter": "chara_0004",
+            "id": "player_four",
+            "score": 100
+        }
+    ],
+    "politics": {
+        "characters": {
+            "list": [
+                {
+                    "age": 22,
+                    "alive": true,
+                    "claims": [],
+                    "diplomacy": 12,
+                    "dynastyName": "Jones",
+                    "gold": 500,
+                    "hasPlot": false,
+                    "id": "chara_0001",
+                    "intrigue": 15,
+                    "kingdomId": "k_one",
+                    "martial": 21,
+                    "name": "Rayleigh",
+                    "prestige": 160,
+                    "stewardship": 10,
+                    "traits": [
+                        "proud",
+                        "patient"
+                    ]
+                },
+                {
+                    "age": 22,
+                    "alive": true,
+                    "claims": [
+                        "prov_four"
+                    ],
+                    "diplomacy": 12,
+                    "dynastyName": "Stuart",
+                    "gold": 500,
+                    "hasPlot": false,
+                    "id": "chara_0002",
+                    "intrigue": 15,
+                    "kingdomId": "k_two",
+                    "martial": 21,
+                    "name": "Thomas",
+                    "prestige": 240,
+                    "stewardship": 10,
+                    "traits": [
+                        "lustful",
+                        "wroth"
+                    ]
+                },
+                {
+                    "age": 22,
+                    "alive": true,
+                    "claims": [],
+                    "diplomacy": 12,
+                    "dynastyName": "Collins",
+                    "gold": 500,
+                    "hasPlot": false,
+                    "id": "chara_0003",
+                    "intrigue": 15,
+                    "kingdomId": "k_three",
+                    "martial": 21,
+                    "name": "Emile",
+                    "prestige": 200,
+                    "stewardship": 10,
+                    "traits": [
+                        "kind",
+                        "slothful"
+                    ]
+                },
+                {
+                    "age": 22,
+                    "alive": true,
+                    "claims": [],
+                    "diplomacy": 12,
+                    "dynastyName": "Miles",
+                    "gold": 500,
+                    "hasPlot": true,
+                    "id": "chara_0004",
+                    "intrigue": 15,
+                    "kingdomId": "k_four",
+                    "martial": 21,
+                    "name": "Jonas",
+                    "plotEnd": 200,
+                    "plotTarget": "d_of_odds",
+                    "plotType": 1,
+                    "prestige": 200,
+                    "stewardship": 10,
+                    "traits": [
+                        "chaste",
+                        "greedy"
+                    ]
+                }
+            ],
+            "relations": []
+        },
+        "kingdoms": [
+            {
+                "holder": "chara_0004",
+                "id": "k_four",
+                "kingdomColorCode": 3253403802,
+                "name": "Kingdom of Four"
+            },
+            {
+                "holder": "chara_0001",
+                "id": "k_one",
+                "kingdomColorCode": 215192060,
+                "name": "Kingdom of One"
+            },
+            {
+                "holder": "chara_0003",
+                "id": "k_three",
+                "kingdomColorCode": 1517155255,
+                "name": "Kingdom of Three"
+            },
+            {
+                "holder": "chara_0002",
+                "id": "k_two",
+                "kingdomColorCode": 200056190,
+                "name": "Kingdom of Two"
+            }
+        ],
+        "wars": []
+    },
+    "ressources": {
+        "adjacenciesPath": "./res/adjacencies.csv",
+        "traitsPath": "./res/traits.json"
+    }
+}

@@ -11,13 +11,14 @@ using json = nlohmann::json;
 
 namespace render {
     ToState::ToState () {}
+    
     ToState::ToState (state::GameState * state) {
         this->state=state;
         try {
-            /*json j = fetchAllProvincesData();
+            json j = fetchAllProvincesData();
             for(json::iterator it = j.begin(); it!= j.end(); ++it) {
                 this->mapColorId[it.value()["colorCode"].dump()] = it.value()["id"].get<std::string>();
-            }*/
+            }
         }
         catch(const std::exception& e) {
             std::cerr << e.what() <<std::endl;
