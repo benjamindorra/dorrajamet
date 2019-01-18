@@ -94,6 +94,7 @@ namespace state
         << "\nBase levy men: " << baseLevy.getMen()
         << "\nDispPosX: " << dispPosX
         << "\nDispPosY: " << dispPosY
+        << "\nKingdomId: " << kingdomId 
         << std::endl;
     }
     int Province::getLevyMen()
@@ -241,7 +242,7 @@ namespace state
     nlohmann::json Province::toJson ()
     {
         nlohmann::json j;
-        j["id"] = id;
+        /*j["id"] = id;
         j["name"] = name;
         j["kingdomId"] = kingdomId;
         j["colorCode"] = colorCode;
@@ -255,7 +256,7 @@ namespace state
         j["taxIncome"] = taxIncome;
         j["siegeStatus"] = siegeStatus;
         j["siegingArmy"] = siegingArmy;
-        j["controlledBy"] = controlledBy;
+        j["controlledBy"] = controlledBy;*/
         return j;
     }
 }

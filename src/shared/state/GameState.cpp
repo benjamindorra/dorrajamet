@@ -54,7 +54,7 @@ namespace state
     }
     void GameState::debug()
     {
-        //this->politics->debug();
+        this->politics->debug();
         //this->ressources.debug();
         this->gameMap->debug();
     }
@@ -274,8 +274,8 @@ namespace state
         for (Player player : players) {
             if (player.getId()==playerId) {
                 auto messages = player.getMessages();
-                if(messages.size())
-                    std::cout << "found " << messages.size() << " messages for player: " << playerId << std::endl;
+                /*if(messages.size())
+                    std::cout << "found " << messages.size() << " messages for player: " << playerId << std::endl;*/
                 return messages;
             }
         }
@@ -305,7 +305,11 @@ namespace state
     {
         for(unsigned i = 0; i < players.size(); i++)
             if(players[i].getId() == playerId)
+            {
                 players[i].removeMessage(messageId);
+                return;
+            }
+        throw std::runtime_error("Error: couldn't find player of id: " + playerId + "\n\n");
     }
     bool GameState::areAllies (std::string characterA, std::string characterB)
     {
@@ -339,6 +343,7 @@ namespace state
     void GameState::endWar (std::string warId, std::string winner)
     {
         politics->endWar(warId, winner);
+        std::cout << "GameState::endWar finished\n";
     }
     void GameState::transferProvince (std::string provinceId, std::string kingdomId)
     {

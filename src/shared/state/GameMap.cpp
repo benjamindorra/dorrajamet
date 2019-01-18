@@ -73,12 +73,12 @@ namespace state
     }
     void GameMap::debug ()
     {
-        /*std::cout << "TOTAL PROVINCES COUNT: " << provinces.size() << std::endl;
+        std::cout << "TOTAL PROVINCES COUNT: " << provinces.size() << std::endl;
         for(auto const& e: provinces)
-            provinces[e.first].debug();*/
-        std::cout << "ARMIES(" << armies.size() << ")\n\n";
-        for(auto const& e: armies)
-            armies[e.first].debug();
+            provinces[e.first].debug();
+        //std::cout << "ARMIES(" << armies.size() << ")\n\n";
+        /*for(auto const& e: armies)
+            armies[e.first].debug();*/
     }
     std::string GameMap::getArmyPosition (std::string armyId)
     {

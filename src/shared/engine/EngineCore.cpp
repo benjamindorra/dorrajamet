@@ -73,6 +73,7 @@ namespace engine
             default:
                 throw std::runtime_error("Error: unknown command type.\n");
         }
+        std::cout << "left process command function\n";
     }
 
     void EngineCore::endWar (std::string warId, std::string winner)
@@ -198,6 +199,8 @@ namespace engine
                         mess["data"] = warId;
                         gameState->pushMessageToPlayer(gameState->getPlayerOfCharacter(character), mess);
                     }
+
+                    gameState->debug();
                     
                 }
                 else
@@ -227,7 +230,7 @@ namespace engine
                 mess["id"] = currentCharacter + "_peace_offer:" + warId + "_to_" + targetCharacter + "_turn_" + std::to_string(currentTurn);
                 mess["type"] = 1;
                 mess["sourceCharacter"] = currentCharacter;
-                mess["requiresAnswer"] = false;
+                mess["requiresAnswer"] = true;
                 mess["data"] = warId;
                 gameState->pushMessageToPlayer(gameState->getPlayerOfCharacter(targetCharacter), mess);
             }
@@ -257,7 +260,7 @@ namespace engine
                 mess["id"] = currentCharacter + "_surr_offer:" + warId + "_to_" + targetCharacter + "_turn_" + std::to_string(currentTurn);
                 mess["type"] = 5;
                 mess["sourceCharacter"] = currentCharacter;
-                mess["requiresAnswer"] = false;
+                mess["requiresAnswer"] = true;
                 mess["data"] = warId;
                 gameState->pushMessageToPlayer(gameState->getPlayerOfCharacter(targetCharacter), mess);
             }
@@ -272,7 +275,7 @@ namespace engine
     }
     void EngineCore::okButton (std::string arguments)
     {
-        auto currentPlayer = gameState->getCurrentPlayerCharacter();
+        auto currentPlayer = gameState->getCurrentPlayer();
         try
         {
             auto j = nlohmann::json::parse(arguments);
@@ -316,7 +319,9 @@ namespace engine
                 default:
                     throw std::runtime_error("Error: unknown message type\n");
             }
+            std::cout << "left the switch\n";
             gameState->removeMessage(currentPlayer, messageId);
+            std::cout << "removed message\n";
         }
         catch(const std::exception& e)
         {
@@ -368,9 +373,27 @@ namespace engine
         // message contains warId
         // determine the winner 
         // end war
+        auto currentCharacter = gameState->getCurrentPlayerCharacter();
+        auto otherCharacter = message["sourceCharacter"].get<std::string>();
+        auto warId = message["data"].get<std::string>();
+
+        if(repliedYes)// source character surrendered to current character, source loses
+            gameState->endWar(warId, currentCharacter);
+        // otherwise the war goes on
+        
     }
     void EngineCore::processPeaceMessageReply (bool repliedYes, std::string arguments, nlohmann::json message)
     {
         // same as above
+        auto currentCharacter = gameState->getCurrentPlayerCharacter();
+        auto otherCharacter = message["sourceCharacter"].get<std::string>();
+        auto warId = message["data"].get<std::string>();
+
+        gameState->debug();
+        if(repliedYes)// currentCharacter loses
+            gameState->endWar(warId, otherCharacter);
+        // otherwise the war goes on
+        std::cout << "processed peace message reply\n";
+        gameState->debug();
     }
 }
