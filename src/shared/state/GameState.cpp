@@ -359,6 +359,9 @@ namespace state
     nlohmann::json GameState::fetchAllCharactersData(){
         return politics->fetchAllCharactersData();
     }
+    nlohmann::json GameState::getOrderJson (std::string origId, std::string destId){
+        return ressources.getOrderJson(origId,destId);
+    }
     nlohmann::json GameState::toJson (){
             nlohmann::json gameState;
             nlohmann::json allPlayers = nlohmann::json::array();
@@ -377,6 +380,5 @@ namespace state
     void GameState::save(std::string savePath){
         nlohmann::json gameState = this->toJson();
         saveFile(savePath, gameState.dump(4));
-    }
-
+    }    
 }

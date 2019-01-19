@@ -12,9 +12,13 @@ namespace ai {
 };
 namespace engine {
   class Command;
+};
+namespace ai {
+  class BasicAI;
 }
 
 #include "engine/Command.h"
+#include "BasicAI.h"
 #include "ScoreNode.h"
 
 namespace ai {
@@ -32,24 +36,18 @@ namespace ai {
   public:
     DeepAI (state::GameState* state, engine::EngineCore * engine);
     ~DeepAI ();
-    void fillTree (std::string playerId, int turnsToCompute);
+    void fillTree (int turnsToCompute);
     std::vector<engine::Command> minimax ();
     void sendCommands (engine::EngineCore* engineCore, std::vector<engine::Command> commands);
-    int computeScore (state::GameState* gameState, std::string playerId);
+    int computeScore (ScoreNode* node);
     state::GameState computeGameState (ScoreNode *  node, state::GameState* initialState);
     int generateChildren (ScoreNode * node);
     std::string viewTree (ScoreNode * currentNode);
     void fillLevel (ScoreNode* currentNode);
     void viewTreeParse (std::string tree);
-    void generateLevyChildren (ScoreNode* node, state::GameState* newState, std::string characterId);
-    void generateArmiesChildren (ScoreNode* node, state::GameState* newState, std::string characterId);
-    void generateClaimChildren (ScoreNode* node, state::GameState* newState, std::string characterId);
-    void generateWarChildren (ScoreNode* node, state::GameState* newState, std::string characterId);
-    void generatePeaceChildren (ScoreNode* node, state::GameState* newState, std::string characterId);
-    void generateAllianceChildren (ScoreNode* node, state::GameState* newState, std::string characterId);
-    void generateAnswerChildren (ScoreNode* node, state::GameState* newState, std::string characterId);
-    void computeLeafScores (ScoreNode* currentNode, std::string playerId);
+    void computeLeafScores (ScoreNode* currentNode);
     int computeMaxChildren (ScoreNode* currentNode);
+    void main (int turnsToCompute);
     // Setters and Getters
   };
 

@@ -2,29 +2,52 @@
 #ifndef AI__BASICAI__H
 #define AI__BASICAI__H
 
-#include <render.h>
 #include <string>
-#include <map>
 #include <state.h>
 #include <engine.h>
+#include <vector>
+#include <map>
+
+namespace engine {
+  class Command;
+}
+
+#include "engine/Command.h"
 
 namespace ai {
 
   /// class BasicAI - somewhat advanced ai
   class BasicAI {
+    // Associations
     // Attributes
   private:
-    render::ToState toState;
-    render::ToEngine toEngine;
-    std::map<std::pair<std::string, std::string>, float> scores;
+    /// Id of the player the AI is playing as
     std::string playerId;
+    /// Id of the character the AI is playing as
     std::string characterId;
+    state::GameState* gameState;
+    engine::EngineCore* engineCore;
+    /// All actions and their scores
+    std::map<std::vector<engine::Command>, int> actionScores;
     // Operations
   public:
-    BasicAI (state::GameState * state, engine::EngineCore * engine, std::string playerId);
+    BasicAI (state::GameState * state, engine::EngineCore * engine);
+    BasicAI (state::GameState* state);
     ~BasicAI ();
-    void calculateScores ();
-    void chooseAction ();
+    int calculateScore (std::vector<engine::Command> action);
+    std::pair<std::vector<std::vector<engine::Command>>, std::vector<int>> chooseBestActions (std::pair<std::vector<std::vector<engine::Command>>, std::vector<int>> actions, int n);
+    std::vector<std::vector<engine::Command>> generatePossibleActions ();
+    void sendAction (std::vector<engine::Command> action);
+    std::vector<std::vector<engine::Command>> createArmies (std::vector<std::vector<engine::Command>> possibleActions);
+    std::vector<std::vector<engine::Command>> moveArmies (std::vector<std::vector<engine::Command>> possibleActions);
+    std::vector<std::vector<engine::Command>> makeClaim (std::vector<std::vector<engine::Command>> possibleActions);
+    std::vector<std::vector<engine::Command>> startWars (std::vector<std::vector<engine::Command>> possibleActions);
+    std::vector<std::vector<engine::Command>> makePeace (std::vector<std::vector<engine::Command>> possibleActions);
+    std::vector<std::vector<engine::Command>> makeSurr (std::vector<std::vector<engine::Command>> possibleActions);
+    std::vector<std::vector<engine::Command>> makeAlliance (std::vector<std::vector<engine::Command>> possibleActions);
+    std::vector<std::vector<engine::Command>> answerMessages (std::vector<std::vector<engine::Command>> possibleActions);
+    void main ();
+    std::pair<std::vector<std::vector<engine::Command>>, std::vector<int>> computeScores (std::vector<std::vector<engine::Command>> actions);
     // Setters and Getters
   };
 

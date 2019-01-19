@@ -95,6 +95,7 @@ namespace state {
     void transferProvince (std::string provinceId, std::string kingdomId);
     GameState copy ();
     nlohmann::json fetchAllCharactersData ();
+    nlohmann::json getOrderJson (std::string origId, std::string destId);
     nlohmann::json toJson ();
     void save (std::string savePath);
     // Setters and Getters

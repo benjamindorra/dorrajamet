@@ -95,7 +95,7 @@ int main(int argc, char ** argv)
             //std::cout << testState.fetchAllProvincesTopLiegeColor().dump(2);
             testState.save(savePath);
         }
-        else if(command == "ai")
+        else if(command == "random_ai")
         {
             state::GameState testState("./res/testGameState.json");
             std::queue<engine::Command> commands;
@@ -105,15 +105,20 @@ int main(int argc, char ** argv)
             std::cout<<"AI OK"<<std::endl;
             //std::cout << testState.fetchAllProvincesTopLiegeColor().dump(2);
             testState.save(savePath);
-
+        }
+        else if(command == "heuristic_ai") {
+            state::GameState testState("./res/testGameState.json");
+            engine::EngineCore testEngine(&testState);
+            //ia
+            ai::BasicAI basicAI(&testState, &testEngine);
+            basicAI.main();
         }
         else if(command == "deep_ai"){
             state::GameState testState("./res/testGameState.json");
             std::queue<engine::Command> commands;
             engine::EngineCore testEngine(&testState, &commands);
             ai::DeepAI deepAI(&testState, &testEngine);
-            deepAI.fillTree("player_one", 1);
-            deepAI.minimax();
+            deepAI.main(2);
             /*render::Render render1(1280,720);
             //init the render
             render1.init(&testState, &testEngine);

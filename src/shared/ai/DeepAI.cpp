@@ -4,6 +4,8 @@
 #include <ctime>
 #include <cstdlib>
 
+#define POSSIBILITIES 3
+
 using json = nlohmann::json;
 
 namespace ai {
@@ -12,8 +14,10 @@ namespace ai {
         this->engine = engine;
         treeRoot = new ScoreNode;
     }
-    DeepAI::~DeepAI (){}
-    void DeepAI::fillTree (std::string playerId, int turnsToCompute){
+    DeepAI::~DeepAI (){
+        delete treeRoot;
+    }
+    void DeepAI::fillTree (int turnsToCompute){
         // create a ScoreTree, containing commands and score.
         //TO REMOVE
         std::srand(std::time(nullptr));
@@ -24,7 +28,9 @@ namespace ai {
         for(json::iterator it=players.begin(); it != players.end(); it++){
             playersCount++;
         }
-        int levels = playersCount * turnsToCompute;
+        //turnsToCompute turns for everyons, plus one for the one the ai is playing at
+        //so that the last scores are the ones of the ai
+        int levels = playersCount * turnsToCompute +1;
         /*// table used to check if every level of the tree has been correctly filled
         // numbers are paired, first : number of child processed ,second: number of child created
         // all children that have been created must be processed as long as their level
@@ -146,8 +152,7 @@ namespace ai {
     }
 
     std::vector<engine::Command> DeepAI::minimax (){
-        std::string playerId = this->gameState->getCurrentPlayer();
-        computeLeafScores(treeRoot, playerId);
+        computeLeafScores(treeRoot);
         // use the minimax algorithm to find a good serie of commands for the AI's turn
         for (ScoreNode* child : this->treeRoot->getChildren()){
             child->setScore(computeMaxChildren(child));
@@ -172,14 +177,16 @@ namespace ai {
         // end player's turn
         engineCore->processCommand(engine::Command(engine::Command::commandType::turn, ""));
     }
-    int DeepAI::computeScore (state::GameState* oneState, std::string playerId){
+    
+    int DeepAI::computeScore (ScoreNode* node){
         // compute score for a player in a game state
-        int score = 0;
-        json provinces = oneState->fetchAllProvincesData();
+        int score = node->getScore();
+        state::GameState currentState = computeGameState(node, this->gameState);
+        json provinces = currentState.fetchAllProvincesData();
         for(json::iterator it=provinces.begin(); it != provinces.end(); it++){
-            // count how many provinces a player owns
-            if (oneState->getProvinceOwner(it.value()["id"])==oneState->getCharacterOfPlayer(playerId)){
-                score++;
+            //as conquering the map is the primary objective, every province is worth a LOT of points
+            if (currentState.getProvinceOwner(it.value()["id"])==currentState.getCurrentPlayerCharacter()){
+                score+=1000;
             }
         }
         return score;
@@ -201,205 +208,36 @@ namespace ai {
         }
         return newState;
     }
-    
-    void DeepAI::generateLevyChildren (ScoreNode* node, state::GameState* newState, std::string characterId){
-        /*json provinces = newState->fetchAllProvincesData();
-        for(json::iterator it=provinces.begin(); it != provinces.end(); it++){
-            if (newState->getProvinceOwner(it.value()["id"])==characterId){
-                for(ScoreNode* child : node->getChildren()){
-                    if (it.value()["id"] != json::parse(child->getCommands().back().getArgument())["id"]){
-                        ScoreNode* newNode = new ScoreNode;
-                        //TO CHANGE
-                        json j;
-                        j["id"] = it.value()["id"];
-                        std::vector<engine::Command> commands = child->getCommands();
-                        commands.push_back(engine::Command(engine::Command::raise, j.dump()));
-                        //
-                        newNode->setCommands(commands);
-                        node->addChild(newNode);
-                    }
-                }
-            }
-        }*/
-    }
-    
-    void DeepAI::generateArmiesChildren (ScoreNode* node, state::GameState* newState, std::string characterId){
-        // temporary node to store children
-        ScoreNode tempNode;
-        ScoreNode tempNodeChild;
-        // temporary state recaculated for each children
-        //state::GameState tempState;
-        for(ScoreNode* child : node->getChildren()){
-            //copy the commands but keep the original in the same place
-            tempNodeChild.setCommands(child->getCommands());
-            tempNode.addChild(&tempNodeChild);
-            // calculate the state for the child node
-            state::GameState tempState = newState->copy();
-            engine::EngineCore tempEngine(&tempState);
-            for (engine::Command command : child->getCommands()) {
-                tempEngine.processCommand(command);
-            }
-            //json armies = tempState.fetchAllArmiesData();
-            json armies = tempState.fetchAllArmiesData();
-            json provinces = tempState.fetchAllProvincesData();
-            for(json::iterator army=armies.begin();army != armies.end();army++){
-                if (army.value()["ownerCharacter"]==characterId){
-                    for(ScoreNode* tempChild : tempNode.getChildren()){      
-                        for(json::iterator province=provinces.begin(); province != provinces.end(); province++){
-                            if (province.value()["id"]!="sea"){
-                                if (child->getCommands().empty()){
-                                    ScoreNode* newNode = new ScoreNode;
-                                    json j;
-                                    j["id"] = army.value()["id"];
-                                    j["dest"] = province.value()["id"];
-                                    std::vector<engine::Command> commands = tempChild->getCommands();
-                                    //std::vector<engine::Command> commands = tempNodeChild.getCommands();
-                                    commands.push_back(engine::Command(engine::Command::army, j.dump()));
-                                    newNode->setCommands(commands);
-                                    tempNode.addChild(newNode);
-                                }
-                                else if(army.value()["id"] != json::parse(child->getCommands().back().getArgument())["id"]){
-                                    ScoreNode* newNode = new ScoreNode;
-                                    json j;
-                                    j["id"] = army.value()["id"];
-                                    j["dest"] = province.value()["id"];
-                                    std::vector<engine::Command> commands = tempChild->getCommands();
-                                    //std::vector<engine::Command> commands = tempNodeChild.getCommands();
-                                    commands.push_back(engine::Command(engine::Command::army, j.dump()));
-                                    newNode->setCommands(commands);
-                                    tempNode.addChild(newNode);
-                                }
-                            }
-                        }
-                    }
-                }
-            }
-            //do not copy the original node (already in place)
-            for (long unsigned int i=1;i<tempNode.getChildren().size();i++){
-                node->addChild(tempNode.getChildren()[i]);
-            }
-            tempNode.clearChildren();
-        }
-    }
-    void DeepAI::generateClaimChildren (ScoreNode* node, state::GameState* newState, std::string characterId){
-        json provinces = newState->fetchAllProvincesData();
-        for(ScoreNode* child : node->getChildren()){    
-            for(json::iterator province=provinces.begin(); province!=provinces.end(); province++){
-                if (province.value()["id"]!="sea"){
-                    if (newState->getProvinceOwner(province.value()["id"])!=characterId){
-                        ScoreNode* newNode = new ScoreNode;
-                        //TO CHANGE
-                        json j;
-                        j["colorCode"] = province.value()["colorCode"];
-                        std::vector<engine::Command> commands = child->getCommands();
-                        commands.push_back(engine::Command(engine::Command::claim, j.dump()));
-                        //
-                        newNode->setCommands(commands);
-                        node->addChild(newNode);
-                    }
-                }
-            }
-        }
-    }
-    void DeepAI::generateWarChildren (ScoreNode* node, state::GameState* newState, std::string characterId){
-        json characters = newState->fetchAllCharactersData();
-        for(ScoreNode* child : node->getChildren()){    
-            for(json::iterator it=characters.begin(); it != characters.end(); it++){
-                if (it.value()["id"]!=characterId){
-                    if(not newState->areAtWar(it.value()["id"], characterId)){
-                        ScoreNode* newNode = new ScoreNode;
-                        //TO CHANGE
-                        json j;
-                        j["id"] = it.value()["id"];
-                        std::vector<engine::Command> commands = child->getCommands();
-                        commands.push_back(engine::Command(engine::Command::war, j.dump()));
-                        //
-                        newNode->setCommands(commands);
-                        node->addChild(newNode);
-                    }
-                }
-            }
-        }
-    }
-    void DeepAI::generatePeaceChildren (ScoreNode* node, state::GameState* newState, std::string characterId){
-        /*json characters = newState->fetchAllCharactersData();
-        for(ScoreNode* child : node->getChildren()){    
-            for(json::iterator it=characters.begin(); it != characters.end(); it++){
-                if (it.value()["id"]!=characterId){
-                    if(newState->areAtWar(it.value()["id"], characterId)){
-                        ScoreNode* newNode = new ScoreNode;
-                        //TO CHANGE
-                        json j;
-                        j["id"] = it.value()["id"];
-                        std::vector<engine::Command> commands = child->getCommands();
-                        commands.push_back(engine::Command(engine::Command::peace, j.dump()));
-                        //
-                        newNode->setCommands(commands);
-                        node->addChild(newNode);
-                    }
-                }
-            }
-        }*/
-    }
-    void DeepAI::generateAllianceChildren (ScoreNode* node, state::GameState* newState, std::string characterId){
-        /*json provinces = newState->fetchAllProvincesData();
-        for(ScoreNode* child : node->getChildren()){    
-            for(json::iterator province=provinces.begin(); province!=provinces.end(); province++){
-                if (province.value()["id"]!="sea"){
-                    if (newState->getProvinceOwner(province.value()["id"])!=characterId){
-                        ScoreNode* newNode = new ScoreNode;
-                        //TO CHANGE
-                        json j;
-                        j["id"] = province.value()["id"];
-                        std::vector<engine::Command> commands = child->getCommands();
-                        commands.push_back(engine::Command(engine::Command::alliance, j.dump()));
-                        //
-                        newNode->setCommands(commands);
-                        node->addChild(newNode);
-                    }
-                }
-            }
-        }*/
-    }
-    void DeepAI::generateAnswerChildren (ScoreNode* node, state::GameState* newState, std::string characterId){}
+
 
     int DeepAI::generateChildren(ScoreNode * node){
-        // get the current game state for the node
+        // use BasicAI to generate and evaluate all possible actions, 
+        // and add the POSSIBILITIES best ones to the active node
+        //get the current game state for the node
         state::GameState newState = computeGameState(node, this->gameState);
-        state::GameState tempState;
-        // add a node with no command
-        node->addChild(new ScoreNode);
-        // get the player id
-        std::string playerId = newState.getCurrentPlayer();
-        std::string characterId = newState.getCurrentPlayerCharacter();
-        //recruit at most 1 levy from each province
-        //generateLevyChildren (node, &newState, characterId);
-        //move each army at most one
-        generateArmiesChildren (node, &newState, characterId);
-        //claim at most one province
-        //generateClaimChildren (node, &newState, characterId);
-        //declare war to at most 1 character
-        //generateWarChildren (node, &newState, characterId);
-        //make peace with at most 1 character
-        //generatePeaceChildren (node, &newState, characterId);
-        //make an alliance with at most 1 character
-        //generateAllianceChildren (node, &newState, characterId);
-        //answer messages
-        //generateAnswerChildren (node, &newState, characterId);
-        /*int nChildren = std::rand()%3+1;
-        for (int i=0;i<nChildren;i++){
-            node->addChild(new ScoreNode);
-        }*/
+        //make a basic AI to generate (at most) POSSIBILITIES actions
+        BasicAI basicAi(&newState);
+        std::vector<std::vector<engine::Command>> actions = basicAi.generatePossibleActions();
+        std::pair<std::vector<std::vector<engine::Command>>, std::vector<int>> scoresActions;
+        scoresActions = basicAi.computeScores(actions);
+        scoresActions = basicAi.chooseBestActions(scoresActions, POSSIBILITIES);
+        //build (at most) POSSIBILITIES children with the chosen commands and their scores
+        for(long unsigned int i=0;i<scoresActions.first.size();i++){
+            ScoreNode* child = new ScoreNode;
+            child->setCommands(scoresActions.first[i]);
+            child->setScore(scoresActions.second[i]);
+            node->addChild(child);
+        }
         return node->getChildren().size();
     }
 
     std::string DeepAI::viewTree(ScoreNode * currentNode){
         // explore the tree and return the number of childs of each node in a string
         if (currentNode->getChildren().empty()) {
-            return std::to_string(currentNode->getScore());
+            return std::to_string(currentNode->getScore())+" ";
         }
         else {
-            std::string children = std::to_string(currentNode->getScore())+"[";
+            std::string children = std::to_string(currentNode->getScore())+" [";
             for (ScoreNode* child : currentNode->getChildren()) {
                 children.append(viewTree(child));
             }
@@ -432,7 +270,7 @@ namespace ai {
                 treeTable[level].append(std::string(1,character)+" ");
                 level--;
             }
-            else treeTable[level].append(std::string(1,character)+" ");
+            else treeTable[level].append(std::string(1,character));
         }
         // display the tree
         for(std::string treeLevel : treeTable) {
@@ -452,16 +290,21 @@ namespace ai {
         }
     }
 
-    void DeepAI::computeLeafScores(ScoreNode* currentNode, std::string playerId){
+    void DeepAI::computeLeafScores(ScoreNode* currentNode){
         // compute the score of leaf level 
         if (currentNode->getChildren().empty()) {
-            state::GameState finalState = computeGameState(currentNode, this->gameState);
-            currentNode->setScore(computeScore(&finalState, playerId));
+            currentNode->setScore(computeScore(currentNode));
         }
         else {
             for (ScoreNode* child : currentNode->getChildren()) {
-                computeLeafScores(child, playerId);
+                computeLeafScores(child);
             }
         }
+    }
+
+    void DeepAI::main (int turnsToCompute){
+        fillTree(turnsToCompute);
+        std::vector<engine::Command> bestAction = minimax();
+        sendCommands(engine,bestAction);
     }
 }
