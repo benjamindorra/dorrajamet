@@ -75,8 +75,12 @@ namespace render {
                     this->data = "No one owns the Black Sea\n";
                 else
                 {
-                    this->data = "Name: "+j["name"].dump()+"\n"+"Dynasty name: "+j["dynastyName"].dump()+"\n"
-                    +"Age: "+j["age"].dump()+"\n"+"Traits: "+j["traits"].dump()+"\n"+"Statistics: "+"\n"
+                    this->data = "Name: "+j["name"].get<std::string>()+"\n"+"Dynasty name: "+j["dynastyName"].get<std::string>()+"\n"
+                    +"Age: "+j["age"].dump()+"\n"+"Traits: ";
+                    for (auto& trait : j["traits"]) {
+                        this->data+=trait.get<std::string>()+" ";
+                    }
+                    this->data=this->data+"\n"+"Statistics: "+"\n"
                     +"Diplomacy: "+j["diplomacy"].dump()+"\n"+"Stewardship: "+j["stewardship"].dump()+"\n"
                     +"Martial: "+j["martial"].dump()+"\n"+"Intrigue: "+j["intrigue"].dump()+"\n"+"\n"+"Alive: "
                     +j["alive"].dump()+"\n"+"Prestige: "+j["prestige"].dump()+"\n"+"Gold: "+j["gold"].dump()+"\n"
@@ -103,9 +107,12 @@ namespace render {
                     this->data = j["name"];
                 else
                 {
-                    this->data = "Name: "+j["name"].dump()+"\n"+"Development: "+j["development"].dump()+"\n"
-                    +"Prosperity: "+j["prosperity"].dump()+"\n"+"Levy: "+j["levy"].dump()+"\n"
-                    +"Tax income: "+j["taxIncome"].dump()+"\n";
+                    this->data = "Name: "+j["name"].get<std::string>()+"\n"+"Development: "+j["development"].dump()+"\n"
+                    +"Prosperity: "+j["prosperity"].dump()+"\n"+"Levy: ";
+                    for (json::iterator info=j["levy"].begin();info!=j["levy"].end();info++){
+                        this->data = this->data+info.key()+": "+info.value().dump()+" ";
+                    }
+                    this->data = this->data+"\n"+"Tax income: "+j["taxIncome"].dump()+"\n";
                 }
             }
             catch(const std::exception& e) {
@@ -122,9 +129,12 @@ namespace render {
             buttons.push_back(new Button(mainRender, x1, y1, "", color, sf::Vector2i(width, spaceV)));
             try {
                 json j = state->fetchArmyData(this->id);
-                this->data = "Owner: "+j["ownerCharacter"].dump()+"\n"+"Levies: "+j["levies"].dump()+"\n"
-                +"Current province: "+j["currentProvince"].dump()+"\n"+"Current battle: "+j["currentBattle"].dump()+"\n"
-                +"Orders: "+j["orders"].dump()+"\n";
+                this->data = "Owner: "+j["ownerCharacter"].get<std::string>()+"\n"+"Levies: ";
+                for(auto& levy : j["levies"]){
+                    this->data+=levy;
+                }
+                this->data = this->data+"\n"+"Current province: "+j["currentProvince"].get<std::string>()+"\n"+"Current battle: "
+                +j["currentBattle"].get<std::string>()+"\n"+"Orders: "+j["orders"].dump()+"\n";
             }
             catch(const std::exception& e) {
                 std::cerr << e.what() <<std::endl;

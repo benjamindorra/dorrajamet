@@ -33,8 +33,6 @@ namespace render {
         frame.setOutlineThickness(-1);
         //position the text
         text.setPosition(frame.getPosition());
-        //temporary. change to fit the actual player.
-        selectCharacter("player_one");
     }
     PlayerData::~PlayerData () {}
     void PlayerData::selectCharacter(std::string id) {
@@ -46,7 +44,7 @@ namespace render {
                     this->data = "Score :"+ it.value()["score"].dump()+" ";
                     this->id = it.value()["currentCharacter"].get<std::string>();
                     j = state->fetchCharacterData(this->id);
-                    this->data = "Character: "+j["name"].dump()+" "+j["dynastyName"].dump()+" "
+                    this->data = "Character: "+j["name"].get<std::string>()+" "+j["dynastyName"].get<std::string>()+" "
                     +"Prestige: "+j["prestige"].dump()+" "+"Gold: "+j["gold"].dump()+" "
                     +"Plot active: "+j["hasPlot"].dump()+"\n"
                     +"Diplomacy: "+j["diplomacy"].dump()+" "+"Stewardship: "+j["stewardship"].dump()+" "
@@ -67,6 +65,6 @@ namespace render {
         mainRender->Render::getWindow()->draw(text);
     }
     void PlayerData::update() {
-        selectCharacter(this->id);
+        selectCharacter(state->getCurrentPlayer());
     }
 }
