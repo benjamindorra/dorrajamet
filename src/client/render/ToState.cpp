@@ -11,6 +11,7 @@ using json = nlohmann::json;
 
 namespace render {
     ToState::ToState () {}
+    
     ToState::ToState (state::GameState * state) {
         this->state=state;
         try {

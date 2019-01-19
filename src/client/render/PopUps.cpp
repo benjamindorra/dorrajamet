@@ -29,8 +29,6 @@ namespace render {
         playerId = state->getCurrentPlayer();
         
         json playerMessages = state->fetchPlayerMessagesData(playerId);
-        if(playerMessages.size())
-            std::cout << "found " << playerMessages.size();
         bool alreadyExist;
         /*if(playerMessages.size())
             std::cout << "found " << playerMessages.size();*/

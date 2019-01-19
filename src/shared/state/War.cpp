@@ -43,7 +43,7 @@ namespace state
     }
     void War::debug ()
     {
-
+        std::cout << toJson().dump(2);
     }
     nlohmann::json War::toJson ()
     {

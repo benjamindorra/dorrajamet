@@ -94,6 +94,7 @@ namespace state
         << "\nBase levy men: " << baseLevy.getMen()
         << "\nDispPosX: " << dispPosX
         << "\nDispPosY: " << dispPosY
+        << "\nKingdomId: " << kingdomId 
         << std::endl;
     }
     int Province::getLevyMen()

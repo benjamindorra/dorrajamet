@@ -63,9 +63,15 @@ namespace state
     }
     void Politics::debug()
     {
-        titles.debug();
+        //titles.debug();
         std::cout << "\n\n\n";
-        characters.debug();
+        //characters.debug();
+        for(auto war: wars)
+        {
+            std::cout << war.first << std::endl;
+            war.second.debug();
+        }
+        std::cout << "endPolitics\n";
     }
     void Politics::updateCharactersData()
     {
@@ -138,20 +144,24 @@ namespace state
     {
         try
         {
+            std::cout << "endWar( " << warId << ", " << winner << " )\n";
             War war = wars.at(warId);
             auto attackers = war.getAttackerCamp();
             auto defenders = war.getDefenderCamp();
             auto title = war.getTargetTitle();
             auto claimant = war.getClaimantCharacter();
             auto mainDefender = war.getDefendingCharacter();
+            std::cout << "D0\n";
             if(winner == mainDefender)
                 war.setScore(-100);
             else if(winner == claimant)
                 war.setScore(100);
             else
                 throw std::runtime_error("Error: attempted to end a war of id: " + warId + " with invalid winner id: " + winner + "\n");
+            std::cout << "D1\n";
             if(war.attackerWon())
             {
+                std::cout << "D2\n";
                 for(auto const& a: attackers)
                     characters.changeScoreBy(a, -40);
                 for(auto const& a: defenders)
@@ -161,6 +171,7 @@ namespace state
             }
             else if(war.defenderWon())
             {
+                std::cout << "D3\n";
                 for(auto const& a: attackers)
                     characters.changeScoreBy(a, -50);
                 for(auto const& a: defenders)
@@ -170,9 +181,11 @@ namespace state
             else // White peace
             {
                 
+                std::cout << "D4\n";
             }
             std::vector<unsigned int> toRemove;
             std::vector<nlohmann::json> toPush;
+            std::cout << "D5\n";
             for(auto const& attacker: attackers)
                 for(auto const& defender: defenders)
                 {
@@ -189,14 +202,18 @@ namespace state
                     j["characterB"] = attacker;
                     toPush.push_back(j);
                 }
+            std::cout << "D6\n";
             for(auto i: toRemove)
             {
                 relations[i] = relations.back();
                 relations.pop_back();
             }
+            std::cout << "D7\n";
             for(auto j: toPush)
                 relations.push_back(Relation(j.dump()));
+            std::cout << "D8\n";
             wars.erase(warId);
+            std::cout << "D9\n";
         }
         catch(const std::exception& e)
         {
