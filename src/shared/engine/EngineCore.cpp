@@ -176,7 +176,6 @@ namespace engine
                     std::cout << "attackers: \n";
                     for(auto character: camps.first)//attacking camp
                     {
-                        std::cout << character << std::endl;
                         if(character == currentCharacter)
                             continue;
                         nlohmann::json mess;
@@ -190,7 +189,6 @@ namespace engine
                     std::cout << "defenders: \n";
                     for(auto character: camps.second)//defending camp
                     {
-                        std::cout << character << std::endl;
                         nlohmann::json mess;
                         mess["id"] = currentCharacter + "_def_war:" + warId + "_on_" + targetOwner + "_turn_" + std::to_string(currentTurn);
                         mess["type"] = 0;
@@ -199,8 +197,6 @@ namespace engine
                         mess["data"] = warId;
                         gameState->pushMessageToPlayer(gameState->getPlayerOfCharacter(character), mess);
                     }
-
-                    gameState->debug();
                     
                 }
                 else
@@ -389,11 +385,8 @@ namespace engine
         auto otherCharacter = message["sourceCharacter"].get<std::string>();
         auto warId = message["data"].get<std::string>();
 
-        gameState->debug();
         if(repliedYes)// currentCharacter loses
             gameState->endWar(warId, otherCharacter);
         // otherwise the war goes on
-        std::cout << "processed peace message reply\n";
-        gameState->debug();
     }
 }

@@ -128,9 +128,7 @@ namespace render {
                                 unsigned int pix = colorMap.ColorMap::getPixel(mapX,mapY);
                                 std::cout<<"pix: "<<pix<<std::endl;
                                 std::cout<<"x: "<<mapX<<"y: "<<mapY<<std::endl;
-                                std::string text = "William Thomson\n"
-                                "Titles:\nDuchy of Wales\n\nStatistics:\nIntelligence 10\nFighting 2\n\nTraits:\nGluttony\n";
-                                data->Data::select(Data::Character, std::to_string(pix));
+                                data->select(Data::Character, std::to_string(pix));
                             }
                             else {
                                 unsigned int mapX = (unsigned int)pixel.x;

@@ -79,8 +79,13 @@ namespace render {
     {
         return state->getCurrentPlayer();
     }
+    std::string ToState::getCurrentPlayerCharacter()
+    {
+        return state->getCurrentPlayerCharacter();
+    }
     std::string ToState::getCharacterOfPlayer (std::string playerId)
     {
         return state->getCharacterOfPlayer(playerId);
     }
+
 }

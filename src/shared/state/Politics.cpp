@@ -144,24 +144,20 @@ namespace state
     {
         try
         {
-            std::cout << "endWar( " << warId << ", " << winner << " )\n";
             War war = wars.at(warId);
             auto attackers = war.getAttackerCamp();
             auto defenders = war.getDefenderCamp();
             auto title = war.getTargetTitle();
             auto claimant = war.getClaimantCharacter();
             auto mainDefender = war.getDefendingCharacter();
-            std::cout << "D0\n";
             if(winner == mainDefender)
                 war.setScore(-100);
             else if(winner == claimant)
                 war.setScore(100);
             else
                 throw std::runtime_error("Error: attempted to end a war of id: " + warId + " with invalid winner id: " + winner + "\n");
-            std::cout << "D1\n";
             if(war.attackerWon())
             {
-                std::cout << "D2\n";
                 for(auto const& a: attackers)
                     characters.changeScoreBy(a, -40);
                 for(auto const& a: defenders)
@@ -171,7 +167,6 @@ namespace state
             }
             else if(war.defenderWon())
             {
-                std::cout << "D3\n";
                 for(auto const& a: attackers)
                     characters.changeScoreBy(a, -50);
                 for(auto const& a: defenders)
@@ -181,39 +176,24 @@ namespace state
             else // White peace
             {
                 
-                std::cout << "D4\n";
             }
-            std::vector<unsigned int> toRemove;
-            std::vector<nlohmann::json> toPush;
-            std::cout << "D5\n";
             for(auto const& attacker: attackers)
                 for(auto const& defender: defenders)
                 {
-                    for(unsigned int i = 0; i < relations.size(); i++)
-                        if(relations[i].isBetween(attacker, defender) && relations[i].getType() == Relation::war && relations[i].getWarId() == warId)
-                            toRemove.push_back(i);
-                    nlohmann::json j;
-                    j["type"] = 0;
-                    j["characterA"] = attacker;
-                    j["characterB"] = defender;
-                    j["endTurn"] = (parent->getCurrentTurn()) + 10;
-                    toPush.push_back(j);
-                    j["characterA"] = defender;
-                    j["characterB"] = attacker;
-                    toPush.push_back(j);
+                    for(unsigned int i = 0; i < relations.size(); i++){
+                        if(relations[i].isBetween(attacker, defender) && relations[i].getType() == Relation::war && relations[i].getWarId() == warId){
+                            nlohmann::json j;
+                            j["type"] = 0;
+                            j["characterA"] = attacker;
+                            j["characterB"] = defender;
+                            j["endTurn"] = (parent->getCurrentTurn()) + 10;
+                            j["characterA"] = defender;
+                            j["characterB"] = attacker;
+                            relations[i] = Relation(j.dump());
+                        }
+                    }
                 }
-            std::cout << "D6\n";
-            for(auto i: toRemove)
-            {
-                relations[i] = relations.back();
-                relations.pop_back();
-            }
-            std::cout << "D7\n";
-            for(auto j: toPush)
-                relations.push_back(Relation(j.dump()));
-            std::cout << "D8\n";
             wars.erase(warId);
-            std::cout << "D9\n";
         }
         catch(const std::exception& e)
         {
@@ -283,18 +263,30 @@ namespace state
     }
     void Politics::setWar (std::string characterA, std::string characterB, std::string warId)
     {
-        for(auto r: relations)
+        // change relations to WAR. Create them if they don't exist.
+        bool relationExist = false;
+        for(long unsigned int i=0;i<relations.size();i++)
         {
-            if(!(r.isBetween(characterA, characterB) && r.getType() == Relation::alliance))
+            if(relations[i].isBetween(characterA, characterB))
             {
+                relationExist = true;
                 nlohmann::json initJson;
                 initJson["characterA"] = characterA;
                 initJson["characterB"] = characterB;
                 initJson["endTurn"] = -1;
                 initJson["type"] = 4;
                 initJson["warId"] = warId;
-                relations.push_back(Relation(initJson.dump()));
+                relations[i] = Relation(initJson.dump());
             }
+        }
+        if(not relationExist){
+            nlohmann::json initJson;
+            initJson["characterA"] = characterA;
+            initJson["characterB"] = characterB;
+            initJson["endTurn"] = -1;
+            initJson["type"] = 4;
+            initJson["warId"] = warId;
+            relations.push_back(Relation(initJson.dump()));
         }
     }
     bool Politics::areAtWar (std::string characterA, std::string characterB)

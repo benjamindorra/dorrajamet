@@ -266,13 +266,16 @@ namespace render {
         using json = nlohmann::json;
         
         //player's character
-        std::string playerChar = "chara_0001";
+        std::string playerChar = state->getCurrentPlayerCharacter();
         //lists all relations of the player's character
         std::vector<json> relationsList;
         json relations = state->fetchAllRelationsData();
         for(json::iterator it = relations.begin(); it!= relations.end(); ++it)
         {
             if(it.value()["characterA"].get<std::string>()==playerChar) {
+                relationsList.push_back(it.value());
+            }
+            if(it.value()["characterB"].get<std::string>()==playerChar) {
                 relationsList.push_back(it.value());
             }
         }
@@ -295,7 +298,7 @@ namespace render {
                 else{
                     relationExists=false;
                     for (json r : relationsList) {
-                        if(r["characterB"].get<std::string>()==character["id"]){
+                        if(r["characterA"].get<std::string>()==character["id"] || r["characterB"].get<std::string>()==character["id"]){
                             switch(r["type"].get<int>()){
                                 case 0:
                                     //type = non_aggression;
@@ -350,7 +353,7 @@ namespace render {
                         else{
                             relationExists = false;
                             for (json r : relationsList) {
-                                if(r["characterB"].get<std::string>()==character["id"]){
+                                if(r["characterA"].get<std::string>()==character["id"] || r["characterB"].get<std::string>()==character["id"]){
                                     switch(r["type"].get<int>()){
                                         case 0:
                                             //type = non_aggression;
@@ -409,13 +412,13 @@ namespace render {
         // update the colors of the map with one color for each kingdom
         using json = nlohmann::json;
         //lists all the provinces and their colors
-        json provinces = state->fetchAllProvincesKingdomColor();
+        json provincesColors = state->fetchAllProvincesKingdomColor();
         // check if the colors need to be changed
         bool changeColors = false;
         json provincesData = state->fetchAllProvincesData();
-        for (json::iterator it=provincesData.begin(); it !=provincesData.end(); it++){
+        for (json::iterator it=provincesColors.begin(); it !=provincesColors.end(); it++){
             if (it.value()["colorCode"]!=255) {
-                if (colorsCache[it.value()["id"]] != it.value()["colorCode"]){
+                if (colorsCache[it.value()["provinceId"]] != it.value()["color"]){
                     changeColors=true;
                 }
             }
@@ -431,9 +434,9 @@ namespace render {
                     if (modMap.getPixel(x,y).toInteger()!=255) {
                         colorCode = mainRender->getColorCode(x,y);
                         json provinceId = state->fetchProvinceDataFromColor(std::to_string(colorCode))["id"];
-                        for (json::iterator p=provinces.begin(); p!=provinces.end(); ++p) {
+                        for (json::iterator p=provincesColors.begin(); p!=provincesColors.end(); ++p) {
                             if (p.value()["provinceId"]==provinceId){
-                                colorsCache[provinceId]=colorCode;
+                                colorsCache[provinceId]=p.value()["color"];
                                 modMap.setPixel(x,y, sf::Color(p.value()["color"]));
                                 break;
                             }

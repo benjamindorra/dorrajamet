@@ -63,18 +63,18 @@ namespace render {
             for (Button *button : buttons) {
                 delete button;
             }
-            buttons={};
+            buttons.clear();
             buttons.push_back(new Button(mainRender, x1, y1, "Relations", color, sf::Vector2i(width, spaceV/3)));
             buttons.push_back(new Button(mainRender, x1, y1+spaceV/3, "Alliance", color, sf::Vector2i(width/2, spaceV/3)));
             buttons.push_back(new Button(mainRender, x1+width/2, y1+spaceV/3, "Surrender", color, sf::Vector2i(width/2, spaceV/3)));
             buttons.push_back(new Button(mainRender, x1, y1+2*spaceV/3, "War", color, sf::Vector2i(width/2, spaceV/3)));
             buttons.push_back(new Button(mainRender, x1+width/2, y1+2*spaceV/3, "Peace", color, sf::Vector2i(width/2, spaceV/3)));
             try {
-                json j = state->fetchCharacterDataFromColor(this->id);
-                if(j == "sea")
+                if(this->id == "255")
                     this->data = "No one owns the Black Sea\n";
                 else
                 {
+                    json j = state->fetchCharacterDataFromColor(this->id);
                     this->data = "Name: "+j["name"].get<std::string>()+"\n"+"Dynasty name: "+j["dynastyName"].get<std::string>()+"\n"
                     +"Age: "+j["age"].dump()+"\n"+"Traits: ";
                     for (auto& trait : j["traits"]) {
@@ -97,7 +97,7 @@ namespace render {
             for (Button *button : buttons) {
                 delete button;
             }
-            buttons={};
+            buttons.clear();
             buttons.push_back(new Button(mainRender, x1, y1, "Levy", color, sf::Vector2i(width/2, spaceV/2)));
             buttons.push_back(new Button(mainRender, x1+width/2, y1, "Claim", color, sf::Vector2i(width/2, spaceV/2)));
             buttons.push_back(new Button(mainRender, x1, y1+spaceV/2, "", color, sf::Vector2i(width, spaceV/2)));
@@ -125,7 +125,7 @@ namespace render {
             for (Button *button : buttons) {
                 delete button;
             }
-            buttons={};
+            buttons.clear();
             buttons.push_back(new Button(mainRender, x1, y1, "", color, sf::Vector2i(width, spaceV)));
             try {
                 json j = state->fetchArmyData(this->id);
@@ -146,7 +146,7 @@ namespace render {
             for (Button *button : buttons) {
                 delete button;
             } 
-            buttons={};
+            buttons.clear();
             buttons.push_back(new Button(mainRender, x1, y1, "Character", color, sf::Vector2i(width, spaceV/3)));
             buttons.push_back(new Button(mainRender, x1, y1+spaceV/3, "", color, sf::Vector2i(width, 2*spaceV/3)));
             buttons.push_back(new Button(mainRender, x1, y1+spaceV/3, "", color, sf::Vector2i(width, 2*spaceV/3)));
@@ -159,10 +159,40 @@ namespace render {
                 for(json::iterator it = j.begin(); it!= j.end(); ++it)
                 {
                     std::string characterA = it.value()["characterA"].get<std::string>();
-                    if(characterA==character["id"]) {
-                        std::string characterB = it.value()["characterB"].get<std::string>();
-                        this->data +=state->fetchCharacterData(characterB)["name"].get<std::string>()+" ";
-                        this->data +=it.value()["type"].dump()+"\n";
+                    std::string characterB = it.value()["characterB"].get<std::string>();
+                    if(characterA==character["id"] || characterB==character["id"]) {
+                        if(characterA==character["id"]) {
+                            json characterBData = state->fetchCharacterData(characterB);
+                            this->data +=characterBData["name"].get<std::string>()+" "+characterBData["dynastyName"].get<std::string>()+": ";
+                        }
+                        else if(characterB==character["id"]){
+                            json characterAData = state->fetchCharacterData(characterA);
+                            this->data +=characterAData["name"].get<std::string>()+" "+characterAData["dynastyName"].get<std::string>()+": ";
+                        }
+                        switch(it.value()["type"].get<int>()){
+                            case 0:
+                                //type = non_aggression;
+                                this->data +="no aggression\n";
+                                break;
+                            case 1:
+                                //type = alliance;
+                                this->data +="alliance\n";
+                                break;
+                            case 2:
+                                //type = friendship;
+                                this->data +="friendship\n";
+                                break;
+                            case 3:
+                                //type = rivalry;
+                                this->data +="rivalry\n";
+                                break;
+                            case 4:
+                                //type = war;
+                                this->data +="war\n";
+                                break;
+                            default:
+                                throw std::string("Error: invalid relation type.");
+                        }
                     }
                 }
             }

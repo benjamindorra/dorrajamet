@@ -350,8 +350,9 @@ namespace state
     std::string GameMap::getProvinceId (unsigned int colorCode)
     {
         for(auto province: provinces)
-            if(province.second.getColorCode() == colorCode)
+            if(province.second.getColorCode() == colorCode){
                 return province.first;
+            }
         throw std::runtime_error("Error: unknown province color code: " + colorCode);
     }
 
