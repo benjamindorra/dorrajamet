@@ -28,7 +28,7 @@ static unsigned anon_cnt = 0;
 static char *sscanfmt()
 {
     static char buf[16];
-    sprintf (buf, "#%%%d[^#]#", SMALL_BUFFER - 1);
+    sprintf (buf, "#%%%d[^#]#", LARGE_BUFFER - 1);
     return buf;
 }
 

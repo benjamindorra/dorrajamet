@@ -66,7 +66,7 @@
 #define HUGE_BUFFER  16384
 
 struct umlattribute {
-    char name[SMALL_BUFFER];
+    char name[LARGE_BUFFER];
     char value[SMALL_BUFFER];
     char type [SMALL_BUFFER];
     char comment [LARGE_BUFFER];
@@ -143,9 +143,9 @@ typedef struct umlpackagenode umlpackagenode;
 typedef umlpackagenode * umlpackagelist;
 
 struct umlclass {
-    char id[SMALL_BUFFER];
-    char name[SMALL_BUFFER];
-    char stereotype[SMALL_BUFFER];
+    char id[BIG_BUFFER];
+    char name[BIG_BUFFER];
+    char stereotype[BIG_BUFFER];
     char comment[LARGE_BUFFER];
     int isabstract;
     umlattrlist attributes;
