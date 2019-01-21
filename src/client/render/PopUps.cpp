@@ -12,13 +12,8 @@ namespace render {
         this->playerId = playerId;
     }
     PopUps::~PopUps ( ){}
-    void PopUps::newPopUp (bool requireAnswer, PopUp::Action action, std::string causeId, std::string targetId, std::string id, std::string data){
-        if (requireAnswer) {
-            popUps[id] = new PopUp(mainRender, PopUp::Type::Question, action, causeId, targetId, state, engine, data, id);
-        }
-        else {
-            popUps[id] = new PopUp(mainRender, PopUp::Type::Info, action, causeId, targetId, state, engine, data, id);
-        }
+    void PopUps::newPopUp (bool requiresAnswer, PopUp::Type type, std::string causeId, std::string targetId, std::string id, std::string data){
+            popUps[id] = new PopUp(mainRender, requiresAnswer, type, causeId, state, engine, data, id);
     }
     void PopUps::deletePopUp (std::string id){
         delete popUps[id];

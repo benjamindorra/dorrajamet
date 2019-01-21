@@ -22,8 +22,8 @@ namespace render {
   class PopUp : public render::Element {
     // Attributes
   public:
-    enum Type{Info=0, Question=1};
-    enum Action{War=0,Peace=1,Alliance=2,Claim=3,Plot=4,Surr=5};
+    bool requiresAnswer;
+    enum Type{War=0,Peace=1,Alliance=2,Claim=3,Plot=4,Surr=5,Other=6};
     int clickX;
     int clickY;
     bool selected     = false;
@@ -33,16 +33,15 @@ namespace render {
     sf::Font font;
     std::vector<Button*> buttons;
     std::string causeId;
-    std::string targetId;
     ToState * state;
     ToEngine * engine;
     std::string data;
     std::string messageId;
     // Operations
   public:
-    PopUp (Render * mainRender, Type type, Action action, std::string causeId, std::string targetId, ToState * state, ToEngine * engine, std::string data, std::string messageId);
+    PopUp (Render * mainRender, bool requiresAnswer, Type type, std::string causeId, ToState * state, ToEngine * engine, std::string data, std::string messageId);
     ~PopUp ();
-    void select (Type type, Action action, std::string causeId, std::string targetId);
+    void select (bool requiresAnswer, Type type, std::string causeId, std::string data);
     void draw ();
     bool contains (int x, int y);
     bool click (int x, int y);

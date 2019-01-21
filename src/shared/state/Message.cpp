@@ -38,7 +38,7 @@ namespace state
   nlohmann::json Message::toJson(){
     nlohmann::json j;
     j["id"] = id;
-    //type : War=0,Peace=1,Alliance=2,Claim=3,Plot=4,Surr=5 as in PopUp::Action
+    //type : War=0,Peace=1,Alliance=2,Claim=3,Plot=4,Surr=5,Other=6 as in PopUp::Action
     j["type"] = type;
     j["sourceCharacter"] = sourceCharacter;
     j["requireAnswer"] = requiresAnswer;

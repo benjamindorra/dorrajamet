@@ -138,7 +138,6 @@ namespace engine
             {
                 //1 turn delay before a claim becomes active
                 gameState->addClaim(currentCharacter, targetProv, currentTurn+1);
-                std::cout << "added claim\n";
                 nlohmann::json mess;
                 mess["id"] = currentCharacter + "_claim_" + targetProv + "_from_" + targetOwner + "_turn_" + std::to_string(currentTurn);
                 mess["type"] = 3;
@@ -147,8 +146,15 @@ namespace engine
                 mess["data"] = targetProv;
                 gameState->pushMessageToPlayer(targetPlayer, mess);
             }
-            else
-                std::cout << "can't claim your own provinces\n";
+            else{
+                nlohmann::json mess;
+                mess["id"] = currentCharacter + "_other_" + "claimOwnProvince" + "_turn_" + std::to_string(currentTurn);
+                mess["type"] = 6;
+                mess["sourceCharacter"] = currentCharacter;
+                mess["requiresAnswer"] = false;
+                mess["data"] = "You can't claim your own provinces";
+                gameState->pushMessageToPlayer(gameState->getCurrentPlayer(), mess);
+            }
         }
         catch(const std::exception& e)
         {
@@ -164,10 +170,24 @@ namespace engine
         {
             auto j = nlohmann::json::parse(arguments);
             auto targetOwner = gameState->getProvinceOwner(gameState->getProvinceFromColor(j["colorCode"].get<unsigned int>()));
-            if(targetOwner == currentCharacter)
-                std::cout << "Can't declare war on yourself you madman!\n";
-            else if(gameState->areAllies(targetOwner, currentCharacter))
-                std::cout << "Can't declare ass on allies you jerk!\n";
+            if(targetOwner == currentCharacter){
+                nlohmann::json mess;
+                mess["id"] = currentCharacter + "_other_" + "warOnYourself" + "_turn_" + std::to_string(currentTurn);
+                mess["type"] = 6;
+                mess["sourceCharacter"] = currentCharacter;
+                mess["requiresAnswer"] = false;
+                mess["data"] = "Can't declare war on yourself you madman!";
+                gameState->pushMessageToPlayer(gameState->getCurrentPlayer(), mess);
+            }
+            else if(gameState->areAllies(targetOwner, currentCharacter)){
+                nlohmann::json mess;
+                mess["id"] = currentCharacter + "_other_" + "warOnAlly" + "_turn_" + std::to_string(currentTurn);
+                mess["type"] = 6;
+                mess["sourceCharacter"] = currentCharacter;
+                mess["requiresAnswer"] = false;
+                mess["data"] = "Can't declare war on allies you jerk!";
+                gameState->pushMessageToPlayer(gameState->getCurrentPlayer(), mess);
+            }
             else
             {
                 auto claim = gameState->hasActiveClaim(currentCharacter, targetOwner);
@@ -199,8 +219,15 @@ namespace engine
                     }
                     
                 }
-                else
-                    std::cout << "You have no claim over this character\n";
+                else{
+                    nlohmann::json mess;
+                    mess["id"] = currentCharacter + "_other_" + "noClaim" + "_turn_" + std::to_string(currentTurn);
+                    mess["type"] = 6;
+                    mess["sourceCharacter"] = currentCharacter;
+                    mess["requiresAnswer"] = false;
+                    mess["data"] = "You have no claim over this character";
+                    gameState->pushMessageToPlayer(gameState->getCurrentPlayer(), mess);
+                }
             }
         }
         catch(const std::exception& e)
@@ -230,8 +257,15 @@ namespace engine
                 mess["data"] = warId;
                 gameState->pushMessageToPlayer(gameState->getPlayerOfCharacter(targetCharacter), mess);
             }
-            else
-                std::cout << "Not at war.\n";
+            else{
+                nlohmann::json mess;
+                mess["id"] = currentCharacter + "_other_" + "noWar" + "_turn_" + std::to_string(currentTurn);
+                mess["type"] = 6;
+                mess["sourceCharacter"] = currentCharacter;
+                mess["requiresAnswer"] = false;
+                mess["data"] = "Not at war.";
+                gameState->pushMessageToPlayer(gameState->getCurrentPlayer(), mess);
+            }
         }
         catch(const std::exception& e)
         {
@@ -260,8 +294,15 @@ namespace engine
                 mess["data"] = warId;
                 gameState->pushMessageToPlayer(gameState->getPlayerOfCharacter(targetCharacter), mess);
             }
-            else
-                std::cout << "Not at war.\n";
+            else {
+                nlohmann::json mess;
+                mess["id"] = currentCharacter + "_other_" + "noWar" + "_turn_" + std::to_string(currentTurn);
+                mess["type"] = 6;
+                mess["sourceCharacter"] = currentCharacter;
+                mess["requiresAnswer"] = false;
+                mess["data"] = "Not at war.";
+                gameState->pushMessageToPlayer(gameState->getCurrentPlayer(), mess);
+            }
         }
         catch(const std::exception& e)
         {

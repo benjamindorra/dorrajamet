@@ -4,13 +4,11 @@
 #include "json.hpp"
 
 namespace render {
-    PopUp::PopUp (Render * mainRender, Type type, Action action, std::string causeId, 
-    std::string targetId, ToState * state, ToEngine * engine, std::string data, std::string messageId){
+    PopUp::PopUp (Render * mainRender, bool requiresAnswer, Type type, std::string causeId, ToState * state, ToEngine * engine, std::string data, std::string messageId){
         this->mainRender=mainRender;
         this->state = state;
         this->engine = engine;
         this->causeId = causeId;
-        this->targetId = targetId;
         this->data = data;
         this->messageId = messageId;
         // text
@@ -23,37 +21,40 @@ namespace render {
         frame.setFillColor(sf::Color(128,128,128,255));
         frame.setOutlineColor(sf::Color::Black);
         frame.setOutlineThickness(-1);
-        select(type, action, causeId, targetId);
+        select(requiresAnswer, type, causeId, data);
     }
-    
+
     PopUp::~PopUp () {
         for (Button *button : buttons) {
             delete button;
         }        
     }
     
-    void PopUp::select (Type type, Action action, std::string causeId, std::string targetId) {
+    void PopUp::select (bool requiresAnswer, Type type, std::string causeId, std::string data) {
         // select text, buttons and frame size
-        std::cout << "new popup cause: " << causeId << " -- target id: " << targetId << std::endl;;
+        std::cout << "new popup cause: " << causeId << std::endl;;
         std::string toDisplay;
-        switch (action) {
+        switch (type) {
             case War:
-                toDisplay = state->fetchCharacterData(causeId)["name"].get<std::string>()+" declares war to "+state->fetchCharacterData( state->getCharacterOfPlayer(targetId))["name"].get<std::string>()+" !";
+                toDisplay = state->fetchCharacterData(causeId)["name"].get<std::string>()+" declares war to you !";
                 break;
             case Peace:
-                toDisplay = state->fetchCharacterData(causeId)["name"].get<std::string>()+" offers peace to "+state->fetchCharacterData(state->getCharacterOfPlayer(targetId))["name"].get<std::string>()+".";
+                toDisplay = state->fetchCharacterData(causeId)["name"].get<std::string>()+" offers peace to you.";
                 break;
             case Surr:
-                toDisplay = state->fetchCharacterData(causeId)["name"].get<std::string>()+" surrenders to "+state->fetchCharacterData(state->getCharacterOfPlayer(targetId))["name"].get<std::string>()+".";
+                toDisplay = state->fetchCharacterData(causeId)["name"].get<std::string>()+" surrenders to you.";
                 break;
             case Alliance:
-                toDisplay = state->fetchCharacterData(causeId)["name"].get<std::string>()+" makes an alliance with "+state->fetchCharacterData(targetId)["name"].get<std::string>()+".";
+                toDisplay = state->fetchCharacterData(causeId)["name"].get<std::string>()+" wants to make an alliance with you.";
                 break;
             case Claim:
                 toDisplay = state->fetchCharacterData(causeId)["name"].get<std::string>()+" claims "+state->fetchProvinceData(data)["name"].get<std::string>()+".";
                 break;
             case Plot:
-                toDisplay = state->fetchCharacterData(causeId)["name"].get<std::string>()+" assassinated "+state->fetchCharacterData(targetId)["name"].get<std::string>()+" !";
+                toDisplay = state->fetchCharacterData(causeId)["name"].get<std::string>()+" assassinated you !";
+                break;
+            case Other:
+                toDisplay = data;
                 break;
             default:
                 throw std::string("unknown action");
@@ -71,16 +72,12 @@ namespace render {
         }
         sf::Color color(160,160,160,255);
         int widthB = 120;
-        switch (type){
-            case Info:
-                buttons.push_back(new Button(mainRender, x+width/2-20, y+height/2, "OK", color, sf::Vector2i(40,20)));
-                break;
-            case Question:
-                buttons.push_back(new Button(mainRender, x+width/2-widthB, y+height/2, "ACCEPT", color, sf::Vector2i(widthB,20)));
-                buttons.push_back(new Button(mainRender, x+width/2, y+height/2, "REFUSE", color, sf::Vector2i(widthB,20)));
-                break;
-            default:
-                throw std::string("unknown type");
+        if (requiresAnswer) {    
+            buttons.push_back(new Button(mainRender, x+width/2-widthB, y+height/2, "ACCEPT", color, sf::Vector2i(widthB,20)));
+            buttons.push_back(new Button(mainRender, x+width/2, y+height/2, "REFUSE", color, sf::Vector2i(widthB,20)));
+        }
+        else{
+            buttons.push_back(new Button(mainRender, x+width/2-20, y+height/2, "OK", color, sf::Vector2i(40,20)));
         }
     }
     
@@ -141,7 +138,6 @@ namespace render {
         nlohmann::json j;
         j["command"] = button;
         j["causeId"] = causeId;
-        j["targetId"] = targetId;
         j["messageId"] = messageId;
         engine->addCommand(button, j.dump());
     }

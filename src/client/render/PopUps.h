@@ -32,7 +32,7 @@ namespace render {
   public:
     PopUps (Render * mainRender, ToState * state, ToEngine * engine, std::string playerId);
     ~PopUps ( );
-    void newPopUp (bool requireAnswer, PopUp::Action action, std::string causeId, std::string targetId, std::string id, std::string data);
+    void newPopUp (bool requireAnswer, PopUp::Type type, std::string causeId, std::string targetId, std::string id, std::string data);
     void deletePopUp (std::string id);
     void update ();
     void draw ();
