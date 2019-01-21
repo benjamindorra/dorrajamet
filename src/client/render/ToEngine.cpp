@@ -12,7 +12,6 @@ namespace render {
     }
     ToEngine::~ToEngine (){}
     void ToEngine::addCommand (std::string command, std::string argument){
-        std::cout<<"command "<<command<<" argument "<<argument<<std::endl;
         if (command=="moveArmy") {
             engine->pushCommand(engine::Command(engine::Command::army, argument));
         }
@@ -46,6 +45,9 @@ namespace render {
         {
             engine->pushCommand(engine::Command(engine::Command::surr, argument));
         }
-
+        if (command=="Levy")
+        {
+            engine->pushCommand(engine::Command(engine::Command::createArmy, argument));
+        }
     }
 }

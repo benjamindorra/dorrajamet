@@ -343,18 +343,7 @@
         ],
         "armies":
         [
-            {
-                "id": "army_chara0001_xx",
-                "ownerCharacter": "chara_0001",
-                "levies":
-                [
-                    "prov_one"
-                ],
-                "currentProvince": "prov_one",
-                "currentBattle": "",
-                "orders":
-                []
-            }
+            
         ]
     }
 }

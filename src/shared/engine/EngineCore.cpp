@@ -70,6 +70,9 @@ namespace engine
             case Command::no:
                 noButton(command.getArgument());
                 break;
+            case Command::createArmy:
+                createArmy(command.getArgument());
+                break;
             default:
                 throw std::runtime_error("Error: unknown command type.\n");
         }
@@ -429,5 +432,65 @@ namespace engine
         if(repliedYes)// currentCharacter loses
             gameState->endWar(warId, otherCharacter);
         // otherwise the war goes on
+    }
+    void EngineCore::createArmy (std::string arguments){
+        auto currentCharacter = gameState->getCurrentPlayerCharacter();
+        auto currentTurn = gameState->getCurrentTurn();
+        try
+        {
+            // Check if the two characters can make peace for a warId that is retrieved
+            // Add a peace proposal message to target player with warId as metadata
+            auto j = nlohmann::json::parse(arguments);
+            auto targetProvince = gameState->getProvinceFromColor(j["colorCode"].get<unsigned int>());
+            auto provinceOwner = gameState->getProvinceOwner(targetProvince);
+            nlohmann::json characters = gameState->fetchAllCharactersData();
+            if(provinceOwner==currentCharacter){
+                bool isAtWar = false;
+                for (auto& character : characters){
+                    if (gameState->areAtWar(currentCharacter, character["id"])) {
+                        isAtWar = true;
+                        break;
+                    }
+                }
+                if(isAtWar)
+                {
+                    nlohmann::json armyJson;
+                    armyJson["id"] = "army_" + currentCharacter + "_from_" + targetProvince;
+                    armyJson["ownerCharacter"] = currentCharacter;
+                    std::vector<std::string> levies;
+                    levies.push_back(targetProvince);
+                    armyJson["levies"] = levies;
+                    armyJson["currentProvince"] = targetProvince;
+                    armyJson["currentBattle"] = "";
+                    nlohmann::json jOrders = nlohmann::json::array();
+                    armyJson["orders"] = jOrders;
+                    gameState->createArmy(armyJson);
+                    gameState->raiseLevy(targetProvince);
+                }
+                else{
+                    nlohmann::json mess;
+                    mess["id"] = currentCharacter + "_other_" + "createArmynoWar" + "_turn_" + std::to_string(currentTurn);
+                    mess["type"] = 6;
+                    mess["sourceCharacter"] = currentCharacter;
+                    mess["requiresAnswer"] = false;
+                    mess["data"] = "Can only create armies during a war.";
+                    gameState->pushMessageToPlayer(gameState->getCurrentPlayer(), mess);
+                }
+            }
+            else{
+                    nlohmann::json mess;
+                    mess["id"] = currentCharacter + "_other_" + "provinceNotOwned_" + targetProvince + "_turn_" + std::to_string(currentTurn);
+                    mess["type"] = 6;
+                    mess["sourceCharacter"] = currentCharacter;
+                    mess["requiresAnswer"] = false;
+                    mess["data"] = "Cannot create an army on someone else's province.";
+                    gameState->pushMessageToPlayer(gameState->getCurrentPlayer(), mess);
+                }
+        }
+        catch(const std::exception& e)
+        {
+            std::cerr << e.what() << std::endl;
+            throw std::runtime_error("Error: could not parse createArmy command\n");
+        }
     }
 }

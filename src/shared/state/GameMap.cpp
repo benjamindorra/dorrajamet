@@ -140,7 +140,10 @@ namespace state
     }
     void GameMap::disbandLevy (std::string idProvince)
     {
-        provinces[idProvince].disbandLevy();
+        provinces.at(idProvince).disbandLevy();
+    }
+    void GameMap::raiseLevy (std::string idProvince){
+        provinces.at(idProvince).raiseLevy();
     }
     bool GameMap::checkForOngoingBattles (std::string province)
     {
@@ -434,6 +437,11 @@ namespace state
         {
             std::cerr << e.what() << std::endl;
             throw std::runtime_error("Error: GameMap::transferProvince( " + provinceId + ", " + kingdomId + " )\n");
+        }
+    }
+    void GameMap::createArmy (nlohmann::json armyJson){
+        if (this->armies.find(armyJson["id"])==this->armies.end()){
+            this->armies[armyJson["id"]]=Army(this, armyJson.dump());
         }
     }
     nlohmann::json GameMap::toJson (){

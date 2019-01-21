@@ -44,6 +44,7 @@ namespace engine {
     void noButton (std::string arguments);
     void processSurrenderMessageReply (bool repliedYes, std::string arguments, nlohmann::json message);
     void processPeaceMessageReply (bool repliedYes, std::string arguments, nlohmann::json message);
+    void createArmy (std::string arguments);
     // Setters and Getters
   };
 

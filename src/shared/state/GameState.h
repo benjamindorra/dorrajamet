@@ -98,6 +98,9 @@ namespace state {
     nlohmann::json fetchAllCharactersData ();
     nlohmann::json getOrderJson (std::string origId, std::string destId);
     void increaseCurrentTurn ();
+    void createArmy (nlohmann::json armyJson);
+    void disbandLevy (std::string idProvince);
+    void raiseLevy (std::string idProvince);
     nlohmann::json toJson ();
     void save (std::string savePath);
     // Setters and Getters

@@ -31,8 +31,9 @@ namespace state {
     int getMen ();
     void killMen (int victims);
     void setMen (int men);
-    void disband ();
     void update ();
+    void disband ();
+    void raise ();
     bool isRaised ();
     void setReinforcementRate (float rate);
     void reinforce (int men);

@@ -65,6 +65,9 @@ namespace state
     {
         raised = false;
     }
+    void Levy::raise (){
+        raised = true;
+    }
     bool Levy::isRaised()
     {
         return raised;

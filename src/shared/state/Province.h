@@ -58,6 +58,7 @@ namespace state {
     unsigned int getColorCode ();
     void killMenFromLevy (int victims);
     void disbandLevy ();
+    void raiseLevy ();
     bool isLevyRaised ();
     void setLevyReinforcementRate (float rate);
     void setSiegingArmy (std::string armyId);

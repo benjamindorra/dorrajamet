@@ -113,6 +113,9 @@ namespace state
     {
         levy.disband();
     }
+    void Province::raiseLevy (){
+        levy.raise();
+    }
     bool Province::isLevyRaised ()
     {
         return levy.isRaised();

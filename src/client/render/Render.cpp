@@ -50,7 +50,6 @@ namespace render {
         // buttons
         this->turnButton = new Button(this, window.getSize().x*0.8, 0, "end turn", sf::Color::Red, sf::Vector2i(window.getSize().x*0.2, window.getSize().y*0.1));
         this->switchColors = new Button(this, 0, 0, "switch\ncolors", sf::Color(0,128,0), sf::Vector2i(window.getSize().x*0.1, window.getSize().y*0.1));
-        std::cout<<"Render init OK"<<std::endl;
     }
 
     // main loop, handles render and events

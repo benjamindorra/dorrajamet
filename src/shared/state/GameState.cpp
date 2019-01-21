@@ -377,6 +377,15 @@ namespace state
     void GameState::increaseCurrentTurn(){
         this->currentTurn++;
     }
+    void GameState::createArmy (nlohmann::json armyJson){
+        gameMap->createArmy(armyJson);
+    }
+    void GameState::disbandLevy (std::string idProvince){
+        gameMap->disbandLevy(idProvince);
+    }
+    void GameState::raiseLevy (std::string idProvince){
+        gameMap->raiseLevy(idProvince);
+    }
     nlohmann::json GameState::toJson (){
             nlohmann::json gameState;
             nlohmann::json allPlayers = nlohmann::json::array();

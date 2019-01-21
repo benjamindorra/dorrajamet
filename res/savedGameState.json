@@ -1,28 +1,17 @@
 {
     "currentPlayer": 0,
-    "currentTurn": 5,
+    "currentTurn": 0,
     "gameMap": {
-        "armies": [
-            {
-                "currentBattle": "",
-                "currentProvince": "prov_one",
-                "id": "army_chara0001_xx",
-                "levies": [
-                    "prov_one"
-                ],
-                "orders": [],
-                "ownerCharacter": "chara_0001"
-            }
-        ],
+        "armies": [],
         "battles": [],
         "provinces": [
             {
                 "baseLevy": {
                     "isRaised": false,
-                    "men": 12232,
+                    "men": 500,
                     "reinforcementRate": 1.0
                 },
-                "baseTaxIncome": 34,
+                "baseTaxIncome": 200,
                 "colorCode": 4278190335,
                 "controlledBy": "none",
                 "development": 50,
@@ -32,11 +21,11 @@
                 "kingdomId": "k_three",
                 "levy": {
                     "isRaised": false,
-                    "men": 5975,
+                    "men": 500,
                     "reinforcementRate": 1.0
                 },
                 "name": "Fiveland",
-                "prosperity": 87,
+                "prosperity": 12,
                 "siegeStatus": 0,
                 "siegingArmy": "none",
                 "taxIncome": 200
@@ -44,10 +33,10 @@
             {
                 "baseLevy": {
                     "isRaised": false,
-                    "men": 12232,
+                    "men": 500,
                     "reinforcementRate": 1.0
                 },
-                "baseTaxIncome": 34,
+                "baseTaxIncome": 200,
                 "colorCode": 4294902015,
                 "controlledBy": "none",
                 "development": 50,
@@ -57,11 +46,11 @@
                 "kingdomId": "k_four",
                 "levy": {
                     "isRaised": false,
-                    "men": 5975,
+                    "men": 500,
                     "reinforcementRate": 1.0
                 },
                 "name": "Fourland",
-                "prosperity": 87,
+                "prosperity": 12,
                 "siegeStatus": 0,
                 "siegingArmy": "none",
                 "taxIncome": 200
@@ -69,10 +58,10 @@
             {
                 "baseLevy": {
                     "isRaised": false,
-                    "men": 12232,
+                    "men": 500,
                     "reinforcementRate": 1.0
                 },
-                "baseTaxIncome": 34,
+                "baseTaxIncome": 200,
                 "colorCode": 65535,
                 "controlledBy": "none",
                 "development": 50,
@@ -82,11 +71,11 @@
                 "kingdomId": "k_one",
                 "levy": {
                     "isRaised": true,
-                    "men": 5975,
+                    "men": 500,
                     "reinforcementRate": 1.0
                 },
                 "name": "Oneland",
-                "prosperity": 87,
+                "prosperity": 12,
                 "siegeStatus": 0,
                 "siegingArmy": "none",
                 "taxIncome": 200
@@ -94,10 +83,10 @@
             {
                 "baseLevy": {
                     "isRaised": false,
-                    "men": 12232,
+                    "men": 500,
                     "reinforcementRate": 1.0
                 },
-                "baseTaxIncome": 34,
+                "baseTaxIncome": 200,
                 "colorCode": 4278255615,
                 "controlledBy": "none",
                 "development": 50,
@@ -107,11 +96,11 @@
                 "kingdomId": "k_four",
                 "levy": {
                     "isRaised": false,
-                    "men": 5975,
+                    "men": 500,
                     "reinforcementRate": 1.0
                 },
                 "name": "Sixland",
-                "prosperity": 87,
+                "prosperity": 12,
                 "siegeStatus": 0,
                 "siegingArmy": "none",
                 "taxIncome": 200
@@ -119,24 +108,24 @@
             {
                 "baseLevy": {
                     "isRaised": false,
-                    "men": 14384,
+                    "men": 600,
                     "reinforcementRate": 1.0
                 },
-                "baseTaxIncome": 42,
+                "baseTaxIncome": 250,
                 "colorCode": 16711935,
                 "controlledBy": "none",
                 "development": 60,
                 "dispPosX": 217,
                 "dispPosY": 330,
                 "id": "prov_three",
-                "kingdomId": "k_one",
+                "kingdomId": "k_three",
                 "levy": {
                     "isRaised": false,
-                    "men": 7046,
+                    "men": 600,
                     "reinforcementRate": 1.0
                 },
                 "name": "Threeland",
-                "prosperity": 90,
+                "prosperity": 15,
                 "siegeStatus": 0,
                 "siegingArmy": "none",
                 "taxIncome": 250
@@ -144,24 +133,24 @@
             {
                 "baseLevy": {
                     "isRaised": false,
-                    "men": 10017,
+                    "men": 400,
                     "reinforcementRate": 1.0
                 },
-                "baseTaxIncome": 27,
+                "baseTaxIncome": 150,
                 "colorCode": 16777215,
                 "controlledBy": "none",
                 "development": 40,
                 "dispPosX": 372,
                 "dispPosY": 207,
                 "id": "prov_two",
-                "kingdomId": "k_one",
+                "kingdomId": "k_two",
                 "levy": {
                     "isRaised": false,
-                    "men": 4871,
+                    "men": 400,
                     "reinforcementRate": 1.0
                 },
                 "name": "Twoland",
-                "prosperity": 81,
+                "prosperity": 6,
                 "siegeStatus": 0,
                 "siegingArmy": "none",
                 "taxIncome": 150
@@ -221,7 +210,9 @@
                 {
                     "age": 22,
                     "alive": true,
-                    "claims": {},
+                    "claims": {
+                        "prov_two": 1
+                    },
                     "diplomacy": 12,
                     "dynastyName": "Jones",
                     "gold": 500,
@@ -231,7 +222,7 @@
                     "kingdomId": "k_one",
                     "martial": 21,
                     "name": "Rayleigh",
-                    "prestige": 120,
+                    "prestige": 200,
                     "stewardship": 10,
                     "traits": [
                         "proud",
@@ -253,7 +244,7 @@
                     "kingdomId": "k_two",
                     "martial": 21,
                     "name": "Thomas",
-                    "prestige": 240,
+                    "prestige": 200,
                     "stewardship": 10,
                     "traits": [
                         "lustful",
@@ -273,7 +264,7 @@
                     "kingdomId": "k_three",
                     "martial": 21,
                     "name": "Emile",
-                    "prestige": 240,
+                    "prestige": 200,
                     "stewardship": 10,
                     "traits": [
                         "kind",
@@ -312,16 +303,10 @@
                     "type": 2
                 },
                 {
-                    "characterA": "chara_0002",
-                    "characterB": "chara_0001",
-                    "endTurn": 11,
-                    "type": 0
-                },
-                {
-                    "characterA": "chara_0003",
-                    "characterB": "chara_0001",
-                    "endTurn": 15,
-                    "type": 0
+                    "characterA": "chara_0001",
+                    "characterB": "chara_0002",
+                    "endTurn": -1,
+                    "type": 3
                 }
             ]
         },
