@@ -44,6 +44,12 @@ namespace render {
         }
     }
     void Data::select(Types type,std::string id) {
+        // reset the view if the user selected a different data to show
+        if (this->type!=type || this->id!=id) {
+            view.setCenter(view.getSize().x/2, view.getSize().y/2);
+            text.setPosition(0,0);
+        }
+        //set global variables
         this->type = type;
         this->id = id;
         // select data type
@@ -55,9 +61,6 @@ namespace render {
         float left = view.getViewport().left;
         float x1 = left*mainRender->getWindow()->getSize().x;
         sf::Color color(160,160,160,255);
-        // reset the view
-        view.setCenter(view.getSize().x/2, view.getSize().y/2);
-        text.setPosition(0,0);
         // create buttons
         if (type==Types::Character) {
             for (Button *button : buttons) {
