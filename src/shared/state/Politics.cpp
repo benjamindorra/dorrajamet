@@ -230,7 +230,7 @@ namespace state
             res.push_back(relation.toJson());
         return res;
     }
-    std::vector<std::string> Politics::getClaims (std::string characterId)
+    std::map<std::string, int> Politics::getClaims (std::string characterId)
     {
         return characters.getClaims(characterId);
     }
@@ -296,9 +296,9 @@ namespace state
                 return true;
         return false;
     }
-    void Politics::addClaim (std::string claimant, std::string provinceId)
+    void Politics::addClaim (std::string claimant, std::string provinceId, int turn)
     {
-        characters.addClaim(claimant, provinceId);
+        characters.addClaim(claimant, provinceId, turn);
     }
     nlohmann::json Politics::fetchAllCharactersData(){
         return characters.fetchAllCharactersData();
@@ -318,7 +318,14 @@ namespace state
             throw std::runtime_error("Politics::getWarCamps with id: " + warId + "\n");
         }
     }
-    std::string Politics::getWar (std::string characterA, std::string characterB)
+    nlohmann::json Politics::getWar (std::string characterA, std::string characterB)
+    {
+        for(auto war: wars)
+            if((war.second.getClaimantCharacter() == characterA && war.second.getDefendingCharacter() == characterB) || (war.second.getClaimantCharacter() == characterB && war.second.getDefendingCharacter() == characterA))
+                return war.second.toJson();
+        return "";
+    }
+    std::string Politics::getWarId (std::string characterA, std::string characterB)
     {
         for(auto war: wars)
             if((war.second.getClaimantCharacter() == characterA && war.second.getDefendingCharacter() == characterB) || (war.second.getClaimantCharacter() == characterB && war.second.getDefendingCharacter() == characterA))

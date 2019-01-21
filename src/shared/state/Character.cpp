@@ -47,10 +47,10 @@ namespace state{
             stewardship = j["stewardship"].get<int>();
             martial = j["martial"].get<int>();
             intrigue = j["intrigue"].get<int>();
-            if(j["claims"].is_array())
-                claims = j["claims"].get<std::vector<std::string>>();
+            if(j["claims"].is_object())
+                claims = j["claims"].get<std::map<std::string, int>>();
             else
-                claims = std::vector<std::string>();
+                claims = std::map<std::string, int>();
             alive = j["alive"].get<bool>();
             prestige = j["prestige"].get<int>();
             gold = j["gold"].get<int>();
@@ -98,7 +98,7 @@ namespace state{
         for(auto trait : this->traits) std::cout << trait << " | ";
         std::cout << "\nClaims: ";
         std::cout << std::endl;
-        for(auto claim : this->claims) std::cout << claim << " | ";
+        for(auto claim : this->claims) std::cout << claim.first << "active on turn: " << claim.second <<" | ";
         std::cout << std::endl;
     }
     bool Character::checkConsistency ()
@@ -182,7 +182,7 @@ namespace state{
     }
     void Character::removeClaim (std::string titleId)
     {
-        auto it = std::find(claims.begin(), claims.end(), titleId);
+        auto it = claims.find(titleId);
         if(it != claims.end())
             claims.erase(it);
     }
@@ -190,14 +190,14 @@ namespace state{
     {
         return kingdomId;
     }
-    std::vector<std::string> Character::getClaims ()
+    std::map<std::string, int> Character::getClaims ()
     {
         return claims;
     }
-    void Character::addClaim (std::string provinceId)
+    void Character::addClaim (std::string provinceId, int turn)
     {
-        if(!isIn(claims, provinceId))
-            claims.push_back(provinceId);
+        if(claims.find(provinceId) == claims.end())
+            claims[provinceId]=turn;
     }
     nlohmann::json Character::toJson ()
     {

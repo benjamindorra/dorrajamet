@@ -83,7 +83,7 @@
                     "stewardship": 10,
                     "martial": 21,
                     "intrigue": 15,
-                    "claims": ["prov_four"],
+                    "claims": {"prov_four": 1},
                     "alive": true,
                     "prestige": 200,
                     "gold": 500,

@@ -1,11 +1,11 @@
 {
-    "currentPlayer": 1,
-    "currentTurn": 0,
+    "currentPlayer": 0,
+    "currentTurn": 5,
     "gameMap": {
         "armies": [
             {
                 "currentBattle": "",
-                "currentProvince": "prov_two",
+                "currentProvince": "prov_one",
                 "id": "army_chara0001_xx",
                 "levies": [
                     "prov_one"
@@ -129,7 +129,7 @@
                 "dispPosX": 217,
                 "dispPosY": 330,
                 "id": "prov_three",
-                "kingdomId": "k_three",
+                "kingdomId": "k_one",
                 "levy": {
                     "isRaised": false,
                     "men": 7046,
@@ -221,7 +221,7 @@
                 {
                     "age": 22,
                     "alive": true,
-                    "claims": [],
+                    "claims": {},
                     "diplomacy": 12,
                     "dynastyName": "Jones",
                     "gold": 500,
@@ -231,7 +231,7 @@
                     "kingdomId": "k_one",
                     "martial": 21,
                     "name": "Rayleigh",
-                    "prestige": 160,
+                    "prestige": 120,
                     "stewardship": 10,
                     "traits": [
                         "proud",
@@ -241,9 +241,9 @@
                 {
                     "age": 22,
                     "alive": true,
-                    "claims": [
-                        "prov_four"
-                    ],
+                    "claims": {
+                        "prov_four": 1
+                    },
                     "diplomacy": 12,
                     "dynastyName": "Stuart",
                     "gold": 500,
@@ -263,7 +263,7 @@
                 {
                     "age": 22,
                     "alive": true,
-                    "claims": [],
+                    "claims": {},
                     "diplomacy": 12,
                     "dynastyName": "Collins",
                     "gold": 500,
@@ -273,7 +273,7 @@
                     "kingdomId": "k_three",
                     "martial": 21,
                     "name": "Emile",
-                    "prestige": 200,
+                    "prestige": 240,
                     "stewardship": 10,
                     "traits": [
                         "kind",
@@ -283,7 +283,7 @@
                 {
                     "age": 22,
                     "alive": true,
-                    "claims": [],
+                    "claims": {},
                     "diplomacy": 12,
                     "dynastyName": "Miles",
                     "gold": 500,
@@ -304,7 +304,26 @@
                     ]
                 }
             ],
-            "relations": []
+            "relations": [
+                {
+                    "characterA": "chara_0001",
+                    "characterB": "chara_0004",
+                    "endTurn": -1,
+                    "type": 2
+                },
+                {
+                    "characterA": "chara_0002",
+                    "characterB": "chara_0001",
+                    "endTurn": 11,
+                    "type": 0
+                },
+                {
+                    "characterA": "chara_0003",
+                    "characterB": "chara_0001",
+                    "endTurn": 15,
+                    "type": 0
+                }
+            ]
         },
         "kingdoms": [
             {

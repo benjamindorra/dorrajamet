@@ -229,15 +229,18 @@ namespace state
     {
         return players[currentPlayer].getCharacter();
     }
-    std::string GameState::hasClaim (std::string claimantId, std::string targetCharacterId)
+    std::string GameState::hasActiveClaim (std::string claimantId, std::string targetCharacterId)
     {
+        /*if the claimant has a claim on a province from the target AND this claim is valid
+        (the current turn is superior to the turn the claim becomes valid) returns the claimed province*/
         auto targetKingdom = politics->getKingdomOfCharacter(targetCharacterId);
         auto targetProvinces = gameMap->getProvincesOfKingdom(targetKingdom);
         auto claims = politics->getClaims(claimantId);
         for(auto p: targetProvinces)
-            for(auto c: claims)
-                if(p == c)
+            for(auto c: claims){
+                if(p == c.first && this->currentTurn>=c.second)
                     return p;
+            }
         return "";
     }
     bool GameState::areAtWar (std::string characterA, std::string characterB)
@@ -261,9 +264,9 @@ namespace state
         auto kingdomId = gameMap->getProvinceKingdomId(provinceId);
         return politics->getCharacterOfKingdom(kingdomId);
     }
-    void GameState::addClaim (std::string characterId, std::string provinceId)
+    void GameState::addClaim (std::string characterId, std::string provinceId, int turn)
     {
-        politics->addClaim(characterId, provinceId);
+        politics->addClaim(characterId, provinceId, turn);
     }
     std::string GameState::getProvinceFromColor (unsigned int colorCode)
     {
@@ -328,9 +331,13 @@ namespace state
         else
             throw std::runtime_error("No player of id: " + playerId + "\n");
     }
-    std::string GameState::getWar (std::string characterA, std::string characterB)
+    nlohmann::json GameState::getWar (std::string characterA, std::string characterB)
     {
         return politics->getWar(characterA, characterB);
+    }
+    std::string GameState::getWarId (std::string characterA, std::string characterB)
+    {
+        return politics->getWarId(characterA, characterB);
     }
     void GameState::peaceOffer (std::string warId, std::string offeringCharacter)
     {
@@ -366,6 +373,9 @@ namespace state
     }
     nlohmann::json GameState::getOrderJson (std::string origId, std::string destId){
         return ressources.getOrderJson(origId,destId);
+    }
+    void GameState::increaseCurrentTurn(){
+        this->currentTurn++;
     }
     nlohmann::json GameState::toJson (){
             nlohmann::json gameState;

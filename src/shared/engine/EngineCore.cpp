@@ -87,6 +87,7 @@ namespace engine
     }
     void EngineCore::endTurn()
     {
+        gameState->increaseCurrentTurn();
         gameState->updateArmiesOrders();
         gameState->checkNewBattles();
         gameState->updateBattles();
@@ -135,7 +136,8 @@ namespace engine
             auto targetPlayer = gameState->getPlayerOfCharacter(targetOwner);
             if(targetOwner != currentCharacter)
             {
-                gameState->addClaim(currentCharacter, targetProv);
+                //1 turn delay before a claim becomes active
+                gameState->addClaim(currentCharacter, targetProv, currentTurn+1);
                 std::cout << "added claim\n";
                 nlohmann::json mess;
                 mess["id"] = currentCharacter + "_claim_" + targetProv + "_from_" + targetOwner + "_turn_" + std::to_string(currentTurn);
@@ -168,12 +170,11 @@ namespace engine
                 std::cout << "Can't declare ass on allies you jerk!\n";
             else
             {
-                auto claim = gameState->hasClaim(currentCharacter, targetOwner);
+                auto claim = gameState->hasActiveClaim(currentCharacter, targetOwner);
                 if(claim.size())
                 {
                     auto warId = gameState->declareWar(claim, currentCharacter, targetOwner);
                     auto camps = gameState->getWarCamps(warId);
-                    std::cout << "attackers: \n";
                     for(auto character: camps.first)//attacking camp
                     {
                         if(character == currentCharacter)
@@ -186,7 +187,6 @@ namespace engine
                         mess["data"] = warId;
                         gameState->pushMessageToPlayer(gameState->getPlayerOfCharacter(character), mess);
                     }
-                    std::cout << "defenders: \n";
                     for(auto character: camps.second)//defending camp
                     {
                         nlohmann::json mess;
@@ -219,7 +219,7 @@ namespace engine
             // Add a peace proposal message to target player with warId as metadata
             auto j = nlohmann::json::parse(arguments);
             auto targetCharacter = gameState->getProvinceOwner(gameState->getProvinceFromColor(j["colorCode"].get<unsigned int>()));
-            auto warId = gameState->getWar(currentCharacter, targetCharacter);
+            auto warId = gameState->getWarId(currentCharacter, targetCharacter);
             if(warId.size())
             {
                 nlohmann::json mess;
@@ -249,7 +249,7 @@ namespace engine
             // Add a surrendering message to target player with warId as metadata
             auto j = nlohmann::json::parse(arguments);
             auto targetCharacter = gameState->getProvinceOwner(gameState->getProvinceFromColor(j["colorCode"].get<unsigned int>()));
-            auto warId = gameState->getWar(currentCharacter, targetCharacter);
+            auto warId = gameState->getWarId(currentCharacter, targetCharacter);
             if(warId.size())
             {
                 nlohmann::json mess;

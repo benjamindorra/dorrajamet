@@ -122,7 +122,7 @@ namespace ai {
         json characters = gameState->fetchAllCharactersData();
         for(std::vector<engine::Command> action : possibleActions){    
             for(json::iterator character=characters.begin();character!=characters.end();character++){
-                if (gameState->hasClaim(characterId,character.value()["id"])!=""){
+                if (gameState->hasActiveClaim(characterId,character.value()["id"])!=""){
                     if(not gameState->areAtWar(character.value()["id"], characterId)){
                         json provinces = gameState->fetchAllProvincesData();
                         for (json::iterator province=provinces.begin();province!=provinces.end();province++){
@@ -336,7 +336,7 @@ namespace ai {
                     break;
                     case engine::Command::claim:{
                         // claim a province score
-                        std::vector<std::string> claims = newState.fetchCharacterData(characterId)["claims"].get<std::vector<std::string>>();
+                        std::map<std::string, int> claims = newState.fetchCharacterData(characterId)["claims"].get<std::map<std::string, int>>();
                         //no claims ?! to succeed one must be ambitious !
                         if (claims.size()==0) score+=15;
                         //greed is good but too much is dangerous
@@ -373,16 +373,16 @@ namespace ai {
                         json characters = newState.fetchAllCharactersData();
                         std::string targetProvinceId = newState.getProvinceFromColor(json::parse(command.getArgument())["colorCode"]);
                         std::string opponentId = newState.getProvinceOwner(targetProvinceId);
-                        std::vector<std::string> claims;
+                        std::map<std::string, int> claims;
                         for(json::iterator character = characters.begin(); character != characters.end(); character++){
                             //if there is no war moving an army is generally not that useful
                             if(newState.areAtWar(character.value()["id"], characterId)) wars++;
                             //getting your character claims
-                            if (character.value()["id"]==characterId) claims = character.value()["claims"].get<std::vector<std::string>>();
+                            if (character.value()["id"]==characterId) claims = character.value()["claims"].get<std::map<std::string, int>>();
                         }
-                        for (std::string claim : claims){
-                            //only consider starting a war if there is a casus belli
-                            if(newState.getProvinceOwner(claim) == opponentId){
+                        for (std::pair<std::string, int> claim : claims){
+                            //only consider starting a war if there is a casus belli (active claim)
+                            if(newState.getProvinceOwner(claim.first) == opponentId && newState.getCurrentTurn()>=claim.second){
                                 //if you are at war with nobody, now might be a good time to start !
                                 if (wars==0) score+=15;
                                 //fighting the whole world at the same time is not recommended
@@ -402,36 +402,41 @@ namespace ai {
                     break;
                     case engine::Command::surr:{
                         //surrender score
-                        //basically the opposite of the war score, except the ai is NOT pacifist
+                        //will the ai surrender and lose a province ? Maybe, but the ai is NOT pacifist
                         int wars = 0;
                         json characters = newState.fetchAllCharactersData();
                         std::string targetProvinceId = newState.getProvinceFromColor(json::parse(command.getArgument())["colorCode"]);
                         std::string opponentId = newState.getProvinceOwner(targetProvinceId);
-                        std::vector<std::string> claims;
+                        std::vector<std::string> warOpponents;
                         for(json::iterator character = characters.begin(); character != characters.end(); character++){
                             //if there is no war moving an army is generally not that useful
-                            if(newState.areAtWar(character.value()["id"], characterId)) wars++;
-                            //getting your character claims
-                            if (character.value()["id"]==characterId) claims = character.value()["claims"].get<std::vector<std::string>>();
-                        }
-                        for (std::string claim : claims){
-                            //only consider starting a war if there is a casus belli
-                            if(newState.getProvinceOwner(claim) == opponentId){
-                                //if you are at war with nobody, now might be a good time to start !
-                                if (wars==0) score-=30;
-                                //fighting the whole world at the same time is not recommended
-                                if(wars>2) score+=5*wars;
-                                //comparing populations in provinces to roughly estimate strength
-                                int yourPopulation = 0;
-                                int opponentPopulation = 0;
-                                json provinces = newState.fetchAllProvincesData();
-                                for(json::iterator province = provinces.begin(); province != provinces.end(); province++){
-                                    if (newState.getProvinceOwner(province.value()["id"])==opponentId) opponentPopulation+=province.value()["levy"]["men"].get<int>();
-                                    if (newState.getProvinceOwner(province.value()["id"])==characterId) yourPopulation+=province.value()["levy"]["men"].get<int>();
+                            if(newState.areAtWar(character.value()["id"], characterId)) {
+                                wars++;
+                                warOpponents.push_back(character.value()["id"]);
+                                json currentWar = newState.getWar(character.value()["id"], characterId);
+                                //the war we are considering surrendering
+                                if (currentWar["targetProvince"] == targetProvinceId) {
+                                    //find who is the opponent
+                                    if (currentWar["claimantCharacter"]==characterId){
+                                        opponentId = currentWar["mainDefender"];
+                                    }
+                                    else opponentId = currentWar["claimantCharacter"];
                                 }
-                                score += (opponentPopulation-yourPopulation)/100;
                             }
-                        }       
+                        }
+                        //if this is the only war you are in, might as well keep going
+                        if (wars==1) score-=30;
+                        //if you are engaged in many conflicts you just might want to focus your effort
+                        if(wars>2) score+=5*wars;
+                        //comparing populations in provinces to roughly estimate strength
+                        int yourPopulation = 0;
+                        int opponentPopulation = 0;
+                        json provinces = newState.fetchAllProvincesData();
+                        for(json::iterator province = provinces.begin(); province != provinces.end(); province++){
+                            if (newState.getProvinceOwner(province.value()["id"])==opponentId) opponentPopulation+=province.value()["levy"]["men"].get<int>();
+                            if (newState.getProvinceOwner(province.value()["id"])==characterId) yourPopulation+=province.value()["levy"]["men"].get<int>();
+                        }
+                        score += (opponentPopulation-yourPopulation)/100;     
                     }
                     break;
                     case engine::Command::peace:{

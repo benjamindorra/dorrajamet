@@ -117,13 +117,13 @@ namespace state
         }
         return res;
     }
-    std::vector<std::string> Characters::getClaims (std::string characterId)
+    std::map<std::string, int> Characters::getClaims (std::string characterId)
     {
         return characters[characterId].getClaims();
     }
-    void Characters::addClaim (std::string claimant, std::string provinceId)
+    void Characters::addClaim (std::string claimant, std::string provinceId, int turn)
     {
-        characters[claimant].addClaim(provinceId);
+        characters[claimant].addClaim(provinceId, turn);
     }
     nlohmann::json Characters::toJson (){
         nlohmann::json allCharacters = nlohmann::json::array();

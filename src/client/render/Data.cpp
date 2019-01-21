@@ -134,7 +134,7 @@ namespace render {
                     this->data+=levy;
                 }
                 this->data = this->data+"\n"+"Current province: "+j["currentProvince"].get<std::string>()+"\n"+"Current battle: "
-                +j["currentBattle"].get<std::string>()+"\n"+"Orders: "+j["orders"].dump()+"\n";
+                +j["currentBattle"].get<std::string>()+"\n"+"Orders: "+j["orders"].dump(2)+"\n";
             }
             catch(const std::exception& e) {
                 std::cerr << e.what() <<std::endl;

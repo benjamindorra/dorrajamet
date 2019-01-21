@@ -75,11 +75,11 @@ namespace state {
     nlohmann::json fetchAllProvincesKingdomColor ();
     std::string getCurrentPlayer ();
     std::string getCurrentPlayerCharacter ();
-    std::string hasClaim (std::string claimantId, std::string targetCharacterId);
+    std::string hasActiveClaim (std::string claimantId, std::string targetCharacterId);
     bool areAtWar (std::string characterA, std::string characterB);
     std::string declareWar (std::string claim, std::string attackerId, std::string defenderId);
     std::string getProvinceOwner (std::string provinceId);
-    void addClaim (std::string characterId, std::string provinceId);
+    void addClaim (std::string characterId, std::string provinceId, int turn);
     std::string getProvinceFromColor (unsigned int colorCode);
     nlohmann::json fetchPlayerMessages (std::string playerId);
     std::string getPlayerOfCharacter (std::string characterId);
@@ -88,7 +88,8 @@ namespace state {
     bool areAllies (std::string characterA, std::string characterB);
     std::pair<std::vector<std::string>, std::vector<std::string>> getWarCamps (std::string warId);
     std::string getCharacterOfPlayer (std::string playerId);
-    std::string getWar (std::string characterA, std::string characterB);
+    nlohmann::json getWar (std::string characterA, std::string characterB);
+    std::string getWarId (std::string characterA, std::string characterB);
     void peaceOffer (std::string warId, std::string offeringCharacter);
     void surrender (std::string warId, std::string surrenderingCharacter);
     void endWar (std::string warId, std::string winner);
@@ -96,6 +97,7 @@ namespace state {
     GameState copy ();
     nlohmann::json fetchAllCharactersData ();
     nlohmann::json getOrderJson (std::string origId, std::string destId);
+    void increaseCurrentTurn ();
     nlohmann::json toJson ();
     void save (std::string savePath);
     // Setters and Getters

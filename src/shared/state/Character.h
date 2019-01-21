@@ -4,6 +4,7 @@
 
 #include <string>
 #include <vector>
+#include <map>
 #include <json.hpp>
 
 namespace state {
@@ -28,7 +29,8 @@ namespace state {
     int stewardship;
     int martial;
     int intrigue;
-    std::vector<std::string> claims;
+    /// map of provinces claimed and the turns the claims become active. An active claim enables you to start a war.
+    std::map<std::string, int> claims;
     bool alive;
     int prestige;
     int gold;
@@ -53,8 +55,8 @@ namespace state {
     Character generateHeir ();
     void removeClaim (std::string provinceId);
     std::string getKingdom ();
-    std::vector<std::string> getClaims ();
-    void addClaim (std::string provinceId);
+    std::map<std::string, int> getClaims ();
+    void addClaim (std::string provinceId, int turn);
     nlohmann::json toJson ();
     // Setters and Getters
   };
