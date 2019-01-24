@@ -115,7 +115,8 @@ namespace render {
                     for (json::iterator info=j["levy"].begin();info!=j["levy"].end();info++){
                         this->data = this->data+info.key()+": "+info.value().dump()+" ";
                     }
-                    this->data = this->data+"\n"+"Tax income: "+j["taxIncome"].dump()+"\n";
+                    this->data = this->data+"\n"+"Tax income: "+j["taxIncome"].dump()+"\n"+"Siege status: "+j["siegeStatus"].dump()+"\n"
+                    +"Sieging army: "+j["siegingArmy"].get<std::string>()+"\n"+"Controlled by: "+j["controlledBy"].get<std::string>();
                 }
             }
             catch(const std::exception& e) {

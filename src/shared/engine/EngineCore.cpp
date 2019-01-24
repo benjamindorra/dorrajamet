@@ -98,10 +98,9 @@ namespace engine
         gameState->clearDeadArmies();
         gameState->updateProvinces();
         gameState->updateLevies();
-        /*gameState->updateWars();
-        gameState->updateCharactersData();*/
+        gameState->updateWars();
+        //gameState->updateCharactersData();
         std::cout << "End turn procedure finished\n";
-        
     }
     void EngineCore::moveArmy (std::string arguments)
     {

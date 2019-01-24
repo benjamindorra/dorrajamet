@@ -174,7 +174,7 @@
                 },
                 "baseTaxIncome": 200,
                 "taxIncome": 200,
-                "siegeStatus": 0,
+                "siegeStatus": 50,
                 "siegingArmy": "none",
                 "controlledBy": "none"
             },
@@ -201,7 +201,7 @@
                 },
                 "baseTaxIncome": 150,
                 "taxIncome": 150,
-                "siegeStatus": 0,
+                "siegeStatus": 50,
                 "siegingArmy": "none",
                 "controlledBy": "none"
             },
@@ -228,7 +228,7 @@
                 },
                 "baseTaxIncome": 250,
                 "taxIncome": 250,
-                "siegeStatus": 0,
+                "siegeStatus": 50,
                 "siegingArmy": "none",
                 "controlledBy": "none"
             },
@@ -255,7 +255,7 @@
                 },
                 "baseTaxIncome": 200,
                 "taxIncome": 200,
-                "siegeStatus": 0,
+                "siegeStatus": 50,
                 "siegingArmy": "none",
                 "controlledBy": "none"
             },
@@ -282,7 +282,7 @@
                 },
                 "baseTaxIncome": 200,
                 "taxIncome": 200,
-                "siegeStatus": 0,
+                "siegeStatus": 50,
                 "siegingArmy": "none",
                 "controlledBy": "none"
             },
@@ -309,7 +309,7 @@
                 },
                 "baseTaxIncome": 200,
                 "taxIncome": 200,
-                "siegeStatus": 0,
+                "siegeStatus": 50,
                 "siegingArmy": "none",
                 "controlledBy": "none"
             },
@@ -336,7 +336,7 @@
                 },
                 "baseTaxIncome": 0,
                 "taxIncome": 0,
-                "siegeStatus": 0,
+                "siegeStatus": 50,
                 "siegingArmy": "none",
                 "controlledBy": "none"
             }

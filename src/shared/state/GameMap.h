@@ -74,6 +74,8 @@ namespace state {
     std::vector<std::string> getProvincesOfKingdom (std::string kingdomId);
     void transferProvince (std::string provinceId, std::string kingdomId);
     void createArmy (nlohmann::json armyJson);
+    std::string getProvinceController (std::string provinceId);
+    void setProvinceController (std::string provinceId, std::string controller);
     nlohmann::json toJson ();
     // Setters and Getters
   };

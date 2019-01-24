@@ -152,23 +152,29 @@ namespace state
     }
     void Province::updateController()
     {
-        if(siegeStatus < 100)
-            return;
-        auto siegingArmyOwner = parent->getKingdomOfCharacter(parent->getArmy(siegingArmy)->getOwnerCharacter());
-        auto provinceOwner = kingdomId;
-        if(siegingArmyOwner == provinceOwner)
-            controlledBy = "none";
-        else
-            controlledBy = siegingArmyOwner;
-        siegeStatus = 0;
-        siegingArmy = "none";
+        if(siegeStatus >= 100) {
+            auto siegingArmyOwner = parent->getKingdomOfCharacter(parent->getArmy(siegingArmy)->getOwnerCharacter());
+            auto provinceOwner = kingdomId;
+            if(siegingArmyOwner == provinceOwner)
+                controlledBy = "none";
+            else
+                controlledBy = siegingArmyOwner;
+            siegeStatus = 50;
+            siegingArmy = "none";
+        }
+        if(siegeStatus <= 0) {
+            controlledBy = kingdomId;
+            siegeStatus = 50;
+            siegingArmy = "none";
+        }
     }
     void Province::updateSiege()
     {
         if(isSieged())
-            changeSiegeStatusBy(50);
+            changeSiegeStatusBy(20);
         else
-            changeSiegeStatusBy(-50);
+            changeSiegeStatusBy(-20);
+        updateController();
     }
     void Province::setSiegingArmy (std::string armyId)
     {
@@ -185,6 +191,9 @@ namespace state
     std::string Province::getController ()
     {
         return controlledBy;
+    }
+    void Province::setController (std::string controller){
+        controlledBy = controller;
     }
     std::string Province::getKingdom ()
     {

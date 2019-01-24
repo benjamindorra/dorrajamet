@@ -101,6 +101,9 @@ namespace state {
     void createArmy (nlohmann::json armyJson);
     void disbandLevy (std::string idProvince);
     void raiseLevy (std::string idProvince);
+    std::string getProvinceController (std::string provinceId);
+    void setProvinceController (std::string provinceId, std::string controller);
+    bool isProvinceAtWar (std::string provinceId);
     nlohmann::json toJson ();
     void save (std::string savePath);
     // Setters and Getters

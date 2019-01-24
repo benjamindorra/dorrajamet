@@ -26,7 +26,7 @@
                 },
                 "name": "Fiveland",
                 "prosperity": 12,
-                "siegeStatus": 0,
+                "siegeStatus": 50,
                 "siegingArmy": "none",
                 "taxIncome": 200
             },
@@ -51,7 +51,7 @@
                 },
                 "name": "Fourland",
                 "prosperity": 12,
-                "siegeStatus": 0,
+                "siegeStatus": 50,
                 "siegingArmy": "none",
                 "taxIncome": 200
             },
@@ -76,7 +76,7 @@
                 },
                 "name": "Oneland",
                 "prosperity": 12,
-                "siegeStatus": 0,
+                "siegeStatus": 50,
                 "siegingArmy": "none",
                 "taxIncome": 200
             },
@@ -101,7 +101,7 @@
                 },
                 "name": "Sixland",
                 "prosperity": 12,
-                "siegeStatus": 0,
+                "siegeStatus": 50,
                 "siegingArmy": "none",
                 "taxIncome": 200
             },
@@ -126,7 +126,7 @@
                 },
                 "name": "Threeland",
                 "prosperity": 15,
-                "siegeStatus": 0,
+                "siegeStatus": 50,
                 "siegingArmy": "none",
                 "taxIncome": 250
             },
@@ -151,7 +151,7 @@
                 },
                 "name": "Twoland",
                 "prosperity": 6,
-                "siegeStatus": 0,
+                "siegeStatus": 50,
                 "siegingArmy": "none",
                 "taxIncome": 150
             },
@@ -176,7 +176,7 @@
                 },
                 "name": "Black Sea",
                 "prosperity": 0,
-                "siegeStatus": 0,
+                "siegeStatus": 50,
                 "siegingArmy": "none",
                 "taxIncome": 0
             }
@@ -210,9 +210,7 @@
                 {
                     "age": 22,
                     "alive": true,
-                    "claims": {
-                        "prov_two": 1
-                    },
+                    "claims": {},
                     "diplomacy": 12,
                     "dynastyName": "Jones",
                     "gold": 500,

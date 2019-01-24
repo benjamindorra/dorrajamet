@@ -65,6 +65,7 @@ namespace state {
     std::string getWarId (std::string characterA, std::string characterB);
     void setWarScore (std::string warId, int score);
     nlohmann::json fetchAllCharactersData ();
+    bool isProvinceAtWar (std::string provinceId);
     nlohmann::json toJson ();
     // Setters and Getters
   };

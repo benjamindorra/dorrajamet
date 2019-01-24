@@ -69,6 +69,7 @@ namespace state {
     bool isSieged ();
     bool isCaptured ();
     std::string getController ();
+    void setController (std::string controller);
     std::string getKingdom ();
     void setKingdom (std::string kingdomId);
     void updateController ();

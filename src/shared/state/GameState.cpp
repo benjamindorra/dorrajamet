@@ -247,6 +247,9 @@ namespace state
     {
         return politics->areAtWar(characterA, characterB);
     }
+    bool GameState::isProvinceAtWar (std::string provinceId){
+        return politics->isProvinceAtWar(provinceId);
+    }
     std::string GameState::declareWar (std::string claim, std::string attackerId, std::string defenderId)
     {
         auto attackerCamp = politics->getAllies(attackerId);
@@ -385,6 +388,12 @@ namespace state
     }
     void GameState::raiseLevy (std::string idProvince){
         gameMap->raiseLevy(idProvince);
+    }
+    std::string GameState::getProvinceController (std::string provinceId){
+        return gameMap->getProvinceController(provinceId);
+    }
+    void GameState::setProvinceController (std::string provinceId, std::string controller){
+        gameMap->setProvinceController(provinceId, controller);
     }
     nlohmann::json GameState::toJson (){
             nlohmann::json gameState;

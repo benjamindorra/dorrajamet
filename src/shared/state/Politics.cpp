@@ -139,6 +139,31 @@ namespace state
         for(auto const& e: finishedWars)
             endWar(e);
         */
+        //simplified version.
+        //the siegeStatus of a province is between 0 and 100, starting at 50.
+        //if it reaches 0, the defender gains control of the province, he keeps the province and the war ends.
+        //if it reaches 100, the attacker wins, he takes control of the province and the war ends.
+        //it is NOT a good practice to iterate over a list here you are adding/removing elements.
+        //this is why we iterate over relations, and not wars. else it creates a bug.
+        for(Relation relation : relations){
+            if (relation.getType()==Relation::relType::war){
+                std::string warId = relation.getWarId();
+                std::cout<<std::endl<<warId<<std::endl;
+                std::string provinceId = wars.at(warId).getTargetTitle();
+                std::string provinceController = parent->getProvinceController(provinceId);
+                if (provinceController != "none") {
+                    std::string attackerId = wars.at(warId).getClaimantCharacter();
+                    std::string defenderId = wars.at(warId).getDefendingCharacter();
+                    parent->setProvinceController(provinceId, "none");
+                    if (titles.getKingdomOwner(provinceController) == defenderId){
+                        endWar(warId, defenderId);
+                    }
+                    else {
+                        endWar(warId, attackerId);
+                    }
+                }
+            }
+        }
     }
     void Politics::endWar (std::string warId, std::string winner)
     {
@@ -293,6 +318,12 @@ namespace state
     {
         for(auto r: relations)
             if((r.isBetween(characterA, characterB) && r.getType() == Relation::war))
+                return true;
+        return false;
+    }
+    bool Politics::isProvinceAtWar(std::string provinceId){
+        for(auto war: wars)
+            if(war.second.getTargetTitle()==provinceId)
                 return true;
         return false;
     }

@@ -300,7 +300,7 @@ namespace state
         std::map<std::string, std::vector<std::string>> pos; // pos contains all the armies contained in each province
         for(auto const& e: armies)
             pos[armies[e.first].getCurrentProvince()].push_back(e.first);
-        for(auto const& e: pos) // for each province
+        for(auto const& e: pos) // for each province containing an army
         {
             // Get whoever owns or control the province
             auto provinceId = e.first;
@@ -308,7 +308,7 @@ namespace state
             if(provinces[provinceId].isCaptured())
                 provinceController = provinces[provinceId].getController();
             else
-                parent->fetchKingdomData(provinces[provinceId].getKingdom())["holder"];
+                provinceController = parent->fetchKingdomData(provinces[provinceId].getKingdom())["holder"];
             // No siege starts if a battle or a siege is ongoing
             if(checkForOngoingBattles(provinceId) || checkForOngoingSiege(provinceId))
                 continue;
@@ -322,6 +322,25 @@ namespace state
                 {
                     provinces[provinceId].setSiegingArmy(a);
                     break;// For now we will only consider the first sieging army
+                }
+            }
+            //removes the siege if there is no opponent army anymore
+            for (auto province : provinces){
+                if (province.second.isSieged()){
+                    if (pos.find(province.first) == pos.end()){
+                        province.second.setSiegingArmy("none");
+                    }
+                    else {
+                        bool opponentArmy = false;
+                        for(std::string army : pos.at(province.first)){
+                            if (parent->areAtWar(parent->getProvinceOwner(province.first), parent->getArmyOwner(army))){
+                                opponentArmy = true;
+                            }
+                        }
+                        if (not opponentArmy){
+                                province.second.setSiegingArmy("none");
+                        }
+                    }
                 }
             }
         }
@@ -338,8 +357,10 @@ namespace state
     }
     void GameMap::updateSieges ()
     {
+        //only update the siege of a province if it is at war
         for(auto const& e: provinces)
-            provinces[e.first].updateSiege();
+            if (parent->isProvinceAtWar(e.first))
+                provinces[e.first].updateSiege();
     }
     void GameMap::updateProvincesData ()
     {
@@ -443,6 +464,12 @@ namespace state
         if (this->armies.find(armyJson["id"])==this->armies.end()){
             this->armies[armyJson["id"]]=Army(this, armyJson.dump());
         }
+    }
+    std::string GameMap::getProvinceController (std::string provinceId){
+        return provinces.at(provinceId).getController();
+    }
+    void GameMap::setProvinceController (std::string provinceId, std::string controller){
+        provinces[provinceId].setController(controller);
     }
     nlohmann::json GameMap::toJson (){
         nlohmann::json gameMap;
