@@ -2,18 +2,24 @@
 #ifndef AI__RANDOMAI__H
 #define AI__RANDOMAI__H
 
-#include <render.h>
 #include <state.h>
 #include <engine.h>
+
+namespace engine {
+  class Command;
+}
+
+#include "engine/Command.h"
 
 namespace ai {
 
   /// class RandomAI - 
   class RandomAI {
+    // Associations
     // Attributes
   private:
-    render::ToState toState;
-    render::ToEngine toEngine;
+    state::GameState* gameState;
+    engine::EngineCore* engineCore;
     // Operations
   public:
     RandomAI (state::GameState * state, engine::EngineCore * engine);
