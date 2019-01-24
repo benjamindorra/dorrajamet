@@ -32,9 +32,10 @@ namespace render {
         y = (std::rand()%380) + 20;
         this->setPosition(x,y);
     }
-    ShowArmy::ShowArmy (Render * mainRender, sf::Texture * texture, std::string id, int x, int y) {
+    ShowArmy::ShowArmy (Render * mainRender, sf::Texture * texture, std::string id, std::string currentProvinceId, int x, int y) {
         this->selected=false;
         this->mainRender=mainRender;
+        this->currentProvinceId=currentProvinceId;
         this->x = x;
         this->y = y;
         this->armyImg=Image(x, y);
@@ -80,16 +81,18 @@ namespace render {
     void ShowArmy::select() {
         selected=!selected;
         if (selected) {
-            //armyImg.importFile("./res/armySel.bmp");
             armyImg.setColor(sf::Color(0, 0, 255));
         }
         else {
-            //armyImg.importFile("./res/army.bmp");
             armyImg.setColor(sf::Color(255, 255, 255));
         }
     }
 
     bool ShowArmy::getSelected() {
         return selected;
+    }
+
+    std::string ShowArmy::getCurrentProvinceId(){
+        return currentProvinceId;
     }
 }

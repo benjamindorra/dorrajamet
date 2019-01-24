@@ -36,12 +36,13 @@ namespace render {
     ShowArmies (Render * mainRender, ToState * state, ToEngine * engine);
     ~ShowArmies ();
     void addArmy (ShowArmy * showArmy);
-    void newArmy (std::string id, int x, int y);
+    void newArmy (std::string id, std::string currentProvinceId);
     std::vector<ShowArmy*> * getArmies ();
     std::string selectArmy (int x, int y);
     std::string moveSelected (int x, int y);
     void draw ();
     void deleteArmies ();
+    void deleteArmy (std::string id);
     // Setters and Getters
   };
 

@@ -62,14 +62,25 @@ namespace render {
         }
     }
 
-    void ShowArmies::newArmy(std::string id, int x, int y) {
-        armies.push_back(new ShowArmy(mainRender, &texture, id, x, y));
+    void ShowArmies::newArmy(std::string id, std::string currentProvinceId) {
+        nlohmann::json province = state->fetchProvinceData(currentProvinceId);
+        armies.push_back(new ShowArmy(mainRender, &texture, id, currentProvinceId,  province["dispPosX"].get<int>(), province["dispPosY"].get<int>()));
+        
     }
 
     void ShowArmies::deleteArmies(){
         for (long unsigned int i=0;i<armies.size();i++) {
             delete armies[i];
             armies.erase(armies.begin()+i);
+        }
+    }
+    void ShowArmies::deleteArmy(std::string id){
+        for (long unsigned int i=0;i<armies.size();i++) {
+            if(armies[i]->getId()==id){
+                delete armies[i];
+                armies.erase(armies.begin()+i);
+                break;
+            }
         }
     }
 }

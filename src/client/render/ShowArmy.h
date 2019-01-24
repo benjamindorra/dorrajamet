@@ -23,12 +23,13 @@ namespace render {
     Image armyImg;
     std::string id;
     bool selected;
+    std::string currentProvinceId;
     // Operations
   public:
     ShowArmy ();
     ShowArmy (Render * mainRender, Image& armyImg);
     ShowArmy (Render * mainRender, Image& armyImg, std::string id);
-    ShowArmy (Render * mainRender, sf::Texture * texture, std::string id, int x, int y);
+    ShowArmy (Render * mainRender, sf::Texture * texture, std::string id, std::string currentProvinceId, int x, int y);
     ~ShowArmy ();
     void draw ();
     void setPosition (int x, int y);
@@ -38,6 +39,7 @@ namespace render {
     bool getSelected ();
     int getX ();
     int getY ();
+    std::string getCurrentProvinceId ();
     // Setters and Getters
   };
 
