@@ -60,6 +60,7 @@ namespace state
     void Politics::setParent (GameState * parent)
     {
         this->parent = parent;
+        refreshChildParentPointers();
     }
     void Politics::debug()
     {

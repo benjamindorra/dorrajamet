@@ -84,6 +84,9 @@ namespace state
     {
         return reinforcementRate;
     }
+    void Levy::setParent(Province* parent){
+        this->parent = parent;
+    }
     nlohmann::json Levy::toJson ()
     {
         nlohmann::json j;

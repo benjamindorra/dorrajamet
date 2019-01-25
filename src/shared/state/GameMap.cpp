@@ -66,6 +66,7 @@ namespace state
     void GameMap::setParent(state::GameState * parent)
     {
         this->parent = parent;
+        refreshChildParentPointers();
     }
     bool GameMap::checkConsistency ()
     {
@@ -221,7 +222,6 @@ namespace state
         for(std::string battleId : battlesId){
             if (battles[battleId].isFinished()) {
                 battles.erase(battleId);
-                std::cout<<std::endl<<"CLEARED BATTLE"<<std::endl;
             }
         }              
     }
@@ -235,7 +235,6 @@ namespace state
         {
             armies[army].disband();
             armies.erase(army);
-            std::cout<<std::endl<<"CLEARED ARMY"<<std::endl;
         }
         refreshChildParentPointers();
     }
@@ -314,7 +313,6 @@ namespace state
     }
     void GameMap::checkNewSieges ()
     {
-        std::cout<<std::endl<<"CHECKING NEW SIEGES"<<std::endl;
         std::map<std::string, std::vector<std::string>> pos; // pos contains all the armies contained in each province
         for(auto const& e: armies)
             pos[armies[e.first].getCurrentProvince()].push_back(e.first);
@@ -346,7 +344,6 @@ namespace state
         //removes the siege if there is no opponent army anymore
         for (auto province : provinces){
             if (province.second.isSieged()){
-                std::cout<<std::endl<<"PROVINCE SIEGED "<<province.first<<std::endl;
                 if (pos.find(province.first) == pos.end()){
                     provinces[province.first].setSiegingArmy("none");
                 }
@@ -356,11 +353,8 @@ namespace state
                         if (parent->areAtWar(parent->getProvinceOwner(province.first), parent->getArmyOwner(army))){
                             opponentArmy = true;
                         }
-                        std::cout<<std::endl<<"ARMY "<<army<<std::endl;
                     }
-                    std::cout<<std::endl<<"OPPONENT ARMY "<<opponentArmy<<std::endl;
                     if (not opponentArmy){
-                            std::cout<<std::endl<<"SIEGE DELETED "<<province.first<<std::endl;
                             provinces[province.first].setSiegingArmy("none");
                     }
                 }

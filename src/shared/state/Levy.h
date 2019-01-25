@@ -38,6 +38,7 @@ namespace state {
     void setReinforcementRate (float rate);
     void reinforce (int men);
     float getReinforcementRate ();
+    void setParent (Province* parent);
     nlohmann::json toJson ();
     // Setters and Getters
   };

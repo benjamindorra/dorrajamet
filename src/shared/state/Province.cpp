@@ -67,6 +67,8 @@ namespace state
     void Province::setParent (GameMap * parent)
     {
         this->parent = parent;
+        levy.setParent(this);
+        baseLevy.setParent(this);
     }
     bool Province::checkConsistency ()
     {
@@ -170,7 +172,6 @@ namespace state
     }
     void Province::updateSiege()
     {
-        std::cout<<"SIEGED BY "<<siegingArmy<<"  address "<<(long unsigned int)this<<std::endl;
         if(isSieged())
             changeSiegeStatusBy(20);
         else
@@ -179,9 +180,7 @@ namespace state
     }
     void Province::setSiegingArmy (std::string armyId)
     {
-        std::cout<<"SIEGING ARMY ID "<<siegingArmy<<std::endl;
         this->siegingArmy = armyId;
-        std::cout<<"NEW SIEGED ARMY ID "<<siegingArmy<<" ARMY ID "<<armyId<<" address "<<(long unsigned int)this<<std::endl;
     }
     bool Province::isSieged()
     {

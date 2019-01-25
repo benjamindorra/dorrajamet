@@ -78,6 +78,9 @@ namespace state
     void Army::setParent (GameMap * parent)
     {
         this->parent = parent;
+        for (long unsigned int i=0;i<orders.size();i++){
+            orders[i].setParent(this);
+        }
     }
     bool Army::checkConsistency ()
     {
