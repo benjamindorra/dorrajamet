@@ -109,8 +109,15 @@ namespace state
     }
     void GameMap::updateBattles()
     {
+        //std::vector<std::string> battlesId;
         for(auto const& e : battles)
             battles[e.first].advance();
+            //battlesId.push_back(e.first);
+        //for(std::string battleId : battlesId){
+            //if (battles[battleId].isFinished())
+                //battles.erase(battleId);
+            //else
+        //}
     }
     Army * GameMap::getArmy (std::string idArmy)
     {
@@ -173,7 +180,7 @@ namespace state
                     if(checkForOngoingBattles(e.first))
                         continue;
                     army1 = e.second[i];
-                    for(j = i + 1; i < e.second.size(); j++)
+                    for(j = i + 1; j < e.second.size(); j++)
                     {
                         if(checkForOngoingBattles(e.first))
                             continue;
@@ -205,9 +212,18 @@ namespace state
     }
     void GameMap::clearFinishedBattles ()
     {
-        for(auto const& e: battles)
+        /*for(auto const& e: battles)
             if(battles[e.first].isFinished())
-                battles[e.first].close(parent->getCurrentTurn());                
+                battles[e.first].close(parent->getCurrentTurn());*/
+        std::vector<std::string> battlesId;
+        for(auto const& e : battles)
+            battlesId.push_back(e.first);
+        for(std::string battleId : battlesId){
+            if (battles[battleId].isFinished()) {
+                battles.erase(battleId);
+                std::cout<<std::endl<<"CLEARED BATTLE"<<std::endl;
+            }
+        }              
     }
     void GameMap::clearDeadArmies ()
     {
@@ -219,6 +235,7 @@ namespace state
         {
             armies[army].disband();
             armies.erase(army);
+            std::cout<<std::endl<<"CLEARED ARMY"<<std::endl;
         }
         refreshChildParentPointers();
     }
@@ -297,6 +314,7 @@ namespace state
     }
     void GameMap::checkNewSieges ()
     {
+        std::cout<<std::endl<<"CHECKING NEW SIEGES"<<std::endl;
         std::map<std::string, std::vector<std::string>> pos; // pos contains all the armies contained in each province
         for(auto const& e: armies)
             pos[armies[e.first].getCurrentProvince()].push_back(e.first);
@@ -324,22 +342,26 @@ namespace state
                     break;// For now we will only consider the first sieging army
                 }
             }
-            //removes the siege if there is no opponent army anymore
-            for (auto province : provinces){
-                if (province.second.isSieged()){
-                    if (pos.find(province.first) == pos.end()){
-                        province.second.setSiegingArmy("none");
+        }
+        //removes the siege if there is no opponent army anymore
+        for (auto province : provinces){
+            if (province.second.isSieged()){
+                std::cout<<std::endl<<"PROVINCE SIEGED "<<province.first<<std::endl;
+                if (pos.find(province.first) == pos.end()){
+                    provinces[province.first].setSiegingArmy("none");
+                }
+                else {
+                    bool opponentArmy = false;
+                    for(std::string army : pos.at(province.first)){
+                        if (parent->areAtWar(parent->getProvinceOwner(province.first), parent->getArmyOwner(army))){
+                            opponentArmy = true;
+                        }
+                        std::cout<<std::endl<<"ARMY "<<army<<std::endl;
                     }
-                    else {
-                        bool opponentArmy = false;
-                        for(std::string army : pos.at(province.first)){
-                            if (parent->areAtWar(parent->getProvinceOwner(province.first), parent->getArmyOwner(army))){
-                                opponentArmy = true;
-                            }
-                        }
-                        if (not opponentArmy){
-                                province.second.setSiegingArmy("none");
-                        }
+                    std::cout<<std::endl<<"OPPONENT ARMY "<<opponentArmy<<std::endl;
+                    if (not opponentArmy){
+                            std::cout<<std::endl<<"SIEGE DELETED "<<province.first<<std::endl;
+                            provinces[province.first].setSiegingArmy("none");
                     }
                 }
             }
@@ -357,10 +379,16 @@ namespace state
     }
     void GameMap::updateSieges ()
     {
-        //only update the siege of a province if it is at war
+        //only update the siege of a province if it is at war and there is no battle for it
         for(auto const& e: provinces)
-            if (parent->isProvinceAtWar(e.first))
-                provinces[e.first].updateSiege();
+            if (parent->isProvinceAtWar(e.first)){
+                bool noBattle = true;
+                for (auto battle : battles)
+                    if (battle.second.getProvince() == e.first)
+                        noBattle = false;
+                if (noBattle)
+                    provinces[e.first].updateSiege();
+            }
     }
     void GameMap::updateProvincesData ()
     {

@@ -353,7 +353,6 @@ namespace state
     void GameState::endWar (std::string warId, std::string winner)
     {
         politics->endWar(warId, winner);
-        std::cout << "GameState::endWar finished\n";
     }
     void GameState::transferProvince (std::string provinceId, std::string kingdomId)
     {
