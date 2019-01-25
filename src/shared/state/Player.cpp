@@ -60,9 +60,9 @@ namespace state
     }
     void Player::addMessage (nlohmann::json initJson)
     {
-        std::cout << "player " << id << " had " << pendingMessages.size() << " pending messages\n";
+        //std::cout << "player " << id << " had " << pendingMessages.size() << " pending messages\n";
         pendingMessages.push_back(Message(initJson));
-        std::cout << "player " << id << " has " << pendingMessages.size() << " pending messages\n";
+        //std::cout << "player " << id << " has " << pendingMessages.size() << " pending messages\n";
     }
 
     void Player::removeMessage (std::string messageId)

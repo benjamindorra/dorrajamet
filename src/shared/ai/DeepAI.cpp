@@ -130,9 +130,7 @@ namespace ai {
                     //
                 }*/
                 fillLevel(treeRoot);
-                //TO REMOVE
-                viewTreeParse(viewTree(treeRoot));
-                //
+                //viewTreeParse(viewTree(treeRoot));
             //}
         }
     }

@@ -70,7 +70,7 @@
                 "id": "prov_one",
                 "kingdomId": "k_one",
                 "levy": {
-                    "isRaised": true,
+                    "isRaised": false,
                     "men": 500,
                     "reinforcementRate": 1.0
                 },

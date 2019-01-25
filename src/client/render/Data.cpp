@@ -291,10 +291,8 @@ namespace render {
             else if (button =="Alliance") {}
             else if (button=="Surrender") {}
             else if (button=="War") {
-                std::cout << "War... War never changes.\n";
             }
             else if (button=="Peace") {
-                std::cout << "Wars begin when you will...\n";
             }
             j["command"] = button;
             j["colorCode"] = std::stoul(id);

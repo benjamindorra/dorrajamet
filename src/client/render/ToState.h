@@ -3,9 +3,8 @@
 #define RENDER__TOSTATE__H
 
 #include <state.h>
-#include <string>
-#include <map>
 #include <json.hpp>
+#include <string>
 
 namespace state {
   class GameState;
@@ -21,7 +20,6 @@ namespace render {
     // Attributes
   public:
     state::GameState * state;
-    std::map<std::string, std::string> mapColorId;
     // Operations
   public:
     ToState ();

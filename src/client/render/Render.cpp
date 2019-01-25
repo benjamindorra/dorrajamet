@@ -109,12 +109,9 @@ namespace render {
                                 unsigned int mapX = (unsigned int)pixel.x;
                                 unsigned int mapY = (unsigned int)pixel.y;
                                 unsigned int pix = colorMap.ColorMap::getPixel(mapX,mapY);
-                                std::cout<<"pix: "<<pix<<std::endl;
-                                std::cout<<"x: "<<mapX<<"y: "<<mapY<<std::endl;
                                 data->select(Data::Province, std::to_string(pix));
                             }
                             else {
-                                std::cout<<"army !"<<std::endl;
                                 data->select(Data::Army, leftclick);
                             }
 
@@ -125,8 +122,6 @@ namespace render {
                                 unsigned int mapX = (unsigned int)pixel.x;
                                 unsigned int mapY = (unsigned int)pixel.y;
                                 unsigned int pix = colorMap.ColorMap::getPixel(mapX,mapY);
-                                std::cout<<"pix: "<<pix<<std::endl;
-                                std::cout<<"x: "<<mapX<<"y: "<<mapY<<std::endl;
                                 data->select(Data::Character, std::to_string(pix));
                             }
                             else {
@@ -146,7 +141,6 @@ namespace render {
                             }
                         }
                     }
-                    else std::cout<<"x: "<<x<<"y: "<<y<<std::endl;
                     break;
                 }
                 case sf::Event::KeyPressed: {

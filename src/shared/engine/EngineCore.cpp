@@ -76,7 +76,6 @@ namespace engine
             default:
                 throw std::runtime_error("Error: unknown command type.\n");
         }
-        std::cout << "left process command function\n";
     }
 
     void EngineCore::endWar (std::string warId, std::string winner)
@@ -100,7 +99,6 @@ namespace engine
         gameState->updateLevies();
         gameState->updateWars();
         //gameState->updateCharactersData();
-        std::cout << "End turn procedure finished\n";
     }
     void EngineCore::moveArmy (std::string arguments)
     {
@@ -114,7 +112,6 @@ namespace engine
             if(currentCharacter == armyOwner)
             {
                 gameState->setArmyOrder(id, dest);
-                std::cout<<"Orders given to army"<<std::endl;
             }
             else
                 std::cout << "Can't give the order\n";
@@ -358,9 +355,7 @@ namespace engine
                 default:
                     throw std::runtime_error("Error: unknown message type\n");
             }
-            std::cout << "left the switch\n";
             gameState->removeMessage(currentPlayer, messageId);
-            std::cout << "removed message\n";
         }
         catch(const std::exception& e)
         {

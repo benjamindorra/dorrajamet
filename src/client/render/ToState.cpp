@@ -14,16 +14,6 @@ namespace render {
     
     ToState::ToState (state::GameState * state) {
         this->state=state;
-        try {
-            json j = fetchAllProvincesData();
-            for(json::iterator it = j.begin(); it!= j.end(); ++it) {
-                this->mapColorId[it.value()["colorCode"].dump()] = it.value()["id"].get<std::string>();
-            }
-        }
-        catch(const std::exception& e) {
-            std::cerr << e.what() <<std::endl;
-            throw std::runtime_error("Incorrect data for Provinces");
-        }
     }
     ToState::~ToState () {}
     nlohmann::json ToState::fetchCharacterData (std::string id)
@@ -52,7 +42,6 @@ namespace render {
     }
     nlohmann::json ToState::fetchAllProvincesData ()
     {
-        //std::cout << state->fetchAllProvincesData()[0]["dispPosX"] << " " << state->fetchAllProvincesData()[0]["dispPosY"] << std::endl;
         return state->fetchAllProvincesData();
     }
     nlohmann::json ToState::fetchCharacterDataFromColor (std::string colorCode)

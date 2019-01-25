@@ -20,13 +20,10 @@ namespace render {
         popUps.erase(popUps.find(id));
     }
     void PopUps::update (){
-        //std::cout << "Popups update\n";
         playerId = state->getCurrentPlayer();
         
         json playerMessages = state->fetchPlayerMessagesData(playerId);
         bool alreadyExist;
-        /*if(playerMessages.size())
-            std::cout << "found " << playerMessages.size();*/
         for (json::iterator playerMessage = playerMessages.begin(); playerMessage != playerMessages.end(); ++playerMessage) {
             alreadyExist=false;
             for (auto popUp : popUps) {

@@ -149,7 +149,6 @@ namespace state
         for(Relation relation : relations){
             if (relation.getType()==Relation::relType::war){
                 std::string warId = relation.getWarId();
-                std::cout<<std::endl<<warId<<std::endl;
                 std::string provinceId = wars.at(warId).getTargetTitle();
                 std::string provinceController = parent->getProvinceController(provinceId);
                 if (provinceController != "none") {

@@ -81,12 +81,12 @@ namespace state
         if(currentPlayer >= players.size())
         {
             currentPlayer = 0;
-            std::cout << "player " << players[currentPlayer].getId() << " has " << players[currentPlayer].getMessages().size() << " messages\n";
+            //std::cout << "player " << players[currentPlayer].getId() << " has " << players[currentPlayer].getMessages().size() << " messages\n";
             return true;
         }
         else
         {
-            std::cout << "player " << players[currentPlayer].getId() << " has " << players[currentPlayer].getMessages().size() << " messages\n";
+            //std::cout << "player " << players[currentPlayer].getId() << " has " << players[currentPlayer].getMessages().size() << " messages\n";
             return false;
         }
     }

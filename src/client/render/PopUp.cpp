@@ -32,7 +32,6 @@ namespace render {
     
     void PopUp::select (bool requiresAnswer, Type type, std::string causeId, std::string data) {
         // select text, buttons and frame size
-        std::cout << "new popup cause: " << causeId << std::endl;;
         std::string toDisplay;
         switch (type) {
             case War:

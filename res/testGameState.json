@@ -169,7 +169,7 @@
                 "levy":
                 {
                     "men": 500,
-                    "isRaised": true,
+                    "isRaised": false,
                     "reinforcementRate": 1 
                 },
                 "baseTaxIncome": 200,

@@ -142,7 +142,7 @@ namespace state
         int res = 0;
         for(auto const& levy: levies)
         {
-            std::cout << "Levy of province: " << levy << " has still " << parent->getLevyMen(levy) << std::endl;
+            //std::cout << "Levy of province: " << levy << " has still " << parent->getLevyMen(levy) << std::endl;
             res += parent->getLevyMen(levy);
         }
         return res;
